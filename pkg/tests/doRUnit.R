@@ -1,5 +1,5 @@
 ## unit tests will not be done if RUnit is not available
-do.test = FALSE
+do.test = TRUE
 if(require("RUnit", quietly=TRUE) && do.test) {
   
   ## --- Setup ---
