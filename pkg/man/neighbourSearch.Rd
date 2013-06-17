@@ -1,0 +1,48 @@
+\name{neighbourSearch}
+\alias{neighbourSearch}
+\title{neighbour search}
+\usage{
+  neighbourSearch(takens, positionTakens, radius,
+    number.boxes = NULL)
+}
+\arguments{
+  \item{takens}{The matrix containing all the Takens'
+  vectors (see \link{buildTakens}).}
+
+  \item{positionTakens}{Integer denoting the Takens' vector
+  whose neighbours will be searched.}
+
+  \item{radius}{Distance in which the algorithm will search
+  for neighbours.}
+
+  \item{number.boxes}{Integer denoting the number of boxes
+  per dimension that will be used to construct a wrapped
+  grid (see Schreiber). If the user does not specify a
+  number of boxes, this function estimates a proper
+  number.}
+}
+\value{
+  A containing all the neighbours of the
+  \emph{positionTakens-th} Takens' vector. If the list is
+  empty, that means that there is no neighbour of the
+  \emph{positionTakens-th} Takens' vector in the given
+  radius.
+}
+\description{
+  This function finds all the neighbours of a given Takens'
+  vector. The neighbours are found using a box assisted
+  algorithm that creates a wrapped grid with a given number
+  of boxes per dimension.
+}
+\author{
+  Constantino A. Garcia
+}
+\references{
+  Schreiber, T. Efficient neighbor searching in nonlinear
+  time series analysis. Int. J. Bifurcation and Chaos, 5,
+  p. 349, (1995).
+}
+\seealso{
+  \code{\link{findAllNeighbours}}.
+}
+

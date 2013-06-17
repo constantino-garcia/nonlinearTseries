@@ -1,0 +1,63 @@
+\name{nonLinearPrediction}
+\alias{nonLinearPrediction}
+\title{Nonlinear time series prediction}
+\usage{
+  nonLinearPrediction(time.series, embedding.dim, time.lag,
+    prediction.step, radius, radius.increment)
+}
+\arguments{
+  \item{time.series}{Previous values of the time series
+  that the algorithm will use to make the prediction.}
+
+  \item{embedding.dim}{Integer denoting the dimension in
+  which we shall embed the \emph{time.series}.}
+
+  \item{time.lag}{Integer denoting the number of time steps
+  that will be use to construct the Takens' vectors.}
+
+  \item{radius}{The radius used to looking for neighbours
+  in the phase space (see details).}
+
+  \item{radius.increment}{The increment used when no
+  neighbours are found (see details).}
+
+  \item{prediction.step}{Integer denoting the number of
+  time steps ahead for the forecasting.}
+}
+\value{
+  The predicted value \emph{prediction.step} time steps
+  ahead.
+}
+\description{
+  Function for predicting futures values of a given time
+  series using previous values and nonlinear analysis
+  techniques.
+}
+\details{
+  Using \emph{time.series} measurements, an embedding in
+  \emph{embedding.dim}-dimensional phase space with time
+  lag \emph{time.lag} is used to predict the value
+  following the given time series after
+  \emph{prediction.steps} sample steps. This is done by
+  finding all the neighbours of the last Takens' vector in
+  a radius of size \emph{radius} (the max norm is used). If
+  no neighbours are found within a distance radius, the
+  neighbourhood size is increased until succesful using
+  \emph{radius.increment}(\emph{radius} = \emph{radius} +
+  \emph{radius.increment}).
+}
+\examples{
+h=henon(n.sample=5000,start=c(0.324,-0.8233))
+predic=nonLinearPrediction(time.series=h$x[10:2000],embedding.dim=2,
+                           time.lag=1,
+                           prediction.step=3,radius=0.03,radius.increment=0.03/2)
+cat("real value: ",h$x[2003],"Vs Forecast:",predic)
+}
+\author{
+  Constantino A. Garcia
+}
+\references{
+  H. Kantz and T. Schreiber: Nonlinear Time series Analysis
+  (Cambridge university press)
+}
+

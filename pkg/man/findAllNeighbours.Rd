@@ -1,0 +1,50 @@
+\name{findAllNeighbours}
+\alias{findAllNeighbours}
+\title{neighbour search}
+\usage{
+  findAllNeighbours(takens, radius, number.boxes = NULL)
+}
+\arguments{
+  \item{takens}{The matrix containing all the Takens'
+  vectors (see \link{buildTakens}).}
+
+  \item{radius}{Distance in which the algorithm will search
+  for neighbours.}
+
+  \item{number.boxes}{Integer denoting the number of boxes
+  per dimension that will be used to construct a wrapped
+  grid (see Schreiber). If the user does not specify a
+  number of boxes, this function estimates a proper
+  number.}
+}
+\value{
+  A list in which the n-th position contains another list
+  with all the neighbours of the n-th Takens' vector. If
+  the list is empty, that means that there is no neighbour
+  of the n-th Takens' vector in the given radius.
+}
+\description{
+  This function finds all the neighbours of all the vectors
+  from Takens' vector array. The neighbours are found using
+  a box assisted algorithm that creates a wrapped grid of a
+  given number of boxes per dimension.
+}
+\examples{
+# Find all the neighbours Takens' vectors build from the Henon time
+# series. The size of the neighbourhood is set to 0.1.
+h=henon(start = c(0.63954883, 0.04772637), do.plot = FALSE)
+takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
+neighbours=findAllNeighbours(takens,0.1)
+}
+\author{
+  Constantino A. Garcia
+}
+\references{
+  Schreiber, T. Efficient neighbor searching in nonlinear
+  time series analysis. Int. J. Bifurcation and Chaos, 5,
+  p. 349, (1995).
+}
+\seealso{
+  \code{\link{neighbourSearch}}.
+}
+

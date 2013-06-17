@@ -1,0 +1,34 @@
+useDynLib(nonlinearAnalysis)
+
+export("maxLyapunov","corrDim","getOrder","getCorrMatrix","getRadius","getEmbeddingDims",
+      "sampleEntropy","infDim","dfa","buildTakens","timeLag","getEmbeddingDim",
+      "neighbourSearch","findAllNeighbours","nonLinearNoiseReduction","nonLinearPrediction",
+      "poincareMap","FFTsurrogate","henon","logisticMap","lorenz","rossler","ikedaMap",
+      "cliffordMap","sinaiMap","gaussMap","estimate","rqa","recurrencePlot","spaceTimePlot","getContourlines")
+
+exportClasses(maxLyapunov, corrDim, sampleEntropy, infDim, dfa, spaceTimePlot)
+
+S3method(estimate,maxLyapunov)
+S3method(plot,maxLyapunov)
+
+S3method(print,corrDim)
+S3method(plot,corrDim)
+S3method(estimate,corrDim)
+
+S3method(plot,sampleEntropy)
+S3method(estimate,sampleEntropy)
+
+S3method(plot,infDim)
+S3method(estimate,infDim)
+
+S3method(estimate,dfa)
+S3method(estimate,dfa)
+
+S3method(plot,spaceTimePlot)
+
+
+# Import all packages listed as Imports or Depends
+import(
+ corpcor,
+ rgl
+)

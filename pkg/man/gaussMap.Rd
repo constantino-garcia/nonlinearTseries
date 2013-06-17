@@ -1,0 +1,58 @@
+\name{gaussMap}
+\alias{gaussMap}
+\title{Gauss map}
+\usage{
+  gaussMap(a = 4.9, b = -0.58,
+    start = runif(1, min = -0.5, max = 0.5),
+    n.sample = 5000, n.transient = 500, do.plot = TRUE)
+}
+\arguments{
+  \item{start}{A numeric value indicating the starting
+  value for the time series. If the starting point is not
+  specified, it is generated randomly.}
+
+  \item{a}{The \emph{a} parameter. Default: 4.9}
+
+  \item{b}{The \emph{b} parameter. Default: -0.58}
+
+  \item{n.sample}{Length of the generated time series.
+  Default: 5000 samples.}
+
+  \item{n.transient}{Number of transient samples that will
+  be discarded. Default: 500 samples.}
+
+  \item{do.plot}{Logical value. If TRUE (default value), a
+  plot of the generated Gauss system is shown.}
+}
+\value{
+  A vector containing the values of the time series that
+  has been generated.
+}
+\description{
+  Generates a 1-dimensional time series using the Gauss map
+}
+\details{
+  The Gauss map is defined as follows: \deqn{x_{n+1}=
+  exp(-a \cdot (x_n)^2) + b}{x[n+1] = exp(-a*(x[n])^2) + b}
+  The default selection for both \emph{a} and \emph{b}
+  parameters is known to produce a deterministic chaotic
+  time series.
+}
+\note{
+  Some initial values may lead to an unstable system that
+  will tend to infinity.
+}
+\author{
+  Constantino A. Garcia
+}
+\references{
+  Chaos and nonlinear dynamics: an introduction for
+  scientists and engineers, by Robert C. Hilborn, 2nd Ed.,
+  Oxford, Univ. Press, New York, 2004.
+}
+\seealso{
+  \code{\link{henon}, \link{logisticMap}, \link{lorenz},
+  \link{rossler}, \link{ikedaMap}, \link{cliffordMap},
+  \link{sinaiMap}}
+}
+

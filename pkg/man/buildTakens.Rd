@@ -1,0 +1,47 @@
+\name{buildTakens}
+\alias{buildTakens}
+\title{Build the Takens' vectors}
+\usage{
+  buildTakens(time.series, embedding.dim, time.lag)
+}
+\arguments{
+  \item{time.series}{The original time series.}
+
+  \item{embedding.dim}{Integer denoting the dimension in
+  which we shall embed the time.series.}
+
+  \item{time.lag}{Integer denoting the number of time steps
+  that will be use to construct the Takens' vectors.}
+}
+\value{
+  A matrix containing the Takens' vectors (one per row).
+}
+\description{
+  This function builds the Takens' vectors from a given
+  time series. The set of Takens' vector is the result of
+  embedding the time series in a m-dimensional space. That
+  is, the \eqn{n^{th}} Takens' vector is defined as
+  \deqn{T[n]=\{time.series[n], time.series[n+
+  timeLag],...time.series[n+m*timeLag]\}.} Taken's theorem
+  states that we can then reconstruct an equivalent
+  dynamical system to the original one (the dynamical
+  system that generated the observed time series) by using
+  the Takens' vectors.
+}
+\examples{
+# Build the Takens vector for the Henon map using the x-coordinate time series
+h = henon(n.sample=  3000,n.transient= 100, a = 1.4, b = 0.3,
+start = c(0.73954883, 0.04772637), do.plot = FALSE)
+takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
+# using the x-coordinate time series we are able to reconstruct the state space
+# of the Henon map
+plot(takens)
+}
+\author{
+  Constantino A. Garcia
+}
+\references{
+  H. Kantz and T. Schreiber: Nonlinear Time series Analysis
+  (Cambridge university press)
+}
+

@@ -1,0 +1,59 @@
+#' Generate surrogate data using the Fourier transform
+#' @description
+#' Generates surrogate samples from the original time series.
+#' @details
+#' This function uses the phase randomization procedure for 
+#' generating the surrogated data. This algorithm generates surrogate data with the same
+#' mean and autocorrelation function (and thus, the same power spectrum because of the 
+#' Wiener-Khinchin theorem) as the original time series.
+#' 
+#' The phase randomization algorithm is often used when the null hypothesis being tested
+#' consist on the assumption that the time.series data comes from a stationary linear
+#' stochastic process with Gaussian inputs. The phase randomization preserves the Gaussian
+#' distribution.
+#' @param time.series The original time.series from which the surrogate data is generated.
+#' @param n.samples The number of surrogate data sets to generate,
+#' @return A matrix containing the generated surrogate data (one time series per row).
+#' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+#' @author Constantino A. Garcia
+#' @examples
+#' # generate 20 surrogate sets using as original time series an arma(1,1) simulation
+#' time.series = arima.sim(list(order = c(1,0,1), ar = 0.6, ma = 0.5), n = 200)
+#' surrogate = FFTsurrogate(time.series, 20)
+FFTsurrogate = function(time.series,n.samples=1){
+  fourier.transform = fft(time.series)
+  length.data = length(time.series)
+  surrogate.data=matrix(0, nrow = n.samples, ncol=length.data)
+  for (counter in 1:n.samples){
+    surrogate.data[counter,] = generateSingleFFTsurr(fourier.transform, length.data)
+  }
+  return(surrogate.data)
+  
+}
+
+# private function
+# generates one surrogate data set using the fourier.transform Fourier transform of length length.data
+generateSingleFFTsurr = function(fourier.transform, length.data){
+  # we must respect the hermitian simmetry to generate real time series
+  # phase[2] = - phase[N]; phase[3] = -phase[N-1]... phase[k] = -phase[N-k+2]
+  
+  # Differentiate the odd and the even case
+  if (length.data%%2 == 0){ 
+    #even case
+    for (k in 1:(length.data/2-1) ){
+      phase = runif(1,min=0,2*pi)
+      fourier.transform[[k+1]]=abs(fourier.transform[[k+1]])*exp(1i*phase)
+      fourier.transform[[length.data-k+1]]=abs(fourier.transform[[length.data-k+1]])*exp(-1i*phase)
+    }
+  }else{
+    # odd case
+    for (k in 1:( (length.data-1)/2 ) ){
+      phase = runif(1,min=0,2*pi)
+      fourier.transform[[k+1]]=abs(fourier.transform[[k+1]])*exp(1i*phase)
+      fourier.transform[[length.data-k+1]]=abs(fourier.transform[[length.data-k+1]])*exp(-1i*phase)
+    }
+  }
+  # give warning if some imaginary part is too big 
+  return(Re(fft(fourier.transform,inverse="TRUE"))/length.data)
+  
+}
