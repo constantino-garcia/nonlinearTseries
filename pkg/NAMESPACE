@@ -22,13 +22,13 @@ S3method(plot,infDim)
 S3method(estimate,infDim)
 
 S3method(estimate,dfa)
-S3method(estimate,dfa)
+S3method(plot,dfa)
 
 S3method(plot,spaceTimePlot)
 
 
 # Import all packages listed as Imports or Depends
 import(
- corpcor,
+ Matrix,
  rgl
 )

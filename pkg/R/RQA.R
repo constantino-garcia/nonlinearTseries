@@ -102,43 +102,26 @@ recurrencePlot=function(takens = NULL, time.series, embedding.dim, time.lag,radi
 #private 
 recurrencePlotAux=function(neighs){
   ntakens=length(neighs)
-  numberPlots=0
-  cx=0.01
-  #find first vector with any neighbour to use plot the first time
+  neighs.matrix = neighbourListSparseNeighbourMatrix(neighs,ntakens)
+  image(neighs.matrix,xlab="Number of Takens' vector", ylab="Number of Takens' vector")
+    
+}
+
+neighbourListSparseNeighbourMatrix  = function(neighs,ntakens){
+  require("Matrix")
+  neighs.matrix = Diagonal(ntakens)
   for (i in 1:ntakens){
-    nneighs=length(neighs[[i]])
-    if (nneighs==0) next
-    #use plot the first Time
-    plot(i,(neighs[[i]])[[1]],xlab="id of the takens' vector",
-         ylab="id of the takens' vector",type='p',cex=cx,main="Recurrence plot",
-         xlim=c(1,ntakens),ylim=c(1,ntakens))
-    #use lines
-    if (nneighs>1){  
-      for (j in 2:nneighs){
-        lines(i,(neighs[[i]])[[j]],type='p',cex=cx)
+    if (length(neighs[[i]])>0){
+      for (j in neighs[[i]]){
+        neighs.matrix[i,j] = 1
       }
     }
-    break
   }
-  #plot the other neighbourhood relations using lines
-  if (i<ntakens){
-    for (ii in (i+1):ntakens){
-      nneighs=length(neighs[[ii]])
-      if (nneighs==0) next
-      for (j in 1:nneighs){
-        lines(ii,(neighs[[ii]])[[j]],type='p',cex=cx)
-      }
-      
-    }
-  }
-  #plot Diagonal line
-  lines(1:ntakens,1:ntakens,type='p',cex=cx)
+  return (neighs.matrix)
 }
 
 
-
-
-neighbourListToSparseNeighbourMatrix = function(neighs,ntakens){
+neighbourListToCsparseNeighbourMatrix = function(neighs,ntakens){
   max.number.neighs = -1
   # store the number of neighs of each takens' vector
   number.neighs = rep(0,ntakens)
@@ -220,7 +203,7 @@ calculateDiagonalParameters=function(neighs,ntakens,numberRecurrencePoints,lmin=
 getHistograms=function(neighs,ntakens,lmin,vmin){
   
   # the neighbours are labeled from 0 to ntakens-1
-  c.matrix = neighbourListToSparseNeighbourMatrix(neighs,ntakens)
+  c.matrix = neighbourListToCsparseNeighbourMatrix(neighs,ntakens)
   verticalHistogram = rep(0,ntakens)
   diagonalHistogram = rep(0,ntakens)
   recurrenceHistogram = rep(0,ntakens)

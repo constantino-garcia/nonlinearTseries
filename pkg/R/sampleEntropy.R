@@ -15,14 +15,14 @@
 #' @param do.plot do.plot Logical value. If TRUE (default value), a plot of the sample entropy is shown.
 #' @return A \emph{sampleEntropy} object that contains a list storing the sample entropy (\emph{sample.entropy}),
 #' the embedding dimensions ( \emph{embedding.dims}) and radius (\emph{radius}) for which the sample entropy has 
-#' been computed, and the order of the sample entropy (\emph{corr.order}). The sample entropy
+#' been computed, and the order of the sample entropy (\emph{order}). The sample entropy
 #' is stored as a matrix in which each row contains the computations for a given embedding dimension and 
 #' each column stores the computations for a given radius.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @examples
 #' h=henon(n.sample = 15000, n.transient = 100, a = 1.4, b = 0.3,
 #' start = c(0.78,0.8165), do.plot = FALSE)
-#' gen.corr.dim=corrDim(time.series=h$x,min.embedding.dim=2,max.embedding.dim=9,corr.order=2,
+#' gen.corr.dim=corrDim(time.series=h$x,min.embedding.dim=2,max.embedding.dim=9,order=2,
 #'                               time.lag=1,min.radius=0.025,max.radius=0.01,n.points.radius=20,
 #'                               do.plot=FALSE,theiler.window=10,number.boxes=100)
 #' se=sampleEntropy(gen.corr.dim, do.plot=FALSE)
@@ -40,7 +40,7 @@ sampleEntropy = function (corrDim.object, do.plot=TRUE){
     entropy[i,] = log(corr.matrix[i,]/corr.matrix[i+1,])
   }
   dimnames(entropy)=list(head(embeddings,-1),radius)
-  sample.entropy = list(sample.entropy = entropy,embedding.dims = head(embeddings,-1),corr.order=getOrder(corrDim.object), radius=radius)
+  sample.entropy = list(sample.entropy = entropy,embedding.dims = head(embeddings,-1),order=getOrder(corrDim.object), radius=radius)
   class(sample.entropy)="sampleEntropy"
   
   if (do.plot){
@@ -60,8 +60,8 @@ sampleEntropy = function (corrDim.object, do.plot=TRUE){
 plot.sampleEntropy = function(x, ...){
   xlab = expression("ln("*epsilon*")")
   ylab = expression(h[q]*"("*epsilon*")")
-  main = expression("Sample entropy (q = "*x$corr.order*")"*h[x$corr.order]*"("*epsilon*")")
-  main=paste("Sample entropy (q = ",x$corr.order,")")
+  main = expression("Sample entropy (q = "*x$order*")"*h[x$order]*"("*epsilon*")")
+  main=paste("Sample entropy (q = ",x$order,")")
   number.embeddings = length(x$embedding.dims)
   
   current.par = par()
@@ -112,8 +112,8 @@ estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,...){
 plotSampleEntropyEstimate = function(sampleEntropy.object,sample.entropy.estimate){
   xlab = expression("ln("*epsilon*")")
   ylab = expression(h[q]*"("*epsilon*")")
-  main = expression("Sample entropy (q = "*sampleEntropy.object$corr.order*")"*h[sampleEntropy.object$corr.order]*"("*epsilon*")")
-  main=paste("Sample entropy (q = ",sampleEntropy.object$corr.order,")")
+  main = expression("Sample entropy (q = "*sampleEntropy.object$order*")"*h[sampleEntropy.object$order]*"("*epsilon*")")
+  main=paste("Sample entropy (q = ",sampleEntropy.object$order,")")
   number.embeddings = length(sampleEntropy.object$embedding.dims)
   
   current.par = par()

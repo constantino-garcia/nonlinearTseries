@@ -59,7 +59,8 @@ getEmbeddingDim = function(time.series,  number.points = length(time.series),
     E.star.vector[[dimension]] = E.parameters$E.star
     E1.vector[[dimension-1]] = E.vector[[dimension]]/E.vector[[dimension-1]]
     E2.vector[[dimension-1]] = E.star.vector[[dimension]]/E.star.vector[[dimension-1]]
-    #compute if E1(d)>=threshold
+    #compute if E1(d)>=threshold...If it is the first time it happens(embedding.dim==0), store
+    # the dimension
     if ((embedding.dim==0)&&(E1.vector[[dimension-1]]>=threshold)){
       embedding.dim = dimension-1
     }
@@ -91,6 +92,8 @@ getCaoParameters = function(data, m, time.lag, theiler.window){
   }else{
     mutual.distance = as.matrix(dist(takens,  method = "maximum"))
   } 
+  # avoid problems eliminating same vectors from the Takens' matrix
+  mutual.distance[mutual.distance==0] = Inf
   #number of iterations needed 
   max.iter = nrow(takens.next.dimension)
   # the a(i, d) parameter from the Cao's article (Equation 1) will be call here

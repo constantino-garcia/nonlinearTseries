@@ -102,7 +102,7 @@ estimate.dfa = function(x, regression.range = NULL,do.plot=FALSE,...){
   alpha=interp1$coefficients[[2]]
   if (do.plot){
     plot(x)
-    lines(x$window.sizes,10^interp1$fitted.values,col="blue")
+    lines(x$window.sizes[index.alpha],10^interp1$fitted.values,col="blue")
     legend("bottomright",col="blue",lty=c(1),lwd=c(2.5), legend=paste("Scaling exponent estimate =", sprintf("%.2f",alpha)))
   }
   return(alpha)
