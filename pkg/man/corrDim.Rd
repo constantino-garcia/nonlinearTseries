@@ -131,8 +131,8 @@
   \emph{use.embeddings} parameter. The slopes are
   determined by performing a linear regression over the
   radius' range specified in \emph{regression.range}.If
-  do.plot is TRUE, a graphic of the regression over the
-  data is shown.
+  \emph{do.plot} is TRUE, a graphic of the regression over
+  the data is shown.
 }
 \description{
   Functions for estimating the correlation sum and the

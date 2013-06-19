@@ -33,9 +33,9 @@
   embedding dimensions ( \emph{embedding.dims}) and radius
   (\emph{radius}) for which the sample entropy has been
   computed, and the order of the sample entropy
-  (\emph{corr.order}). The sample entropy is stored as a
-  matrix in which each row contains the computations for a
-  given embedding dimension and each column stores the
+  (\emph{order}). The sample entropy is stored as a matrix
+  in which each row contains the computations for a given
+  embedding dimension and each column stores the
   computations for a given radius.
 
   The \emph{plot} function shows the graphics for the
@@ -70,7 +70,7 @@
 \examples{
 h=henon(n.sample = 15000, n.transient = 100, a = 1.4, b = 0.3,
 start = c(0.78,0.8165), do.plot = FALSE)
-gen.corr.dim=corrDim(time.series=h$x,min.embedding.dim=2,max.embedding.dim=9,corr.order=2,
+gen.corr.dim=corrDim(time.series=h$x,min.embedding.dim=2,max.embedding.dim=9,order=2,
                               time.lag=1,min.radius=0.025,max.radius=0.01,n.points.radius=20,
                               do.plot=FALSE,theiler.window=10,number.boxes=100)
 se=sampleEntropy(gen.corr.dim, do.plot=FALSE)

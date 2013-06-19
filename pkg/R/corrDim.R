@@ -193,7 +193,7 @@ plot.corrDim = function(x, ...){
 #' @return The \emph{estimate} function estimates the correlation dimension of the 
 #' \emph{corr.dim} object by averagin the slopes of the embedding dimensions specified in
 #' the \emph{use.embeddings} parameter. The slopes are determined by performing a linear regression
-#' over the radius' range specified in \emph{regression.range}.If do.plot is TRUE,
+#' over the radius' range specified in \emph{regression.range}.If \emph{do.plot} is TRUE,
 #' a graphic of the regression over the data is shown.
 #' @param use.embeddings A numeric vector specifying which embedding dimensions should the \emph{estimate} function use to compute
 #' the correlation dimension.
