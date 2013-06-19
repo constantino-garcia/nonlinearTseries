@@ -7,5 +7,5 @@ Author: Constantino A. Garcia
 Maintainer: Constantino A. Garcia <constantinoantonio.garcia@usc.es>
 Description: R package for nonlinear time series analysis
 License: GPL-2
-Depends: corpcor, rgl
+Depends: Matrix, rgl
 Suggests: RUnit
