@@ -49,7 +49,7 @@
   will tend to infinity.
 }
 \examples{
-ikeda.map=ikedaMap(n.sample = 1000, n.transient=10, do.plot=TRUE)
+\dontrun{ikeda.map=ikedaMap(n.sample = 1000, n.transient=10, do.plot=TRUE)}
 }
 \author{
   Constantino A. Garcia

@@ -17,9 +17,11 @@
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @author Constantino A. Garcia
 #' @examples
+#' \dontrun{
 #' # generate 20 surrogate sets using as original time series an arma(1,1) simulation
 #' time.series = arima.sim(list(order = c(1,0,1), ar = 0.6, ma = 0.5), n = 200)
 #' surrogate = FFTsurrogate(time.series, 20)
+#' }
 FFTsurrogate = function(time.series,n.samples=1){
   fourier.transform = fft(time.series)
   length.data = length(time.series)

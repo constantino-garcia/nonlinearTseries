@@ -52,13 +52,13 @@ isNeighbour=function(v1,v2,embedding.dim,radius){
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @author Constantino A. Garcia
 #' @examples 
-#' # Build the Takens vector for the Henon map using the x-coordinate time series
+#'\dontrun{# Build the Takens vector for the Henon map using the x-coordinate time series
 #' h = henon(n.sample=  3000,n.transient= 100, a = 1.4, b = 0.3, 
 #' start = c(0.73954883, 0.04772637), do.plot = FALSE)
 #' takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
 #' # using the x-coordinate time series we are able to reconstruct the state space
 #' # of the Henon map
-#' plot(takens)
+#' plot(takens)}
 buildTakens=function (time.series, embedding.dim, time.lag) 
 {
   

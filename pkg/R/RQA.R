@@ -36,9 +36,11 @@
 #' 
 #' @references Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
 #' @examples
+#' \dontrun{
 #' rossler.ts =  rossler(time=seq(0, 10, by = 0.01),do.plot=FALSE)$x
 #' rqa.params=rqa(time.series = rossler.ts, embedding.dim=2, time.lag=1,
 #'                radius=1.2,lmin=2,do.plot=FALSE,distanceToBorder=2)
+#'                }
 #' @author Constantino A. Garcia
 #' @rdname rqa
 #' @export rqa

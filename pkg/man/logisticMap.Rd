@@ -41,7 +41,9 @@
   will tend to infinity.
 }
 \examples{
+\dontrun{
 log.map=logisticMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
+}
 }
 \author{
   Constantino A. Garcia

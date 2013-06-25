@@ -139,14 +139,14 @@
   for checking if \eqn{D_1}{D1} saturates.
 }
 \examples{
-s = sinaiMap(a=0.3,n.sample=5000,start=c(0.23489,0.8923),do.plot=FALSE)
+\dontrun{s = sinaiMap(a=0.3,n.sample=5000,start=c(0.23489,0.8923),do.plot=FALSE)
 inf.dim = infDim(time.series = s$x, embedding.dim = 2, time.lag = 1,
                                 min.fixed.mass=0.01, max.fixed.mass=0.03,
                                 number.fixed.mass.points=1000, radius =0.1,
                                 increasing.radius.factor = sqrt(2), number.boxes=100,
                                 number.reference.vectors=100, theiler.window = 200,
                                 kMax = 100,do.plot=FALSE)
-estimate(inf.dim)
+estimate(inf.dim)}
 }
 \author{
   Constantino A. Garcia

@@ -130,12 +130,14 @@
   estimation should be discarded.
 }
 \examples{
-# Estimating the  maximal Lyapunov exponent of the Henon attractor
+\dontrun{
+ # Estimating the  maximal Lyapunov exponent of the Henon attractor
  h=henon(start = c(0.63954883, 0.04772637), do.plot = FALSE)
  estimation = maxLyapunov(time.series = h$x, embedding.dim=2,time.lag=1,
  radius=0.001,theiler.window=4, min.neighs=2, min.ref.points=500 ,
  min.time.steps=5, max.time.steps=10)
  cat("expected: ",0.41," calculated: ",estimate(estimation),"\\n")
+ }
 }
 \author{
   Constantino A. Garcia

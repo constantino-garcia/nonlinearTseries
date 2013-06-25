@@ -21,9 +21,10 @@
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples
-#' henon.map=henon(n.sample = 1000, n.transient=10,do.plot=TRUE,start=c(-0.006423277,-0.473545134))
+#' \dontrun{ henon.map=henon(n.sample = 1000, n.transient=10,do.plot=TRUE,start=c(-0.006423277,-0.473545134))
 #' # accessing the x coordinate and plotting it
 #' plot(ts(henon.map$x))
+#' }
 henon=function(start=runif(min=-0.5,max=0.5,n=2), a=1.4, b=0.3, n.sample = 5000, n.transient=500, do.plot=TRUE){
   
   ##########################################################################
@@ -71,7 +72,9 @@ henon=function(start=runif(min=-0.5,max=0.5,n=2), a=1.4, b=0.3, n.sample = 5000,
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{henon}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples
+#' \dontrun{
 #' log.map=logisticMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
+#' }
 logisticMap = function( r=4, start=runif(n=1,min=0,max=1), n.sample=5000,n.transient=500,do.plot=TRUE){
   ############################################################
   n.sample = n.sample + n.transient
@@ -138,9 +141,9 @@ bifurcationDiagram=function(mappingFunctionName, parameterVector, n.transient = 
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{henon}, \link{logisticMap}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples 
-#' lor=lorenz(time=seq(0,30,by = 0.01))
+#' \dontrun{lor=lorenz(time=seq(0,30,by = 0.01))
 #' # plotting the x-component 
-#' plot(lor$time,lor$x,type="l")
+#' plot(lor$time,lor$x,type="l")}
 lorenz=function(sigma = 10, beta = 8/3, rho = 28, start=c(-13, -14, 47),
                 time=seq(0,50,by = 0.01),do.plot=TRUE){
   
@@ -184,7 +187,7 @@ lorenz=function(sigma = 10, beta = 8/3, rho = 28, start=c(-13, -14, 47),
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{henon}, \link{logisticMap}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples 
-#' r.ts = rossler(time=seq(0,30,by = 0.01))
+#' \dontrun{r.ts = rossler(time=seq(0,30,by = 0.01))}
 rossler=function(a = 0.2, b = 0.2, c = 5.7, start=c(-2, -10, 0.2)
                 ,time=seq(0,50,by = 0.01), do.plot=TRUE){
   
@@ -228,7 +231,8 @@ rossler=function(a = 0.2, b = 0.2, c = 5.7, start=c(-2, -10, 0.2)
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples
-#' ikeda.map=ikedaMap(n.sample = 1000, n.transient=10, do.plot=TRUE)
+#' \dontrun{ikeda.map=ikedaMap(n.sample = 1000, n.transient=10, do.plot=TRUE)}
+
 # \code{\link{http://www.pessoal.utfpr.edu.br/msergio/cap3/6Ikeda/index.html}}
 ikedaMap=function(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start=runif(2), n.sample = 5000, n.transient=500, do.plot=TRUE){
   n.sample = n.sample + n.transient
@@ -279,9 +283,9 @@ ikedaMap=function(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start=runif(2), n.sample 
 #' @author Constantino A. Garcia
 #'  @seealso \code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples
-#' clifford.map=cliffordMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
+#' \dontrun{clifford.map=cliffordMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 #' # accessing the x coordinate and plotting it
-#' plot(ts(clifford.map$x))
+#' plot(ts(clifford.map$x))}
 cliffordMap=function(a = -1.4, b = 1.6, c = 1.0, d = 0.7,start=runif(2),
                       n.sample = 5000, n.transient=500, do.plot=TRUE){
   n.sample = n.sample + n.transient

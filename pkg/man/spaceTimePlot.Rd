@@ -81,8 +81,8 @@
   computations.
 }
 \examples{
-tak = buildTakens(sin(2*pi*0.005*(0:5000)),2,1)
- stp.test = spaceTimePlot(takens=tak,number.time.steps=400,do.plot=TRUE)
+\dontrun{tak = buildTakens(sin(2*pi*0.005*(0:5000)),2,1)
+ stp.test = spaceTimePlot(takens=tak,number.time.steps=400,do.plot=TRUE)}
 }
 \author{
   Constantino A. Garcia

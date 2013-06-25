@@ -62,9 +62,11 @@
   yet.
 }
 \examples{
+\dontrun{
 h = henon(do.plot=FALSE)
 dimension = getEmbeddingDim(h$x, time.lag=1, max.embedding.dim=6,
              theiler.window=10, threshold=0.9, do.plot=TRUE)
+             }
 }
 \author{
   Constantino A. Garcia

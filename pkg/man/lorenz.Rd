@@ -50,9 +50,9 @@
   will tend to infinity.
 }
 \examples{
-lor=lorenz(time=seq(0,30,by = 0.01))
+\dontrun{lor=lorenz(time=seq(0,30,by = 0.01))
 # plotting the x-component
-plot(lor$time,lor$x,type="l")
+plot(lor$time,lor$x,type="l")}
 }
 \author{
   Constantino A. Garcia
