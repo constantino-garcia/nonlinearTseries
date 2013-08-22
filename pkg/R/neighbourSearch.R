@@ -173,8 +173,6 @@ findAllNeighboursDist=function(data,radius){
 # finds at least N neighbours for each takens' vector stored in the takens array 
 # using firstly neigbourhoods of size radius. If there are not found enough neighbours, the
 # neighbourhood size is increased by +radius.increment.
-
-
 find.at.least.N.neighboursBIS=function(takens,radius,radius.increment,N,number.boxes=NULL){
   n.takens=nrow(takens)
   if (N > n.takens ) stop(paste("Can not find ",N," neighbours if there exist only ",n.takens," takens' vectors\n"))

@@ -1,5 +1,7 @@
 \name{maxLyapunov}
 \alias{estimate.maxLyapunov}
+\alias{getDivergence}
+\alias{getTime}
 \alias{maxLyapunov}
 \alias{plot.maxLyapunov}
 \title{Maximum lyapunov exponent}
@@ -10,6 +12,10 @@
     min.ref.points = 500, min.time.steps = 0,
     max.time.steps = 10, number.boxes = NULL,
     sampling.period = 1, do.plot = TRUE)
+
+  getTime(x)
+
+  getDivergence(x)
 
   \method{plot}{maxLyapunov} (x, ...)
 
@@ -87,6 +93,13 @@
   sampling.period}{max.time.steps * sampling.period}}.
   \eqn{s.function} is a vector containing the values of the
   \eqn{S(t)} for each t in the time vector.
+
+  The \emph{getTime} function returns the time in which the
+  divergence of close trajectories was computed
+
+  The \emph{getDivergence} function returns the rate of
+  divergence of close trajectories needed for the maximum
+  Lyapunov exponent estimation
 
   In order to obtain an estimation of the Lyapunov exponent
   the user can use the \emph{estimate} function. The

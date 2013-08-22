@@ -170,7 +170,8 @@ plot.corrDim = function(x, ...){
     number.embeddings=nrow(x$corr.matrix)
     par(mfrow=c(2,1))
     ### log-log plot
-    plot(x$radius^(x$corr.order-1),x$corr.matrix[1,],log="xy",'b',col=1,cex=0.3,ylim=range(x$corr.matrix))
+    plot(x$radius^(x$corr.order-1),x$corr.matrix[1,],log="xy",'b',col=1,cex=0.3,ylim=range(x$corr.matrix),
+         xlab="Radius r",ylab="Correlation Sum C(r)",main="Correlation Sum Vs radius")
     i=2
     while(i<=number.embeddings){
       lines(x$radius^(x$corr.order-1),x$corr.matrix[i,],'b',col=i,cex=0.3)
@@ -181,7 +182,8 @@ plot.corrDim = function(x, ...){
     dlcm=t(apply(lcm,MARGIN=1,differentiate, h = (x$corr.order-1)*(log10(x$radius[[2]])-log10(x$radius[[1]]))) )
     dlcm=10^dlcm
     radius.axis = head(x$radius,-1); radius.axis = tail(radius.axis,-1)
-    plot(radius.axis^(x$corr.order-1),dlcm[1,],'b',log="xy",cex=0.3,col=1,ylim=range(dlcm))
+    plot(radius.axis^(x$corr.order-1),dlcm[1,],'b',log="xy",cex=0.3,col=1,ylim=range(dlcm),
+         xlab="Radius r",ylab="Local slopes of the Correlation Sum",main="Local slopes of the Correlation Sum Vs Radius")
     i=2
     while(i <= number.embeddings){
       lines(radius.axis^(x$corr.order-1),dlcm[i,],'b',cex=0.3,col=i)

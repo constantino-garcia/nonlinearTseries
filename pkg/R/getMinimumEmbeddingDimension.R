@@ -12,6 +12,10 @@
 #' deterministic signals, there exist some d such that E2(d)!=1. For stochastic signals,
 #' E2(d) is approximately 1 for all the values. 
 #' @note
+#' The current implementation of this function is fully written in R (as a prototype).
+#' Thus it requires heavy computations and may be quite slow. Future versions of the package
+#' will solve this issue.
+#' 
 #' In the current version of the package, the automatic detection of stochastic 
 #' signals has not been implemented yet.
 #' @param time.series The original time series.

@@ -88,6 +88,21 @@ maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,t
   return (max.lyapunov.structure)
 }
 
+#' @return The \emph{getTime} function returns the 
+#' time in which the divergence of close trajectories was computed
+#' @rdname maxLyapunov
+#'
+getTime = function(x){
+  return (x$time)
+}
+
+#' @return The \emph{getDivergence} function returns the 
+#' rate of divergence of close trajectories needed for the maximum Lyapunov
+#' exponent estimation
+#' @rdname maxLyapunov
+getDivergence = function(x){
+  return (x$s.function)
+}
 
 #' @rdname maxLyapunov
 #' @method plot maxLyapunov  

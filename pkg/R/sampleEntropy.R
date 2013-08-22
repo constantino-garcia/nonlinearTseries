@@ -51,6 +51,15 @@ sampleEntropy = function (corrDim.object, do.plot=TRUE){
 
 }
 
+#' @return The \emph{getSampleEntropy} returns the sample entropy function depending 
+#' of the radius used for the computations.
+#' @rdname sampleEntropy
+#'
+getSampleEntropy = function(x){
+  return (x$sample.entropy)
+}
+
+
 
 #' @return The \emph{plot} function shows the graphics for the sample entropy.
 #' @rdname sampleEntropy

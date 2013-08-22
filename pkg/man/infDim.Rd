@@ -1,5 +1,7 @@
 \name{infDim}
 \alias{estimate.infDim}
+\alias{getFixedMass}
+\alias{getLogRadius}
 \alias{infDim}
 \alias{plot.infDim}
 \title{Information dimension}
@@ -10,6 +12,10 @@
     increasing.radius.factor = sqrt(2),
     number.boxes = NULL, number.reference.vectors,
     theiler.window = 1, kMax = 100, do.plot = TRUE)
+
+  getFixedMass(x)
+
+  getLogRadius(x)
 
   \method{estimate}{infDim} (x, regression.range = NULL,
     do.plot = TRUE, ...)
@@ -85,6 +91,13 @@
   components: \emph{log.radius} and \emph{fixed.mass}.
   \emph{log.radius} contains the average log10(radius) in
   which the \emph{fixed.mass} can be found.
+
+  The \emph{getFixedMass} function returns the fixed mass
+  vector used in the information dimension algorithm
+
+  The \emph{getLogRadius} function returns average
+  log(radius) computed on the information dimension
+  algorithm
 
   The 'estimate' function estimates the information
   dimension of the 'infDim' object by performing a linear

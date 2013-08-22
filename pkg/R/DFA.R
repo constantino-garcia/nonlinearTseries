@@ -77,6 +77,23 @@ dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE){
 }
 
 
+#' @return The \emph{getWindowSizes} function returns the windows sizes used
+#' to detrend the time series
+#' @rdname dfa
+#'
+getWindowSizes= function(x){
+  return (x$window.sizes)
+}
+
+
+#' @return The \emph{getFluctuationFun} function returns the Fluctuation function
+#' of the DFA
+#' @rdname dfa
+#'
+getFluctuationFun= function(x){
+  return (x$fluctuation.function)
+}
+
 #' @rdname dfa
 #' @method plot dfa
 #' @param ... Additional parameters.

@@ -120,6 +120,22 @@ infDim=function(time.series, embedding.dim=2, time.lag=1, min.fixed.mass,
   
   return(information.dimension.structure)
 }
+#' @return The \emph{getFixedMass} function returns the fixed mass vector used
+#' in the information dimension algorithm
+#' @rdname infDim
+#'
+getFixedMass = function(x){
+  return (x$fixed.mass)
+}
+
+#' @return The \emph{getLogRadius} function returns average log(radius) computed
+#' on the information dimension algorithm
+#' @rdname infDim
+#'
+getLogRadius = function(x){
+  return (x$log.radius)
+}
+
 
 #' @return The 'estimate' function estimates the information dimension of the 
 #' 'infDim' object by performing a linear regression
@@ -174,39 +190,3 @@ plot.infDim = function(x, ...){
   plot(fixed.mass.axis,derivative,'b',cex=0.3,col=1,xlab="fixed mass p",ylab="local slope d1(p)", main="Local slopes for the Information dimension estimate")
   par(mfrow=c(1,1))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-# d1=function(takens, fixedMass, radius, increasing.radius.factor = sqrt(2), number.boxes=NULL, numberReferenceVectors, 
-#          theiler.window = 1, kMax = NULL){
-#   #estimates number.boxes if it has not been specified
-#   numberTakens = nrow(takens)
-#   embedding.dim = ncol(takens)
-#   if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens, radius)
-#   if (is.null(kMax)) kMax = min( max(as.integer(numberTakens/1000),1),100)
-#   averageLogRadius = 0.0
-#   boxes=rep(0,number.boxes*number.boxes+1)
-#   
-#   c.result=.C("d1", takens = as.double(takens), numberTakens = as.integer(numberTakens),
-#             embeddingD = as.integer(embedding.dim), fixedMass = as.double(fixedMass),
-#             eps = as.double(radius), increasingEpsFactor = as.double(increasing.radius.factor),
-#             numberBoxes = as.integer(number.boxes), boxes = as.integer(boxes), 
-#             numberReferenceVectors = as.integer( numberReferenceVectors), 
-#             theilerWindow = as.integer(theiler.window), kMax = as.integer(kMax),
-#             averageLogRadius = as.double(averageLogRadius),
-#             PACKAGE="nonlinearAnalysis")
-#   
-#   return(c.result$averageLogRadius)
-#   
-#   
-# }

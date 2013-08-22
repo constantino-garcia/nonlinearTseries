@@ -1,10 +1,13 @@
 \name{sampleEntropy}
 \alias{estimate.sampleEntropy}
+\alias{getSampleEntropy}
 \alias{plot.sampleEntropy}
 \alias{sampleEntropy}
 \title{Sample Entropy (also known as Kolgomorov-Sinai Entropy)}
 \usage{
   sampleEntropy(corrDim.object, do.plot = TRUE)
+
+  getSampleEntropy(x)
 
   \method{plot}{sampleEntropy} (x, ...)
 
@@ -37,6 +40,10 @@
   in which each row contains the computations for a given
   embedding dimension and each column stores the
   computations for a given radius.
+
+  The \emph{getSampleEntropy} returns the sample entropy
+  function depending of the radius used for the
+  computations.
 
   The \emph{plot} function shows the graphics for the
   sample entropy.
