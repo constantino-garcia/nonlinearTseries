@@ -1,5 +1,5 @@
 \name{spaceTimePlot}
-\alias{getContourlines}
+\alias{getContourLines}
 \alias{plot.spaceTimePlot}
 \alias{spaceTimePlot}
 \title{Space Time plot}
@@ -9,7 +9,7 @@
     time.step = 1, number.time.steps = NULL,
     numberPercentages = 10, do.plot = TRUE)
 
-  getContourlines(x)
+  getContourLines(x)
 
   \method{plot}{spaceTimePlot} (x, ...)
 }

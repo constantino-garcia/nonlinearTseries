@@ -1,8 +1,8 @@
-\name{getEmbeddingDim}
-\alias{getEmbeddingDim}
+\name{estimateEmbeddingDim}
+\alias{estimateEmbeddingDim}
 \title{Estimate the embedding dimension}
 \usage{
-  getEmbeddingDim(time.series,
+  estimateEmbeddingDim(time.series,
     number.points = length(time.series), time.lag = 1,
     max.embedding.dim = 15, threshold = 0.95,
     do.plot = TRUE, theiler.window = 1)
@@ -69,7 +69,7 @@
 \examples{
 \dontrun{
 h = henon(do.plot=FALSE)
-dimension = getEmbeddingDim(h$x, time.lag=1, max.embedding.dim=6,
+dimension = estimateEmbeddingDim(h$x, time.lag=1, max.embedding.dim=6,
              theiler.window=10, threshold=0.9, do.plot=TRUE)
              }
 }

@@ -30,6 +30,7 @@
 #' @author Constantino A. Garcia
 #' @rdname sampleEntropy
 #' @export sampleEntropy
+#' @exportClass sampleEntropy
 sampleEntropy = function (corrDim.object, do.plot=TRUE){ 
   radius = getRadius(corrDim.object)
   corr.matrix = getCorrMatrix(corrDim.object)
@@ -54,7 +55,7 @@ sampleEntropy = function (corrDim.object, do.plot=TRUE){
 #' @return The \emph{getSampleEntropy} returns the sample entropy function depending 
 #' of the radius used for the computations.
 #' @rdname sampleEntropy
-#'
+#' @export getSampleEntropy
 getSampleEntropy = function(x){
   return (x$sample.entropy)
 }

@@ -34,6 +34,8 @@
 #' @author Constantino A. Garcia
 #' @rdname spaceTimePlot
 #' @export spaceTimePlot
+#' @exportClass spaceTimePlot
+#' @useDynLib nonlinearAnalysis
 spaceTimePlot=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag=1,max.radius=NULL, time.step=1 , number.time.steps = NULL, numberPercentages=10,do.plot=TRUE){
   ### define
   kLengthRadiusVector = 1000
@@ -85,8 +87,8 @@ spaceTimePlot=function(takens = NULL, time.series=NULL, embedding.dim=2, time.la
 
 #' @rdname spaceTimePlot
 #' @param x A \emph{spaceTimePlot} object.
-#' @S3method getContourlines spaceTimePlot
-getContourlines = function(x){
+#' @export getContourLines
+getContourLines = function(x){
   return (x$stp.matrix)
 }
   

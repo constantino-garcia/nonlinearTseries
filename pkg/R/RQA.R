@@ -44,6 +44,7 @@
 #' @author Constantino A. Garcia
 #' @rdname rqa
 #' @export rqa
+#' 
 rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,radius,lmin = 2,vmin = 2,do.plot=FALSE,distanceToBorder=2){
   if(is.null(takens)){
     takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  
@@ -92,6 +93,8 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,radi
 #' @param radius Maximum distance between two phase-space points to be considered a recurrence.
 #' @references Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
 #' @author Constantino A. Garcia
+#' @export recurrencePlot
+#' @import Matrix
 recurrencePlot=function(takens = NULL, time.series, embedding.dim, time.lag,radius){
   if(is.null(takens)){
     takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  

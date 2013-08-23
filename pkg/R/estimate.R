@@ -11,6 +11,7 @@
 #' @return An estimate of the proper chaotic invariant.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @author Constantino A. Garcia
+#' @export estimate
 estimate = function(x, regression.range, do.plot,...){
   UseMethod("estimate")
 }

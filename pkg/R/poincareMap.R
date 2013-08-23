@@ -42,6 +42,7 @@
 #' @author Constantino A. Garcia
 #' @rdname poincareMap
 #' @export poincareMap
+#' @useDynLib nonlinearAnalysis
 poincareMap=function(time.series=NULL, embedding.dim=2, time.lag=1, takens = NULL, normal.hiperplane.vector = NULL,  hiperplane.point ){
   if (is.null(takens)){takens = buildTakens(time.series,embedding.dim,time.lag)}
   dimension = ncol(takens)

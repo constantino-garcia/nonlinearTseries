@@ -1,34 +1,62 @@
-useDynLib(nonlinearAnalysis)
-
-export("maxLyapunov","corrDim","getOrder","getCorrMatrix","getRadius","getEmbeddingDims",
-      "sampleEntropy","infDim","dfa","buildTakens","timeLag","getEmbeddingDim",
-      "neighbourSearch","findAllNeighbours","nonLinearNoiseReduction","nonLinearPrediction",
-      "poincareMap","FFTsurrogate","henon","logisticMap","lorenz","rossler","ikedaMap",
-      "cliffordMap","sinaiMap","gaussMap","estimate","rqa","recurrencePlot","spaceTimePlot","getContourlines")
-
-exportClasses(maxLyapunov, corrDim, sampleEntropy, infDim, dfa, spaceTimePlot)
-
-S3method(estimate,maxLyapunov)
-S3method(plot,maxLyapunov)
-
-S3method(print,corrDim)
-S3method(plot,corrDim)
+export(buildTakens)
+exportClasses(corrDim)
+exportClasses(dfa)
+exportClasses(infDim)
+exportClasses(maxLyapunov)
+exportClasses(sampleEntropy)
+exportClasses(spaceTimePlot)
+export(cliffordMap)
+export(corrDim)
+export(dfa)
+export(estimate)
+export(estimateEmbeddingDim)
+export(FFTsurrogate)
+export(findAllNeighbours)
+export(gaussMap)
+export(getContourLines)
+export(getDivergence)
+export(getEmbeddingDims)
+export(getFixedMass)
+export(getFluctuationFunction)
+export(getLogRadius)
+export(getOrder)
+export(getRadius)
+export(getSampleEntropy)
+export(getTime)
+export(getWindowSizes)
+export(henon)
+export(ikedaMap)
+export(infDim)
+export(logisticMap)
+export(lorenz)
+export(maxLyapunov)
+export(neighbourSearch)
+export(nonlinearityTest)
+export(nonLinearNoiseReduction)
+export(nonLinearPrediction)
+export(poincareMap)
+export(recurrencePlot)
+export(rossler)
+export(rqa)
+export(sampleEntropy)
+export(sinaiMap)
+export(spaceTimePlot)
+export(surrogateTest)
+export(timeLag)
+import(Matrix)
+import(rgl)
+import(TSA)
+import(tseries)
 S3method(estimate,corrDim)
-
-S3method(plot,sampleEntropy)
-S3method(estimate,sampleEntropy)
-
-S3method(plot,infDim)
-S3method(estimate,infDim)
-
 S3method(estimate,dfa)
+S3method(estimate,infDim)
+S3method(estimate,maxLyapunov)
+S3method(estimate,sampleEntropy)
+S3method(plot,corrDim)
 S3method(plot,dfa)
-
+S3method(plot,infDim)
+S3method(plot,maxLyapunov)
+S3method(plot,sampleEntropy)
 S3method(plot,spaceTimePlot)
-
-
-# Import all packages listed as Imports or Depends
-import(
- Matrix,
- rgl
-)
+S3method(print,corrDim)
+useDynLib(nonlinearAnalysis)

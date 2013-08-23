@@ -63,6 +63,8 @@
 #' @author Constantino A. Garcia
 #' @rdname corrDim
 #' @export corrDim
+#' @exportClass corrDim
+#' @useDynLib nonlinearAnalysis
 corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5, time.lag=1, 
                      min.radius,max.radius,corr.order=2,n.points.radius=5,theiler.window=100,do.plot=TRUE,number.boxes=NULL){
  
@@ -122,7 +124,7 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5, ti
 
 #' @return The \emph{getOrder} function returns the order of the correlation sum.
 #' @rdname corrDim
-#'
+#' @export getOrder
 #' 
 getOrder = function(x){
   return (x$corr.order)
@@ -130,7 +132,7 @@ getOrder = function(x){
 
 #' @return The \emph{getCorrMatrix} function returns the correlations matrix  storing the correlation sums that have been computed for all the embedding dimensions.
 #' @rdname corrDim
-#'
+#' @export getOrder
 #' 
 getCorrMatrix = function(x){
   return (x$corr.matrix)
@@ -139,7 +141,7 @@ getCorrMatrix = function(x){
 
 #' @return The \emph{getRadius} function returns the radius on which the correlation sum function has been evaluated.
 #' @rdname corrDim
-#'
+#' @export getRadius
 getRadius = function(x){
   return (x$radius)
 }
@@ -147,7 +149,7 @@ getRadius = function(x){
 #' @return The \emph{getEmbeddingDims} function returns the embedding dimensions on which 
 #' the correlation sum function has been evaluated.
 #' @rdname corrDim
-#'
+#' @export getEmbeddingDims
 getEmbeddingDims = function(x){
   return (x$embedding.dims)
 }
@@ -156,6 +158,8 @@ getEmbeddingDims = function(x){
 #' @rdname corrDim
 #' @method print corrDim
 #' @param ... Additional parameters.
+#' @method print corrDim
+#' @S3method print corrDim
 print.corrDim = function(x, ...){
   print(x$corr.matrix)
 }
@@ -166,6 +170,8 @@ print.corrDim = function(x, ...){
 #' \eqn{log10(C(r))\;Vs\;log10(C(r)).}{log10(C(r)) Vs log10(C(r)).}
 #' @rdname corrDim
 #' @method plot corrDim
+#' @S3method plot corrDim
+#' @method plot
 plot.corrDim = function(x, ...){
     number.embeddings=nrow(x$corr.matrix)
     par(mfrow=c(2,1))
@@ -202,7 +208,9 @@ plot.corrDim = function(x, ...){
 #' @param x A \emph{corrDim} object.
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @rdname corrDim
+#' @S3method estimate corrDim
 #' @method estimate corrDim
+#' 
 estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,use.embeddings = NULL,...){
   corr.matrix = getCorrMatrix(x)
   if (!is.null(use.embeddings)){corr.matrix = corr.matrix[as.character(use.embeddings),]}

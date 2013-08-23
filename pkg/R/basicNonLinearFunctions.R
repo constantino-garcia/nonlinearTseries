@@ -59,6 +59,7 @@ isNeighbour=function(v1,v2,embedding.dim,radius){
 #' # using the x-coordinate time series we are able to reconstruct the state space
 #' # of the Henon map
 #' plot(takens)}
+#' @export buildTakens
 buildTakens=function (time.series, embedding.dim, time.lag) 
 {
   
@@ -111,6 +112,7 @@ buildTakens=function (time.series, embedding.dim, time.lag)
 #' by increasing the lag.max or selecting a higher value to which the autocorrelation function must decay.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @author Constantino A. Garcia
+#' @export timeLag
 timeLag = function (time.series, method="first.zero",value = 0,lag.max=NULL,do.plot=TRUE){
   ##############################################################################
   ########################### internal functions definitions ###################
@@ -122,7 +124,7 @@ timeLag = function (time.series, method="first.zero",value = 0,lag.max=NULL,do.p
         l.time.series = length(time.series)
         lag.max = floor(l.time.series/2)
       }
-      ac = acf(time.series,lag.max=lag.max,plot=do.plot,type="correlation")
+      ac = stats::acf(time.series,lag.max=lag.max,plot=do.plot,type="correlation")
       ac = ac$acf
       cross.position <- which(ac < value)
       # if the autocorrelation function does not cross the value specified
@@ -147,7 +149,7 @@ timeLag = function (time.series, method="first.zero",value = 0,lag.max=NULL,do.p
       l.time.series = length(time.series)
       lag.max = l.time.series
     }
-    ac = acf(time.series,lag.max=lag.max,plot=TRUE,type="correlation")
+    ac = stats::acf(time.series,lag.max=lag.max,plot=TRUE,type="correlation")
     ac = ac$acf
     first.minimum = which(diff(ac) >= 0)
     # if the autocorrelation function is monotonically decreasing, an error is given

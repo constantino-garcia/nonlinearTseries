@@ -1,0 +1,36 @@
+\name{nonlinearityTest}
+\alias{nonlinearityTest}
+\title{Nonlinearity test}
+\usage{
+  nonlinearityTest(time.series, verbose = TRUE)
+}
+\arguments{
+  \item{time.series}{The original time.series from which
+  the surrogate data is generated.}
+
+  \item{verbose}{Logical value. If TRUE, a summary of each
+  of the tests is shown.}
+}
+\value{
+  A list containing the results of each of the tests.
+}
+\description{
+  Nonlinearity test
+}
+\details{
+  This function runs a set of nonlinearity tests
+  implemented in other R packages including: \itemize{
+  \item Teraesvirta's neural metwork test for nonlinearity
+  (\code{\link[tseries]{terasvirta.test}}).  \item White
+  neural metwork test for nonlinearity
+  (\code{\link[tseries]{white.test}}).  \item Keenan's
+  one-degree test for nonlinearity
+  (\code{\link[TSA]{Keenan.test}}).  \item Perform the
+  McLeod-Li test for conditional heteroscedascity (ARCH).
+  (\code{\link[TSA]{McLeod.Li.test}}).  \item Perform the
+  Tsay's test for quadratic nonlinearity in a time series.
+  (\code{\link[TSA]{Tsay.test}}).  \item Perform the
+  Likelihood ratio test for threshold nonlinearity.
+  (\code{\link[TSA]{tlrt}}). }
+}
+

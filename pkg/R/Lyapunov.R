@@ -60,6 +60,8 @@
 #'  }
 #' @rdname maxLyapunov
 #' @export maxLyapunov
+#' @exportClass maxLyapunov
+#' @useDynLib nonlinearAnalysis
 maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,theiler.window=1,min.neighs=5,
                      min.ref.points=500,min.time.steps=0,max.time.steps=10,number.boxes=NULL,sampling.period=1,do.plot=TRUE){
   #C parameters
@@ -91,7 +93,7 @@ maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,t
 #' @return The \emph{getTime} function returns the 
 #' time in which the divergence of close trajectories was computed
 #' @rdname maxLyapunov
-#'
+#' @export getTime
 getTime = function(x){
   return (x$time)
 }
@@ -100,6 +102,7 @@ getTime = function(x){
 #' rate of divergence of close trajectories needed for the maximum Lyapunov
 #' exponent estimation
 #' @rdname maxLyapunov
+#' @export getDivergence
 getDivergence = function(x){
   return (x$s.function)
 }
@@ -107,7 +110,9 @@ getDivergence = function(x){
 #' @rdname maxLyapunov
 #' @method plot maxLyapunov  
 #' @param ... Additional parameters.
+#' @method plot maxLyapunov
 #' @S3method plot maxLyapunov 
+#' @method plot
 plot.maxLyapunov= function(x, ...){
   plot(x$time,x$s.function,xlab="t",ylab=expression("S(t)"),main="Estimating maximal Lyapunov exponent")
 }
@@ -119,8 +124,9 @@ plot.maxLyapunov= function(x, ...){
 #' @param x A \emph{maxLyapunov} object.
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @rdname maxLyapunov
-#' @method estimate maxLyapunov 
 #' @S3method estimate maxLyapunov 
+#' @method estimate maxLyapunov
+#' @method estimate
 estimate.maxLyapunov= function(x,regression.range = NULL,do.plot=FALSE,...){
   if (is.null(regression.range)){
     min.time = x$time[[2]] # the first position is always 0

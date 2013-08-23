@@ -44,6 +44,8 @@ boxAssistant=function(takens, radius,number.boxes=NULL){
 #' @references  Schreiber, T. Efficient neighbor searching in nonlinear time series analysis. Int. J. Bifurcation and Chaos, 
 #' 5, p. 349, (1995).
 #' @author Constantino A. Garcia
+#' @export neighbourSearch
+#' @useDynLib nonlinearAnalysis
 neighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
   #estimates number.boxes if it has not been specified
   if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens, radius)
@@ -106,6 +108,7 @@ neighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
 #' takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
 #' neighbours=findAllNeighbours(takens,0.1)}
 #' @seealso \code{\link{neighbourSearch}}.
+#' @export findAllNeighbours
 findAllNeighbours=function(takens,radius,number.boxes=NULL){
   #estimates number.boxes if it has not been specified
   if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens, radius)

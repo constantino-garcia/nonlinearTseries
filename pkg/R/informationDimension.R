@@ -62,6 +62,8 @@
 #' estimate(inf.dim)}
 #' @rdname infDim
 #' @export infDim
+#' @exportClass infDim
+#' @useDynLib nonlinearAnalysis
 #' @seealso \code{\link{corrDim}}.
 infDim=function(time.series, embedding.dim=2, time.lag=1, min.fixed.mass,
                               max.fixed.mass, number.fixed.mass.points = 10, radius, 
@@ -123,7 +125,7 @@ infDim=function(time.series, embedding.dim=2, time.lag=1, min.fixed.mass,
 #' @return The \emph{getFixedMass} function returns the fixed mass vector used
 #' in the information dimension algorithm
 #' @rdname infDim
-#'
+#' @export getFixedMass
 getFixedMass = function(x){
   return (x$fixed.mass)
 }
@@ -131,7 +133,7 @@ getFixedMass = function(x){
 #' @return The \emph{getLogRadius} function returns average log(radius) computed
 #' on the information dimension algorithm
 #' @rdname infDim
-#'
+#' @export getLogRadius
 getLogRadius = function(x){
   return (x$log.radius)
 }
@@ -144,8 +146,9 @@ getLogRadius = function(x){
 #' @param x A \emph{infDim} object.
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @rdname infDim
-#' @method estimate infDim
 #' @S3method estimate infDim
+#' @method estimate infDim
+#' @method estimate
 estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,...){
   if (is.null(regression.range)){
     min.fixed.mass = min(x$fixed.mass) # the first position is always 0
@@ -178,8 +181,9 @@ estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,...){
 #' dimension Vs the fixed mass, both in a semi-log scale.}
 #' @param ... Additional parameters.
 #' @rdname infDim
-#' @method plot infDim
 #' @S3method plot infDim
+#' @method plot infDim
+#' @method plot
 plot.infDim = function(x, ...){
   par(mfrow=c(2,1))
   plot(x$fixed.mass,x$log.radius,log="x",main="Information Dimension",ylab="<log10(radius)>",xlab="fixed mass (p)")
