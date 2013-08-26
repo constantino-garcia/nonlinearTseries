@@ -30,11 +30,13 @@
   given number of boxes per dimension.
 }
 \examples{
-\dontrun{# Find all the neighbours Takens' vectors build from the Henon time
+\dontrun{
+# Find all the neighbours Takens' vectors build from the Henon time
 # series. The size of the neighbourhood is set to 0.1.
 h=henon(start = c(0.63954883, 0.04772637), do.plot = FALSE)
 takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
-neighbours=findAllNeighbours(takens,0.1)}
+neighbours=findAllNeighbours(takens,0.1)
+}
 }
 \author{
   Constantino A. Garcia

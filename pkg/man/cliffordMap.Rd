@@ -52,7 +52,8 @@
   will tend to infinity.
 }
 \examples{
-\dontrun{clifford.map=cliffordMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
+\dontrun{
+clifford.map=cliffordMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 # accessing the x coordinate and plotting it
 plot(ts(clifford.map$x))}
 }

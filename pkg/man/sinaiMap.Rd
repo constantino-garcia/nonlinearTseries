@@ -45,9 +45,11 @@
   will tend to infinity.
 }
 \examples{
-\dontrun{sinai.map = sinaiMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
+\dontrun{
+sinai.map = sinaiMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 # accessing the x coordinate and plotting it
-plot(ts(sinai.map$x))}
+plot(ts(sinai.map$x))
+}
 }
 \author{
   Constantino A. Garcia

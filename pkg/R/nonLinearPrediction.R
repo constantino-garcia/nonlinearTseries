@@ -19,11 +19,14 @@
 #' @return The predicted value \emph{prediction.step} time steps ahead.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @examples
-#' \dontrun{h=henon(n.sample=5000,start=c(0.324,-0.8233))
+#' \dontrun{
+#' h=henon(n.sample=5000,start=c(0.324,-0.8233))
 #' predic=nonLinearPrediction(time.series=h$x[10:2000],embedding.dim=2,
 #'                            time.lag=1,
-#'                            prediction.step=3,radius=0.03,radius.increment=0.03/2)
-#' cat("real value: ",h$x[2003],"Vs Forecast:",predic)}
+#'                            prediction.step=3,radius=0.03,
+#'                            radius.increment=0.03/2)
+#' cat("real value: ",h$x[2003],"Vs Forecast:",predic)
+#' }
 #' @author Constantino A. Garcia
 #' @rdname nonLinearPrediction
 #' @export nonLinearPrediction

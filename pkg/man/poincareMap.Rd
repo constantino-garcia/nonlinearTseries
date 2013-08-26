@@ -56,10 +56,13 @@
   using the phase-space reconstruction (see examples).
 }
 \examples{
-\dontrun{r=rossler(a = 0.2, b = 0.2, c = 5.7, start=c(-2, -10, 0.2) ,time=seq(0,300,by = 0.01), do.plot=FALSE)
+\dontrun{
+r=rossler(a = 0.2, b = 0.2, c = 5.7, start=c(-2, -10, 0.2),
+time=seq(0,300,by = 0.01), do.plot=FALSE)
 takens=cbind(r$x,r$y,r$z)
 # calculate poincare sections
-pm=poincareMap(takens = takens,normal.hiperplane.vector = c(0,1,0),  hiperplane.point=c(0,0,0) )
+pm=poincareMap(takens = takens,normal.hiperplane.vector = c(0,1,0),
+ hiperplane.point=c(0,0,0) )
 plot3d(takens,size=0.7)
 points3d(pm$pm,col="red")}
 }

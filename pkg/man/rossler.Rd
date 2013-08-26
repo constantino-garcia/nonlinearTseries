@@ -47,7 +47,9 @@
   will tend to infinity.
 }
 \examples{
-\dontrun{r.ts = rossler(time=seq(0,30,by = 0.01))}
+\dontrun{
+r.ts = rossler(time=seq(0,30,by = 0.01))
+}
 }
 \author{
   Constantino A. Garcia

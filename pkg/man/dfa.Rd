@@ -92,7 +92,8 @@
 \examples{
 \dontrun{
  noise = rnorm(5000)
- dfa.analysis = dfa(time.series = noise, npoints = 10, window.size.range=c(10,1000), do.plot=FALSE)
+ dfa.analysis = dfa(time.series = noise, npoints = 10,
+               window.size.range=c(10,1000), do.plot=FALSE)
  cat("Theorical: 0.5---Estimated: ", estimate(dfa.analysis),"\\n")
 }
 }

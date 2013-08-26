@@ -21,7 +21,9 @@
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples
-#' \dontrun{ henon.map=henon(n.sample = 1000, n.transient=10,do.plot=TRUE,start=c(-0.006423277,-0.473545134))
+#' \dontrun{
+#' henon.map=henon(n.sample = 1000, n.transient=10,do.plot=TRUE,
+#'                start=c(-0.006423277,-0.473545134))
 #' # accessing the x coordinate and plotting it
 #' plot(ts(henon.map$x))
 #' }
@@ -143,9 +145,11 @@ bifurcationDiagram=function(mappingFunctionName, parameterVector, n.transient = 
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{henon}, \link{logisticMap}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples 
-#' \dontrun{lor=lorenz(time=seq(0,30,by = 0.01))
+#' \dontrun{
+#' lor=lorenz(time=seq(0,30,by = 0.01))
 #' # plotting the x-component 
-#' plot(lor$time,lor$x,type="l")}
+#' plot(lor$time,lor$x,type="l")
+#' }
 #' @export lorenz
 #' @import rgl
 lorenz=function(sigma = 10, beta = 8/3, rho = 28, start=c(-13, -14, 47),
@@ -191,7 +195,9 @@ lorenz=function(sigma = 10, beta = 8/3, rho = 28, start=c(-13, -14, 47),
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{henon}, \link{logisticMap}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples 
-#' \dontrun{r.ts = rossler(time=seq(0,30,by = 0.01))}
+#' \dontrun{
+#' r.ts = rossler(time=seq(0,30,by = 0.01))
+#' }
 #' @export rossler
 #' @import rgl
 rossler=function(a = 0.2, b = 0.2, c = 5.7, start=c(-2, -10, 0.2)
@@ -237,7 +243,9 @@ rossler=function(a = 0.2, b = 0.2, c = 5.7, start=c(-2, -10, 0.2)
 #' @author Constantino A. Garcia
 #' @seealso \code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples
-#' \dontrun{ikeda.map=ikedaMap(n.sample = 1000, n.transient=10, do.plot=TRUE)}
+#' \dontrun{
+#' ikeda.map=ikedaMap(n.sample = 1000, n.transient=10, do.plot=TRUE)
+#' }
 #' @export ikedaMap
 
 # \code{\link{http://www.pessoal.utfpr.edu.br/msergio/cap3/6Ikeda/index.html}}
@@ -290,7 +298,8 @@ ikedaMap=function(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start=runif(2), n.sample 
 #' @author Constantino A. Garcia
 #'  @seealso \code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{sinaiMap}, \link{gaussMap}}
 #' @examples
-#' \dontrun{clifford.map=cliffordMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
+#' \dontrun{
+#' clifford.map=cliffordMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 #' # accessing the x coordinate and plotting it
 #' plot(ts(clifford.map$x))}
 #' @export cliffordMap
@@ -342,9 +351,11 @@ cliffordMap=function(a = -1.4, b = 1.6, c = 1.0, d = 0.7,start=runif(2),
 #' Mcsharry, P. E. and P. R. Ruffino (2003). Asymptotic angular stability 
 #' in nonlinear systems: rotation numbers and winding numbers. Dynamical Systems 18(3), 191-200.
 #' @examples
-#' \dontrun{sinai.map = sinaiMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
+#' \dontrun{
+#' sinai.map = sinaiMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 #' # accessing the x coordinate and plotting it
-#' plot(ts(sinai.map$x))}
+#' plot(ts(sinai.map$x))
+#' }
 #' @export sinaiMap
 sinaiMap=function(a = 0.1,start=runif(2),
                    n.sample = 5000, n.transient=500, do.plot=TRUE){

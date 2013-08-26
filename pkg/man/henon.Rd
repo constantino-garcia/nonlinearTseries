@@ -47,7 +47,9 @@
   will tend to infinity.
 }
 \examples{
-\dontrun{ henon.map=henon(n.sample = 1000, n.transient=10,do.plot=TRUE,start=c(-0.006423277,-0.473545134))
+\dontrun{
+henon.map=henon(n.sample = 1000, n.transient=10,do.plot=TRUE,
+               start=c(-0.006423277,-0.473545134))
 # accessing the x coordinate and plotting it
 plot(ts(henon.map$x))
 }
