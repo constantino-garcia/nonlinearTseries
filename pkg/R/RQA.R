@@ -113,7 +113,6 @@ recurrencePlotAux=function(neighs){
 }
 
 neighbourListSparseNeighbourMatrix  = function(neighs,ntakens){
-  require("Matrix")
   neighs.matrix = Diagonal(ntakens)
   for (i in 1:ntakens){
     if (length(neighs[[i]])>0){

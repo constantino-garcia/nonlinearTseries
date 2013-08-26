@@ -16,9 +16,6 @@
 #' @import tseries
 #' @import TSA
 nonlinearityTest <- function(time.series, verbose = TRUE){
-  require(tseries)  
-  require(TSA)
-  
   nltests = list()
   # apply all tests
   # testing linearity in mean
