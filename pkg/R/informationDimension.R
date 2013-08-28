@@ -64,7 +64,7 @@
 #' @rdname infDim
 #' @export infDim
 #' @exportClass infDim
-#' @useDynLib nonlinearAnalysis
+#' @useDynLib nonlinearTseries
 #' @seealso \code{\link{corrDim}}.
 infDim=function(time.series, embedding.dim=2, time.lag=1, min.fixed.mass,
                               max.fixed.mass, number.fixed.mass.points = 10, radius, 
@@ -90,7 +90,7 @@ infDim=function(time.series, embedding.dim=2, time.lag=1, min.fixed.mass,
               numberReferenceVectors = as.integer( number.reference.vectors), 
               theilerWindow = as.integer(theiler.window), kMax = as.integer(kMax),
               averageLogRadiusVector = as.double(averageLogRadiusVector),
-              PACKAGE="nonlinearAnalysis")
+              PACKAGE="nonlinearTseries")
  
   #### eliminate nas and infs should not be necessary
   logic.vector = is.na(c.result$averageLogRadiusVector)|is.infinite(c.result$averageLogRadiusVector)

@@ -61,7 +61,7 @@
 #' @rdname maxLyapunov
 #' @export maxLyapunov
 #' @exportClass maxLyapunov
-#' @useDynLib nonlinearAnalysis
+#' @useDynLib nonlinearTseries
 maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,theiler.window=1,min.neighs=5,
                      min.ref.points=500,min.time.steps=0,max.time.steps=10,number.boxes=NULL,sampling.period=1,do.plot=TRUE){
   #C parameters
@@ -76,7 +76,7 @@ maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,t
                    Sdn=as.double(Sdn),nmax=as.integer(max.time.steps),
                    nminRP=as.integer(min.ref.points),neighMin=as.integer(min.neighs),
                    numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),
-                   PACKAGE="nonlinearAnalysis")
+                   PACKAGE="nonlinearTseries")
 
   # create lyapunov structure
   time=(0:max.time.steps)*sampling.period

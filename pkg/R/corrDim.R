@@ -64,7 +64,7 @@
 #' @rdname corrDim
 #' @export corrDim
 #' @exportClass corrDim
-#' @useDynLib nonlinearAnalysis
+#' @useDynLib nonlinearTseries
 corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5, time.lag=1, 
                      min.radius,max.radius,corr.order=2,n.points.radius=5,theiler.window=100,do.plot=TRUE,number.boxes=NULL){
  
@@ -89,14 +89,14 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5, ti
            minEmbeddingD=as.integer(min.embedding.dim),maxEmbeddingD=as.integer(max.embedding.dim),
            eps=as.double(radius),numberEps=as.integer(n.points.radius),
            numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),corrMatrix=as.double(corr.matrix),
-           PACKAGE="nonlinearAnalysis")
+           PACKAGE="nonlinearTseries")
   }else{
     sol=.C("generalizedCorrDim", time.series=as.double(time.series),lenTimeSeries = as.integer(lenTimeSeries),
            takensDimMin=as.double(takensDimMin),tau=as.integer(time.lag), numberTakens = as.integer(numberTakens),
            minEmbeddingD=as.integer(min.embedding.dim),maxEmbeddingD=as.integer(max.embedding.dim), q = as.integer(corr.order),
            eps=as.double(radius),numberEps=as.integer(n.points.radius),
            numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),corr.matrix=as.double(corr.matrix),
-           PACKAGE="nonlinearAnalysis")
+           PACKAGE="nonlinearTseries")
   }
 
   #get the correlation sum matrix

@@ -1,4 +1,4 @@
-Package: nonlinearAnalysis
+Package: nonlinearTseries
 Type: Package
 Title: R package for nonlinear time series analysis
 Version: 0.1

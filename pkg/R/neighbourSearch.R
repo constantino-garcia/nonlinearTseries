@@ -19,7 +19,7 @@ boxAssistant=function(takens, radius,number.boxes=NULL){
                     embeddingD=as.integer(embedding.dim),eps= as.double(radius),
                     numberBoxes=as.integer(number.boxes),boxes=as.integer(boxes),
                     possibleNeighbours=as.integer(possibleNeighbours),
-                    PACKAGE="nonlinearAnalysis" )
+                    PACKAGE="nonlinearTseries" )
   #format solution and return it
   sol=list(boxes=ret$boxes,possibleNeighbours=ret$possibleNeighbours)
   return(sol)
@@ -45,7 +45,7 @@ boxAssistant=function(takens, radius,number.boxes=NULL){
 #' 5, p. 349, (1995).
 #' @author Constantino A. Garcia
 #' @export neighbourSearch
-#' @useDynLib nonlinearAnalysis
+#' @useDynLib nonlinearTseries
 neighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
   #estimates number.boxes if it has not been specified
   if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens, radius)
@@ -72,7 +72,7 @@ neighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
                           boxes=as.integer(boxes),possibleNeighbours=as.integer(possibleNeighbours),
                           neighList=as.integer(neighList),
                           nfound=as.integer(nfound),
-                          PACKAGE="nonlinearAnalysis")
+                          PACKAGE="nonlinearTseries")
   #arrange solutions
   if (cneighs$nfound==0){
     finalNeighs=list(nfound=0,neighList=list())
@@ -140,7 +140,7 @@ findAllNeighbours=function(takens,radius,number.boxes=NULL){
                boxes=as.integer(boxes),possibleNeighbours=as.integer(possibleNeighbours),
                neighList=as.integer(neighList),
                nfound=as.integer(nfound),
-               PACKAGE="nonlinearAnalysis")
+               PACKAGE="nonlinearTseries")
     #arrange solutions
     if (cneighs$nfound==0){
       allneighs[[i]]=list()

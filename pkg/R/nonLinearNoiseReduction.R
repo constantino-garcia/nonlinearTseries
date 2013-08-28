@@ -16,6 +16,7 @@
 #' @author Constantino A. Garcia
 #' @rdname nonLinearNoiseReduction
 #' @export nonLinearNoiseReduction
+#' @useDynLib nonlinearTseries
 nonLinearNoiseReduction=function(time.series, embedding.dim, radius){
   N=length(time.series)
   #build takens' vectors using time.lag = 1
@@ -27,7 +28,7 @@ nonLinearNoiseReduction=function(time.series, embedding.dim, radius){
                                   embeddingD = as.integer(embedding.dim),
                                   eps = as.double(radius),
                                   numberBoxes = as.integer(400),
-                                  PACKAGE="nonlinearAnalysis")
+                                  PACKAGE="nonlinearTseries")
   
   return(denoised.time.series$timeSeries)
   

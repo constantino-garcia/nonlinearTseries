@@ -46,7 +46,7 @@
 #' @author Constantino A. Garcia
 #' @rdname poincareMap
 #' @export poincareMap
-#' @useDynLib nonlinearAnalysis
+#' @useDynLib nonlinearTseries
 poincareMap=function(time.series=NULL, embedding.dim=2, time.lag=1, takens = NULL, normal.hiperplane.vector = NULL,  hiperplane.point ){
   if (is.null(takens)){takens = buildTakens(time.series,embedding.dim,time.lag)}
   dimension = ncol(takens)
@@ -83,7 +83,7 @@ poincareMap=function(time.series=NULL, embedding.dim=2, time.lag=1, takens = NUL
                 numberNegativeCrossings = as.integer(number.of.negative.crossings), 
                 hiperplanePoint = as.double(hiperplane.point),
                 normalVector = as.double(normal.hiperplane.vector),
-                PACKAGE="nonlinearAnalysis")
+                PACKAGE="nonlinearTseries")
   
   # arranging data to return it
   poincare.map.series = matrix(poincare$poincareMapSeries,nrow=n.points,ncol=dimension)

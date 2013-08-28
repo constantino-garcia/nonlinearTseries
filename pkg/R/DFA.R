@@ -17,7 +17,7 @@
 #'  Compute the total error for each of the segments.
 #'  \item Compute the average of the total error over all segments and take its root square. By repeating 
 #'  the previous steps for several segment sizes (let's denote it by t), we obtain the
-#'  so-called Fluction function \eqn{F(t)}.
+#'  so-called Fluctuation function \eqn{F(t)}.
 #'  \item  If the data presents long-range power law correlations:  \eqn{F(t) \sim t^\alpha}{F(t) proportional t^alpha} and
 #'  we may estimate using regression.
 #'  \item  Usually, when plotting \eqn{\log(F(t))\;Vs\;log(t)}{log(F(t)) Vs log(t)} we may distinguish two linear regions.

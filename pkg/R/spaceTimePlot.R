@@ -37,7 +37,7 @@
 #' @rdname spaceTimePlot
 #' @export spaceTimePlot
 #' @exportClass spaceTimePlot
-#' @useDynLib nonlinearAnalysis
+#' @useDynLib nonlinearTseries
 spaceTimePlot=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag=1,max.radius=NULL, time.step=1 , number.time.steps = NULL, numberPercentages=10,do.plot=TRUE){
   ### define
   kLengthRadiusVector = 1000
@@ -62,7 +62,7 @@ spaceTimePlot=function(takens = NULL, time.series=NULL, embedding.dim=2, time.la
                    embeddingD = as.integer(embedding.dim), eps = as.double(radius), leps = as.integer(kLengthRadiusVector),
                    numberTimeSteps =  as.integer(number.time.steps), timeStep = as.integer(time.step),
                    numberPercentages = as.integer( numberPercentages), spaceTimePlot = as.double(stp),
-                   PACKAGE="nonlinearAnalysis")
+                   PACKAGE="nonlinearTseries")
   # format and return spaceTimePlot
   stp.matrix = matrix(sol$spaceTimePlot,ncol=number.time.steps,nrow=numberPercentages)
   # positions where the radius was not enough to compute the propper percentage 

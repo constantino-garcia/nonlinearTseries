@@ -95,6 +95,7 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,radi
 #' @author Constantino A. Garcia
 #' @export recurrencePlot
 #' @import Matrix
+#' @useDynLib nonlinearTseries
 recurrencePlot=function(takens = NULL, time.series, embedding.dim, time.lag,radius){
   if(is.null(takens)){
     takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  
@@ -218,7 +219,7 @@ getHistograms=function(neighs,ntakens,lmin,vmin){
             verticalHistogram = as.integer(verticalHistogram),
             diagonalHistogram = as.integer(diagonalHistogram),
             recurrenceHistogram = as.integer(recurrenceHistogram),
-            PACKAGE="nonlinearAnalysis" )
+            PACKAGE="nonlinearTseries" )
   
   
   return(list(diagonalHist=hist$diagonalHistogram,recurrenceHist=hist$recurrenceHistogram,
