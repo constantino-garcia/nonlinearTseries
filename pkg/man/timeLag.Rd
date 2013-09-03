@@ -2,8 +2,8 @@
 \alias{timeLag}
 \title{Estimate an appropiate time lag for the Takens' vectors}
 \usage{
-  timeLag(time.series, method = "first.zero", value = 0,
-    lag.max = NULL, do.plot = TRUE)
+  timeLag(time.series, method = "first.e.decay",
+    value = 1/exp(1), lag.max = NULL, do.plot = TRUE)
 }
 \arguments{
   \item{time.series}{The original time series.}

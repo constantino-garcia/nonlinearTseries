@@ -95,7 +95,7 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5, ti
            takensDimMin=as.double(takensDimMin),tau=as.integer(time.lag), numberTakens = as.integer(numberTakens),
            minEmbeddingD=as.integer(min.embedding.dim),maxEmbeddingD=as.integer(max.embedding.dim), q = as.integer(corr.order),
            eps=as.double(radius),numberEps=as.integer(n.points.radius),
-           numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),corr.matrix=as.double(corr.matrix),
+           numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),corrMatrix=as.double(corr.matrix),
            PACKAGE="nonlinearTseries")
   }
 
@@ -132,7 +132,7 @@ getOrder = function(x){
 
 #' @return The \emph{getCorrMatrix} function returns the correlations matrix  storing the correlation sums that have been computed for all the embedding dimensions.
 #' @rdname corrDim
-#' @export getOrder
+#' @export getCorrMatrix
 #' 
 getCorrMatrix = function(x){
   return (x$corr.matrix)
@@ -229,10 +229,10 @@ estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,use.embeddin
   }
   lcm = log10(corr.matrix)
   if (do.plot){
-    plot(log.radius,lcm[1,],'b',col=1,cex=0.3,ylim=c(lcm[numberEmbeddings,ncol(corr.matrix)],lcm[1,1]))
+    plot((q-1)*log.radius,lcm[1,],'b',col=1,cex=0.3,ylim=c(lcm[numberEmbeddings,ncol(corr.matrix)],lcm[1,1]),...)
     i=2
     while(i<=numberEmbeddings){
-      lines(log.radius,lcm[i,],'b',col=i,cex=0.3)
+      lines((q-1)*log.radius,lcm[i,],'b',col=i,cex=0.3)
       i=i+1
     } 
   }

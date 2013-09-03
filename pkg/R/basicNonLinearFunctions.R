@@ -102,7 +102,7 @@ buildTakens=function (time.series, embedding.dim, time.lag)
 #' }   
 #' @param time.series The original time series.
 #' @param method The method that we shall use to estimate the time lag (see the Details section). Available methods
-#' are \emph{"first.zero"}, \emph{"first.e.decay"}, \emph{"first.minimum"} and \emph{"first.value"}. 
+#' are \emph{"first.zero"}, \emph{"first.e.decay"} (default), \emph{"first.minimum"} and \emph{"first.value"}. 
 #' @param value Numeric value indicating the value that the autocorrelation function must cross in order to
 #' select the time lag. It is used only with the "first.value" method.
 #' @param lag.max Maximum lag at which to calculate the acf. By default, the length of the time.series
@@ -114,7 +114,7 @@ buildTakens=function (time.series, embedding.dim, time.lag)
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @author Constantino A. Garcia
 #' @export timeLag
-timeLag = function (time.series, method="first.zero",value = 0,lag.max=NULL,do.plot=TRUE){
+timeLag = function (time.series, method="first.e.decay",value = 1/exp(1),lag.max=NULL,do.plot=TRUE){
   ##############################################################################
   ########################### internal functions definitions ###################
   #############################################################################
@@ -139,8 +139,9 @@ timeLag = function (time.series, method="first.zero",value = 0,lag.max=NULL,do.p
         if ((cross.position > 1) && (abs(ac[[cross.position]] - value) > abs(ac[[cross.position - 1]] - value)))
           cross.position = cross.position - 1
       }
-      # convert from positions to time lags by substracting 1
-      return (cross.position-1)
+      # If possible: convert from positions to time lags by substracting 1
+      if ((cross.position) > 1){cross.position = cross.position-1}
+      return (cross.position)
   }
   
   # internal function. It will calculate the first time lag where
