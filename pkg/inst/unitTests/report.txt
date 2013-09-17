@@ -1,0 +1,70 @@
+RUNIT TEST PROTOCOL -- Tue Sep 17 16:41:24 2013 
+*********************************************** 
+Number of test functions: 17 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+nonlinearTseries unit testing - 17 test functions, 0 errors, 0 failures
+
+
+
+Details 
+*************************** 
+Test Suite: nonlinearTseries unit testing 
+Test function regexp: ^test.+ 
+Test file regexp: ^runit.+\.[rR]$ 
+Involved directory: 
+/home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests 
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.correlation.dim.R 
+test.correlation.dimension: (5 checks) ... OK (0.87 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.dfa.R 
+test.dfa: (3 checks) ... OK (5.56 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.generalized.correlation.entropy.R 
+test.generalized.correlation.entropy: (4 checks) ... OK (0.79 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.if.runs.R 
+test.if.runs: (0 checks) ... OK (0.1 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.information.dimension.R 
+test.information.dimension: (3 checks) ... OK (7.01 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.max.lyapunov.R 
+test.max.lyapunov: (6 checks) ... OK (1.77 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.minimum.embedding.R 
+test.minimum.embedding: (3 checks) ... OK (3.41 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.neighbour.search.R 
+test.neighbour.search: (9089 checks) ... OK (1.12 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.nonlinear.prediction.R 
+test.nonlinear.prediction: (0 checks) ... OK (0.05 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.nonlinear.systems.R 
+test.nonlinear.systems: (8 checks) ... OK (0.34 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.poincare.section.R 
+test.poincare.section: (4 checks) ... OK (12.79 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.rqa.R 
+test.rqa: (33 checks) ... OK (0.28 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.sample.entropy.R 
+test.sample.entropy: (4 checks) ... OK (0.73 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.space.time.plot.R 
+test.space.time.plot: (6 checks) ... OK (0.07 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.surrogate.fft.R 
+test.surrogate.fft: (6 checks) ... OK (0.04 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.takens.estimator.R 
+test.takens.estimator: (0 checks) ... OK (0 seconds)
+--------------------------- 
+Test file: /home/remoto/constantinoantonio.garcia/Tesis/Rpackages/nonlinear/pkg/tests/../inst/unitTests/runit.timeLag.R 
+test.timeLag: (6 checks) ... OK (1 seconds)

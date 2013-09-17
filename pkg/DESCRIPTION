@@ -8,7 +8,7 @@ Maintainer: Constantino A. Garcia <constantinoantonio.garcia@usc.es>
 Description: R package for nonlinear time series analysis
 License: GPL-2
 Copyright: ANN library is copyright University of Maryland and Sunil Arya and
-           David Mount. R wrapper of ANN library is copyright Samuel Kemp 2005-9 
+           David Mount. R wrapper is based on the ANN library, copyright Samuel Kemp 2005-9 
            and Gregory Jefferis 2009-2013.
 Depends: Matrix, rgl, tseries, TSA
 Suggests: RUnit
