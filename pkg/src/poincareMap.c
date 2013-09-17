@@ -5,7 +5,7 @@
 
 // calculate an aproximation to the point of intersection between the hiperplane
 // and the trajectory using linear interpolation
-inline double calculateCrossings(double* timeSeries,int nPoints, double sideParam1,
+double calculateCrossings(double* timeSeries,int nPoints, double sideParam1,
                                  double sideParam2, int pos1, int pos2,
                                  int dimension, double* crossPoint){
     // compute the crossing time using linear interpolation

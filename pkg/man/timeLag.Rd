@@ -10,8 +10,9 @@
 
   \item{method}{The method that we shall use to estimate
   the time lag (see the Details section). Available methods
-  are \emph{"first.zero"}, \emph{"first.e.decay"},
-  \emph{"first.minimum"} and \emph{"first.value"}.}
+  are \emph{"first.zero"}, \emph{"first.e.decay"}
+  (default), \emph{"first.minimum"} and
+  \emph{"first.value"}.}
 
   \item{value}{Numeric value indicating the value that the
   autocorrelation function must cross in order to select

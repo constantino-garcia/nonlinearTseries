@@ -92,6 +92,7 @@ plot.sampleEntropy = function(x, ...){
          lwd=rep(2.5,number.embeddings),
          legend=x$embedding.dims,title="Embedding dimension")
   par(mar=current.par$mar)
+  par(mfrow=c(1,1))
   
 }
 
@@ -101,21 +102,36 @@ plot.sampleEntropy = function(x, ...){
 #' over the range specified by \emph{regression range} in the \emph{estimate} function.
 #' @param x A \emph{sampleEntropy} object.
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
+#' @param use.embeddings A numeric vector specifying which embedding dimensions should the \emph{estimate} function use to compute
+#' the sample entropy.
 #' @return The  \emph{estimate} function returns a vector storing the sample entropy estimate for each embedding dimension.
 #' @rdname sampleEntropy
 #' @method estimate sampleEntropy
 #' @S3method estimate sampleEntropy
-estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,...){
+estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,use.embeddings=NULL,...){
   if (is.null(regression.range)){
     regression.range = range(x$radius)
   }  
+  if (!is.null(use.embeddings)){
+    use.embeddings = x$embedding.dims
+  }
+  #select only embeddings used in the object
+  use.embeddings = intersect(as.numeric(use.embeddings),x$embedding.dims)
+  len.use.embeddings = length(use.embeddings)
+  if(len.use.embeddings<1) {stop("The embeddings specified are not present!\n")}
+  #range
   indx = which(x$radius >= regression.range[[1]] & x$radius <=regression.range[[2]])
-  if ( length(x$embedding.dims) == 1){
-    sample.entropy.estimate = mean(x$sample.entropy[indx])
+    
+  if (len.use.embeddings == 1){
+    sample.entropy.estimate = mean(x$sample.entropy[as.character(use.embeddings),indx])
   }else{
-    sample.entropy.estimate = apply(x$sample.entropy[,indx],MARGIN=1,FUN=mean)  
+    sample.entropy.estimate = apply(x$sample.entropy[as.character(use.embeddings),indx],MARGIN=1,FUN=mean)  
   }  
   if (do.plot){
+    #create new sample entropy object with the embedding.dims and radius range used
+    x = list(sample.entropy = x$sample.entropy[as.character(use.embeddings),],
+             embedding.dims = use.embeddings,order=x$order, radius=x$radius)
+    class(x)="sampleEntropy"
     plotSampleEntropyEstimate(x,sample.entropy.estimate)
   }
   return(sample.entropy.estimate)

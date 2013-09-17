@@ -44,7 +44,20 @@
 
 
 
-
+#' Time Reversibility statistic
+#' @details  The time simmetry statistic  measures the asymmetry of a time series 
+#' under time reversal by implementing the third order statistic:
+#' \deqn{E[s_n - s_{n-\tau})^3] }{E [s(n) - s(n-tau))^3]}.
+#' Since linear stochastic series are symmetric under time reversal, this statistic
+#' may be used for testing the assertion that the data was generated
+#' from a stationary linear stochastic process or not.
+#' @param time.series The time series used to compute the statistic
+#' @param tau Time delay used to compute the third order statistic.
+#' @return The time simmetry statistic for the delays specified with
+#' \emph{tau}.
+#' @author Constantino A. Garcia
+#' @rdname timeReversibility
+#' @export timeReversibility
 timeReversibility <- function(time.series,tau){
   len.ts = length(time.series)
   statistic = c()

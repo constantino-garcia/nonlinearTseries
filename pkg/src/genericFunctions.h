@@ -17,43 +17,14 @@ inline int MOD(int x,int m){
 
 //computes the max distance between the n1-th and n2-th takens vector.
 //the neighbourhood is defined in a embeddingD-dimension space
-inline double distance(int n1,int n2,double *takens, int numberTakens,int embeddingD){
-  int i;
-  double dis=0.0;
-  double a,b;
-  for (i=0;i<embeddingD;i++){
-    a=MAT_ELEM(takens,n1,i ,numberTakens);
-    b=MAT_ELEM(takens,n2,i,numberTakens);
-    dis = MAX(dis , ( (double)(fabs(a-b)) ) );
-  }
-  return (dis);
-}
+double distance(int n1,int n2,double *takens, int numberTakens,int embeddingD);
 
 //computes if vectors n1 and n2 in the takens array are neighbours.
 //the neighbourhood is defined in a embeddingD-dimension space with
 //the max norm and eps radious.
-inline int isNeighbourTakens(int n1,int n2,double *takens, int numberTakens,int embeddingD,double eps){
-  int i;
-  double a,b;
-  for (i=0;i<embeddingD;i++){
-    a=MAT_ELEM(takens,n1,i ,numberTakens);
-    b=MAT_ELEM(takens,n2,i,numberTakens);
-    if ( ((double)(fabs(a-b)))>=eps) return 0;
-  }
-  return (1);
-}
-
+ int isNeighbourTakens(int n1,int n2,double *takens, int numberTakens,int embeddingD,double eps);
 
 // scalar product
-inline double scalarProduct (double* vector1, double* vector2, int len){
-  double result = 0.0;
-  int i;
-  
-  for (i=0;i<len;i++){
-    result += vector1[i]*vector2[i];
-  }
-  return (result);
-    
-}
+double scalarProduct (double* vector1, double* vector2, int len);
 
 #endif //GENERIC_FUNCTIONS_H

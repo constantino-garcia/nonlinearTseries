@@ -4,7 +4,7 @@
 #include <Rmath.h> //include digamma function
 #include <R.h> //include sort functionality
 
-inline double which(double *distVector,int k,int numberValidNeighs){
+double which(double *distVector,int k,int numberValidNeighs){
    R_rsort(distVector,numberValidNeighs);
    return (distVector[k]);
 }

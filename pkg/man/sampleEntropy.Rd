@@ -12,7 +12,8 @@
   \method{plot}{sampleEntropy} (x, ...)
 
   \method{estimate}{sampleEntropy} (x,
-    regression.range = NULL, do.plot = TRUE, ...)
+    regression.range = NULL, do.plot = TRUE,
+    use.embeddings = NULL, ...)
 }
 \arguments{
   \item{corrDim.object}{A \emph{corrDim} object from which
@@ -29,6 +30,10 @@
   \item{regression.range}{Vector with 2 components denoting
   the range where the function will perform linear
   regression.}
+
+  \item{use.embeddings}{A numeric vector specifying which
+  embedding dimensions should the \emph{estimate} function
+  use to compute the sample entropy.}
 }
 \value{
   A \emph{sampleEntropy} object that contains a list

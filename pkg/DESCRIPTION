@@ -1,11 +1,14 @@
 Package: nonlinearTseries
 Type: Package
 Title: R package for nonlinear time series analysis
-Version: 0.1
+Version: 0.2
 Date: 2013-02-01
 Author: Constantino A. Garcia
 Maintainer: Constantino A. Garcia <constantinoantonio.garcia@usc.es>
 Description: R package for nonlinear time series analysis
 License: GPL-2
+Copyright: ANN library is copyright University of Maryland and Sunil Arya and
+           David Mount. R wrapper of ANN library is copyright Samuel Kemp 2005-9 
+           and Gregory Jefferis 2009-2013.
 Depends: Matrix, rgl, tseries, TSA
 Suggests: RUnit

@@ -89,7 +89,7 @@ surrogateTest <- function(time.series, significance = 0.05,
       }  
     }
   }
-  nltest$surrogates.tatistics = surrogates.statistics
+  nltest$surrogates.statistics = surrogates.statistics
   nltest$data.statistic = data.statistic
   
   return(nltest)

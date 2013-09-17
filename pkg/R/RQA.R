@@ -56,7 +56,7 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,radi
   if (maxDistanceMD <=1) maxDistanceMD=2 # this should not happen
   
   neighs=findAllNeighbours(takens,radius)
-  if (do.plot) recurrencePlotAux(neighs)
+  if (do.plot) {recurrencePlotAux(neighs)}
   hist=getHistograms(neighs,ntakens,lmin,vmin)
   # calculate the number of recurrence points from the recurrence rate. The recurrence
   # rate counts the number of points at every distance in a concrete side of the main diagonal.
@@ -109,7 +109,8 @@ recurrencePlot=function(takens = NULL, time.series, embedding.dim, time.lag,radi
 recurrencePlotAux=function(neighs){
   ntakens=length(neighs)
   neighs.matrix = neighbourListSparseNeighbourMatrix(neighs,ntakens)
-  image(neighs.matrix,xlab="Number of Takens' vector", ylab="Number of Takens' vector")
+  # need a print because it is a trellis object!!
+  print(image(neighs.matrix,xlab="Number of Takens' vector", ylab="Number of Takens' vector"))
     
 }
 

@@ -5,7 +5,7 @@
   estimateEmbeddingDim(time.series,
     number.points = length(time.series), time.lag = 1,
     max.embedding.dim = 15, threshold = 0.95,
-    do.plot = TRUE, theiler.window = 1)
+    do.plot = TRUE)
 }
 \arguments{
   \item{time.series}{The original time series.}
@@ -31,13 +31,6 @@
 
   \item{do.plot}{Logical value. If TRUE (default value), a
   plot of E1(d) and E2(d) is shown.}
-
-  \item{theiler.window}{Integer denoting the Theiler
-  window: Two Takens' vectors must be separated by more
-  than theiler.window time steps in order to be considered
-  neighbours. By using a Theiler window, we exclude
-  temporally correlated vectors from our estimations.
-  Default: 1.}
 }
 \description{
   This function determines the minimum embedding dimension
@@ -55,13 +48,15 @@
   from stochastic signals. For deterministic signals, there
   exist some d such that E2(d)!=1. For stochastic signals,
   E2(d) is approximately 1 for all the values.
+
+  This function uses the Arya and Mount's C++ ANN library
+  for nearest neighbour search (For more information on the
+  ANN library please visit
+  \url{http://www.cs.umd.edu/~mount/ANN/}). The R wrapper
+  is a modified version of the RANN package code by Samuel
+  E. Kemp and Gregory Jefferis.
 }
 \note{
-  The current implementation of this function is fully
-  written in R (as a prototype). Thus it requires heavy
-  computations and may be quite slow. Future versions of
-  the package will solve this issue.
-
   In the current version of the package, the automatic
   detection of stochastic signals has not been implemented
   yet.
@@ -70,7 +65,7 @@
 \dontrun{
 h = henon(do.plot=FALSE)
 dimension = estimateEmbeddingDim(h$x, time.lag=1, max.embedding.dim=6,
-             theiler.window=10, threshold=0.9, do.plot=TRUE)
+             threshold=0.9, do.plot=TRUE)
              }
 }
 \author{
@@ -80,5 +75,14 @@ dimension = estimateEmbeddingDim(h$x, time.lag=1, max.embedding.dim=6,
   Cao, L. Practical method for determining the minimum
   embedding dimension of a scalar time series. Physica D:
   Nonlinear Phenomena, 110,1, pp. 43-50 (1997).
+
+  Arya S. and Mount D. M. (1993), Approximate nearest
+  neighbor searching, Proc. 4th Ann. ACM-SIAM Symposium on
+  Discrete Algorithms (SODA'93), 271-280.
+
+  Arya S., Mount D. M., Netanyahu N. S., Silverman R. and
+  Wu A. Y (1998), An optimal algorithm for approximate
+  nearest neighbor searching, Journal of the ACM, 45,
+  891-923.
 }
 
