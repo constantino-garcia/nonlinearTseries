@@ -110,11 +110,14 @@ getCaoParameters = function(data, m, time.lag){
     # get closest neighbour (avoid picking the same vector with the 2 index)
     closest.neigh = nearest.neigh$nn.idx[takens.position,2] 
     numerator = as.numeric(dist(rbind(takens.next.dimension[takens.position, ], takens.next.dimension[closest.neigh, ]),  method = "maximum"))
-    min.dist.ratio[[takens.position]] = numerator/nearest.neigh$nn.dists[takens.position, 2]
+    if (nearest.neigh$nn.dists[takens.position, 2] == 0){
+      # We found equal points in phase space... assing 0      
+      min.dist.ratio[[takens.position]] = 0
+    }else{
+      min.dist.ratio[[takens.position]] = numerator/nearest.neigh$nn.dists[takens.position, 2]
+    }
+    
     stochastic.parameter[[takens.position]] = abs(data[[takens.position+m*time.lag]]-data[[closest.neigh+m*time.lag]])
   }
   return (list(E = mean(min.dist.ratio), E.star = mean(stochastic.parameter)))
 }
-
-
-
