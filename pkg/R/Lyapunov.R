@@ -114,7 +114,9 @@ getDivergence = function(x){
 #' @S3method plot maxLyapunov 
 #' @method plot
 plot.maxLyapunov= function(x, ...){
-  plot(x$time,x$s.function,xlab="t",ylab=expression("S(t)"),main="Estimating maximal Lyapunov exponent")
+  plot(x$time[-1],x$s.function[-1],
+       xlab="t",ylab=expression("S(t)"),
+       main="Estimating maximal Lyapunov exponent")
 }
 
 #' @return In order to obtain an estimation of the Lyapunov exponent the user can use the

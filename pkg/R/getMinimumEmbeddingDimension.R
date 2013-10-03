@@ -27,7 +27,10 @@
 #' @param threshold Numerical value between 0 and 1. The embedding dimension is estimated
 #' using the E1(d) function. E1(d) stops changing when d is greater than or equal to
 #' embedding dimension, staying close to 1. This value establishes a threshold for 
-#' considering that E1(d) has stopped to change. Default: 0.95
+#' considering that E1(d) is close to 1. Default: 0.95
+#' @param max.relative.change Maximum relative change in E1(d) with respect to 
+#' E1(d-1) in order to consider that the E1 function has been stabilized and it will
+#' stop changing. Default: 0.01.
 #' @param do.plot Logical value. If TRUE (default value), a plot of E1(d) and E2(d) is shown.
 #' @references 
 #' Cao, L. Practical method for determining the minimum embedding dimension of a scalar time series. Physica D: Nonlinear Phenomena,
@@ -46,6 +49,7 @@
 #' @export estimateEmbeddingDim
 estimateEmbeddingDim = function(time.series,  number.points = length(time.series), 
                                           time.lag = 1,  max.embedding.dim = 15,  threshold = 0.95, 
+                                          max.relative.change = 0.10,
                                           do.plot = TRUE){
   if (max.embedding.dim < 3) stop("max.embedding.dim should be greater that 2...\n")
   time.series.len = length(time.series)
@@ -67,10 +71,13 @@ estimateEmbeddingDim = function(time.series,  number.points = length(time.series
     E.star.vector[[dimension]] = E.parameters$E.star
     E1.vector[[dimension-1]] = E.vector[[dimension]]/E.vector[[dimension-1]]
     E2.vector[[dimension-1]] = E.star.vector[[dimension]]/E.star.vector[[dimension-1]]
+    # Error for dimension - 2
+    relative.error = abs(E1.vector[[dimension-1]]-E1.vector[[dimension-2]])/(E1.vector[[dimension-2]])
     #compute if E1(d)>=threshold...If it is the first time it happens(embedding.dim==0), store
     # the dimension
-    if ((embedding.dim==0)&&(E1.vector[[dimension-1]]>=threshold)){
-      embedding.dim = dimension-1
+    if ((embedding.dim==0)&&(E1.vector[[dimension-2]]>=threshold)
+        &&(relative.error < max.relative.change )){
+      embedding.dim = dimension - 2
     }
   }
   #plot graphics

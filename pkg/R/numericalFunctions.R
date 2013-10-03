@@ -32,7 +32,27 @@ trapezoidalRule = function(x, integrand ){
 # private method implementing (y(x+h)-y(x-h))/2h 
 differentiate = function(h,y){
   len = length(y)
-  derivative = (y[3:len]-y[1:(len-2)])/(2*h)
+  if (len >= 3){
+    derivative = (y[3:len]-y[1:(len-2)])/(2*h)  
+  }else{
+    # if not possible... use (y(x+h)-y(x))/h
+    derivative = diff(y)/(h)  
+  }
+  
   return(derivative)
 }
   
+differentiateAxis = function(x){
+  len = length(x)
+  if (len >= 3){
+    # We have used the (y(x+h)-y(x-h))/2h  rule ...
+    # Eliminate first and last 
+    axis = x[-c(1,len)]
+  }else{
+    # We have used the (y(x+h)-y(x))/h rule ...
+    # Eliminate last
+    axis = x[-c(len)]
+  }
+  
+  return(axis)
+}

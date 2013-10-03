@@ -106,7 +106,7 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5, ti
   wh=which(corr.matrix==0,arr.ind=TRUE)
   wh=unique(wh[,'col'])
   if (length(wh>0)){
-    corr.matrix=corr.matrix[,-wh]
+    corr.matrix=corr.matrix[,-wh,drop=FALSE]
     #eliminate the corresponding radius values in the radius vector
     radius=radius[-wh]
   }
@@ -173,8 +173,17 @@ print.corrDim = function(x, ...){
 #' @S3method plot corrDim
 #' @method plot
 plot.corrDim = function(x, ...){
+   current.par = par() 
+   # Check if it is possible to compute local slopes and
+   # set layout depending on it
+   if ( ncol(x$corr.matrix) > 1) {
+      # it is possible... 3 regions
+      layout(rbind(1,2,3), heights=c(4,4,2))
+    }else{
+      # not possible... just 2 regions (not local slopes)
+      layout(rbind(1,2), heights=c(8,2))
+    }
     number.embeddings=nrow(x$corr.matrix)
-    par(mfrow=c(2,1))
     ### log-log plot
     plot(x$radius^(x$corr.order-1),x$corr.matrix[1,],log="xy",'b',col=1,cex=0.3,ylim=range(x$corr.matrix),
          xlab="Radius r",ylab="Correlation Sum C(r)",main="Correlation Sum Vs radius")
@@ -184,18 +193,34 @@ plot.corrDim = function(x, ...){
       i = i + 1
     }
     #### local slopes
-    lcm = log10(x$corr.matrix)
-    dlcm=t(apply(lcm,MARGIN=1,differentiate, h = (x$corr.order-1)*(log10(x$radius[[2]])-log10(x$radius[[1]]))) )
-    dlcm=10^dlcm
-    radius.axis = head(x$radius,-1); radius.axis = tail(radius.axis,-1)
-    plot(radius.axis^(x$corr.order-1),dlcm[1,],'b',log="xy",cex=0.3,col=1,ylim=range(dlcm),
-         xlab="Radius r",ylab="Local slopes of the Correlation Sum",main="Local slopes of the Correlation Sum Vs Radius")
-    i=2
-    while(i <= number.embeddings){
-      lines(radius.axis^(x$corr.order-1),dlcm[i,],'b',cex=0.3,col=i)
-      i=i+1
+    # Check if it is possible to compute local slopes
+    if ( ncol(x$corr.matrix) > 1) {
+      lcm = log10(x$corr.matrix)
+      dlcm= matrix(
+                    t(apply(lcm,MARGIN=1,differentiate, 
+                          h = (x$corr.order-1)*(log10(x$radius[[2]])-log10(x$radius[[1]]))
+                          )),
+                    nrow = number.embeddings)
+      dlcm=10^dlcm
+      radius.axis = differentiateAxis(x$radius)
+      plot(radius.axis^(x$corr.order-1),dlcm[1,],'b',log="xy",cex=0.3,col=1,ylim=range(dlcm),
+           xlab="Radius r",ylab="Local slopes of the Correlation Sum",main="Local slopes of the Correlation Sum Vs Radius")
+      i=2
+      while(i <= number.embeddings){
+        lines(radius.axis^(x$corr.order-1),dlcm[i,],'b',cex=0.3,col=i)
+        i=i+1
+      }
     }
+    ### add legend
+    par(mar=c(0, 0, 0, 0))
+    plot.new()
+    legend("center","groups",ncol=ceiling(number.embeddings/2), 
+           col=1:number.embeddings,lty=rep(1,number.embeddings),
+           lwd=rep(2.5,number.embeddings),
+           legend=x$embedding.dims, title="Embedding dimension")
+    par(mar=current.par$mar)
     par(mfrow=c(1,1))
+    
 }
 
 #' @return The \emph{estimate} function estimates the correlation dimension of the 

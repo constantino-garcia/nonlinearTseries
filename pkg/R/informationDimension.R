@@ -166,7 +166,7 @@ estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,...){
   # plotting
   if (do.plot){
     plot(x$fixed.mass,x$log.radius,log="x",main="Information Dimension",ylab="<log10(radius)>",xlab="fixed mass (p)")
-    lines(x$fixed.mass,reg$fitted.values,col="blue")
+    lines(x$fixed.mass[indx],reg$fitted.values,col="blue")
     legend("topleft",col="blue",lty=c(1),lwd=c(2.5), legend=c("D1 =", sprintf("%.2f",information.dimension)))
   }
   return(information.dimension)
@@ -186,12 +186,14 @@ estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,...){
 #' @method plot infDim
 #' @method plot
 plot.infDim = function(x, ...){
-  par(mfrow=c(2,1))
+  if ( length(x$fixed.mass) > 1) {par(mfrow=c(2,1))}
   plot(x$fixed.mass,x$log.radius,log="x",main="Information Dimension",ylab="<log10(radius)>",xlab="fixed mass (p)")
   #local slopes
-  lfm = log10(x$fixed.mass)
-  derivative = differentiate(x$log.radius,h = lfm[[2]] - lfm[[1]])
-  fixed.mass.axis = head(x$fixed.mass,-1); fixed.mass.axis = tail(fixed.mass.axis,-1)
-  plot(fixed.mass.axis,derivative,'b',cex=0.3,col=1,xlab="fixed mass p",ylab="local slope d1(p)", main="Local slopes for the Information dimension estimate")
+  if (length(x$fixed.mass) > 1){
+    lfm = log10(x$fixed.mass)
+    derivative = differentiate(x$log.radius,h = lfm[[2]] - lfm[[1]])
+    fixed.mass.axis = differentiateAxis(x$fixed.mass)
+    plot(fixed.mass.axis,derivative,'b',cex=0.3,col=1,xlab="fixed mass p",ylab="local slope d1(p)", main="Local slopes for the Information dimension estimate")  
+  }
   par(mfrow=c(1,1))
 }

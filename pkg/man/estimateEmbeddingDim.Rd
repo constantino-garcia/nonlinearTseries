@@ -5,7 +5,7 @@
   estimateEmbeddingDim(time.series,
     number.points = length(time.series), time.lag = 1,
     max.embedding.dim = 15, threshold = 0.95,
-    do.plot = TRUE)
+    max.relative.change = 0.1, do.plot = TRUE)
 }
 \arguments{
   \item{time.series}{The original time series.}
@@ -27,7 +27,12 @@
   function. E1(d) stops changing when d is greater than or
   equal to embedding dimension, staying close to 1. This
   value establishes a threshold for considering that E1(d)
-  has stopped to change. Default: 0.95}
+  is close to 1. Default: 0.95}
+
+  \item{max.relative.change}{Maximum relative change in
+  E1(d) with respect to E1(d-1) in order to consider that
+  the E1 function has been stabilized and it will stop
+  changing. Default: 0.01.}
 
   \item{do.plot}{Logical value. If TRUE (default value), a
   plot of E1(d) and E2(d) is shown.}

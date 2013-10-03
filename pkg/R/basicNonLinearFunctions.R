@@ -120,7 +120,7 @@ timeLag = function (time.series, method="first.e.decay",value = 1/exp(1),lag.max
   #############################################################################
   # internal function. It will calculate the first time lag where
   # the autocorrelation function decays to a given value
-  position.acf.decays=function(time.series,value,lag.max=NULL){
+  position.acf.decays=function(time.series,value,lag.max=NULL,do.plot){
       if (is.null(lag.max)){
         l.time.series = length(time.series)
         lag.max = floor(l.time.series/2)
@@ -146,12 +146,12 @@ timeLag = function (time.series, method="first.e.decay",value = 1/exp(1),lag.max
   
   # internal function. It will calculate the first time lag where
   # the autocorrelation function has a minimum
-  first.acf.minimum=function(time.series,lag.max=NULL){
+  first.acf.minimum=function(time.series,lag.max=NULL,do.plot){
     if (is.null(lag.max)){
       l.time.series = length(time.series)
       lag.max = l.time.series
     }
-    ac = stats::acf(time.series,lag.max=lag.max,plot=TRUE,type="correlation")
+    ac = stats::acf(time.series,lag.max=lag.max,plot=do.plot,type="correlation")
     ac = ac$acf
     first.minimum = which(diff(ac) >= 0)
     # if the autocorrelation function is monotonically decreasing, an error is given
@@ -167,15 +167,15 @@ timeLag = function (time.series, method="first.e.decay",value = 1/exp(1),lag.max
   #############################################################################
   time.lag=0
   switch(method,
-         "first.zero"={time.lag=position.acf.decays(time.series,0,lag.max)},
-         "first.e.decay"={time.lag=position.acf.decays(time.series,1/exp(1),lag.max)},
+         "first.zero"={time.lag=position.acf.decays(time.series,0,lag.max,do.plot=do.plot)},
+         "first.e.decay"={time.lag=position.acf.decays(time.series,1/exp(1),lag.max,do.plot=do.plot)},
          "first.value"={
                         if ((value < 0)||(value>1))
                           stop(paste("Incorrect \"cross\" value", value,
                                       ". \"Cross\" value must be between 0 and 1.
                                      Choose another \"cross\" value!\n",sep=""))
-                        time.lag=position.acf.decays(time.series,value,lag.max)},
-         "first.minimum"={time.lag=first.acf.minimum(time.series,lag.max)},
+                        time.lag=position.acf.decays(time.series,value,lag.max,do.plot=do.plot)},
+         "first.minimum"={time.lag=first.acf.minimum(time.series,lag.max,do.plot=do.plot)},
          {stop("Incorrect method. Available methods are:\"fist.zero\",
                \"first.e.decay\", \"fist.value\" and \"fist.minimum\".\n")})
   return (time.lag)
