@@ -18,7 +18,6 @@
 #' @export nonLinearNoiseReduction
 #' @useDynLib nonlinearTseries
 nonLinearNoiseReduction=function(time.series, embedding.dim, radius){
-  N=length(time.series)
   #build takens' vectors using time.lag = 1
   takens=buildTakens(time.series=time.series,embedding.dim=embedding.dim,time.lag=1) 
   

@@ -42,7 +42,6 @@ spaceTimePlot=function(takens = NULL, time.series=NULL, embedding.dim=2, time.la
   ### define
   kLengthRadiusVector = 1000
   kTimeStepsDefault = 500
-  kMaxTimeStepsDefault = 10000
   ###
   if(is.null(takens)){
     takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  

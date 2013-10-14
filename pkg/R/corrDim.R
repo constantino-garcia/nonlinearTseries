@@ -267,7 +267,7 @@ estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,use.embeddin
     indx = which(new.corr$radius >= r.min & new.corr$radius <= r.max)
     y.values = log10(new.corr$correlation[indx])
     x.values = (q-1)*log10(new.corr$radius[indx])
-    fit=lm(y.values~x.values)
+    fit=lm(y.values ~ x.values)
     if (do.plot){
       lines(x.values,fit$fitted.values,col="blue",type="b",cex=0.3)
     }

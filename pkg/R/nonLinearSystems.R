@@ -178,14 +178,14 @@ lorenz=function(sigma = 10, beta = 8/3, rho = 28, start=c(-13, -14, 47),
 #' The Rossler system is a system of ordinary differential equations defined as:
 #' \deqn{\dot{x} = -(y + z)}{dx/dt = -(y + z)}
 #' \deqn{\dot{y} = x+a \cdot y}{dy/dt = x + a*y}
-#' \deqn{\dot{z} = b + z*(x-c)}{dz/dt = b + z*(x-c)}
-#' The default selection for the system parameters (\emph{a} = 0.2, \emph{b} = 0.2, \emph{c} = 5.7) is known to
+#' \deqn{\dot{z} = b + z*(x-w)}{dz/dt = b + z*(x-w)}
+#' The default selection for the system parameters (\emph{a} = 0.2, \emph{b} = 0.2, \emph{w} = 5.7) is known to
 #' produce a deterministic chaotic time series.
 #' @param start A 3-dimensional numeric vector indicating the starting point for the time series.
 #' Default: c(-2, -10, 0.2).
 #' @param a The \emph{a} parameter. Default:0.2.
 #' @param b The \emph{b} parameter. Default: 0.2.
-#' @param c The \emph{c} parameter. Default: 5.7.
+#' @param w The \emph{w} parameter. Default: 5.7.
 #' @param time The temporal interval at which the system will be generated. Default: time=seq(0,50,by = 0.01).
 #' @param do.plot Logical value. If TRUE (default value), a plot of the generated Lorenz system is shown.
 #' @return A list with four vectors named \emph{time}, \emph{x}, \emph{y} and \emph{z} containing the time, the x-components, the 
@@ -200,13 +200,13 @@ lorenz=function(sigma = 10, beta = 8/3, rho = 28, start=c(-13, -14, 47),
 #' }
 #' @export rossler
 #' @import rgl
-rossler=function(a = 0.2, b = 0.2, c = 5.7, start=c(-2, -10, 0.2)
+rossler=function(a = 0.2, b = 0.2, w = 5.7, start=c(-2, -10, 0.2)
                 ,time=seq(0,50,by = 0.01), do.plot=TRUE){
   
-  params=c(a,b,c)
+  params=c(a,b,w)
   rosslerEquations=function(coord,t,params){
-    x=coord[[1]];y=coord[[2]];z=coord[[3]];a=params[[1]];b=params[[2]];c=params[[3]]
-    return (c(-y-z, x+a*y, b + z*(x-c)))
+    x=coord[[1]];y=coord[[2]];z=coord[[3]];a=params[[1]];b=params[[2]];w=params[[3]]
+    return (c(-y-z, x+a*y, b + z*(x-w)))
   }
   r=rungeKutta(rosslerEquations,start,time,params)
   

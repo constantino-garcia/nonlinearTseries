@@ -9,9 +9,9 @@
   maxLyapunov(time.series, takens = NULL,
     embedding.dim = 2, time.lag = 1, radius,
     theiler.window = 1, min.neighs = 5,
-    min.ref.points = 500, min.time.steps = 0,
-    max.time.steps = 10, number.boxes = NULL,
-    sampling.period = 1, do.plot = TRUE)
+    min.ref.points = 500, max.time.steps = 10,
+    number.boxes = NULL, sampling.period = 1,
+    do.plot = TRUE)
 
   getTime(x)
 
@@ -60,9 +60,6 @@
   routine will try to use. The routine stops when it finds
   \emph{min.ref.points} reference points, saving
   computation time.}
-
-  \item{min.time.steps}{Integer denoting the number of time
-  steps marking the start of the linear region.}
 
   \item{max.time.steps}{Integer denoting the number of time
   steps marking the end of the linear region.}
@@ -141,16 +138,6 @@
   user must check that there is a linear region in the
   \eqn{S(t) Vs t}. If such a region does not exist, the
   estimation should be discarded.
-}
-\examples{
-\dontrun{
- # Estimating the  maximal Lyapunov exponent of the Henon attractor
- h=henon(start = c(0.63954883, 0.04772637), do.plot = FALSE)
- estimation = maxLyapunov(time.series = h$x, embedding.dim=2,time.lag=1,
- radius=0.001,theiler.window=4, min.neighs=2, min.ref.points=500 ,
- min.time.steps=5, max.time.steps=10)
- cat("expected: ",0.41," calculated: ",estimate(estimation),"\\n")
- }
 }
 \author{
   Constantino A. Garcia

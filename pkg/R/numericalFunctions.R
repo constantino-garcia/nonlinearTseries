@@ -4,7 +4,6 @@
 rungeKutta=function(func,initial.condition,time,params){
   n.samples = length(time)
   h = time[[2]]-time[[1]]
-  previous.value = initial.condition
   y = matrix(ncol=length(initial.condition), nrow=n.samples)
   y[1,] = initial.condition
   for (i in 2:n.samples){
@@ -20,7 +19,7 @@ rungeKutta=function(func,initial.condition,time,params){
 }
 
 # private method
-# Trapezoidal rule for numerical integration
+# Trapezoidal rule for numerical integration 
 trapezoidalRule = function(x, integrand ){
   index = 2:length(x)
   par(mfrow=c(1,1))

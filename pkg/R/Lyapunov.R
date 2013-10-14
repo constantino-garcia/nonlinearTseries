@@ -32,7 +32,6 @@
 #' a reference point.
 #' @param min.ref.points Number of reference points that the routine will try to use. The routine stops when it finds 
 #' \emph{min.ref.points} reference points, saving computation time.
-#' @param min.time.steps Integer denoting the number of time steps marking the start of the linear region.
 #' @param max.time.steps Integer denoting the number of time steps marking the end of the linear region.
 #' @param number.boxes Number of boxes that will be used in the box assisted algorithm (see \link{neighbourSearch}).
 #' @param sampling.period Sampling period of the time series. When dealing with a discrete
@@ -49,21 +48,12 @@
 #' Rosenstein, Michael T and Collins, James J and De Luca, Carlo J.A practical method for calculating largest Lyapunov exponents from small data sets.
 #' Physica D: Nonlinear Phenomena, 65-1, 117--134, (1993).
 #' @author Constantino A. Garcia
-#' @examples 
-#'  \dontrun{
-#'  # Estimating the  maximal Lyapunov exponent of the Henon attractor
-#'  h=henon(start = c(0.63954883, 0.04772637), do.plot = FALSE)
-#'  estimation = maxLyapunov(time.series = h$x, embedding.dim=2,time.lag=1,
-#'  radius=0.001,theiler.window=4, min.neighs=2, min.ref.points=500 ,
-#'  min.time.steps=5, max.time.steps=10)
-#'  cat("expected: ",0.41," calculated: ",estimate(estimation),"\n")
-#'  }
 #' @rdname maxLyapunov
 #' @export maxLyapunov
 #' @exportClass maxLyapunov
 #' @useDynLib nonlinearTseries
 maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,theiler.window=1,min.neighs=5,
-                     min.ref.points=500,min.time.steps=0,max.time.steps=10,number.boxes=NULL,sampling.period=1,do.plot=TRUE){
+                     min.ref.points=500,max.time.steps=10,number.boxes=NULL,sampling.period=1,do.plot=TRUE){
   #C parameters
   if (is.null(takens)) takens=buildTakens(time.series,embedding.dim=embedding.dim,time.lag=time.lag)
   if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(time.series, radius)

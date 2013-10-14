@@ -2,7 +2,7 @@
 \alias{rossler}
 \title{Rossler system}
 \usage{
-  rossler(a = 0.2, b = 0.2, c = 5.7,
+  rossler(a = 0.2, b = 0.2, w = 5.7,
     start = c(-2, -10, 0.2), time = seq(0, 50, by = 0.01),
     do.plot = TRUE)
 }
@@ -15,7 +15,7 @@
 
   \item{b}{The \emph{b} parameter. Default: 0.2.}
 
-  \item{c}{The \emph{c} parameter. Default: 5.7.}
+  \item{w}{The \emph{w} parameter. Default: 5.7.}
 
   \item{time}{The temporal interval at which the system
   will be generated. Default: time=seq(0,50,by = 0.01).}
@@ -37,9 +37,9 @@
   The Rossler system is a system of ordinary differential
   equations defined as: \deqn{\dot{x} = -(y + z)}{dx/dt =
   -(y + z)} \deqn{\dot{y} = x+a \cdot y}{dy/dt = x + a*y}
-  \deqn{\dot{z} = b + z*(x-c)}{dz/dt = b + z*(x-c)} The
+  \deqn{\dot{z} = b + z*(x-w)}{dz/dt = b + z*(x-w)} The
   default selection for the system parameters (\emph{a} =
-  0.2, \emph{b} = 0.2, \emph{c} = 5.7) is known to produce
+  0.2, \emph{b} = 0.2, \emph{w} = 5.7) is known to produce
   a deterministic chaotic time series.
 }
 \note{
