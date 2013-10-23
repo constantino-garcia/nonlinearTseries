@@ -193,7 +193,7 @@ plot.infDim = function(x, ...){
     lfm = log10(x$fixed.mass)
     derivative = differentiate(x$log.radius,h = lfm[[2]] - lfm[[1]])
     fixed.mass.axis = differentiateAxis(x$fixed.mass)
-    plot(fixed.mass.axis,derivative,'b',cex=0.3,col=1,xlab="fixed mass p",ylab="local slope d1(p)", main="Local slopes for the Information dimension estimate")  
+    plot(fixed.mass.axis,derivative,log="x",'b',cex=0.3,col=1,xlab="fixed mass p",ylab="local slope d1(p)", main="Local slopes for the Information dimension estimate")  
   }
   par(mfrow=c(1,1))
 }

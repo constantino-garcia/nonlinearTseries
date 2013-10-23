@@ -185,8 +185,9 @@ plot.corrDim = function(x, ...){
     }
     number.embeddings=nrow(x$corr.matrix)
     ### log-log plot
+    xlab = ifelse(x$corr.order==2,{"Radius r"},{paste("Radius r^",x$corr.order-1,"",sep="")})
     plot(x$radius^(x$corr.order-1),x$corr.matrix[1,],log="xy",'b',col=1,cex=0.3,ylim=range(x$corr.matrix),
-         xlab="Radius r",ylab="Correlation Sum C(r)",main="Correlation Sum Vs radius")
+         xlab=xlab,ylab="Correlation Sum C(r)",main="Correlation Sum Vs radius")
     i=2
     while(i<=number.embeddings){
       lines(x$radius^(x$corr.order-1),x$corr.matrix[i,],'b',col=i,cex=0.3)
@@ -203,8 +204,9 @@ plot.corrDim = function(x, ...){
                     nrow = number.embeddings)
       dlcm=10^dlcm
       radius.axis = differentiateAxis(x$radius)
+      xlab = ifelse(x$corr.order==2,{"Radius r"},{paste("Radius r^",x$corr.order-1,"",sep="")})
       plot(radius.axis^(x$corr.order-1),dlcm[1,],'b',log="xy",cex=0.3,col=1,ylim=range(dlcm),
-           xlab="Radius r",ylab="Local slopes of the Correlation Sum",main="Local slopes of the Correlation Sum Vs Radius")
+           xlab=xlab,ylab="Local slopes of the Correlation Sum",main="Local slopes of the Correlation Sum Vs Radius")
       i=2
       while(i <= number.embeddings){
         lines(radius.axis^(x$corr.order-1),dlcm[i,],'b',cex=0.3,col=i)
@@ -236,9 +238,12 @@ plot.corrDim = function(x, ...){
 #' @S3method estimate corrDim
 #' @method estimate corrDim
 #' 
-estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,use.embeddings = NULL,...){
+estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,
+                          use.embeddings = NULL,...){
   corr.matrix = getCorrMatrix(x)
-  if (!is.null(use.embeddings)){corr.matrix = corr.matrix[as.character(use.embeddings),]}
+  if (!is.null(use.embeddings)){
+    corr.matrix = corr.matrix[as.character(use.embeddings),]
+  }
   average=0
   #x axis
   q = getOrder(x)
@@ -249,15 +254,18 @@ estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,use.embeddin
     r.min = min(radius)
     r.max = max(radius)
   }else{
-    r.min = regression.range[[1]]
-    r.max = regression.range[[2]]
+    # transform the regression range in the corresponding radius
+    r.min = (regression.range[[1]])^(1/(q-1))
+    r.max = (regression.range[[2]])^(1/(q-1))
   }
   lcm = log10(corr.matrix)
   if (do.plot){
-    plot((q-1)*log.radius,lcm[1,],'b',col=1,cex=0.3,ylim=c(lcm[numberEmbeddings,ncol(corr.matrix)],lcm[1,1]),...)
+    plot(radius^(q-1),lcm[1,],'b',log="x",col=1,
+         cex=0.3,ylim=c(lcm[numberEmbeddings,
+         ncol(corr.matrix)],lcm[1,1]),...)
     i=2
     while(i<=numberEmbeddings){
-      lines((q-1)*log.radius,lcm[i,],'b',col=i,cex=0.3)
+      lines(radius^(q-1),lcm[i,],'b',col=i,cex=0.3)
       i=i+1
     } 
   }
@@ -269,7 +277,8 @@ estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,use.embeddin
     x.values = (q-1)*log10(new.corr$radius[indx])
     fit=lm(y.values ~ x.values)
     if (do.plot){
-      lines(x.values,fit$fitted.values,col="blue",type="b",cex=0.3)
+      lines(new.corr$radius[indx]^(q-1),fit$fitted.values,
+            col="blue",type="b",cex=0.3)
     }
     #print(fit$coefficients[[2]])
     average=average + fit$coefficients[[2]]

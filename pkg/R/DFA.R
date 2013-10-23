@@ -103,7 +103,11 @@ getFluctuationFunction= function(x){
 #' @S3method plot dfa
 #' 
 plot.dfa = function(x, ...){
-  plot(x$window.sizes,x$fluctuation.function,log="xy",main="Detrended fluctuation analysis\n",xlab="Window size: t",ylab="Fluctuation function: F(t)")
+  plot(x$window.sizes,
+       x$fluctuation.function,log="xy",
+       main="Detrended fluctuation analysis\n",
+       xlab="Window size: t",
+       ylab="Fluctuation function: F(t)")
 }
 #' @rdname dfa
 #' @method estimate dfa

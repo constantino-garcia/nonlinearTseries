@@ -69,11 +69,11 @@ getSampleEntropy = function(x){
 #' @method plot sampleEntropy
 #' @param ... Additional parameters.
 #' @S3method plot sampleEntropy
-plot.sampleEntropy = function(x, ...){
+plot.sampleEntropy = function(x,...){
   xlab = expression("ln("*epsilon*")")
   ylab = expression(h[q]*"("*epsilon*")")
   main = expression("Sample entropy (q = "*x$order*")"*h[x$order]*"("*epsilon*")")
-  main=paste("Sample entropy (q = ",x$order,")")
+  
   number.embeddings = length(x$embedding.dims)
   
   current.par = par()
