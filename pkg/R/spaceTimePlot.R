@@ -26,7 +26,7 @@
 #' @return A \emph{timeSpacePlot} object that consist, essentially, of a matrix storing the values for each contour line.
 #' Each row stores the value for a given percentage of points. Each column stores the value of the radius you have to go to
 #'  find a given fraction of neighbour pairs (the rows), depending on their temporal separation (the colums). This matrix 
-#'  can be accessed by using the \emph{getContourlines} method.
+#'  can be accessed by using the \emph{contourlines} method.
 #' @references  H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @examples
 #'  \dontrun{
@@ -86,10 +86,25 @@ spaceTimePlot=function(takens = NULL, time.series=NULL, embedding.dim=2, time.la
   
 }
 
-#' @rdname spaceTimePlot
+
+#' Obtain the contour lines of the space time plot.
 #' @param x A \emph{spaceTimePlot} object.
-#' @export getContourLines
-getContourLines = function(x){
+#' @return Returns a matrix representing the contour lines of the 
+#' space time plot.
+#' @seealso \code{\link{spaceTimePlot}}
+#' @export contourLines
+contourLines = function(x){
+  UseMethod("contourLines")
+}
+
+
+#' @return The \emph{contourLines} function returns the contour lines of the 
+#' space time plot.
+#' @param x A \emph{spaceTimePlot} object.
+#' @rdname spaceTimePlot
+#' @method contourLines spaceTimePlot
+#' @S3method contourLines spaceTimePlot
+contourLines.spaceTimePlot = function(x){
   return (x$stp.matrix)
 }
   

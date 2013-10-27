@@ -1,12 +1,12 @@
 \name{corrDim}
 \alias{corrDim}
+\alias{corrMatrix.corrDim}
+\alias{embeddingDims.corrDim}
 \alias{estimate.corrDim}
-\alias{getCorrMatrix}
-\alias{getEmbeddingDims}
-\alias{getOrder}
-\alias{getRadius}
+\alias{nlOrder.corrDim}
 \alias{plot.corrDim}
 \alias{print.corrDim}
+\alias{radius.corrDim}
 \title{Correlation sum, correlation dimension and generalized correlation dimension
 (order q >1).}
 \usage{
@@ -16,13 +16,13 @@
     theiler.window = 100, do.plot = TRUE,
     number.boxes = NULL)
 
-  getOrder(x)
+  \method{nlOrder}{corrDim} (x)
 
-  getCorrMatrix(x)
+  \method{corrMatrix}{corrDim} (x)
 
-  getRadius(x)
+  \method{radius}{corrDim} (x)
 
-  getEmbeddingDims(x)
+  \method{embeddingDims}{corrDim} (x)
 
   \method{print}{corrDim} (x, ...)
 
@@ -42,8 +42,8 @@
   \item{max.embedding.dim}{Integer denoting the maximum
   dimension in which we shall embed the time.series (see
   \link{buildTakens}).Thus, we shall estimate the
-  correlation dimension between min.embedding.dim and
-  max.embedding.dim.}
+  correlation dimension between \emph{min.embedding.dim}
+  and \emph{max.embedding.dim}.}
 
   \item{time.lag}{Integer denoting the number of time steps
   that will be use to construct the Takens' vectors (see
@@ -105,19 +105,19 @@
   whereas each colum stores the correlation sum for a
   specific radius.
 
-  The \emph{getOrder} function returns the order of the
+  The \emph{nlOrder} function returns the order of the
   correlation sum.
 
-  The \emph{getCorrMatrix} function returns the
-  correlations matrix storing the correlation sums that
-  have been computed for all the embedding dimensions.
+  The \emph{corrMatrix} function returns the correlations
+  matrix storing the correlation sums that have been
+  computed for all the embedding dimensions.
 
-  The \emph{getRadius} function returns the radius on which
+  The \emph{radius} function returns the radius on which
   the correlation sum function has been evaluated.
 
-  The \emph{getEmbeddingDims} function returns the
-  embedding dimensions on which the correlation sum
-  function has been evaluated.
+  The \emph{embeddingDims} function returns the embedding
+  dimensions on which the correlation sum function has been
+  evaluated.
 
   The \emph{plot} function shows two graphics of the
   correlation integral: a log-log plot of the correlation
@@ -126,7 +126,7 @@
   log10(C(r)).}
 
   The \emph{estimate} function estimates the correlation
-  dimension of the \emph{corr.dim} object by averagin the
+  dimension of the \emph{corr.dim} object by averaging the
   slopes of the embedding dimensions specified in the
   \emph{use.embeddings} parameter. The slopes are
   determined by performing a linear regression over the

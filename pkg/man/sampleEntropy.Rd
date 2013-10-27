@@ -1,13 +1,22 @@
 \name{sampleEntropy}
+\alias{embeddingDims.sampleEntropy}
 \alias{estimate.sampleEntropy}
-\alias{getSampleEntropy}
+\alias{nlOrder.sampleEntropy}
 \alias{plot.sampleEntropy}
+\alias{radius.sampleEntropy}
 \alias{sampleEntropy}
+\alias{sampleEntropyFunction.sampleEntropy}
 \title{Sample Entropy (also known as Kolgomorov-Sinai Entropy)}
 \usage{
   sampleEntropy(corrDim.object, do.plot = TRUE)
 
-  getSampleEntropy(x)
+  \method{sampleEntropyFunction}{sampleEntropy} (x)
+
+  \method{nlOrder}{sampleEntropy} (x)
+
+  \method{radius}{sampleEntropy} (x)
+
+  \method{embeddingDims}{sampleEntropy} (x)
 
   \method{plot}{sampleEntropy} (x, ...)
 
@@ -41,14 +50,27 @@
   embedding dimensions ( \emph{embedding.dims}) and radius
   (\emph{radius}) for which the sample entropy has been
   computed, and the order of the sample entropy
-  (\emph{order}). The sample entropy is stored as a matrix
-  in which each row contains the computations for a given
-  embedding dimension and each column stores the
+  (\emph{entr.order}). The sample entropy is stored as a
+  matrix in which each row contains the computations for a
+  given embedding dimension and each column stores the
   computations for a given radius.
 
-  The \emph{getSampleEntropy} returns the sample entropy
-  function depending of the radius used for the
-  computations.
+  The \emph{sampleEntropyFunction} returns the sample
+  entropy function \eqn{h_q(m,r)} used for the
+  computations. The sample entropy function is represented
+  by a matrix. Each row represents a given embedding
+  dimension whereas that each column representes a
+  different radius.
+
+  The \emph{nlOrder} function returns the order of the
+  sample entropy.
+
+  The \emph{radius} function returns the radius on which
+  the sample entropy function has been evaluated.
+
+  The \emph{embeddingDims} function returns the embedding
+  dimensions on which the sample entropy function has been
+  evaluated.
 
   The \emph{plot} function shows the graphics for the
   sample entropy.

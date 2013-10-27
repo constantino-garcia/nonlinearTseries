@@ -1,17 +1,17 @@
 \name{dfa}
 \alias{dfa}
 \alias{estimate.dfa}
-\alias{getFluctuationFunction}
-\alias{getWindowSizes}
+\alias{fluctuationFunction.dfa}
 \alias{plot.dfa}
+\alias{windowSizes.dfa}
 \title{Detrended Fluctuation Analysis}
 \usage{
   dfa(time.series, window.size.range = c(10, 300),
     npoints = 20, do.plot = TRUE)
 
-  getWindowSizes(x)
+  \method{windowSizes}{dfa} (x)
 
-  getFluctuationFunction(x)
+  \method{fluctuationFunction}{dfa} (x)
 
   \method{plot}{dfa} (x, ...)
 
@@ -44,11 +44,12 @@
 \value{
   A \emph{dfa} object.
 
-  The \emph{getWindowSizes} function returns the windows
-  sizes used to detrend the time series
+  The \emph{windowSizes} function returns the windows sizes
+  used to detrend the time series.
 
-  The \emph{getFluctuationFunction} function returns the
-  Fluctuation function of the DFA
+  The \emph{fluctuationFunction} function returns the
+  fluctuation function obtained in the DFA represented by
+  the \emph{dfa} object.
 }
 \description{
   Functions for performing Detrended Fluctuation Analysis

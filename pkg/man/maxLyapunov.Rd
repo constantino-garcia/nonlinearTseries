@@ -1,26 +1,31 @@
 \name{maxLyapunov}
+\alias{divergence.maxLyapunov}
+\alias{divTime.maxLyapunov}
+\alias{embeddingDims.maxLyapunov}
 \alias{estimate.maxLyapunov}
-\alias{getDivergence}
-\alias{getTime}
 \alias{maxLyapunov}
 \alias{plot.maxLyapunov}
 \title{Maximum lyapunov exponent}
 \usage{
   maxLyapunov(time.series, takens = NULL,
-    embedding.dim = 2, time.lag = 1, radius,
-    theiler.window = 1, min.neighs = 5,
+    min.embedding.dim = 2,
+    max.embedding.dim = min.embedding.dim, time.lag = 1,
+    radius, theiler.window = 1, min.neighs = 5,
     min.ref.points = 500, max.time.steps = 10,
     number.boxes = NULL, sampling.period = 1,
     do.plot = TRUE)
 
-  getTime(x)
+  \method{divTime}{maxLyapunov} (x)
 
-  getDivergence(x)
+  \method{embeddingDims}{maxLyapunov} (x)
+
+  \method{divergence}{maxLyapunov} (x)
 
   \method{plot}{maxLyapunov} (x, ...)
 
   \method{estimate}{maxLyapunov} (x,
-    regression.range = NULL, do.plot = FALSE, ...)
+    regression.range = NULL, do.plot = FALSE,
+    use.embeddings = NULL, ...)
 }
 \arguments{
   \item{takens}{A matrix containing the Takens' vectors
@@ -34,9 +39,15 @@
   \item{time.series}{The original time series from which
   the maximal Lyapunov exponent will be estimated}
 
-  \item{embedding.dim}{Integer denoting the dimension in
-  which we shall embed the time series (see
+  \item{min.embedding.dim}{Integer denoting the minimum
+  dimension in which we shall embed the time.series (see
   \link{buildTakens}).}
+
+  \item{max.embedding.dim}{Integer denoting the maximum
+  dimension in which we shall embed the time.series (see
+  \link{buildTakens}).Thus, we shall estimate the Lyapunov
+  exponent between \emph{min.embedding.dim} and
+  \emph{max.embedding.dim}.}
 
   \item{time.lag}{Integer denoting the number of time steps
   that will be use to construct the Takens' vectors (see
@@ -81,6 +92,10 @@
   \item{regression.range}{Vector with 2 components denoting
   the range where the function will perform linear
   regression.}
+
+  \item{use.embeddings}{A numeric vector specifying which
+  embedding dimensions should the \emph{estimate} function
+  use to compute the Lyapunov exponent.}
 }
 \value{
   A list with three components named \eqn{time} and
@@ -88,22 +103,29 @@
   temporal interval where the system evolves. It ranges
   from 0 to \emph{\eqn{max.time.steps \cdot
   sampling.period}{max.time.steps * sampling.period}}.
-  \eqn{s.function} is a vector containing the values of the
-  \eqn{S(t)} for each t in the time vector.
+  \eqn{s.function} is a matrix containing the values of the
+  \eqn{S(t)} for each t in the time vector(the columns) and
+  each embedding dimension (the rows).
 
-  The \emph{getTime} function returns the time in which the
-  divergence of close trajectories was computed
+  The \emph{divTime} function returns the time in which the
+  divergence of close trajectories was computed.
 
-  The \emph{getDivergence} function returns the rate of
+  The \emph{embeddingDims} function returns the embeddings
+  in which the divergence of close trajectories was
+  computed
+
+  The \emph{divergence} function returns the rate of
   divergence of close trajectories needed for the maximum
-  Lyapunov exponent estimation
+  Lyapunov exponent estimation.
 
   In order to obtain an estimation of the Lyapunov exponent
   the user can use the \emph{estimate} function. The
-  \eqn{estimate} function allows the user to obtain the
-  maximal Lyapunov exponent obtained by performing a linear
-  regression of \eqn{S(t)} on \eqn{t} in the region
-  especified with the \emph{regression.range}.
+  \eqn{estimate} function allows the user to obtain an
+  estimation of the maximal Lyapunov exponent by averaging
+  the slopes of the embedding dimensions specified in the
+  \emph{use.embeddings} parameter. The slopes are
+  determined by performing a linear regression over the
+  radius' range specified in \emph{regression.range}
 }
 \description{
   Functions for estimating the maximal Lyapunov exponent of
@@ -137,7 +159,10 @@
   an estimate of the maximal Lyapunov exponent, but the
   user must check that there is a linear region in the
   \eqn{S(t) Vs t}. If such a region does not exist, the
-  estimation should be discarded.
+  estimation should be discarded. The computations should
+  be performed for several embedding dimensions in order to
+  check that the Lyapunov exponent does not depend on the
+  embedding dimension.
 }
 \author{
   Constantino A. Garcia

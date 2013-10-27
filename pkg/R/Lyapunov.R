@@ -1,8 +1,8 @@
 ################################################################################
 #' Maximum lyapunov exponent
 #' @description
-#' Functions for estimating the maximal Lyapunov exponent of a dynamical system from 1-dimensional time series
-#' using Takens' vectors.
+#' Functions for estimating the maximal Lyapunov exponent of a dynamical system
+#'  from 1-dimensional time series using Takens' vectors.
 #' @details It is a well-known fact that close trajectories diverge exponentially fast in a chaotic system. The 
 #' averaged exponent that determines the divergence rate is called the Lyapunov exponent (usually denoted with \eqn{\lambda}{lambda}). 
 #' If \eqn{\delta(0)}{delta(0)} is the distance between two Takens' vectors in the embedding.dim-dimensional space, we expect that the distance
@@ -15,13 +15,16 @@
 #' The user should plot \eqn{S(t) Vs t} when looking for the maximal lyapunov exponent and, if for some temporal range
 #' \eqn{S(t)} shows a linear behaviour, its slope is an estimate of the maximal Lyapunov exponent per unit of time. The estimate
 #'  routine allows the user to get always an estimate of the maximal Lyapunov exponent, but the user must check that there is a linear region in the  
-#' \eqn{S(t) Vs t}. If such a region does not exist, the estimation should be discarded.
+#' \eqn{S(t) Vs t}. If such a region does not exist, the estimation should be discarded. The computations should be performed
+#' for several embedding dimensions in order to check that the Lyapunov exponent does not depend on the embedding dimension.
 #' @param takens A matrix containing the Takens' vectors (one per row) that will be used to estimate the maximal Lyapunov
 #' exponent (see \link{buildTakens}). If the Takens' vectors are not specified, the user must specify the time series
 #' (time.series), the embedding dimension (embedding.dim) and the time lag (time.lag) that
 #' shall be used to construct the Takens' vectors.
 #' @param time.series The original time series from which the maximal Lyapunov exponent will be estimated
-#' @param embedding.dim Integer denoting the dimension in which we shall embed the time series (see \link{buildTakens}).
+#' @param min.embedding.dim Integer denoting the minimum dimension in which we shall embed the time.series (see \link{buildTakens}). 
+#' @param max.embedding.dim Integer denoting the maximum dimension in which we shall embed the time.series (see \link{buildTakens}).Thus,
+#' we shall estimate the Lyapunov exponent between \emph{min.embedding.dim} and \emph{max.embedding.dim}.
 #' @param time.lag Integer denoting the number of time steps that will be use to construct the 
 #' Takens' vectors (see \link{buildTakens}).
 #' @param radius Maximum distance in which will look for nearby trajectories.
@@ -37,10 +40,13 @@
 #' @param sampling.period Sampling period of the time series. When dealing with a discrete
 #' system, the \emph{sampling.period} should be set to 1.
 #' @param do.plot Logical value. If TRUE (default value), a plot of \eqn{S(t)} Vs  \eqn{t} is shown.
-#' @return A list with three components named  \eqn{time} and \eqn{s.function}. \eqn{time}
-#' is a vector containing the temporal interval where the system evolves. It ranges from 0 to \emph{\eqn{max.time.steps \cdot sampling.period}{max.time.steps * sampling.period}}.
-#' \eqn{s.function} is a vector containing the 
-#' values of the \eqn{S(t)} for each t in the time vector.
+#' @return A list with three components named  \eqn{time} and \eqn{s.function}.
+#' \eqn{time} is a vector containing the temporal interval where the system 
+#' evolves. It ranges from 0 to 
+#' \emph{\eqn{max.time.steps \cdot sampling.period}{max.time.steps * sampling.period}}.
+#' \eqn{s.function} is a matrix containing the 
+#' values of the \eqn{S(t)} for each t in the time vector(the columns) and each 
+#' embedding dimension (the rows).
 #' @references  
 #' Eckmann, Jean-Pierre and Kamphorst, S Oliffson and Ruelle, David and Ciliberto, S and others. Liapunov exponents from time series.
 #' Physical Review A, 34-6, 4971--4979, (1986).
@@ -52,25 +58,31 @@
 #' @export maxLyapunov
 #' @exportClass maxLyapunov
 #' @useDynLib nonlinearTseries
-maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,theiler.window=1,min.neighs=5,
-                     min.ref.points=500,max.time.steps=10,number.boxes=NULL,sampling.period=1,do.plot=TRUE){
-  #C parameters
-  if (is.null(takens)) takens=buildTakens(time.series,embedding.dim=embedding.dim,time.lag=time.lag)
-  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(time.series, radius)
-  numberTakens=nrow(takens)
-  Sdn=rep(0,max.time.steps+1)
+maxLyapunov=function(time.series,takens=NULL,
+                     min.embedding.dim=2,
+                     max.embedding.dim=min.embedding.dim,
+                     time.lag=1,radius,theiler.window=1,min.neighs=5,
+                     min.ref.points=500,max.time.steps=10,number.boxes=NULL,
+                     sampling.period=1,do.plot=TRUE){
   
-  sol=.C("maxLyapunov",timeSeries=as.double(time.series),takens=as.double(takens),
-                   tau=as.integer(time.lag),numberTakens=as.integer(numberTakens),
-                   embeddingD=as.integer(embedding.dim),eps=as.double(radius),
-                   Sdn=as.double(Sdn),nmax=as.integer(max.time.steps),
-                   nminRP=as.integer(min.ref.points),neighMin=as.integer(min.neighs),
-                   numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),
-                   PACKAGE="nonlinearTseries")
-
-  # create lyapunov structure
+  embeddings = min.embedding.dim:max.embedding.dim
+  n.embeddings = length(embeddings)
+  s.function = matrix(0, ncol = (max.time.steps+1), nrow = n.embeddings)
+  dimnames(s.function) = list(embeddings,0:max.time.steps)
+  for (m in embeddings){
+    s.function[as.character(m),] = maxLyapunovSingleDimension(
+      time.series,takens,
+      m,
+      time.lag, radius,theiler.window,
+      min.neighs,min.ref.points,
+      max.time.steps,number.boxes,
+      sampling.period)
+  }
+  
   time=(0:max.time.steps)*sampling.period
-  max.lyapunov.structure = list(time=time,s.function=sol$Sdn)
+  max.lyapunov.structure = list(time=time,s.function=s.function, 
+                                embedding.dims = min.embedding.dim:max.embedding.dim)
+  
   class(max.lyapunov.structure) = "maxLyapunov"
   #plot
   if (do.plot){
@@ -78,22 +90,83 @@ maxLyapunov=function(time.series,takens=NULL,embedding.dim=2,time.lag=1,radius,t
   }
   #return results
   return (max.lyapunov.structure)
+  
 }
 
-#' @return The \emph{getTime} function returns the 
-#' time in which the divergence of close trajectories was computed
+# Private function for the computation of the s.function of a given 
+# embedding dimension
+maxLyapunovSingleDimension=function(time.series,takens,embedding.dim,time.lag,
+                                    radius,theiler.window,min.neighs,
+                                    min.ref.points,max.time.steps,number.boxes,
+                                    sampling.period,do.plot){
+  #C parameters
+  if (is.null(takens)) takens=buildTakens(time.series,embedding.dim=embedding.dim,time.lag=time.lag)
+  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(time.series, radius)
+  numberTakens=nrow(takens)
+  Sdn=rep(0,max.time.steps+1)
+  
+  sol=.C("maxLyapunov",timeSeries=as.double(time.series),takens=as.double(takens),
+         tau=as.integer(time.lag),numberTakens=as.integer(numberTakens),
+         embeddingD=as.integer(embedding.dim),eps=as.double(radius),
+         Sdn=as.double(Sdn),nmax=as.integer(max.time.steps),
+         nminRP=as.integer(min.ref.points),neighMin=as.integer(min.neighs),
+         numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),
+         PACKAGE="nonlinearTseries")
+  
+  # create lyapunov structure
+  return(sol$Sdn  )
+}
+
+#' Returns the time in which the divergence of close trajectories was computed 
+#' in order to estimate the maximum Lyapunov exponent.
+#' @param x A \emph{maxLyapunov} object.
+#' @return A numeric vector representing the time in which the divergence of
+#' close trajectories was computed.
+#' @seealso \code{\link{maxLyapunov}}
+#' @export divTime
+divTime = function(x){
+  UseMethod("divTime")
+}
+
+
+#' @return The \emph{divTime} function returns the 
+#' time in which the divergence of close trajectories was computed.
 #' @rdname maxLyapunov
-#' @export getTime
-getTime = function(x){
+#' @method divTime maxLyapunov
+#' @S3method divTime maxLyapunov
+divTime.maxLyapunov = function(x){
   return (x$time)
 }
 
-#' @return The \emph{getDivergence} function returns the 
-#' rate of divergence of close trajectories needed for the maximum Lyapunov
-#' exponent estimation
+#' @return The \emph{embeddingDims} function returns the 
+#' embeddings in which the divergence of close trajectories was computed
 #' @rdname maxLyapunov
-#' @export getDivergence
-getDivergence = function(x){
+#' @method embeddingDims maxLyapunov
+#' @S3method embeddingDims maxLyapunov
+embeddingDims.maxLyapunov = function(x){
+  return (embeddingDims.default(x))
+}
+
+#' Returns the rate of divergence of close trajectories needed for the maximum Lyapunov
+#' exponent estimation.
+#' @param x A \emph{maxLyapunov} object.
+#' @return A numeric matrix representing the time in which the divergence of
+#' close trajectories was computed. Each row represents an embedding dimension
+#' whereas that each column represents an specific moment of time.
+#' @seealso \code{\link{maxLyapunov}}
+#' @export divergence
+divergence = function(x){
+  UseMethod("divergence")
+}
+
+
+#' @return The \emph{divergence} function returns the 
+#' rate of divergence of close trajectories needed for the maximum Lyapunov
+#' exponent estimation.
+#' @rdname maxLyapunov
+#' @method divergence maxLyapunov
+#' @S3method divergence maxLyapunov
+divergence.maxLyapunov = function(x){
   return (x$s.function)
 }
 
@@ -104,22 +177,39 @@ getDivergence = function(x){
 #' @S3method plot maxLyapunov 
 #' @method plot
 plot.maxLyapunov= function(x, ...){
-  plot(x$time[-1],x$s.function[-1],
-       xlab="t",ylab=expression("S(t)"),
-       main="Estimating maximal Lyapunov exponent")
+  embeddings = x$embedding.dims
+  n.embeddings = length(embeddings)
+  for (i in 1:n.embeddings){
+    if (i!=1){
+      lines(x$time[-1],x$s.function[as.character(embeddings[[i]]),-1],
+            type = "p", col = i)
+    }else{# first time: use plot
+      plot(x$time[-1],x$s.function[as.character(embeddings[[i]]),-1],
+           xlab="t",ylab=expression("S(t)"),
+           main="Estimating maximal Lyapunov exponent")    
+    }
+  }
+  legend("bottomright",col=1:n.embeddings,lty=rep(1,n.embeddings), 
+         lwd=rep(2.5,n.embeddings), legend=embeddings,title="Embedding dimension")
+  
 }
 
 #' @return In order to obtain an estimation of the Lyapunov exponent the user can use the
 #' \emph{estimate} function. The  \eqn{estimate} function allows the user to obtain
-#' the maximal Lyapunov exponent obtained by performing a linear regression of \eqn{S(t)} on  \eqn{t}
-#' in the region especified with the \emph{regression.range}.
+#' an estimation of the maximal Lyapunov exponent by averaging the slopes of the
+#' embedding dimensions specified in the \emph{use.embeddings} parameter. The
+#' slopes are determined by performing a linear regression
+#' over the radius' range specified in \emph{regression.range}
 #' @param x A \emph{maxLyapunov} object.
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
+#' @param use.embeddings A numeric vector specifying which embedding dimensions should 
+#' the \emph{estimate} function use to compute the Lyapunov exponent.
 #' @rdname maxLyapunov
 #' @S3method estimate maxLyapunov 
 #' @method estimate maxLyapunov
 #' @method estimate
-estimate.maxLyapunov= function(x,regression.range = NULL,do.plot=FALSE,...){
+estimate.maxLyapunov= function(x,regression.range = NULL,
+                               do.plot=FALSE,use.embeddings = NULL,...){
   if (is.null(regression.range)){
     min.time = x$time[[2]] # the first position is always 0
     max.time = tail(x$time,1)
@@ -127,21 +217,41 @@ estimate.maxLyapunov= function(x,regression.range = NULL,do.plot=FALSE,...){
     min.time = regression.range[[1]]
     max.time = regression.range[[2]]
   }
-  
+  if (!is.null(use.embeddings)){
+    s.function = x$s.function[as.character(use.embeddings),]
+  }else{
+    use.embeddings = x$embedding.dims
+    s.function=x$s.function
+  }
   
   indx = which(x$time >= min.time & x$time <= max.time )
-  y.values = x$s.function[indx]
   x.values = x$time[indx]
-  fit=lm(y.values~x.values)
-  lyapunov.estimate=fit$coefficients[[2]]
-  if (do.plot){
-    plot(x)
-    lines(x.values,fit$fitted.values,col=4)
-    legend("bottomright",col=c(1,4),lty=c(1,1),lwd=c(2.5,2.5), legend=c("S(t) Vs. t", 
-                                                                        paste("lyapunov estimate =", sprintf("%.2f",lyapunov.estimate))))
+  lyapunov.estimate = c()
+  n.embeddings = length(use.embeddings)
+  for (i in 1:n.embeddings){
+    current.embedding = use.embeddings[[i]]
+    y.values = s.function[as.character(current.embedding),indx]
+    fit=lm(y.values~x.values)
+    lyapunov.estimate=c(lyapunov.estimate,fit$coefficients[[2]])
+    if (do.plot){
+      if (i!=1){
+        lines(x$time,s.function[as.character(current.embedding),], type = "p",
+              col=i)
+      }else{
+        plot(x$time,s.function[as.character(current.embedding),], xlab="t",ylab="S(t)",
+             main="Estimating maximal Lyapunov exponent",ylim = range(s.function))  
+      }
+      lines(x.values,fit$fitted.values,col=4)
+    }
   }
+  lyapunov.estimate = mean(lyapunov.estimate)
+  if (do.plot){
+    
+    legend("bottomright",col=1:n.embeddings,lty=rep(1,n.embeddings), 
+           lwd=rep(2.5,n.embeddings), legend=use.embeddings,title="Embedding dimension")
+  }
+  
+  
   return (lyapunov.estimate)
 }
-
-
 

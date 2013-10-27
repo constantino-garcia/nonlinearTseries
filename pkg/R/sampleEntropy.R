@@ -15,7 +15,7 @@
 #' @param do.plot do.plot Logical value. If TRUE (default value), a plot of the sample entropy is shown.
 #' @return A \emph{sampleEntropy} object that contains a list storing the sample entropy (\emph{sample.entropy}),
 #' the embedding dimensions ( \emph{embedding.dims}) and radius (\emph{radius}) for which the sample entropy has 
-#' been computed, and the order of the sample entropy (\emph{order}). The sample entropy
+#' been computed, and the order of the sample entropy (\emph{entr.order}). The sample entropy
 #' is stored as a matrix in which each row contains the computations for a given embedding dimension and 
 #' each column stores the computations for a given radius.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
@@ -34,16 +34,17 @@
 #' @export sampleEntropy
 #' @exportClass sampleEntropy
 sampleEntropy = function (corrDim.object, do.plot=TRUE){ 
-  radius = getRadius(corrDim.object)
-  corr.matrix = getCorrMatrix(corrDim.object)
-  embeddings = getEmbeddingDims(corrDim.object)
+  radius = radius(corrDim.object)
+  corr.matrix = corrMatrix(corrDim.object)
+  embeddings = embeddingDims(corrDim.object)
   number.embeddings = length(embeddings) - 1
   entropy = matrix(0,nrow= number.embeddings,ncol=length(radius))
   for (i in 1:number.embeddings){
     entropy[i,] = log(corr.matrix[i,]/corr.matrix[i+1,])
   }
   dimnames(entropy)=list(head(embeddings,-1),radius)
-  sample.entropy = list(sample.entropy = entropy,embedding.dims = head(embeddings,-1),order=getOrder(corrDim.object), radius=radius)
+  sample.entropy = list(sample.entropy = entropy,embedding.dims = head(embeddings,-1),
+                        entr.order=nlOrder(corrDim.object), radius=radius)
   class(sample.entropy)="sampleEntropy"
   
   if (do.plot){
@@ -54,14 +55,54 @@ sampleEntropy = function (corrDim.object, do.plot=TRUE){
 
 }
 
-#' @return The \emph{getSampleEntropy} returns the sample entropy function depending 
-#' of the radius used for the computations.
+#' Returns the sample entropy function \eqn{h_q(m,r)} used for the computations
+#' of the sample entropy.
+#' @param x A \emph{sampleEntropy} object.
+#' @return A numeric matrix representing the sample entropy function
+#' \eqn{h_q(m,r)} obtained in #' the sample entropy computations represented
+#' by the \emph{sampleEntropy} object.
+#' @seealso \code{\link{sampleEntropy}}
+#' @export sampleEntropyFunction
+sampleEntropyFunction = function(x){
+  UseMethod("sampleEntropyFunction")
+}
+
+#' @return The \emph{sampleEntropyFunction} returns the sample entropy function
+#' \eqn{h_q(m,r)} used for the computations. The sample
+#' entropy function is represented by a matrix. Each row represents a given
+#' embedding dimension whereas that each column representes a different radius.
 #' @rdname sampleEntropy
-#' @export getSampleEntropy
-getSampleEntropy = function(x){
+#' @method sampleEntropyFunction sampleEntropy
+#' @S3method sampleEntropyFunction sampleEntropy
+sampleEntropyFunction.sampleEntropy = function(x){
   return (x$sample.entropy)
 }
 
+#' @return The \emph{nlOrder} function returns the order of the sample entropy.
+#' @rdname sampleEntropy
+#' @method nlOrder sampleEntropy
+#' @S3method nlOrder sampleEntropy
+nlOrder.sampleEntropy = function(x){
+  return(x$entr.order)
+}
+
+#' @return The \emph{radius} function returns the radius on which the sample entropy
+#'  function has been evaluated.
+#' @rdname sampleEntropy
+#' @method radius sampleEntropy
+#' @S3method radius sampleEntropy
+radius.sampleEntropy = function(x){
+  return (radius.default(x))
+}
+
+#' @return The \emph{embeddingDims} function returns the embedding dimensions 
+#' on which the sample entropy function has been evaluated.
+#' @rdname sampleEntropy
+#' @method embeddingDims sampleEntropy
+#' @S3method embeddingDims sampleEntropy
+embeddingDims.sampleEntropy = function(x){
+  return (embeddingDims.default(x))
+}
 
 
 #' @return The \emph{plot} function shows the graphics for the sample entropy.
@@ -72,7 +113,7 @@ getSampleEntropy = function(x){
 plot.sampleEntropy = function(x,...){
   xlab = expression("ln("*epsilon*")")
   ylab = expression(h[q]*"("*epsilon*")")
-  main = expression("Sample entropy (q = "*x$order*")"*h[x$order]*"("*epsilon*")")
+  main = expression("Sample entropy (q = "*x$entr.order*")"*h[x$entr.order]*"("*epsilon*")")
   
   number.embeddings = length(x$embedding.dims)
   
@@ -112,7 +153,7 @@ estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,use.embed
   if (is.null(regression.range)){
     regression.range = range(x$radius)
   }  
-  if (!is.null(use.embeddings)){
+  if (is.null(use.embeddings)){
     use.embeddings = x$embedding.dims
   }
   #select only embeddings used in the object
@@ -130,7 +171,7 @@ estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,use.embed
   if (do.plot){
     #create new sample entropy object with the embedding.dims and radius range used
     x = list(sample.entropy = x$sample.entropy[as.character(use.embeddings),],
-             embedding.dims = use.embeddings,order=x$order, radius=x$radius)
+             embedding.dims = use.embeddings,entr.order=x$entr.order, radius=x$radius)
     class(x)="sampleEntropy"
     plotSampleEntropyEstimate(x,sample.entropy.estimate)
   }
@@ -140,8 +181,8 @@ estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,use.embed
 plotSampleEntropyEstimate = function(sampleEntropy.object,sample.entropy.estimate){
   xlab = expression("ln("*epsilon*")")
   ylab = expression(h[q]*"("*epsilon*")")
-  main = expression("Sample entropy (q = "*sampleEntropy.object$order*")"*h[sampleEntropy.object$order]*"("*epsilon*")")
-  main=paste("Sample entropy (q = ",sampleEntropy.object$order,")")
+  main = expression("Sample entropy (q = "*sampleEntropy.object$entr.order*")"*h[sampleEntropy.object$entr.order]*"("*epsilon*")")
+  main=paste("Sample entropy (q = ",sampleEntropy.object$entr.order,")")
   number.embeddings = length(sampleEntropy.object$embedding.dims)
   
   current.par = par()

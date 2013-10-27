@@ -1,5 +1,5 @@
 \name{spaceTimePlot}
-\alias{getContourLines}
+\alias{contourLines.spaceTimePlot}
 \alias{plot.spaceTimePlot}
 \alias{spaceTimePlot}
 \title{Space Time plot}
@@ -9,7 +9,7 @@
     time.step = 1, number.time.steps = NULL,
     numberPercentages = 10, do.plot = TRUE)
 
-  getContourLines(x)
+  \method{contourLines}{spaceTimePlot} (x)
 
   \method{plot}{spaceTimePlot} (x, ...)
 }
@@ -60,7 +60,10 @@
   have to go to find a given fraction of neighbour pairs
   (the rows), depending on their temporal separation (the
   colums). This matrix can be accessed by using the
-  \emph{getContourlines} method.
+  \emph{contourlines} method.
+
+  The \emph{contourLines} function returns the contour
+  lines of the space time plot.
 }
 \description{
   The space time separation is a broadly-used method of

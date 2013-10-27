@@ -1,24 +1,28 @@
 \name{infDim}
+\alias{embeddingDims.infDim}
 \alias{estimate.infDim}
-\alias{getFixedMass}
-\alias{getLogRadius}
+\alias{fixedMass.infDim}
 \alias{infDim}
+\alias{logRadius.infDim}
 \alias{plot.infDim}
 \title{Information dimension}
 \usage{
-  infDim(time.series, embedding.dim = 2, time.lag = 1,
+  infDim(time.series, min.embedding.dim = 2,
+    max.embedding.dim = min.embedding.dim, time.lag = 1,
     min.fixed.mass, max.fixed.mass,
     number.fixed.mass.points = 10, radius,
     increasing.radius.factor = sqrt(2),
     number.boxes = NULL, number.reference.vectors,
     theiler.window = 1, kMax = 100, do.plot = TRUE)
 
-  getFixedMass(x)
+  \method{fixedMass}{infDim} (x)
 
-  getLogRadius(x)
+  \method{fixedMass}{infDim} (x)
+
+  \method{embeddingDims}{infDim} (x)
 
   \method{estimate}{infDim} (x, regression.range = NULL,
-    do.plot = TRUE, ...)
+    do.plot = TRUE, use.embeddings = NULL, ...)
 
   \method{plot}{infDim} (x, ...)
 }
@@ -26,9 +30,15 @@
   \item{time.series}{The original time series from which
   the information dimension will be estimated.}
 
-  \item{embedding.dim}{Integer denoting the dimension in
-  which we shall embed the time.series (see
-  \code{\link{buildTakens}}).}
+  \item{min.embedding.dim}{Integer denoting the minimum
+  dimension in which we shall embed the time.series (see
+  \link{buildTakens}).}
+
+  \item{max.embedding.dim}{Integer denoting the maximum
+  dimension in which we shall embed the time.series (see
+  \link{buildTakens}).Thus, we shall estimate the
+  information dimension between \emph{min.embedding.dim}
+  and \emph{max.embedding.dim}.}
 
   \item{time.lag}{Integer denoting the number of time steps
   that will be use to construct the Takens' vectors (see
@@ -84,6 +94,10 @@
   the range where the function will perform linear
   regression.}
 
+  \item{use.embeddings}{A numeric vector specifying which
+  embedding dimensions should the \emph{estimate} function
+  use to compute the information dimension.}
+
   \item{...}{Additional parameters.}
 }
 \value{
@@ -92,24 +106,29 @@
   \emph{log.radius} contains the average log10(radius) in
   which the \emph{fixed.mass} can be found.
 
-  The \emph{getFixedMass} function returns the fixed mass
-  vector used in the information dimension algorithm
+  The \emph{fixedMass} function returns the fixed mass
+  vector used in the information dimension algorithm.
 
-  The \emph{getLogRadius} function returns average
+  The \emph{logRadius} function returns the average
   log(radius) computed on the information dimension
-  algorithm
+  algorithm.
+
+  The \emph{embeddingDims} function returns the embeddings
+  in which the information dimension was computed
 
   The 'estimate' function estimates the information
-  dimension of the 'infDim' object by performing a linear
-  regression over the fixed mass' range specified in
-  'regression.range'. If do.plot is TRUE, a graphic of the
-  regression over the data is shown.
+  dimension of the 'infDim' object by by averaging the
+  slopes of the embedding dimensions specified in the
+  \emph{use.embeddings} parameter. The slopes are
+  determined by performing a linear regression over the
+  fixed mass' range specified in 'regression.range'. If
+  do.plot is TRUE, a graphic of the regression over the
+  data is shown.
 
-  \code{The 'plot' function shows two graphics of the
-  information dimension estimate: a graphic of
-  <log10(radius)> Vs fixed mass and a graphic of the local
-  slopes of the information dimension Vs the fixed mass,
-  both in a semi-log scale.}
+  The 'plot' function shows two graphics of the information
+  dimension estimate: a graphic of <log10(radius)> Vs fixed
+  mass and a graphic of the local slopes of the information
+  dimension Vs the fixed mass, both in a semi-log scale.
 }
 \description{
   Functions for estimating the information dimension of a
@@ -126,7 +145,10 @@
   \eqn{p(r)} is the probability of finding a neighbour in a
   neighbourhood of size \eqn{r} and <> is the mean value.
   Thus, the information dimension specifies how the average
-  Shannon information scales with the radius \eqn{r}.
+  Shannon information scales with the radius \eqn{r}. The
+  user should compute the information dimension for
+  different embedding dimensions for checking if
+  \eqn{D_1}{D1} saturates.
 
   In order to estimate \eqn{D_1}{D1}, the algorithm looks
   for the scaling behaviour of the the average radius that
@@ -146,21 +168,7 @@
 
   Even with these improvements, the calculations for the
   information dimension are heavier than those needed for
-  the correlation dimension. Thus, this method only
-  explores one embedding dimension. However, the user
-  should run the method for different embedding dimensions
-  for checking if \eqn{D_1}{D1} saturates.
-}
-\examples{
-\dontrun{
-s = sinaiMap(a=0.3,n.sample=5000,start=c(0.23489,0.8923),do.plot=FALSE)
-inf.dim = infDim(time.series = s$x, embedding.dim = 2, time.lag = 1,
-                       min.fixed.mass=0.01, max.fixed.mass=0.03,
-                       number.fixed.mass.points=1000, radius =0.1,
-                       increasing.radius.factor = sqrt(2), number.boxes=100,
-                       number.reference.vectors=100, theiler.window = 200,
-                       kMax = 100,do.plot=FALSE)
-estimate(inf.dim)}
+  the correlation dimension.
 }
 \author{
   Constantino A. Garcia

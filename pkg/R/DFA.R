@@ -63,7 +63,7 @@ dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE){
   #each of the segments by a least-square fit
   #of the time.series and compute the error
   for (i in 1:npoints){
-    fluctuation.function[[i]]=fluctuationFunction(Y,f,window.sizes[[i]])
+    fluctuation.function[[i]]=calculateFluctuationFunction(Y,f,window.sizes[[i]])
   }
   
   #create dfa object
@@ -79,21 +79,45 @@ dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE){
 }
 
 
-#' @return The \emph{getWindowSizes} function returns the windows sizes used
-#' to detrend the time series
+
+#' Returns the window sizes used for DFA in a \emph{dfa} object.
+#' @param x A \emph{dfa} object.
+#' @return The \emph{windowSizes} function returns the windows sizes used
+#' to detrend the time series in the DFA. 
+#' @seealso \code{\link{dfa}}
+#' @export windowSizes
+windowSizes = function(x){
+  UseMethod("windowSizes")
+}
+
+#' @return The \emph{windowSizes} function returns the windows sizes used
+#' to detrend the time series. 
 #' @rdname dfa
-#' @export getWindowSizes
-#'
-getWindowSizes= function(x){
+#' @method windowSizes dfa
+#' @S3method windowSizes dfa
+windowSizes.dfa = function(x){
   return (x$window.sizes)
 }
 
 
-#' @return The \emph{getFluctuationFunction} function returns the Fluctuation function
-#' of the DFA
+#' Returns the fluctuation function obtained in a DFA and represented by a
+#' \emph{dfa} object.
+#' @param x A \emph{dfa} object.
+#' @return The \emph{fluctuationFunction} function returns the fluctuation function used
+#' obtained in the DFA. 
+#' @seealso \code{\link{dfa}}
+#' @export fluctuationFunction
+fluctuationFunction = function(x){
+  UseMethod("fluctuationFunction")
+}
+
+
+#' @return The \emph{fluctuationFunction} function returns the fluctuation function
+#' obtained in the DFA represented by the \emph{dfa} object.
 #' @rdname dfa
-#' @export getFluctuationFunction
-getFluctuationFunction= function(x){
+#' @method fluctuationFunction dfa
+#' @S3method fluctuationFunction dfa
+fluctuationFunction.dfa = function(x){
   return (x$fluctuation.function)
 }
 
@@ -139,7 +163,7 @@ estimate.dfa = function(x, regression.range = NULL,do.plot=FALSE,...){
 # Y: the profile
 # fint: interpolation formula
 # l: size of the window
-fluctuationFunction=function(Y,fint,l){
+calculateFluctuationFunction=function(Y,fint,l){
   #preliminary definitions
   ldata=length(Y)
   ngroups=floor(ldata/l)

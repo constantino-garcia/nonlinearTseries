@@ -1,0 +1,22 @@
+\name{fixedMass}
+\alias{fixedMass}
+\title{Obtain the fixed mass vector used in the information dimension algorithm.}
+\usage{
+  fixedMass(x)
+}
+\arguments{
+  \item{x}{A \emph{infDim} object.}
+}
+\value{
+  A numeric vector representing the fixed mass vector used
+  in the information dimension algorithm represented by the
+  \emph{infDim} object.
+}
+\description{
+  Obtain the fixed mass vector used in the information
+  dimension algorithm.
+}
+\seealso{
+  \code{\link{infDim}}
+}
+

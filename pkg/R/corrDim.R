@@ -39,7 +39,7 @@
 #' @param time.series The original time series from which the correlation sum will be estimated.
 #' @param min.embedding.dim Integer denoting the minimum dimension in which we shall embed the time.series (see \link{buildTakens}). 
 #' @param max.embedding.dim Integer denoting the maximum dimension in which we shall embed the time.series (see \link{buildTakens}).Thus,
-#' we shall estimate the correlation dimension between min.embedding.dim and max.embedding.dim.
+#' we shall estimate the correlation dimension between \emph{min.embedding.dim} and \emph{max.embedding.dim}.
 #' @param time.lag Integer denoting the number of time steps that will be use to construct the 
 #' Takens' vectors (see \link{buildTakens}).
 #' @param min.radius Minimum distance used to compute the correlation sum C(r).
@@ -122,41 +122,55 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5, ti
   
 }
 
-#' @return The \emph{getOrder} function returns the order of the correlation sum.
+#' @return The \emph{nlOrder} function returns the order of the correlation sum.
 #' @rdname corrDim
-#' @export getOrder
-#' 
-getOrder = function(x){
+#' @method nlOrder corrDim
+#' @S3method nlOrder corrDim
+nlOrder.corrDim = function(x){
   return (x$corr.order)
 }
 
-#' @return The \emph{getCorrMatrix} function returns the correlations matrix  storing the correlation sums that have been computed for all the embedding dimensions.
+
+#' Returns the correlation sums stored in the \emph{corrDim} object
+#' @param x A \emph{corrDim} object.
+#' @return The \emph{corrMatrix} function returns the correlations matrix 
+#' storing the correlation sums that have been computed for all the embedding 
+#' dimensions.
+#' @seealso \code{\link{corrDim}}
+#' @export corrMatrix
+corrMatrix = function(x){
+  UseMethod("corrMatrix")
+}
+
+#' @return The \emph{corrMatrix} function returns the correlations matrix 
+#' storing the correlation sums that have been computed for all the embedding 
+#' dimensions.
 #' @rdname corrDim
-#' @export getCorrMatrix
-#' 
-getCorrMatrix = function(x){
+#' @method corrMatrix corrDim
+#' @S3method corrMatrix corrDim
+corrMatrix.corrDim = function(x){
   return (x$corr.matrix)
 }
 
-
-#' @return The \emph{getRadius} function returns the radius on which the correlation sum function has been evaluated.
+#' @return The \emph{radius} function returns the radius on which the correlation sum function has been evaluated.
 #' @rdname corrDim
-#' @export getRadius
-getRadius = function(x){
-  return (x$radius)
+#' @method radius corrDim
+#' @S3method radius corrDim
+radius.corrDim = function(x){
+  return (radius.default(x))
 }
 
-#' @return The \emph{getEmbeddingDims} function returns the embedding dimensions on which 
+#' @return The \emph{embeddingDims} function returns the embedding dimensions on which 
 #' the correlation sum function has been evaluated.
 #' @rdname corrDim
-#' @export getEmbeddingDims
-getEmbeddingDims = function(x){
-  return (x$embedding.dims)
+#' @method embeddingDims corrDim
+#' @S3method embeddingDims corrDim
+embeddingDims.corrDim = function(x){
+  return (embeddingDims.default(x))
 }
 
 
 #' @rdname corrDim
-#' @method print corrDim
 #' @param ... Additional parameters.
 #' @method print corrDim
 #' @S3method print corrDim
@@ -226,7 +240,7 @@ plot.corrDim = function(x, ...){
 }
 
 #' @return The \emph{estimate} function estimates the correlation dimension of the 
-#' \emph{corr.dim} object by averagin the slopes of the embedding dimensions specified in
+#' \emph{corr.dim} object by averaging the slopes of the embedding dimensions specified in
 #' the \emph{use.embeddings} parameter. The slopes are determined by performing a linear regression
 #' over the radius' range specified in \emph{regression.range}.If \emph{do.plot} is TRUE,
 #' a graphic of the regression over the data is shown.
@@ -240,14 +254,14 @@ plot.corrDim = function(x, ...){
 #' 
 estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,
                           use.embeddings = NULL,...){
-  corr.matrix = getCorrMatrix(x)
+  corr.matrix = corrMatrix(x)
   if (!is.null(use.embeddings)){
     corr.matrix = corr.matrix[as.character(use.embeddings),]
   }
   average=0
   #x axis
-  q = getOrder(x)
-  radius=getRadius(x)
+  q = nlOrder(x)
+  radius=radius(x)
   numberEmbeddings=nrow(corr.matrix)
   log.radius = log10(radius)
   if (is.null(regression.range)){
