@@ -199,7 +199,7 @@ plotSampleEntropyEstimate = function(sampleEntropy.object,sample.entropy.estimat
   par(mar=c(0, 0, 0, 0))
   # c(bottom, left, top, right)
   plot.new()
-  legend("center","groups",ncol=number.embeddings/2,col=1:number.embeddings,lty=rep(1,number.embeddings),
+  legend("center","groups",ncol=ceiling(number.embeddings/2),col=1:number.embeddings,lty=rep(1,number.embeddings),
          lwd=rep(2.5,number.embeddings),
          legend=sampleEntropy.object$embedding.dims,title="Embedding dimension")
   par(mar=current.par$mar)
