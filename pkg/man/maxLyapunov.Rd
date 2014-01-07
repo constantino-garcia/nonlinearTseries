@@ -1,6 +1,6 @@
 \name{maxLyapunov}
-\alias{divergence.maxLyapunov}
 \alias{divTime.maxLyapunov}
+\alias{divergence.maxLyapunov}
 \alias{embeddingDims.maxLyapunov}
 \alias{estimate.maxLyapunov}
 \alias{maxLyapunov}

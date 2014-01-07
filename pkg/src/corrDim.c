@@ -2,6 +2,7 @@
 #include "genericFunctions.h"
 #include <math.h>     
 #include <stdlib.h>
+#include <R.h>
 
 //eps is sorted in decreasing order
 void corrDim(double *timeSeries,int *lenTimeSeries,double *takensDimMin, int* tau, int *numberTakens, int *minEmbeddingD
@@ -77,6 +78,8 @@ void corrDim(double *timeSeries,int *lenTimeSeries,double *takensDimMin, int* ta
 // q >1 
 void generalizedCorrDim(double *timeSeries,int *lenTimeSeries,double *takensDimMin, int* tau, int *numberTakens, int *minEmbeddingD
 ,int *maxEmbeddingD, int *q, double *eps,int* numberEps,int *numberBoxes,int *tdist,double* corrMatrix){
+  
+  
   // auxilar variables  
   int i,j,k,m,ep,posNeigh,lastTakens,lastReferenceVector,numberEmbeddings,lastEpsTocheck,nfound;
   double distance, denom;
@@ -109,7 +112,7 @@ void generalizedCorrDim(double *timeSeries,int *lenTimeSeries,double *takensDimM
       //we can not use it if this t(i) vector do not exist in the following embedded spaces
       //or if we have already count this neighbourhood
       //or they are close in time (do not respect the theiler window)
-      if (abs(posNeigh-i)<=(*tdist)) continue;
+      if ((abs(posNeigh-i)<(*tdist))||(posNeigh>lastTakens)) continue;
       //ok: we may use this vector  
       MAT_ELEM(corrMatrix,0,0,numberEmbeddings)=MAT_ELEM(corrMatrix,0,0,numberEmbeddings)+1.0; 
       // complete the row corresponging to the minimum embedding dimension
