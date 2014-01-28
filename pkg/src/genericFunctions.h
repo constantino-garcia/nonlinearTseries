@@ -11,7 +11,7 @@
 
 //this function modifies the C mod function in order to return only positives
 //values
-inline int MOD(int x,int m){
+static inline int MOD(int x,int m){
  return ( ((x%m) + m) %m);
 }
 
