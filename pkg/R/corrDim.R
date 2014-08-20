@@ -216,10 +216,10 @@ plot.corrDim = function(x, ...){
                           h = (x$corr.order-1)*(log10(x$radius[[2]])-log10(x$radius[[1]]))
                           )),
                     nrow = number.embeddings)
-      dlcm=10^dlcm
+      #dlcm=10^dlcm
       radius.axis = differentiateAxis(x$radius)
       xlab = ifelse(x$corr.order==2,{"Radius r"},{paste("Radius r^",x$corr.order-1,"",sep="")})
-      plot(radius.axis^(x$corr.order-1),dlcm[1,],'b',log="xy",cex=0.3,col=1,ylim=range(dlcm),
+      plot(radius.axis^(x$corr.order-1),dlcm[1,],'b',log="x",cex=0.3,col=1,ylim=range(dlcm),
            xlab=xlab,ylab="Local slopes of the Correlation Sum",main="Local slopes of the Correlation Sum Vs Radius")
       i=2
       while(i <= number.embeddings){
