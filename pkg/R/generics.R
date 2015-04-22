@@ -67,4 +67,15 @@ nlOrder = function(x){
   UseMethod("nlOrder")
 }
 
-
+#' Plot local scaling exponents
+#' @description Plots the local scaling exponents of the correlation sum or
+#'  the average Shannon  information (when computing information dimension). 
+#' @param x An object containing all the information needed for the estimate of
+#' the chaotic invariant.
+#' @param ... Additional graphical parameters.
+#' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+#' @author Constantino A. Garcia
+#' @export plotLocalScalingExp
+plotLocalScalingExp = function(x,...){
+  UseMethod("plotLocalScalingExp")
+}

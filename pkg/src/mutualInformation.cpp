@@ -4,7 +4,7 @@ using namespace Rcpp;
 
  
 // [[Rcpp::export]]
-NumericMatrix tsHistogram(NumericVector& x,int& tlag, int& npartitions) {
+NumericMatrix tsHistogram(NumericVector& x,int& tlag, const int& npartitions) {
   int indy, binx, biny;
   NumericMatrix histogram(npartitions,npartitions);
   
@@ -58,9 +58,10 @@ double mutInfFromHist(NumericMatrix& hist){
 
   
 // [[Rcpp::export]]
-NumericVector mutualInformation(NumericVector& x, int& maxlag,
-int& npartitions){
+NumericVector mutualInformation(const NumericVector& tseries,const int& maxlag,
+const int& npartitions){
   NumericVector mutinf(maxlag + 1);
+  NumericVector x(clone(tseries));
   // reescale time series between 0 and 1
   x = ( x - min(x) ) / ( max(x) - min(x) );
     

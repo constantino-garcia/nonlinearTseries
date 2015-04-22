@@ -52,7 +52,8 @@ void maxLyapunov(double *timeSeries,double *takens, int* tau, int *numberTakens,
           distance0=fabs( (double)(timeSeries[ i+((*embeddingD)-1)*(*tau)]-timeSeries[posNeigh+((*embeddingD)-1)*(*tau)] ));
           if (distance0!=0)
             Saux[k]+=(fabs( (double)(timeSeries[ i+((*embeddingD)-1)*(*tau)+k]-
-            timeSeries[posNeigh+((*embeddingD)-1)*(*tau)+k] ))/distance0);    
+              timeSeries[posNeigh+((*embeddingD)-1)*(*tau)+k] ))/distance0);    
+            
         }        
       }
       //check if there are enough neighbours

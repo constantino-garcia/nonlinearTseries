@@ -6,7 +6,8 @@
 
 double which(double *distVector,int k,int numberValidNeighs){
    R_rsort(distVector,numberValidNeighs);
-   return (distVector[k]);
+   // the k smallest vector is in position k-1
+   return (distVector[k-1]);
 }
 
 /******************************************************************************/
@@ -16,7 +17,6 @@ void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
         double *eps, double *increasingEpsFactor, int *numberBoxes,int *boxes, 
         int *numberReferenceVectors, int* theilerWindow, int* kMax,
         double* averageLogRadius){
-  
   // declare variables
   int error=0;
   int i,iiiii, theilerMargin, k, takensVectorsUsed, remainingReferenceVectors,takensIterator,
@@ -42,6 +42,7 @@ void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
                           + theilerMargin;
     k = (*kMax);
   }
+ 
   /******************************** estimator for ln(fixedMass) ****************/
   // use grassberger estimator for ln (fixedMass). This estimator takes into account the
   // finite nature of the estimation. See Generalizations of the Hausdorff dimension
@@ -62,7 +63,6 @@ void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
 /*************************** iterate ***************************************/
 // Go!: while there is some reference vector with not enough vectors in its neighbourhood
 // we will iterate increasing the neighbourhood radius
-
   for (currentEps =(*eps); remainingReferenceVectors > 0; currentEps*=(*increasingEpsFactor)){
     // use the box assisted algorithm with the current radious
     boxAssistant( takens, numberTakens, embeddingD,
@@ -79,6 +79,7 @@ void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
      // and the takensVectorsUsed that we can use
      for (neighIt=0,numberValidNeighs=0;neighIt<nfound;neighIt++){
        neigh=neighList[neighIt];
+       
        // if the current neighbour does not meet the conditions, move to the next
        if ( (abs(currentReferenceVector-neigh)<=(*theilerWindow)) || (neigh > takensVectorsUsed ) ) continue;
        // the current neighbour does meet the conditions (numberValidNeighs++)!! we must compute the distance
@@ -113,11 +114,13 @@ void informationDimension(double *takens, int *numberTakens, int *embeddingD, do
                           int* theilerWindow, int* kMax,double* averageLogRadiusVector){
   // declare variables
   int i;
-  double fixedMass,averageLogRadius;
+  double fixedMass,averageLogRadius,eps_copy;
   // find the averageLogRadiusVector for each fixedMass value in fixedMassVector
   for (i=0;i<(*fixedMassVectorLength);i++){
     fixedMass = fixedMassVector[i];
-    d1(takens, numberTakens, embeddingD, &fixedMass, eps, increasingEpsFactor,
+    averageLogRadius=0.0;
+    eps_copy = (*eps);
+    d1(takens, numberTakens, embeddingD, &fixedMass, &eps_copy, increasingEpsFactor,   
        numberBoxes, boxes, numberReferenceVectors,theilerWindow, kMax, 
        &averageLogRadius);
     //store the averageLogRadius in the averageLogRadiusVector 

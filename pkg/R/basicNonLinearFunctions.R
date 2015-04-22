@@ -38,7 +38,7 @@ isNeighbour=function(v1,v2,embedding.dim,radius){
 #' Build the Takens' vectors 
 #' @description
 #' This function builds the Takens' vectors from a given time series. The set
-#' of Takens' vector is the result of embedding the time series in a m-dimensional
+#' of Takens' vectors is the result of embedding the time series in a m-dimensional
 #' space. That is, the \eqn{n^{th}} Takens' vector is defined as 
 #' \deqn{T[n]=\{time.series[n], time.series[n+ timeLag],...time.series[n+m*timeLag]\}.}
 #' Taken's theorem states that we can then reconstruct an equivalent dynamical 
@@ -152,10 +152,10 @@ timeLag = function (time.series, technique=c("acf","ami"),
                   acf = "Autocorrelation function",
                   ami = "Average Mutual Information (AMI)")
   }
-  if( is.null(lag.max) && (method == "acf") ){
+  if( is.null(lag.max) && (technique == "acf") ){
     
     lag.max = max(20, length(time.series)/2)
-    # if method=="ami", the mutualInformation function will handle the null value
+    # if technique=="ami", the mutualInformation function will handle the null value
   }
   fx = switch(technique, 
               ami = mutualInformation(time.series,lag.max = lag.max,

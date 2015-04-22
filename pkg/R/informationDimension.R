@@ -46,22 +46,33 @@
 #' @param theiler.window Integer denoting the Theiler window:  Two Takens' vectors must be separated by more than
 #'  theiler.window time steps in order to be considered neighbours. By using a Theiler window, we exclude temporally correlated 
 #'  vectors from our estimations. 
-#' @param kMax Maximum number of neighbours used for achieving p with all the points from the time series (see Details). Default: 100.
+#' @param kMax Maximum number of neighbours used for achieving p with all the points from the time series (see Details). 
 #' @param do.plot Logical value. If TRUE (default value), a plot of the correlation sum is shown.
+#' @param ... Additional graphical parameters.
 #' @return A \emph{infDim} object that consist of a list with two components: \emph{log.radius} and \emph{fixed.mass}. \emph{log.radius} contains
 #' the average log10(radius) in which the \emph{fixed.mass} can be found.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @author Constantino A. Garcia
-#  @examples
-#  \dontrun{
-#  s = sinaiMap(a=0.3,n.sample=5000,start=c(0.23489,0.8923),do.plot=FALSE)
-#  inf.dim = infDim(time.series = s$x, embedding.dim = 2, time.lag = 1,
-#                         min.fixed.mass=0.01, max.fixed.mass=0.03,
-#                         number.fixed.mass.points=1000, radius =0.1, 
-#                         increasing.radius.factor = sqrt(2), number.boxes=100, 
-#                         number.reference.vectors=100, theiler.window = 200, 
-#                         kMax = 100,do.plot=FALSE)
-#  estimate(inf.dim)}
+#'  @examples
+#' \dontrun{
+#' x=henon(n.sample=  3000,n.transient= 100, a = 1.4, b = 0.3, 
+#'         start =  c(0.8253681, 0.6955566), do.plot = FALSE)$x
+#' 
+#' leps = infDim(x,min.embedding.dim=2,max.embedding.dim = 5,
+#'               time.lag=1, min.fixed.mass=0.04, max.fixed.mass=0.2,
+#'               number.fixed.mass.points=100, radius =0.001, 
+#'               increasing.radius.factor = sqrt(2), number.boxes=100, 
+#'               number.reference.vectors=100, theiler.window = 10, 
+#'               kMax = 100,do.plot=FALSE)
+#' 
+#' plot(leps,type="l")
+#' colors2=c("#999999", "#E69F00", "#56B4E9", "#009E73", 
+#'           "#F0E442", "#0072B2", "#D55E00")
+#' id.estimation = estimate(leps,do.plot=TRUE,use.embeddings = 3:5,
+#'                          fit.lwd=2,fit.col=1,
+#'                          col=colors2)
+#' cat("Henon---> expected: 1.24    predicted: ", id.estimation ,"\n")
+#' }
 #' @rdname infDim
 #' @export infDim
 #' @exportClass infDim
@@ -72,9 +83,10 @@ infDim <-
            max.embedding.dim = min.embedding.dim,time.lag=1,
            min.fixed.mass, max.fixed.mass, number.fixed.mass.points = 10,
            radius, increasing.radius.factor = sqrt(2), number.boxes=NULL,
-           number.reference.vectors, theiler.window = 1,
-           kMax = 100,do.plot=TRUE){
+           number.reference.vectors=5000, theiler.window = 1,
+           kMax = 1000,do.plot=TRUE,...){
    
+    
     embeddings =  min.embedding.dim:max.embedding.dim
     n.embeddings = length(embeddings)
     fixed.mass.vector = 10^(seq(log10(min.fixed.mass),log10(max.fixed.mass),
@@ -96,7 +108,7 @@ infDim <-
     class(information.dimension.structure) = "infDim"
     
     if (do.plot){
-      plot(information.dimension.structure)
+      plot(information.dimension.structure,...)
     }
 
     return(information.dimension.structure)
@@ -121,7 +133,8 @@ infDimSingleDimension <-
   averageLogRadiusVector = rep(0,number.fixed.mass.points)
   
   c.result=.C("informationDimension", takens = as.double(takens), 
-              numberTakens = as.integer(numberTakens), embeddingD = as.integer(embedding.dim),
+              numberTakens = as.integer(numberTakens),
+              embeddingD = as.integer(embedding.dim),
               fixedMassVector = as.double(fixedMassVector), 
               fixedMassVectorLength = as.integer(number.fixed.mass.points),
               eps = as.double(radius),
@@ -150,7 +163,7 @@ fixedMass = function(x){
 #' in the information dimension algorithm.
 #' @rdname infDim
 #' @method fixedMass infDim
-#' @S3method fixedMass infDim
+#' @export
 fixedMass.infDim = function(x){
   return (x$fixed.mass)
 }
@@ -172,7 +185,7 @@ logRadius = function(x){
 #' on the information dimension algorithm.
 #' @rdname infDim
 #' @method fixedMass infDim
-#' @S3method fixedMass infDim
+#' @export
 logRadius.infDim = function(x){
   return (x$log.radius)
 }
@@ -182,7 +195,7 @@ logRadius.infDim = function(x){
 #' embeddings in which the information dimension was computed
 #' @rdname infDim
 #' @method embeddingDims infDim
-#' @S3method embeddingDims infDim
+#' @export
 embeddingDims.infDim = function(x){
   return (embeddingDims.default(x))
 }
@@ -197,12 +210,20 @@ embeddingDims.infDim = function(x){
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @param use.embeddings A numeric vector specifying which embedding dimensions should 
 #' the \emph{estimate} function use to compute the information dimension.
+#' @param fit.col A vector of colors to plot the regression lines.
+#' @param fit.lty The type of line to plot the regression lines.
+#' @param fit.lwd The width of the line for the regression lines.
+#' @param lty The line type of the <log10(radius)> functions.
+#' @param lwd The line width of the <log10(radius)> functions.
 #' @rdname infDim
-#' @S3method estimate infDim
+#' @export
 #' @method estimate infDim
 #' @method estimate
 estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,
-                           use.embeddings = NULL,...){
+                           use.embeddings = NULL,
+                           col=NULL,pch=NULL,
+                           fit.col=NULL, fit.lty=2,fit.lwd=2,
+                           add.legend=T, lty=1,lwd=1,...){
   if (is.null(regression.range)){
     min.fixed.mass = min(x$fixed.mass) # the first position is always 0
     max.fixed.mass = max(x$fixed.mass)
@@ -221,91 +242,168 @@ estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,
   indx = which(x$fixed.mass>=min.fixed.mass & x$fixed.mass<=max.fixed.mass)
   x.values = log10(x$fixed.mass[indx])
   information.dimension=c()
+  if (do.plot){
+    if (add.legend){
+      current.par =  par(no.readonly = TRUE)
+      on.exit(par(current.par))
+      layout(rbind(1,2), heights=c(8,2))
+    }
+    # eliminate unnecessary embedding dimensions
+    reduced.x = x
+    reduced.x$log.radius = NULL
+    reduced.x$log.radius = log.radius
+    reduced.x$embedding.dims = NULL
+    reduced.x$embedding.dims = use.embeddings
+    # obtain vector of graphical parameters if not specified
+    col = vectorizePar(col,n.embeddings)
+    pch = vectorizePar(pch,n.embeddings)
+    fit.col = vectorizePar(fit.col,n.embeddings,col)
+    plot(reduced.x,col=col,pch=pch,lty=lty,lwd=lwd,add.legend=F,
+         localScalingExp=F,...)
+  }
   for(i in 1:n.embeddings){
     y.values = log.radius[as.character(use.embeddings[[i]]),indx]
     reg = lm(y.values~x.values)
     information.dimension = c(information.dimension,1/reg$coefficients[[2]])
     # plotting
     if (do.plot){
-      if (i!=1){
-        lines(x$fixed.mass,x$log.radius[as.character(use.embeddings[[i]]),],
-              type = "p", col = i)
-      }else{
-        plot(x$fixed.mass,x$log.radius[as.character(use.embeddings[[i]]),],
-             log="x",main="Information Dimension",ylab="<log10(radius)>",
-             xlab="fixed mass (p)",ylim=range(log.radius))
-      }
-      lines(x$fixed.mass[indx],reg$fitted.values,col="blue")
+      lines(x$fixed.mass[indx],reg$fitted.values,
+            col=fit.col[[i]],lwd=fit.lwd,lty=fit.lty,...)
     }  
   }
-  legend("bottomright",col=1:n.embeddings,lty=rep(1,n.embeddings),
-         lwd=rep(2.5,n.embeddings), 
-         legend=use.embeddings,title="Embedding dimension")
-  information.dimension = mean(information.dimension)
+  if (add.legend && do.plot ){
+    par(mar=c(0, 0, 0, 0))
+    plot.new()
+    legend("center","groups",ncol=ceiling(n.embeddings/2), 
+           bty="n", col=col,lty=rep(1,n.embeddings),pch=pch,
+           lwd=rep(2.5,n.embeddings),
+           legend=use.embeddings, title="Embedding dimension")
+  }  
   
+  information.dimension = mean(information.dimension)
   return(information.dimension)
   
 }
 
 
-#' @return The 'plot' function shows two graphics of the information dimension estimate:
-#' a graphic of <log10(radius)> Vs fixed mass and a graphic of the local slopes of the information
-#' dimension Vs the fixed mass, both in a semi-log scale.
-#' @param ... Additional parameters.
+#' @return The 'plot' function plots the computations performed for the 
+#' information dimension estimate:  a graphic of <log10(radius)> Vs fixed mass.
+#' Additionally, the inverse of the local scaling exponents can be plotted.
+#' @param main A title for the plot.
+#' @param xlab A title for the x axis.
+#' @param ylab A title for the y axis.
+#' @param type Type of plot (see \code{\link[graphics]{plot}}).
+#' @param log A character string which contains "x" if the x axis is to be 
+#' logarithmic, "y" if the y axis is to be logarithmic and "xy" or "yx" if both
+#'  axes are to be logarithmic.
+#' @param ylim Numeric vector of length 2, giving the y coordinates range.
+#' @param col Vector of colors for each of the dimensions of the plot.
+#' @param pch Vector of symbols for each of the dimensions of the plot.
+#' @param localScalingExp add a plot of the local information dimension 
+#' scaling exponents?
+#' @param add.legend add a legend to the plot?
 #' @rdname infDim
-#' @S3method plot infDim
+#' @export
 #' @method plot infDim
 #' @method plot
-plot.infDim = function(x, ...){
-  current.par = par() 
-  # Check if it is possible to compute local slopes and
-  # set layout depending on it
-  if ( length(x$fixed.mass) > 1) {
-    # it is possible... 3 regions
+plot.infDim = function(x, main="Information Dimension",
+                       xlab="fixed mass (p)", ylab="<log10(radius)>",
+                       type="b", log="x",ylim=NULL, col=NULL,pch=NULL,
+                       localScalingExp=T,  add.legend=T,...){
+  if ( add.legend || localScalingExp ){
+    current.par =  par(no.readonly = TRUE)
+    on.exit(par(current.par))
+  }
+  if (add.legend && localScalingExp){
+    # 3 regions
     layout(rbind(1,2,3), heights=c(4,4,2))
   }else{
-    # not possible... just 2 regions (not local slopes)
-    layout(rbind(1,2), heights=c(8,2))
+    if (add.legend){
+      # add legend
+      layout(rbind(1,2), heights=c(8,2))
+    }
+    if (localScalingExp){
+      # add local slopes
+      layout(rbind(1,2), heights=c(5,5))
+    }
   }
   n.embeddings = length(x$embedding.dims)
-  for (i in 1:n.embeddings){
-    if (i!=1){
+  if (is.null(ylim)) ylim=range(x$log.radius)
+  col = vectorizePar(col,n.embeddings)
+  pch = vectorizePar(pch,n.embeddings)
+  
+  plot(x$fixed.mass,x$log.radius[as.character(x$embedding.dims[[1]]),],
+       type=type,log=log, col=col[[1]], pch=pch[[1]],ylim=ylim, xlab=xlab,
+       ylab=ylab,main=main,... )  
+  if (n.embeddings >=2){
+    for (i in 2:n.embeddings){
       lines(x$fixed.mass,x$log.radius[as.character(x$embedding.dims[[i]]),],
-            col = i, type = "p")
-    }else{
-      plot(x$fixed.mass,x$log.radius[as.character(x$embedding.dims[[i]]),],
-           log="x",main="Information Dimension",
-           ylab="<log10(radius)>",xlab="fixed mass (p)",
-           ylim=range(x$log.radius))  
-    } 
-    
+            type=type,col=col[[i]], pch=pch[[i]],...)
+    }
   }
   #local slopes
-  if (length(x$fixed.mass) > 1){
-    lfm = log10(x$fixed.mass)
-    derivative = t(apply(x$log.radius,MARGIN=1,differentiate,h=lfm[[2]] - lfm[[1]]))
-    fixed.mass.axis = differentiateAxis(x$fixed.mass)
-    for (i in 1:n.embeddings){
-      if (i!=1){
-        lines(fixed.mass.axis,derivative[i,],'b',cex=0.3,
-              col = i, type = "p")
-      }else{
-        plot(fixed.mass.axis,derivative[i,],log="x",'b',cex=0.3,col=1,
-             xlab="fixed mass p",ylab="local slope d1(p)", 
-             main="Local slopes for the Information dimension estimate",
-             ylim=range(derivative))  
-      } 
-      
-    }
-   
+  if (localScalingExp){
+    plotLocalScalingExp(x,type=type,log=log,col=col,pch=pch,xlab=xlab,
+                        add.legend=F,...)
   }
   ### add legend
-  par(mar=c(0, 0, 0, 0))
-  plot.new()
-  legend("center","groups",ncol=ceiling(n.embeddings/2), 
-         col=1:n.embeddings,lty=rep(1,n.embeddings),
-         lwd=rep(2.5,n.embeddings),
-         legend=x$embedding.dims, title="Embedding dimension")
-  par(mar=current.par$mar)
-  par(mfrow=c(1,1))
+  if (add.legend){
+    par(mar=c(0, 0, 0, 0))
+    plot.new()
+    legend("center","groups",ncol=ceiling(n.embeddings/2), 
+           bty="n", col=col,lty=rep(1,n.embeddings),pch=pch,
+           lwd=rep(2.5,n.embeddings),
+           legend=x$embedding.dims, title="Embedding dimension")
+  }
+}
+
+
+
+#' @return The \emph{plotLocalScalingExp} function plots the inverse of the 
+#' local scaling exponentes of the information dimension 
+#' (for reasons of numerical stability).
+#' @rdname infDim
+#' @method plotLocalScalingExp infDim
+#' @export
+#' @method plotLocalScalingExp
+plotLocalScalingExp.infDim =  function(x,main="Local scaling exponents d1(p)",
+                                       xlab="fixed mass p",ylab="1/d1(p)",
+                                       type="b",log="x",ylim=NULL,col=NULL,pch=NULL,
+                                       add.legend=T,...){
+  
+  n.embeddings = length(x$embedding.dims)
+  if (length(x$fixed.mass) <= 1){
+    stop("Cannot compute local scaling exponents (not enough points in the information dimension matrix)")
+  }
+  
+  if (add.legend){
+    current.par =  par(no.readonly = TRUE)
+    on.exit(par(current.par))
+    layout(rbind(1,2), heights=c(8,2))
+  }  
+  
+  lfm = log10(x$fixed.mass)
+  derivative = t(apply(x$log.radius,MARGIN=1,differentiate,h=lfm[[2]] - lfm[[1]]))
+  fixed.mass.axis = differentiateAxis(x$fixed.mass)
+  
+  col = vectorizePar(col,n.embeddings)
+  pch = vectorizePar(pch,n.embeddings)
+  if (is.null(ylim)) ylim=range(derivative)
+  plot(fixed.mass.axis,derivative[1,],type=type,log=log,col=col[[1]],
+       pch=pch[[1]],ylim=ylim,xlab=xlab,ylab=ylab,main=main,...) 
+  if (n.embeddings >=2){
+    for (i in 2:n.embeddings){
+      lines(fixed.mass.axis,derivative[i,],type=type,col=col[[i]],
+            pch=pch[[i]],...)
+    }
+  }
+  if (add.legend){
+    par(mar=c(0, 0, 0, 0))
+    plot.new()
+    legend("center","groups",ncol=ceiling(n.embeddings/2), 
+           bty="n", col=col,lty=rep(1,n.embeddings),pch=pch,
+           lwd=rep(2.5,n.embeddings),
+           legend=x$embedding.dims, title="Embedding dimension")
+  }
+  
 }

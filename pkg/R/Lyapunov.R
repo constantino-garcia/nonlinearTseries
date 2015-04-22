@@ -40,7 +40,8 @@
 #' @param sampling.period Sampling period of the time series. When dealing with a discrete
 #' system, the \emph{sampling.period} should be set to 1.
 #' @param do.plot Logical value. If TRUE (default value), a plot of \eqn{S(t)} Vs  \eqn{t} is shown.
-#' @return A list with three components named  \eqn{time} and \eqn{s.function}.
+#' @param ... Additional plotting parameters. 
+#'  @return A list with three components named  \eqn{time} and \eqn{s.function}.
 #' \eqn{time} is a vector containing the temporal interval where the system 
 #' evolves. It ranges from 0 to 
 #' \emph{\eqn{max.time.steps \cdot sampling.period}{max.time.steps * sampling.period}}.
@@ -53,6 +54,41 @@
 #' 
 #' Rosenstein, Michael T and Collins, James J and De Luca, Carlo J.A practical method for calculating largest Lyapunov exponents from small data sets.
 #' Physica D: Nonlinear Phenomena, 65-1, 117--134, (1993).
+#' @examples \dontrun{
+#' ## Henon System
+#' h=henon(n.sample=  5000,n.transient= 100, a = 1.4, b = 0.3, 
+#'         start = c(0.63954883, 0.04772637), do.plot = FALSE) 
+#' my.ts=h$x 
+#' ml=maxLyapunov(time.series=my.ts,
+#'                min.embedding.dim=2,
+#'                max.embedding.dim=5,
+#'                time.lag=1,
+#'                radius=0.001,theiler.window=4,
+#'                min.neighs=2,min.ref.points=500,
+#'                max.time.steps=40,do.plot=FALSE)
+#' plot(ml)
+#' ml.estimation = estimate(ml,regression.range = c(0,15),
+#'                          use.embeddings=4:5,
+#'                          do.plot = TRUE)
+#' # The max Lyapunov exponent of the Henon system is 0.41
+#' cat("expected: ",0.41," calculated: ",ml.estimation,"\n")
+#' 
+#' ## Rossler system
+#' r=rossler(a=0.15,b=0.2,w=10,start=c(0,0,0), time=seq(0,1000,0.1),do.plot=FALSE)
+#' my.ts=r$x
+#' use.cols = c("#999999","#E69F00","#56B4E9")
+#' ml=maxLyapunov(time.series=my.ts,min.embedding.dim=5,max.embedding.dim = 7,
+#'                time.lag=12,radius=0.1,theiler.window=50,
+#'                min.neighs=5,min.ref.points=length(r),
+#'                max.time.steps=300,number.boxes=NULL,
+#'                sampling.period=0.1,do.plot=TRUE,
+#'                col=use.cols)
+#' #  The max Lyapunov exponent of the Rossler system is 0.09
+#' ml.est=estimate(ml,col=use.cols,do.plot=T,
+#'                 fit.lty=1,
+#'                 fit.lwd=5)
+#' cat("expected: ",0.090," calculated: ",ml.est,"\n")
+#' }
 #' @author Constantino A. Garcia
 #' @rdname maxLyapunov
 #' @export maxLyapunov
@@ -63,7 +99,7 @@ maxLyapunov=function(time.series,takens=NULL,
                      max.embedding.dim=min.embedding.dim,
                      time.lag=1,radius,theiler.window=1,min.neighs=5,
                      min.ref.points=500,max.time.steps=10,number.boxes=NULL,
-                     sampling.period=1,do.plot=TRUE){
+                     sampling.period=1,do.plot=TRUE,...){
   
   embeddings = min.embedding.dim:max.embedding.dim
   n.embeddings = length(embeddings)
@@ -86,7 +122,7 @@ maxLyapunov=function(time.series,takens=NULL,
   class(max.lyapunov.structure) = "maxLyapunov"
   #plot
   if (do.plot){
-    plot(max.lyapunov.structure)
+    plot(max.lyapunov.structure,...)
   }
   #return results
   return (max.lyapunov.structure)
@@ -114,7 +150,7 @@ maxLyapunovSingleDimension=function(time.series,takens,embedding.dim,time.lag,
          PACKAGE="nonlinearTseries")
   
   # create lyapunov structure
-  return(sol$Sdn  )
+  return(sol$Sdn)
 }
 
 #' Returns the time in which the divergence of close trajectories was computed 
@@ -133,7 +169,7 @@ divTime = function(x){
 #' time in which the divergence of close trajectories was computed.
 #' @rdname maxLyapunov
 #' @method divTime maxLyapunov
-#' @S3method divTime maxLyapunov
+#' @export
 divTime.maxLyapunov = function(x){
   return (x$time)
 }
@@ -142,7 +178,7 @@ divTime.maxLyapunov = function(x){
 #' embeddings in which the divergence of close trajectories was computed
 #' @rdname maxLyapunov
 #' @method embeddingDims maxLyapunov
-#' @S3method embeddingDims maxLyapunov
+#' @export
 embeddingDims.maxLyapunov = function(x){
   return (embeddingDims.default(x))
 }
@@ -165,32 +201,48 @@ divergence = function(x){
 #' exponent estimation.
 #' @rdname maxLyapunov
 #' @method divergence maxLyapunov
-#' @S3method divergence maxLyapunov
+#' @export
 divergence.maxLyapunov = function(x){
   return (x$s.function)
 }
 
 #' @rdname maxLyapunov
 #' @method plot maxLyapunov  
-#' @param ... Additional parameters.
+#' @param main A title for the plot.
+#' @param xlab A title for the x axis.
+#' @param ylab A title for the y axis.
+#' @param type Type of plot (see \code{\link[graphics]{plot}}).
+#' @param col Vector of colors for each of the dimensions of the plot.
+#' @param pch Vector of symbols for each of the dimensions of the plot.
+#' @param add.legend add a legend to the plot?
 #' @method plot maxLyapunov
-#' @S3method plot maxLyapunov 
+#' @export
 #' @method plot
-plot.maxLyapunov= function(x, ...){
+plot.maxLyapunov= function(x, main="Estimating maximal Lyapunov exponent",
+                           xlab="time t",ylab="S(t)",type="p",col=NULL,
+                           pch=NULL, add.legend=T,...){
   embeddings = x$embedding.dims
   n.embeddings = length(embeddings)
+  # obtain default parameter vectors if not specified
+  col = vectorizePar(col,n.embeddings)
+  pch = vectorizePar(pch,n.embeddings)
   for (i in 1:n.embeddings){
     if (i!=1){
       lines(x$time[-1],x$s.function[as.character(embeddings[[i]]),-1],
-            type = "p", col = i)
+            type=type, col = col[[i]],pch=pch[[i]],...)
     }else{# first time: use plot
       plot(x$time[-1],x$s.function[as.character(embeddings[[i]]),-1],
-           xlab="t",ylab=expression("S(t)"),
-           main="Estimating maximal Lyapunov exponent")    
+           xlab=xlab,ylab=ylab, main=main,type=type, col=col[[1]],
+           pch=pch[[1]],...)    
     }
   }
-  legend("bottomright",col=1:n.embeddings,lty=rep(1,n.embeddings), 
-         lwd=rep(2.5,n.embeddings), legend=embeddings,title="Embedding dimension")
+  if (add.legend){
+    legend("bottomright",
+           col=col[1:n.embeddings],
+           pch=pch[1:n.embeddings],lty=rep(1,n.embeddings), 
+           lwd=rep(2.5,n.embeddings),bty="n",
+           legend=embeddings,title="Embedding dimension")
+  }
   
 }
 
@@ -200,16 +252,24 @@ plot.maxLyapunov= function(x, ...){
 #' embedding dimensions specified in the \emph{use.embeddings} parameter. The
 #' slopes are determined by performing a linear regression
 #' over the radius' range specified in \emph{regression.range}
+#' @param ylim Numeric vector of length 2, giving the y coordinates range.
 #' @param x A \emph{maxLyapunov} object.
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @param use.embeddings A numeric vector specifying which embedding dimensions should 
 #' the \emph{estimate} function use to compute the Lyapunov exponent.
+#' @param fit.col A vector of colors to plot the regression lines.
+#' @param fit.lty The type of line to plot the regression lines.
+#' @param fit.lwd The width of the line for the regression lines.
 #' @rdname maxLyapunov
-#' @S3method estimate maxLyapunov 
+#' @export
 #' @method estimate maxLyapunov
 #' @method estimate
 estimate.maxLyapunov= function(x,regression.range = NULL,
-                               do.plot=FALSE,use.embeddings = NULL,...){
+                               do.plot=FALSE,use.embeddings = NULL,
+                               main="Estimating maximal Lyapunov exponent",
+                               xlab="time t",ylab="S(t)",type="p",col=NULL,
+                               pch=NULL, ylim=NULL, fit.col=NULL,fit.lty=2,
+                               fit.lwd=2, add.legend=T,...){
   if (is.null(regression.range)){
     min.time = x$time[[2]] # the first position is always 0
     max.time = tail(x$time,1)
@@ -228,6 +288,13 @@ estimate.maxLyapunov= function(x,regression.range = NULL,
   x.values = x$time[indx]
   lyapunov.estimate = c()
   n.embeddings = length(use.embeddings)
+  # color and symbols for the plots if needed
+  if (do.plot){
+    # obtain vector of graphical parameters if not specified
+    col = vectorizePar(col,n.embeddings)
+    pch = vectorizePar(pch,n.embeddings)
+    fit.col = vectorizePar(fit.col,n.embeddings,col)  
+  }
   for (i in 1:n.embeddings){
     current.embedding = use.embeddings[[i]]
     y.values = s.function[as.character(current.embedding),indx]
@@ -235,20 +302,25 @@ estimate.maxLyapunov= function(x,regression.range = NULL,
     lyapunov.estimate=c(lyapunov.estimate,fit$coefficients[[2]])
     if (do.plot){
       if (i!=1){
-        lines(x$time,s.function[as.character(current.embedding),], type = "p",
-              col=i)
+        lines(x$time,s.function[as.character(current.embedding),], 
+              type=type, col = col[[i]],pch=pch[[i]],...)
       }else{
-        plot(x$time,s.function[as.character(current.embedding),], xlab="t",ylab="S(t)",
-             main="Estimating maximal Lyapunov exponent",ylim = range(s.function))  
+        if (is.null(ylim)) ylim=range(s.function)
+        plot(x$time,s.function[as.character(current.embedding),],
+             xlab=xlab,ylab=ylab, main=main,type=type, col=col[[1]],
+             pch=pch[[1]], ylim = ylim,...)  
       }
-      lines(x.values,fit$fitted.values,col=4)
+      lines(x.values,fit$fitted.values,col=fit.col[[i]],
+            lty=fit.lty,lwd=fit.lwd)
     }
   }
   lyapunov.estimate = mean(lyapunov.estimate)
-  if (do.plot){
-    
-    legend("bottomright",col=1:n.embeddings,lty=rep(1,n.embeddings), 
-           lwd=rep(2.5,n.embeddings), legend=use.embeddings,title="Embedding dimension")
+  if (do.plot && add.legend){
+    legend("bottomright",col=col[1:n.embeddings],
+           pch=pch[1:n.embeddings],
+           lty=rep(1,n.embeddings),bty="n", 
+           lwd=rep(2.5,n.embeddings), legend=use.embeddings,
+           title="Embedding dimension")
   }
   
   

@@ -13,6 +13,7 @@
 #' @param corrDim.object A \emph{corrDim} object from which the Sample Entropy
 #' of the time series characterized by \emph{corrDim} shall be estimated.
 #' @param do.plot do.plot Logical value. If TRUE (default value), a plot of the sample entropy is shown.
+#' @param ... Additional plotting arguments.
 #' @return A \emph{sampleEntropy} object that contains a list storing the sample entropy (\emph{sample.entropy}),
 #' the embedding dimensions ( \emph{embedding.dims}) and radius (\emph{radius}) for which the sample entropy has 
 #' been computed, and the order of the sample entropy (\emph{entr.order}). The sample entropy
@@ -21,19 +22,33 @@
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @examples
 #' \dontrun{
-#' h=henon(n.sample = 15000, n.transient = 100, a = 1.4, b = 0.3,
-#' start = c(0.78,0.8165), do.plot = FALSE)
-#' gen.corr.dim=corrDim(time.series=h$x,min.embedding.dim=2,max.embedding.dim=9,
-#'                      corr.order=2, time.lag=1,min.radius=0.025,
-#'                      max.radius=0.01,n.points.radius=20, do.plot=FALSE,
-#'                      theiler.window=10,number.boxes=100)
-#' se=sampleEntropy(gen.corr.dim, do.plot=FALSE)
-#' estimate(se)}
+#' x=henon(n.sample = 15000, n.transient = 100, a = 1.4, b = 0.3, 
+#'         start = c(0.78,0.8165), do.plot = FALSE)$x
+#' 
+#' cd=corrDim(time.series=x,
+#'            min.embedding.dim=2,max.embedding.dim=9,
+#'            corr.order=2,time.lag=1,
+#'            min.radius=0.05,max.radius=1,
+#'            n.points.radius=100,
+#'            theiler.window=20,
+#'            do.plot=TRUE)
+#' 
+#' use.col = c("#999999", "#E69F00", "#56B4E9", "#009E73", 
+#'             "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+#' se=sampleEntropy(cd,do.plot=TRUE,col=use.col,
+#'                  type="l",xlim=c(0.1,1),
+#'                  add.legend=T)
+#' se.est = estimate(se,
+#'                   regression.range = c(0.4,0.6),
+#'                   use.embeddings = 6:9,col=use.col,type="b")
+#' print(se.est)
+#' cat("Expected K2 = ",0.325," Estimated = ",mean(se.est),"\n")
+#' }
 #' @author Constantino A. Garcia
 #' @rdname sampleEntropy
 #' @export sampleEntropy
 #' @exportClass sampleEntropy
-sampleEntropy = function (corrDim.object, do.plot=TRUE){ 
+sampleEntropy = function (corrDim.object, do.plot=TRUE,...){ 
   radius = radius(corrDim.object)
   corr.matrix = corrMatrix(corrDim.object)
   embeddings = embeddingDims(corrDim.object)
@@ -48,7 +63,7 @@ sampleEntropy = function (corrDim.object, do.plot=TRUE){
   class(sample.entropy)="sampleEntropy"
   
   if (do.plot){
-   plot(sample.entropy) 
+   plot(sample.entropy,...) 
   }
   
   return (sample.entropy)
@@ -73,7 +88,7 @@ sampleEntropyFunction = function(x){
 #' embedding dimension whereas that each column representes a different radius.
 #' @rdname sampleEntropy
 #' @method sampleEntropyFunction sampleEntropy
-#' @S3method sampleEntropyFunction sampleEntropy
+#' @export
 sampleEntropyFunction.sampleEntropy = function(x){
   return (x$sample.entropy)
 }
@@ -81,7 +96,7 @@ sampleEntropyFunction.sampleEntropy = function(x){
 #' @return The \emph{nlOrder} function returns the order of the sample entropy.
 #' @rdname sampleEntropy
 #' @method nlOrder sampleEntropy
-#' @S3method nlOrder sampleEntropy
+#' @export
 nlOrder.sampleEntropy = function(x){
   return(x$entr.order)
 }
@@ -90,7 +105,7 @@ nlOrder.sampleEntropy = function(x){
 #'  function has been evaluated.
 #' @rdname sampleEntropy
 #' @method radius sampleEntropy
-#' @S3method radius sampleEntropy
+#' @export
 radius.sampleEntropy = function(x){
   return (radius.default(x))
 }
@@ -99,7 +114,7 @@ radius.sampleEntropy = function(x){
 #' on which the sample entropy function has been evaluated.
 #' @rdname sampleEntropy
 #' @method embeddingDims sampleEntropy
-#' @S3method embeddingDims sampleEntropy
+#' @export
 embeddingDims.sampleEntropy = function(x){
   return (embeddingDims.default(x))
 }
@@ -108,32 +123,52 @@ embeddingDims.sampleEntropy = function(x){
 #' @return The \emph{plot} function shows the graphics for the sample entropy.
 #' @rdname sampleEntropy
 #' @method plot sampleEntropy
-#' @param ... Additional parameters.
-#' @S3method plot sampleEntropy
-plot.sampleEntropy = function(x,...){
-  xlab = expression("ln("*epsilon*")")
-  ylab = expression(h[q]*"("*epsilon*")")
-  main = expression("Sample entropy (q = "*x$entr.order*")"*h[x$entr.order]*"("*epsilon*")")
-  
+#' @param main A title for the plot.
+#' @param xlab A title for the x axis.
+#' @param ylab A title for the y axis.
+#' @param type Type of plot (see \code{\link[graphics]{plot}}).
+#' @param col Vector of colors for each of the dimensions of the plot.
+#' @param pch Vector of symbols for each of the dimensions of the plot
+#' @param ylim Numeric vector of length 2, giving the y coordinates range..
+#' @param add.legend add a legend to the plot?
+#' @export
+plot.sampleEntropy = function(x,main=NULL,xlab=NULL,ylab=NULL,type="l",
+                              col=NULL, pch=NULL, ylim=NULL,add.legend=T,...){
+  if (is.null(xlab)) xlab = expression("ln("*epsilon*")")
+  if (is.null(ylab)) ylab = expression(h[q]*"("*epsilon*")")
+  if (is.null(main)) main = 
+    bquote("Sample entropy (q = "*.(x$entr.order)*")    "*h[.(x$entr.order)]*"("*epsilon*")")
   number.embeddings = length(x$embedding.dims)
   
-  current.par = par()
-  layout(rbind(1,2), heights=c(8,2))
+  # obtain vector of graphical parameters if not specified
+  col = vectorizePar(col,number.embeddings)
+  pch = vectorizePar(pch,number.embeddings)
+ 
+  if (add.legend){
+    current.par =  par(no.readonly = TRUE)
+    on.exit(par(current.par))
+    layout(rbind(1,2), heights=c(8,2))
+  }
   for (i in 1:number.embeddings){
      if (i == 1) {
-       plot(x$radius,x$sample.entropy[1,],xlab = xlab,ylab = ylab,main=main,'l',col=1,ylim=range(x$sample.entropy))
+       if (is.null(ylim)) ylim=range(x$sample.entropy)
+       plot(x$radius,x$sample.entropy[1,],
+            xlab = xlab,ylab = ylab,main=main,type=type,pch=pch[[i]],
+            col=col[[i]],ylim=ylim,...)
      }else{
-       lines(x$radius,x$sample.entropy[i,],col=i)
+       lines(x$radius,x$sample.entropy[i,],type=type,pch=pch[[i]],
+             col=col[[i]],...)
      }
   }
-  par(mar=c(0, 0, 0, 0))
-  # c(bottom, left, top, right)
-  plot.new()
-  legend("center","groups",ncol=ceiling(number.embeddings/2),col=1:number.embeddings,lty=rep(1,number.embeddings),
-         lwd=rep(2.5,number.embeddings),
-         legend=x$embedding.dims,title="Embedding dimension")
-  par(mar=current.par$mar)
-  par(mfrow=c(1,1))
+  if(add.legend){
+    par(mar=c(0, 0, 0, 0))
+    # c(bottom, left, top, right)
+    plot.new()
+    legend("center","groups",ncol=ceiling(number.embeddings/2),
+           col=col,pch=pch,lty=rep(1,number.embeddings),
+           lwd=rep(2.5,number.embeddings),bty="n",
+           legend=x$embedding.dims,title="Embedding dimension")
+  }
   
 }
 
@@ -145,11 +180,16 @@ plot.sampleEntropy = function(x,...){
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @param use.embeddings A numeric vector specifying which embedding dimensions should the \emph{estimate} function use to compute
 #' the sample entropy.
+#' @param fit.lty The type of line to plot the regression lines. 
+#' @param fit.lwd	The width of the line for the regression lines.
+#' @param fit.col A vector of colors to plot the regression lines.
 #' @return The  \emph{estimate} function returns a vector storing the sample entropy estimate for each embedding dimension.
 #' @rdname sampleEntropy
 #' @method estimate sampleEntropy
-#' @S3method estimate sampleEntropy
-estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,use.embeddings=NULL,...){
+#' @export
+estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,
+                                  use.embeddings=NULL,fit.col=NULL,
+                                  fit.lty=2, fit.lwd=2,add.legend=T,...){
   if (is.null(regression.range)){
     regression.range = range(x$radius)
   }  
@@ -173,35 +213,53 @@ estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,use.embed
     x = list(sample.entropy = x$sample.entropy[as.character(use.embeddings),],
              embedding.dims = use.embeddings,entr.order=x$entr.order, radius=x$radius)
     class(x)="sampleEntropy"
-    plotSampleEntropyEstimate(x,sample.entropy.estimate)
+    plotSampleEntropyEstimate(x,sample.entropy.estimate,
+                              fit.col=fit.col,fit.lty=fit.lty,
+                              fit.lwd=fit.lwd,add.legend=add.legend,...)
   }
   return(sample.entropy.estimate)
 }
 
-plotSampleEntropyEstimate = function(sampleEntropy.object,sample.entropy.estimate){
-  xlab = expression("ln("*epsilon*")")
-  ylab = expression(h[q]*"("*epsilon*")")
-  main = expression("Sample entropy (q = "*sampleEntropy.object$entr.order*")"*h[sampleEntropy.object$entr.order]*"("*epsilon*")")
-  main=paste("Sample entropy (q = ",sampleEntropy.object$entr.order,")")
+plotSampleEntropyEstimate = function(sampleEntropy.object,
+                                     sample.entropy.estimate,main=NULL,
+                                     xlab=NULL,ylab=NULL,type="l",pch=NULL,
+                                     ylim=NULL,col=NULL,
+                                     fit.col,fit.lty,fit.lwd,
+                                     add.legend=T,...){
+  
   number.embeddings = length(sampleEntropy.object$embedding.dims)
   
-  current.par = par()
-  layout(rbind(1,2), heights=c(8,2))
+  # obtain vector of graphical parameters if not specified
+  col = vectorizePar(col,number.embeddings)
+  pch = vectorizePar(pch,number.embeddings)
+  fit.col = vectorizePar(fit.col,number.embeddings,col)
+  
+  if (add.legend){
+    current.par =  par(no.readonly = TRUE)
+    on.exit(par(current.par))
+    layout(rbind(1,2), heights=c(8,2))
+  }
+  plot(sampleEntropy.object,main=main,
+       xlab=xlab,ylab=ylab,type=type,pch=pch,
+       ylim=ylim,col=col,add.legend=F,...)
   for (i in 1:number.embeddings){
     if (i == 1) {
-      plot(sampleEntropy.object$radius,sampleEntropy.object$sample.entropy[1,],xlab = xlab,ylab = ylab,main=main,'l',col=1,ylim=range(sampleEntropy.object$sample.entropy))
-      abline(h=sample.entropy.estimate[[i]],lty=3)
+      abline(h=sample.entropy.estimate[[i]],
+             col=fit.col[[i]],lty=fit.lty,lwd=fit.lwd)
     }else{
-      lines(sampleEntropy.object$radius,sampleEntropy.object$sample.entropy[i,],col=i)
-      abline(h=sample.entropy.estimate[[i]],lty=3)
+      abline(h=sample.entropy.estimate[[i]],
+             col=fit.col[[i]],lty=fit.lty,lwd=fit.lwd)
     }
   }
-  par(mar=c(0, 0, 0, 0))
-  # c(bottom, left, top, right)
-  plot.new()
-  legend("center","groups",ncol=ceiling(number.embeddings/2),col=1:number.embeddings,lty=rep(1,number.embeddings),
-         lwd=rep(2.5,number.embeddings),
-         legend=sampleEntropy.object$embedding.dims,title="Embedding dimension")
-  par(mar=current.par$mar)
+  if(add.legend){
+    par(mar=c(0, 0, 0, 0))
+    # c(bottom, left, top, right)
+    plot.new()
+    legend("center","groups",ncol=ceiling(number.embeddings/2),
+           col=col,pch=pch,lty=rep(1,number.embeddings),
+           lwd=rep(2.5,number.embeddings),bty="n",
+           legend=sampleEntropy.object$embedding.dims,
+           title="Embedding dimension")
+  }
   
 }

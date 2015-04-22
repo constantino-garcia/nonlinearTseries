@@ -32,6 +32,11 @@
 #' E1(d-1) in order to consider that the E1 function has been stabilized and it will
 #' stop changing. Default: 0.01.
 #' @param do.plot Logical value. If TRUE (default value), a plot of E1(d) and E2(d) is shown.
+#' @param main Title for the plot.
+#' @param xlab Title for the x axis.
+#' @param ylab Title for the y axis.
+#' @param xlim numeric vectors of length 2, giving the x coordinates range.
+#' @param ylim numeric vectors of length 2, giving the y coordinates range.
 #' @references 
 #' Cao, L. Practical method for determining the minimum embedding dimension of a scalar time series. Physica D: Nonlinear Phenomena,
 #' 110,1, pp. 43-50 (1997).
@@ -48,9 +53,12 @@
 #'              }
 #' @export estimateEmbeddingDim
 estimateEmbeddingDim = function(time.series,  number.points = length(time.series), 
-                                          time.lag = 1,  max.embedding.dim = 15,  threshold = 0.95, 
-                                          max.relative.change = 0.10,
-                                          do.plot = TRUE){
+                                time.lag = 1,  max.embedding.dim = 15,  threshold = 0.95, 
+                                max.relative.change = 0.10,
+                                do.plot = TRUE,
+                                main = "Computing the embedding dimension",
+                                xlab="dimension (d)", ylab="E1(d) & E2(d)",
+                                ylim = NULL, xlim = NULL){
   if (max.embedding.dim < 3) stop("max.embedding.dim should be greater that 2...\n")
   time.series.len = length(time.series)
   data = time.series[(time.series.len/2-number.points/2+1):(time.series.len/2+number.points/2)]
@@ -82,10 +90,19 @@ estimateEmbeddingDim = function(time.series,  number.points = length(time.series
   }
   #plot graphics
   if (do.plot){
-    plot(1:length(E1.vector), E1.vector, 'b', main = "Computing the embedding dimension", xlab="dimension (d)", ylab="E1(d) & E2(d)", cex = 0.1, ylim = c(0, max(E2.vector)))
-    lines(1:length(E2.vector), E2.vector, 'b', col = 4, cex = 0.1)
-    abline(h = c(1, threshold), col = 2, lty = c(3, 3))
-    legend("bottomright", col = c(1, 4, 2), lty = c(1, 1, 3), lwd = c(2.5, 2.5, 2.5), legend = c("E1(d)", "E2(d)", "limits for E1(d)"))
+    if (is.null(ylim)){
+      ylim = c(0,max(E1.vector,E2.vector))
+    }
+    if (is.null(xlim)){
+      xlim = c(1,length(E1.vector))
+    }
+    plot(1:length(E1.vector), E1.vector, 'b',lty=1,pch=1,
+         main=main,ylab=ylab,xlab=xlab, cex = 1, ylim = ylim, xlim=xlim)
+    lines(1:length(E2.vector), E2.vector, 'b',lty=2,pch=2, col = 2, cex = 1)
+    abline(h = c(1, threshold), col = 3, lwd=2,lty = c(3, 3))
+    legend("bottomright", col = 1:3, lty = 1:3, lwd = c(2.5, 2.5, 2.5),
+           pch=c(1,2,NA),bty="n",
+           legend = c("E1(d)", "E2(d)", "limits for E1(d)"))
     
   }
   return (embedding.dim)
