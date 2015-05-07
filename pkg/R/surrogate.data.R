@@ -96,6 +96,7 @@ surrogateTest <- function(time.series, significance = 0.05, one.sided=FALSE,
   ktol = 1e-6
   
   if (K < 1) stop("Invalid K (K < 1 not allowed")
+  
   # make sure that K is an integer
   if (abs(K%%1) > ktol){
     warning("K is not an integer... rounding it!")
