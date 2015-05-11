@@ -15,7 +15,9 @@ buildTakens(time.series, embedding.dim, time.lag)
 Takens' vectors.}
 }
 \value{
-A matrix containing the Takens' vectors (one per row).
+A matrix containing the Takens' vectors (one per row). The resulting
+matrix also contains information about the time lag and the embedding
+dimension used (as attributes).
 }
 \description{
 This function builds the Takens' vectors from a given time series. The set
@@ -37,7 +39,7 @@ takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
 plot(takens)}
 }
 \author{
-Constantino A. Garcia
+Constantino A. Garcia and Gunther Sawitzki.
 }
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)

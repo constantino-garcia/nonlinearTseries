@@ -49,9 +49,11 @@ isNeighbour=function(v1,v2,embedding.dim,radius){
 #' @param embedding.dim Integer denoting the dimension in which we shall embed the time.series.
 #' @param time.lag Integer denoting the number of time steps that will be use to construct the 
 #' Takens' vectors.
-#' @return A matrix containing the Takens' vectors (one per row).
+#' @return A matrix containing the Takens' vectors (one per row). The resulting
+#' matrix also contains information about the time lag and the embedding
+#' dimension used (as attributes).
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
-#' @author Constantino A. Garcia
+#' @author Constantino A. Garcia and Gunther Sawitzki.
 #' @examples 
 #' \dontrun{
 #'# Build the Takens vector for the Henon map using the x-coordinate time series
@@ -75,6 +77,12 @@ buildTakens=function (time.series, embedding.dim, time.lag)
   for (i in 1:numelem) {
     takens[i, 1:embedding.dim] = time.series[jumpsvect + i]
   }
+  # 
+  #class(takens) = "takens"
+  id=deparse(substitute(time.series))
+  attr(takens,"embedding.dim") = embedding.dim
+  attr(takens,"time.lag") = time.lag
+  attr(takens,"id") = id
   return(takens)
 }
 
