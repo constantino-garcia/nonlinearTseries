@@ -207,6 +207,7 @@ print.corrDim = function(x, ...){
 #' @param localScalingExp add a plot of the local scaling exponents of the correlation
 #' sum.
 #' @param add.legend add a legend to the plot?
+#' @param cex.legend Magnification value for the legend.
 #' @return The \emph{plot} function plots the correlation sum. It is possible to
 #' plot the the correlation sum Vs the radius and also the local scaling exponents
 #'  of the correlation  sum Vs radius.
@@ -217,7 +218,7 @@ print.corrDim = function(x, ...){
 plot.corrDim = function(x,main="Correlation Sum C(r)",xlab=NULL,
                         ylab="C(r)",type="b",
                         log="xy",ylim=NULL, col=NULL,pch=NULL,localScalingExp=T,
-                        add.legend=T,...){
+                        add.legend=T,cex.legend=1,...){
    # set layout depending on options
   if ( add.legend || localScalingExp ){
     current.par =  par(no.readonly = TRUE)
@@ -264,7 +265,7 @@ plot.corrDim = function(x,main="Correlation Sum C(r)",xlab=NULL,
     plot.new()
     legend("center","groups",ncol=ceiling(number.embeddings/2), 
            bty="n", col=col,lty=rep(1,number.embeddings),pch=pch,
-           lwd=rep(2.5,number.embeddings),
+           lwd=rep(2.5,number.embeddings), cex=cex.legend,
            legend=x$embedding.dims, title="Embedding dimension")
   }   
 }

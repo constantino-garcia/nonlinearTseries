@@ -30,7 +30,7 @@ corrDim(time.series, min.embedding.dim = 2, max.embedding.dim = 5,
 
 \method{plot}{corrDim}(x, main = "Correlation Sum C(r)", xlab = NULL,
   ylab = "C(r)", type = "b", log = "xy", ylim = NULL, col = NULL,
-  pch = NULL, localScalingExp = T, add.legend = T, ...)
+  pch = NULL, localScalingExp = T, add.legend = T, cex.legend = 1, ...)
 
 \method{plotLocalScalingExp}{corrDim}(x, main = "Correlation Dimension C(r)",
   xlab = NULL, ylab = "Local scaling exponents", type = "b", log = "x",
@@ -95,6 +95,8 @@ axes are to be logarithmic.}
 sum.}
 
 \item{add.legend}{add a legend to the plot?}
+
+\item{cex.legend}{Magnification value for the legend.}
 
 \item{regression.range}{Vector with 2 components denoting the range where the function will perform linear regression.}
 

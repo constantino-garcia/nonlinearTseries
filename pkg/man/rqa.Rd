@@ -5,7 +5,7 @@
 \title{Recurrence Quantification Analysis (RQA)}
 \usage{
 rqa(takens = NULL, time.series = NULL, embedding.dim = 2, time.lag = 1,
-  radius, lmin = 2, vmin = 2, do.plot = FALSE, distanceToBorder = 2)
+  radius, lmin = 2, vmin = 2, distanceToBorder = 2, do.plot = FALSE)
 }
 \arguments{
 \item{takens}{Instead of specifying the \emph{time.series}, the \emph{embedding.dim} and the \emph{time.lag}, the user
@@ -24,11 +24,11 @@ Takens' vectors.}
 
 \item{vmin}{Minimal length of a vertical line to be considered in the RQA. Default \emph{vmin} = 2.}
 
-\item{do.plot}{Logical. If TRUE, the recurrence plot is shown. However, plotting the recurrence matrix is computationally
-expensive. Use with caution.}
-
 \item{distanceToBorder}{In order to avoid border effects, the \emph{distanceToBorder} points near the
 border of the recurrence matrix are ignored when computing the RQA parameters. Default, \emph{distanceToBorder} = 2.}
+
+\item{do.plot}{Logical. If TRUE, the recurrence plot is shown. However, plotting the recurrence matrix is computationally
+expensive. Use with caution.}
 }
 \value{
 A \emph{rqa}  object that consist of a list with the most important RQA parameters:

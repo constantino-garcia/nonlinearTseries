@@ -4,7 +4,9 @@
 \alias{recurrencePlot}
 \title{Recurrence Plot}
 \usage{
-recurrencePlot(takens = NULL, time.series, embedding.dim, time.lag, radius)
+recurrencePlot(takens = NULL, time.series, embedding.dim, time.lag, radius,
+  main = "Recurrence plot", xlab = "Takens vector's index",
+  ylab = "Takens vector's index", ...)
 }
 \arguments{
 \item{takens}{Instead of specifying the \emph{time.series}, the \emph{embedding.dim} and the \emph{time.lag}, the user

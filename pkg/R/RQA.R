@@ -45,7 +45,8 @@
 #' @rdname rqa
 #' @export rqa
 #' 
-rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,radius,lmin = 2,vmin = 2,do.plot=FALSE,distanceToBorder=2){
+rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
+             radius,lmin = 2,vmin = 2,distanceToBorder=2,do.plot=FALSE){
   if(is.null(takens)){
     takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  
   } 
@@ -96,25 +97,45 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,radi
 #' @export recurrencePlot
 #' @import Matrix
 #' @useDynLib nonlinearTseries
-recurrencePlot=function(takens = NULL, time.series, embedding.dim, time.lag,radius){
+recurrencePlot=function(takens = NULL, time.series, 
+                        embedding.dim, time.lag,radius,
+                        main="Recurrence plot",xlab="Takens vector's index",
+                        ylab="Takens vector's index",...){
   if(is.null(takens)){
-    takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  
+    takens = buildTakens( time.series,
+                          embedding.dim = embedding.dim, 
+                          time.lag = time.lag)  
   } 
   neighs=findAllNeighbours(takens,radius)
-  recurrencePlotAux(neighs)
+  recurrencePlotAux(neighs,...)
 }
 
 #private 
-recurrencePlotAux=function(neighs){
+recurrencePlotAux=function(neighs,...){
   ntakens=length(neighs)
   neighs.matrix = neighbourListSparseNeighbourMatrix(neighs,ntakens)
   # need a print because it is a trellis object!!
-  print(image(neighs.matrix,xlab="Number of Takens' vector", ylab="Number of Takens' vector"))
+  print(image(neighs.matrix,...))
     
 }
 
-neighbourListSparseNeighbourMatrix  = function(neighs,ntakens){
-  neighs.matrix = Diagonal(ntakens)
+neighbourListSparseNeighbourMatrix = function(neighs,ntakens){
+  neigh.index = lapply(seq_along(neighs),
+                       FUN = function(x,y) as.matrix(expand.grid(x,c(x,y[[x]]))),
+                       y=neighs)
+  neigh.len = sapply(neigh.index, FUN=nrow)
+  neigh.matrix = matrix(0,nrow=sum(neigh.len),ncol=2)
+  current.index =1
+  for (i in 1:length(neigh.index)){
+    next.index = current.index + neigh.len[[i]]
+    neigh.matrix[current.index:(next.index - 1),] = neigh.index[[i]]
+    current.index = next.index
+  }
+  sparseMatrix(neigh.matrix[,1],neigh.matrix[,2],dims = c(ntakens,ntakens))
+}
+
+neighbourListSparseNeighbourMatrixOld  = function(neighs,ntakens){
+  neighs.matrix = .sparseDiagonal(ntakens)
   for (i in 1:ntakens){
     if (length(neighs[[i]])>0){
       for (j in neighs[[i]]){

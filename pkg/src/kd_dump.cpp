@@ -439,8 +439,11 @@ static ANNkd_ptr annReadTree(
 	}
 	else {
 		annError("Illegal node type in dump file", ANNabort);
-#ifndef RANN
-		exit(0);								// to keep the compiler happy
-#endif
+    return NULL;
+    /* Original code (below) yields Wreturn-type warning 
+		//#ifndef RANN
+		//		exit(0);								// to keep the compiler happy
+		//#endif
+    */
 	}
 }
