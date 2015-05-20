@@ -8,8 +8,7 @@ void corrDimFromTakens(double *takens,int *lenTakens,int* embeddingDim,
 double *eps,int* numberEps,int *numberBoxes,int *tdist,double* corrVector){
   
   // auxilar variables
-  int i,j,k,m,ep,posNeigh,numberEmbeddings,lastEpsTocheck,nfound;
-  double distance;
+  int i,j,ep,posNeigh,numberEmbeddings,nfound;
   double epsMax=eps[0];
   //correlation Matrix;
   numberEmbeddings=1;

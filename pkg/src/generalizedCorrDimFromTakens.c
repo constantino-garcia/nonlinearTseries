@@ -10,8 +10,8 @@
 void generalizedCorrDimFromTakens(double *takens, int *numberTakens,  int *embedding,
 int *q, double *eps,int* numberEps,int *numberBoxes,int *tdist,double* corrVector){
   // auxilar variables  
-  int i,j,k,m,ep,posNeigh,lastTakens,lastReferenceVector,numberEmbeddings,lastEpsTocheck,nfound;
-  double distance, denom;
+  int i,j,ep,posNeigh,lastTakens,lastReferenceVector,nfound;
+  double denom;
   double epsMax=eps[0];
   // variables for the box assisted algorithm
   int boxes[(*numberBoxes)*(*numberBoxes)+1];

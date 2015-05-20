@@ -9,7 +9,7 @@ void corrDim(double *timeSeries,int *lenTimeSeries,double *takensDimMin, int* ta
 ,int *maxEmbeddingD, double *eps,int* numberEps,int *numberBoxes,int *tdist,double* corrMatrix){
   
   // auxilar variables
-  int i,j,k,m,ep,posNeigh,lastTakens,numberEmbeddings,lastEpsTocheck,nfound;
+  int i,j,m,ep,posNeigh,lastTakens,numberEmbeddings,lastEpsTocheck,nfound;
   double distance;
   double epsMax=eps[0];
   //correlation Matrix;
@@ -81,7 +81,7 @@ void generalizedCorrDim(double *timeSeries,int *lenTimeSeries,double *takensDimM
   
   
   // auxilar variables  
-  int i,j,k,m,ep,posNeigh,lastTakens,lastReferenceVector,numberEmbeddings,lastEpsTocheck,nfound;
+  int i,j,m,ep,posNeigh,lastTakens,lastReferenceVector,numberEmbeddings,lastEpsTocheck,nfound;
   double distance, denom;
   double epsMax=eps[0];
   //correlation Matrix;

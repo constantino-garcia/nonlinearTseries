@@ -16,8 +16,6 @@
 void maxLyapunov(double *timeSeries,double *takens, int* tau, int *numberTakens, int *embeddingD
 , double *eps,double *Sdn,int *nmax, int *nminRP,int *neighMin,int *numberBoxes,int *tdist){
   // auxilar variables
-  int err=0;
-   
   int i,ii,j,k,lastTakens,posNeigh,nfound,nf,rpfound;
   double distance0;
   double Saux[(*nmax)+1];

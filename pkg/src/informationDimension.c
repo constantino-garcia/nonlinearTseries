@@ -18,8 +18,7 @@ void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
         int *numberReferenceVectors, int* theilerWindow, int* kMax,
         double* averageLogRadius){
   // declare variables
-  int error=0;
-  int i,iiiii, theilerMargin, k, takensVectorsUsed, remainingReferenceVectors,takensIterator,
+  int i,theilerMargin, k, takensVectorsUsed, remainingReferenceVectors,takensIterator,
       nTakensWithInsufficientNeighs=0, currentReferenceVector, nfound, neigh, neighIt,
       numberValidNeighs;
   double lnFixedMass, currentEps, radius;

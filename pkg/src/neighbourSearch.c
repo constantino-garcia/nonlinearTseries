@@ -17,7 +17,7 @@
 void boxAssistant( double *takens, int *numberTakens, int *embeddingD
 , double *eps,int *numberBoxes,int *boxes,int *possibleNeighbours){
   //auxiliar variables
-  int i,j;
+  int i;
   int lastPosition=(*embeddingD)-1;
   //the matrix has numberBoxes*numberBoxes + the last position to store the total length
   int lengthBoxes=(*numberBoxes)*(*numberBoxes)+1;
