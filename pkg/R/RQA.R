@@ -1,3 +1,4 @@
+
 ################################################################################
 #' Recurrence Quantification Analysis (RQA)
 #' @description
@@ -127,9 +128,15 @@ neighbourListSparseNeighbourMatrix = function(neighs,ntakens){
   neigh.matrix = matrix(0,nrow=sum(neigh.len),ncol=2)
   current.index =1
   for (i in 1:length(neigh.index)){
+    
     next.index = current.index + neigh.len[[i]]
-    neigh.matrix[current.index:(next.index - 1),] = neigh.index[[i]]
+    if (current.index == (next.index - 1)){
+      neigh.matrix[current.index,] = as.numeric(neigh.index[[i]])  
+    }else{
+      neigh.matrix[current.index:(next.index - 1),] = neigh.index[[i]]
+    } 
     current.index = next.index
+  
   }
   sparseMatrix(neigh.matrix[,1],neigh.matrix[,2],dims = c(ntakens,ntakens))
 }
