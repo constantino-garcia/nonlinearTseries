@@ -1,0 +1,190 @@
+---
+title: "nonlinearTseries quickstart"
+author: "Constantino Antonio García Martínez"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: biblio.bib
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+```{r options,echo=FALSE}
+# colorblind friendly palette
+palette(c("#000000", "#E69F00", "#56B4E9", "#009E73",
+          "#F0E442", "#0072B2", "#D55E00", "#CC79A7"))
+library('knitr')
+knitr::opts_chunk$set(fig.width=7,fig.height=4.7,fig.show='hold')
+```
+
+The **nonlinearTseries** package provides functionality for nonlinear
+time series analysis. This package permits the estimation of the most-used
+nonlinear sstatistics/algorithms including generalized correlation dimension,
+information dimension, largest Lyapunov exponent, sample entropy and
+Recurrence Quantification Analysis (RQA), among others. Basic routines
+for surrogate data testing are also included. This vignette provides a brief
+overview of some of the functionality contained in **nonlinearTseries**.
+
+## Data: Lorenz system
+To explore the routines included in **nonlinearTseries**, we will study the
+famous [Lorenz system](http://en.wikipedia.org/wiki/Lorenz_system). 
+**nonlinearTseries** offers different routines for simulating the best well-known
+nonlinear systems: 
+
+```{r loading}
+suppressMessages(library('nonlinearTseries'))
+library('plot3D')
+# by default, the simulation creates a RGL plot of the system's phase space
+lor = lorenz(do.plot = F)
+# let's plot the phase space of the simulated lorenz system
+scatter3D(lor$x, lor$y, lor$z,
+          main = "Lorenz's system phase space",
+          col = 1, type="o",cex = 0.3)
+```
+
+It must be noted that the `lorenz` function returns the simulated components
+of the system in a `list`. Future versions of the package will allow to obtain
+the same simulations as `ts` objects.
+
+## Taken's embedding theorem
+
+Usually, what we observe in a physical experiment is a single time series and
+not the completely phase space. For example, imagine that we have only measured
+the x component of the Lorenz system. Fortunately, we can still infer the 
+properties of the phase space by constructing vectors whose components are
+time delayed versions of the x signal $[x(t), x(t+\tau), ..., x(t + m\tau)]$ 
+(This theoretical result is referred to as the 
+[Takens' embedding theorem](http://www.scholarpedia.org/article/Attractor_reconstruction)). 
+
+The **nonlinearTseries** package provides functions for estimating proper values
+for the embedding dimension $m$ and the delay-parameter $\tau$. First, the 
+delay-parameter can be estimated by using the autocorrelation function or the
+average mutual information of the signal.
+
+```{r tauEstimation}
+# Imagine we have only measured the x-component of the Lorenz system
+lor.x = lor$x
+
+old.par = par(mfrow = c(1, 2))
+# tau-delay estimation based on the autocorrelation function
+tau.acf = timeLag(lor.x, technique = "acf", do.plot = T)
+# tau-delay estimation based on the mutual information function
+tau.ami = timeLag(lor.x, technique = "ami", do.plot = T)
+par(old.par)
+```
+
+Both techniques select a time-lag based on the behaviour of the autocorrelation
+or the average mutual information function. Since the autocorrelation function
+is a linear statistic we usually obtain more appropriate values with the 
+mutual information technique. Thus, for the remainder of this section, we will use the value obtained with this technique.
+
+Once the time-lag parameter has been estimated, a proper embedding dimension can
+be computed by using the well-known Cao's algorithm ([@cao1997practical]see 
+`?estimateEmbeddingDim` for references):
+
+```{r mEstimation}
+emb.dim = estimateEmbeddingDim(lor.x, time.lag = tau.ami,
+                               max.embedding.dim = 15)
+
+```
+
+The final phase space reconstruction can be obtained using the `buildTakens`
+function:
+
+```{r buildTakens}
+tak = buildTakens(lor.x,embedding.dim = emb.dim, time.lag = tau.ami)
+scatter3D(tak[,1], tak[,2], tak[,3],
+          main = "Lorenz's system reconstructed phase space",
+          col = 1, type="o",cex = 0.3)
+```
+
+Note that the reconstructed and the original phase space have similar features.
+
+## Lyapunov exponent and dimensions
+In practical applications, some of the best well-known nonlinear statistics 
+(such as the Laypunov exponent, the generalized correlation dimensions or the
+sample entropies)  share a similar estimation process. This process could be
+summarised as follows: 
+
+\begin{enumerate}
+\item Perform some heavy computations characterizing 
+either the scaling behaviour of the attractor in the phase space 
+(e.g. correlation dimension) or the dynamical evolution of the system in time  
+(e.g. Lyapunov exponent).
+\item The estimation of the nonlinear statistic requires the existence of a 
+small region (in space or time) in which the function computed in the previous
+step manifests a linear behaviour. Thus, it is important
+to check for the existence of this linear regions through plots. The `plot`
+function can be used with all the objects involved in the computation of these
+statistics.
+\item Once the linear-region has been localized, the nonlinear statistic
+is obtained by performing a linear regression using the `estimate`
+function.
+\end{enumerate}
+
+In the following sections we illustrate this procedure computating the Lyapunov
+exponents and the correlation dimension of the lorenz system.
+
+### Correlation dimension
+
+```{r corrDim}
+cd = corrDim(lor.x,
+             min.embedding.dim = emb.dim,
+             max.embedding.dim = emb.dim + 3,
+             time.lag = tau.ami, 
+             min.radius = 0.001, max.radius = 50,
+             n.points.radius = 40, theiler.window = 100,
+             do.plot=FALSE)
+plot(cd)
+cd.est = estimate(cd,regression.range=c(0.75,3),use.embeddings = 5:7)
+cat("expected: 2.05  --- estimate: ",cd.est,"\n")
+```
+
+## Maximum Lyapunov exponent
+
+```{r maxLyap,include=FALSE}
+# get the sampling period of the lorenz simulation
+# computing the differences of time (all differences should be equal)
+sampling.period = diff(lor$time)[1]
+ml = maxLyapunov(lor.x, 
+                 sampling.period=0.01,
+                 min.embedding.dim = emb.dim,
+                 max.embedding.dim = emb.dim + 3,
+                 time.lag = tau.ami, 
+                 radius=1,
+                 theiler.window=100,
+                 max.time.steps=1000,
+                 do.plot=FALSE)
+plot(ml,type="l", xlim = c(0,8))
+ml.est = estimate(ml, regression.range = c(0,3),
+                  do.plot = T,type="l")
+cat("expected: 0.906  --- estimate: ", ml.est,"\n")
+```
+  
+
+## Surrogate data testing
+
+Although we have postponed its discussion until the end
+of this vignette, the first step before studying a system using nonlinear 
+analysis techniques should be checking that the data shows indeed some degree of
+nonlinearity. 
+
+The preferred method for nonlinearity-test in literature is surrogate data 
+testing. In surrogate data testing,  a statistic $\mu$
+quantifying some nonlinear feature of the data is computed and compared with
+the resulting values for an ensamble of comparable linear processes 
+[@theiler1992testing].
+**nonlinearTseries** includes basic functionality for surrogate data testing. The
+next example performs surrogate data testing by measuring the time
+asymmetry of the data and the surrogates (since linear stochastic processes are
+symmetric under time reversal, a deviation from the distribution of the surrogates
+will be a strong sign of nonlinearity). From the resulting figure, it is clear
+that our time series shows some degree of nonlinearity.
+
+```{r surrogateTest}
+st = surrogateTest(lor.x,significance = 0.05,one.sided = F,
+                   FUN = timeAsymmetry, do.plot=F)
+plot(st)
+```
+
+# References
