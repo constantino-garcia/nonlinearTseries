@@ -31,3 +31,26 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// neighsList2Sparse
+void neighsList2Sparse(List& neighs, NumericMatrix& neighs_matrix);
+RcppExport SEXP nonlinearTseries_neighsList2Sparse(SEXP neighsSEXP, SEXP neighs_matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List& >::type neighs(neighsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type neighs_matrix(neighs_matrixSEXP);
+    neighsList2Sparse(neighs, neighs_matrix);
+    return R_NilValue;
+END_RCPP
+}
+// neighsList2SparseRCreator
+void neighsList2SparseRCreator(const List& neighs, const int& ntakens, NumericMatrix& neighs_matrix);
+RcppExport SEXP nonlinearTseries_neighsList2SparseRCreator(SEXP neighsSEXP, SEXP ntakensSEXP, SEXP neighs_matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const List& >::type neighs(neighsSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ntakens(ntakensSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type neighs_matrix(neighs_matrixSEXP);
+    neighsList2SparseRCreator(neighs, ntakens, neighs_matrix);
+    return R_NilValue;
+END_RCPP
+}

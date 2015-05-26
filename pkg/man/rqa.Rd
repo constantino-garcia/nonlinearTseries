@@ -5,7 +5,8 @@
 \title{Recurrence Quantification Analysis (RQA)}
 \usage{
 rqa(takens = NULL, time.series = NULL, embedding.dim = 2, time.lag = 1,
-  radius, lmin = 2, vmin = 2, distanceToBorder = 2, do.plot = FALSE)
+  radius, lmin = 2, vmin = 2, distanceToBorder = 2, save.RM = TRUE,
+  do.plot = FALSE, ...)
 }
 \arguments{
 \item{takens}{Instead of specifying the \emph{time.series}, the \emph{embedding.dim} and the \emph{time.lag}, the user
@@ -27,12 +28,18 @@ Takens' vectors.}
 \item{distanceToBorder}{In order to avoid border effects, the \emph{distanceToBorder} points near the
 border of the recurrence matrix are ignored when computing the RQA parameters. Default, \emph{distanceToBorder} = 2.}
 
+\item{save.RM}{Logical value. If TRUE, the recurrence matrix is stored as a sparse matrix. Note that
+computing the recurrences in matrix form can be computationally expensive.}
+
 \item{do.plot}{Logical. If TRUE, the recurrence plot is shown. However, plotting the recurrence matrix is computationally
 expensive. Use with caution.}
+
+\item{...}{Additional plotting parameters.}
 }
 \value{
 A \emph{rqa}  object that consist of a list with the most important RQA parameters:
 \itemize{
+ \item \emph{recurrence.matrix}: A sparse symmetric matrix containing the recurrences of the phase space.
  \item \emph{REC}: Recurrence. Percentage of recurrence points in a Recurrence Plot.
  \item \emph{DET}: Determinism. Percentage of recurrence points that form diagonal lines.
  \item \emph{LAM}: Percentage of recurrent points that form vertical lines.
@@ -56,9 +63,10 @@ phase space.
 \examples{
 \dontrun{
 rossler.ts =  rossler(time=seq(0, 10, by = 0.01),do.plot=FALSE)$x
-rqa.params=rqa(time.series = rossler.ts, embedding.dim=2, time.lag=1,
+rqa.analysis=rqa(time.series = rossler.ts, embedding.dim=2, time.lag=1,
                radius=1.2,lmin=2,do.plot=FALSE,distanceToBorder=2)
-               }
+plot(rqa.analysis)
+}
 }
 \author{
 Constantino A. Garcia

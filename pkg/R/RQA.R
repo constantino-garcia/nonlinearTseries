@@ -1,10 +1,9 @@
-
 ################################################################################
 #' Recurrence Quantification Analysis (RQA)
 #' @description
 #' The Recurrence Quantification Analysis (RQA) is an advanced technique for the nonlinear
 #' analysis that allows to quantify the number and duration of the recurrences in the 
-#' phase space.
+#' phase space. 
 #' @param time.series The original time series from which the phase-space reconstruction is performed.
 #' @param embedding.dim Integer denoting the dimension in which we shall embed the \emph{time.series}.
 #' @param time.lag Integer denoting the number of time steps that will be use to construct the 
@@ -14,12 +13,16 @@
 #' @param radius Maximum distance between two phase-space points to be considered a recurrence.
 #' @param lmin Minimal length of a diagonal line to be considered in the RQA. Default \emph{lmin} = 2.
 #' @param vmin Minimal length of a vertical line to be considered in the RQA. Default \emph{vmin} = 2.
+#' @param save.RM Logical value. If TRUE, the recurrence matrix is stored as a sparse matrix. Note that
+#' computing the recurrences in matrix form can be computationally expensive.
 #' @param do.plot Logical. If TRUE, the recurrence plot is shown. However, plotting the recurrence matrix is computationally 
 #'  expensive. Use with caution.
+#' @param ... Additional plotting parameters.
 #' @param distanceToBorder In order to avoid border effects, the \emph{distanceToBorder} points near the 
 #' border of the recurrence matrix are ignored when computing the RQA parameters. Default, \emph{distanceToBorder} = 2.
 #' @return A \emph{rqa}  object that consist of a list with the most important RQA parameters:
 #' \itemize{
+#'  \item \emph{recurrence.matrix}: A sparse symmetric matrix containing the recurrences of the phase space.
 #'  \item \emph{REC}: Recurrence. Percentage of recurrence points in a Recurrence Plot.
 #'  \item \emph{DET}: Determinism. Percentage of recurrence points that form diagonal lines.
 #'  \item \emph{LAM}: Percentage of recurrent points that form vertical lines.
@@ -39,15 +42,16 @@
 #' @examples
 #' \dontrun{
 #' rossler.ts =  rossler(time=seq(0, 10, by = 0.01),do.plot=FALSE)$x
-#' rqa.params=rqa(time.series = rossler.ts, embedding.dim=2, time.lag=1,
+#' rqa.analysis=rqa(time.series = rossler.ts, embedding.dim=2, time.lag=1,
 #'                radius=1.2,lmin=2,do.plot=FALSE,distanceToBorder=2)
-#'                }
+#' plot(rqa.analysis)
+#' }
 #' @author Constantino A. Garcia
 #' @rdname rqa
 #' @export rqa
-#' 
 rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
-             radius,lmin = 2,vmin = 2,distanceToBorder=2,do.plot=FALSE){
+             radius,lmin = 2,vmin = 2,distanceToBorder=2,
+             save.RM = TRUE, do.plot=FALSE,...){
   if(is.null(takens)){
     takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  
   } 
@@ -58,7 +62,12 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
   if (maxDistanceMD <=1) maxDistanceMD=2 # this should not happen
   
   neighs=findAllNeighbours(takens,radius)
-  if (do.plot) {recurrencePlotAux(neighs)}
+  if (save.RM || do.plot){
+    neighs.matrix = neighbourList2SparseMatrix(neighs)
+  }
+  if (do.plot) {
+    rec.plot = recurrencePlotFromMatrix(neighs.matrix,...)
+  }
   hist=getHistograms(neighs,ntakens,lmin,vmin)
   # calculate the number of recurrence points from the recurrence rate. The recurrence
   # rate counts the number of points at every distance in a concrete side of the main diagonal.
@@ -74,12 +83,31 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
   #paramenters dealing with vertical lines
   vertP=calculateVerticalParameters(ntakens,numberRecurrencePoints,vmin,hist$verticalHist)
   #join all computations
-  rqa.parameters=c(REC=REC,RATIO=diagP$DET/REC,diagP,vertP,list(diagonalHistogram=hist$diagonalHist,recurrenceRate=recurrence_rate_vector))
-  class(rqa.parameters) = "rqa"
-  return(rqa.parameters)
+  rqa.parameters = c(REC=REC,RATIO=diagP$DET/REC,
+                     diagP,vertP,
+                     list(diagonalHistogram=hist$diagonalHist,
+                          recurrenceRate=recurrence_rate_vector))
+  
+  if (!save.RM){
+    neighs.matrix = NULL
+  }
+  rqa.analysis = c(list(recurrence.matrix=neighs.matrix),
+                   rqa.parameters)
+  
+  class(rqa.analysis) = "rqa"
+  rqa.analysis
 }
 
-
+#' @export
+plot.rqa = function(x,...){
+  if (!is.null(x$recurrence.matrix)){
+    recurrencePlotFromMatrix(x$recurrence.matrix,
+                             ...)
+  }else{
+    stop("The recurrence matrix has not been stored... Impossible to plot!")
+  }
+  
+}
 ################################################################################
 #' Recurrence Plot 
 #' @description
@@ -93,6 +121,7 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
 #' @param takens Instead of specifying the \emph{time.series}, the \emph{embedding.dim} and the \emph{time.lag}, the user
 #' may specify directly the Takens' vectors. 
 #' @param radius Maximum distance between two phase-space points to be considered a recurrence.
+#' @param ... Additional plotting parameters.
 #' @references Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
 #' @author Constantino A. Garcia
 #' @export recurrencePlot
@@ -100,92 +129,65 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
 #' @useDynLib nonlinearTseries
 recurrencePlot=function(takens = NULL, time.series, 
                         embedding.dim, time.lag,radius,
-                        main="Recurrence plot",xlab="Takens vector's index",
-                        ylab="Takens vector's index",...){
+                        ...){
   if(is.null(takens)){
     takens = buildTakens( time.series,
                           embedding.dim = embedding.dim, 
                           time.lag = time.lag)  
   } 
-  neighs=findAllNeighbours(takens,radius)
-  recurrencePlotAux(neighs,...)
+  neighs.matrix = neighbourList2SparseMatrix(findAllNeighbours(takens,radius))
+  recurrencePlotFromMatrix(neighs.matrix,...)
 }
 
 #private 
-recurrencePlotAux=function(neighs,...){
-  ntakens=length(neighs)
-  neighs.matrix = neighbourListSparseNeighbourMatrix(neighs,ntakens)
+recurrencePlotFromMatrix=function(neighs.matrix,
+                                  main="Recurrence plot",
+                                  xlab="Takens vector's index",
+                                  ylab="Takens vector's index",...){
   # need a print because it is a trellis object!!
-  print(image(neighs.matrix,...))
+  rec.plot = image(neighs.matrix,
+                   main = main, xlab = xlab, ylab = ylab, 
+                   ...)
+  print(rec.plot)
+  rec.plot
+}
+
+neighs2numericType = function(neighs){
+  lapply(neighs,
+         FUN = function(x){
+           if(length(x)==0){
+             numeric();
+           }else{
+             x
+           }
+         })
+}
+
+neighbourList2SparseMatrix = function(neighs){
+  ntakens = length(neighs)
+  neighs = neighs2numericType(neighs)
+  neigh.len = sum(sapply(neighs, FUN=length)) + ntakens
+  neighs.matrix = matrix(0,nrow= neigh.len ,ncol=2)
+  .Call("nonlinearTseries_neighsList2SparseRCreator",neighs=as.list(neighs),ntakens=as.integer(ntakens),
+        neighs_matrix=as.matrix(neighs.matrix),PACKAGE="nonlinearTseries")
+  neighs.matrix
+  sparseMatrix(neighs.matrix[,1],neighs.matrix[,2],dims = c(ntakens,ntakens),
+               symmetric = T)
+}
+
+neighbourListToCsparseNeighbourMatrix = function(neighs){
+  # sum 1 to columns to include the diagonal (i,i) elements
+  neighs.len = sapply(neighs,length)
+  max.neighs = 1 + max(neighs.len)
+  neighs.matrix= matrix(-1,nrow=length(neighs),
+                        ncol = max.neighs)
+  neighs = neighs2numericType(neighs)
+  .Call("nonlinearTseries_neighsList2Sparse",neighs=as.list(neighs),
+        neighs_matrix = as.matrix(neighs.matrix),
+        PACKAGE = "nonlinearTseries")
     
-}
-
-neighbourListSparseNeighbourMatrix = function(neighs,ntakens){
-  neigh.index = lapply(seq_along(neighs),
-                       FUN = function(x,y) as.matrix(expand.grid(x,c(x,y[[x]]))),
-                       y=neighs)
-  neigh.len = sapply(neigh.index, FUN=nrow)
-  neigh.matrix = matrix(0,nrow=sum(neigh.len),ncol=2)
-  current.index =1
-  for (i in 1:length(neigh.index)){
-    
-    next.index = current.index + neigh.len[[i]]
-    if (current.index == (next.index - 1)){
-      neigh.matrix[current.index,] = as.numeric(neigh.index[[i]])  
-    }else{
-      neigh.matrix[current.index:(next.index - 1),] = neigh.index[[i]]
-    } 
-    current.index = next.index
+  list(neighs = neighs.matrix, nneighs = (neighs.len + 1) )
   
-  }
-  sparseMatrix(neigh.matrix[,1],neigh.matrix[,2],dims = c(ntakens,ntakens))
-}
-
-neighbourListSparseNeighbourMatrixOld  = function(neighs,ntakens){
-  neighs.matrix = .sparseDiagonal(ntakens)
-  for (i in 1:ntakens){
-    if (length(neighs[[i]])>0){
-      for (j in neighs[[i]]){
-        neighs.matrix[i,j] = 1
-      }
-    }
-  }
-  return (neighs.matrix)
-}
-
-
-neighbourListToCsparseNeighbourMatrix = function(neighs,ntakens){
-  max.number.neighs = -1
-  # store the number of neighs of each takens' vector
-  number.neighs = rep(0,ntakens)
-  for (i in 1:ntakens){
-    number.neighs[[i]] = length(neighs[[i]]) + 1 # add the proper vector the its neighbourhood
-    if (number.neighs[[i]] > max.number.neighs){
-      max.number.neighs = number.neighs[[i]]
-    }
-  }
-  # add one because i is neighbour of i (itself)
-  neighs.matrix = matrix(-1,ncol=max.number.neighs,nrow=ntakens)
-  for (i in 1:ntakens){
-    # substract 1 to convert to C notation!!!
-    if (number.neighs[[i]] > 1) {
-      neighs.matrix[i,(1:number.neighs[[i]])] = c(i,neighs[[i]]) -1
-    } else{
-      neighs.matrix[i,1] = i-1
-    } 
-    neighs.matrix[i,(1:number.neighs[[i]])] = sort( neighs.matrix[i,1:(number.neighs[[i]])])
-  }
-  
-  return (list(neighs = neighs.matrix, nneighs = number.neighs ))
-}
-
-
-countRecurrencePoints=function(neighs,ntakens){
-  count=0
-  for (i in 1:ntakens){
-    count = count + length(neighs[[i]])
-  }
-  return (count)
 }
 
 
@@ -236,7 +238,7 @@ calculateDiagonalParameters=function(ntakens,numberRecurrencePoints,lmin=2,lDiag
 getHistograms=function(neighs,ntakens,lmin,vmin){
   
   # the neighbours are labeled from 0 to ntakens-1
-  c.matrix = neighbourListToCsparseNeighbourMatrix(neighs,ntakens)
+  c.matrix = neighbourListToCsparseNeighbourMatrix(neighs)
   verticalHistogram = rep(0,ntakens)
   diagonalHistogram = rep(0,ntakens)
   recurrenceHistogram = rep(0,ntakens)

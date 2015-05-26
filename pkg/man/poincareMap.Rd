@@ -29,7 +29,9 @@ related which all of these maps:
 \itemize{
    \item The positive Poincare map is formed by all the intersections with the hyperplane in positive direction
     (defined by the normal vector). The \emph{pm.pos} returns the points of the map whereas that \emph{pm.pos.time} returns
-    the number of time steps since the beggining where the intersections occurred.
+    the number of time steps since the beggining where the intersections occurred. Note that these time steps probably won't
+    be integers since the algorithm uses an interpolation procedure for calculating the
+    intersection with the hyperplane.
    \item Similarly we define a negative Poincare map (\emph{pm.neg} and \emph{pm.neg.time}).
    \item  Finally, we may define a two-side Poincare map that stores all the intersections (no matter the direction
     of the intersection) (\emph{pm} and \emph{pm.time}).

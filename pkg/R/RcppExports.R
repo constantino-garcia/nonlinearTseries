@@ -9,3 +9,11 @@ mutualInformation <- function(tseries, maxlag, npartitions) {
     .Call('nonlinearTseries_mutualInformation', PACKAGE = 'nonlinearTseries', tseries, maxlag, npartitions)
 }
 
+neighsList2Sparse <- function(neighs, neighs_matrix) {
+    invisible(.Call('nonlinearTseries_neighsList2Sparse', PACKAGE = 'nonlinearTseries', neighs, neighs_matrix))
+}
+
+neighsList2SparseRCreator <- function(neighs, ntakens, neighs_matrix) {
+    invisible(.Call('nonlinearTseries_neighsList2SparseRCreator', PACKAGE = 'nonlinearTseries', neighs, ntakens, neighs_matrix))
+}
+

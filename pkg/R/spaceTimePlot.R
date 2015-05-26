@@ -160,7 +160,7 @@ plot.spaceTimePlot = function(x, main = "Space time separation plot",xlab=NULL,
     # c(bottom, left, top, right)
     plot.new()
     legend("center","groups",ncol=numberPercentages/2,
-           col=1:numberPercentages,lty=rep(1,numberPercentages),
+           col=col,lty=rep(1,numberPercentages),
            lwd=rep(2.5,numberPercentages),bty="n",
            legend=legend.text,title="Percentage of neighbour pairs")
 

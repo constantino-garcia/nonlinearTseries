@@ -118,15 +118,6 @@ surrogateTest <- function(time.series, significance = 0.05, one.sided=FALSE,
   FUN = match.fun(FUN)
   data.statistic = FUN(time.series,...)
   
-  if (do.plot){
-    plot(surrogates.statistics,rep(1,length(surrogates.statistics)),
-         xlim=range(data.statistic,surrogates.statistics),ylim=c(0,3),
-         type="h",lwd=2,col=1,lty=1,main=main,xlab=xlab,ylab=ylab)
-    lines(data.statistic,2,type="h",col=2,lty=2,lwd=2)
-    legend("top",bty="n",legend=c("Surrogate data","Original data"),col=1:2,
-           lty=c(1,2),lwd=2)
-  }
-  
   if (verbose){
     if (one.sided){
       sdtMessage1s(data.statistic,surrogates.statistics,alternative,K)
@@ -136,8 +127,39 @@ surrogateTest <- function(time.series, significance = 0.05, one.sided=FALSE,
   }
   nltest$surrogates.statistics = surrogates.statistics
   nltest$data.statistic = data.statistic
+  class(nltest) = "surrogateTest"
   
-  return(nltest)
+  if (do.plot){
+    plot(nltest,main=main,xlab=xlab,ylab=ylab)
+  }
+  
+  nltest
+}
+
+#' @export
+plot.surrogateTest = function(x,xlab="Values of the statistic",ylab="",
+                              main="Surrogate data testing",
+                              type="h",lwd=2,
+                              xlim=NULL,ylim=NULL,
+                              add.legend = T,
+                              ...){
+  surrogates.statistics = x$surrogates.statistics 
+  data.statistic = x$data.statistic 
+  
+  if(is.null(xlim)) xlim = range(data.statistic,surrogates.statistics)
+  if (is.null(ylim)) ylim = c(0,3)
+  
+  plot(surrogates.statistics,rep(1,length(surrogates.statistics)),
+       xlim = xlim, ylim = ylim,
+       type=type,lwd=lwd,main=main,xlab=xlab,ylab=ylab,
+       col=1,lty=1)
+  lines(data.statistic,2,type=type,lwd=lwd,col=2,lty=2)
+  
+  if (add.legend){
+    legend("top",bty="n",legend=c("Surrogate data","Original data"),col=1:2,
+           lty=c(1,2),lwd=lwd)
+  }
+  
 }
 
 # Surrogate Data Testing Message two-sided
