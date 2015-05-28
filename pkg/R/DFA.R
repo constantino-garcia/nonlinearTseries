@@ -112,6 +112,10 @@ dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE,
   #create dfa object
   dfa.structure = list(window.sizes=window.sizes,fluctuation.function=fluctuation.function)
   class(dfa.structure) = "dfa"
+  # add attributes
+  id=deparse(substitute(time.series))
+  attr(dfa.structure,"id") = id
+  
     
   #plot
   if (do.plot){

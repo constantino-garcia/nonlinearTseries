@@ -9,7 +9,7 @@
 \alias{plot.maxLyapunov}
 \title{Maximum lyapunov exponent}
 \usage{
-maxLyapunov(time.series, takens = NULL, min.embedding.dim = 2,
+maxLyapunov(time.series, min.embedding.dim = 2,
   max.embedding.dim = min.embedding.dim, time.lag = 1, radius,
   theiler.window = 1, min.neighs = 5, min.ref.points = 500,
   max.time.steps = 10, number.boxes = NULL, sampling.period = 1,
@@ -33,11 +33,6 @@ maxLyapunov(time.series, takens = NULL, min.embedding.dim = 2,
 }
 \arguments{
 \item{time.series}{The original time series from which the maximal Lyapunov exponent will be estimated}
-
-\item{takens}{A matrix containing the Takens' vectors (one per row) that will be used to estimate the maximal Lyapunov
-exponent (see \link{buildTakens}). If the Takens' vectors are not specified, the user must specify the time series
-(time.series), the embedding dimension (embedding.dim) and the time lag (time.lag) that
-shall be used to construct the Takens' vectors.}
 
 \item{min.embedding.dim}{Integer denoting the minimum dimension in which we shall embed the time.series (see \link{buildTakens}).}
 

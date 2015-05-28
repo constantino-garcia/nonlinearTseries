@@ -49,6 +49,9 @@
 #' @export sampleEntropy
 #' @exportClass sampleEntropy
 sampleEntropy = function (corrDim.object, do.plot=TRUE,...){ 
+  if (!inherits(corrDim.object, "corrDim")){
+    stop("corrDim.object should be of class corrDim")
+  }
   radius = radius(corrDim.object)
   corr.matrix = corrMatrix(corrDim.object)
   embeddings = embeddingDims(corrDim.object)
@@ -61,6 +64,10 @@ sampleEntropy = function (corrDim.object, do.plot=TRUE,...){
   sample.entropy = list(sample.entropy = entropy,embedding.dims = head(embeddings,-1),
                         entr.order=nlOrder(corrDim.object), radius=radius)
   class(sample.entropy)="sampleEntropy"
+  
+  attr(sample.entropy,"time.lag") = attr(corrDim.object,"time.lag") 
+  attr(sample.entropy,"id") = attr(corrDim.object,"id") 
+  attr(sample.entropy,"theiler.window") = attr(corrDim.object,"theiler.window") 
   
   if (do.plot){
    plot(sample.entropy,...) 

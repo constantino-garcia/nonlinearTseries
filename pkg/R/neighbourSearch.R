@@ -22,6 +22,8 @@ boxAssistant=function(takens, radius,number.boxes=NULL){
                     PACKAGE="nonlinearTseries" )
   #format solution and return it
   sol=list(boxes=ret$boxes,possibleNeighbours=ret$possibleNeighbours)
+  sol = propagateTakensAttr(sol, takens)
+  
   return(sol)
 }
 
@@ -81,7 +83,7 @@ neighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
     neighList=cneighs$neighList[1:(cneighs$nfound)]+ 1
     finalNeighs=list(nfound=cneighs$nfound,neighList=neighList)
   }
-  mostattributes(finalNeighs) = attributes(takens)
+  finalNeighs = propagateTakensAttr(finalNeighs, takens)
   # remember to translate the C-index into R-index
   attr(finalNeighs,"takens.index") = positionTakens + 1
   attr(finalNeighs,"radius") = radius
@@ -154,7 +156,8 @@ findAllNeighbours=function(takens,radius,number.boxes=NULL){
       allneighs[[i]]=as.vector(auxiliarNeighList)
     }
   }
-  mostattributes(allneighs) = attributes(takens)
+  
+  allneighs = propagateTakensAttr(allneighs, takens)
   attr(allneighs,"radius") = radius
   return (allneighs)
 }

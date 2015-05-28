@@ -50,7 +50,9 @@
 #' @export poincareMap
 #' @useDynLib nonlinearTseries
 poincareMap=function(time.series=NULL, embedding.dim=2, time.lag=1, takens = NULL, normal.hiperplane.vector = NULL,  hiperplane.point ){
-  if (is.null(takens)){takens = buildTakens(time.series,embedding.dim,time.lag)}
+  if (is.null(takens)){
+    takens = buildTakens(time.series,embedding.dim,time.lag)
+  }
   dimension = ncol(takens)
   n.points = nrow(takens)
   if (is.null(normal.hiperplane.vector)){
@@ -94,7 +96,16 @@ poincareMap=function(time.series=NULL, embedding.dim=2, time.lag=1, takens = NUL
   positive.poincare.map.series = positive.poincare.map.series[1:poincare$numberPositiveCrossings,]
   negative.poincare.map.series = matrix(poincare$negativePoincareMapSeries,nrow=n.points,ncol=dimension)
   negative.poincare.map.series = negative.poincare.map.series[1:poincare$numberNegativeCrossings,]
-  return(list(pm = poincare.map.series, pm.time = poincare$crossingTime[1:poincare$numberCrossings],
-              pm.pos = positive.poincare.map.series, pm.pos.time = poincare$positiveCrossingTime[1:poincare$numberPositiveCrossings],
-              pm.neg = negative.poincare.map.series, pm.neg.time = poincare$negativeCrossingTime[1:poincare$numberNegativeCrossings]))
+  
+  
+  
+  p.map = list(pm = poincare.map.series, pm.time = poincare$crossingTime[1:poincare$numberCrossings],
+               pm.pos = positive.poincare.map.series, pm.pos.time = poincare$positiveCrossingTime[1:poincare$numberPositiveCrossings],
+               pm.neg = negative.poincare.map.series, pm.neg.time = poincare$negativeCrossingTime[1:poincare$numberNegativeCrossings])
+  # add attributes
+  p.map = propagateTakensAttr(p.map, takens)
+  attr(p.map, "normal.hiperplane.vector") = normal.hiperplane.vector
+  attr(p.map, "hiperplane.point") = hiperplane.point 
+  
+  p.map
 }

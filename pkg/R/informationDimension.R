@@ -106,11 +106,18 @@ infDim <-
                                             log.radius =  infDim.matrix,
                                             embedding.dims = embeddings)
     class(information.dimension.structure) = "infDim"
+    # add attributes
+    id=deparse(substitute(time.series))
+    attr(information.dimension.structure,"time.lag") = time.lag
+    attr(information.dimension.structure,"id") = id
+    attr(information.dimension.structure,"theiler.window") = theiler.window
+    
     
     if (do.plot){
       plot(information.dimension.structure,...)
     }
 
+    
     return(information.dimension.structure)
 }
 

@@ -79,6 +79,7 @@ spaceTimePlot=function(takens = NULL,
   dimnames(stp.matrix)  = list(percentagePoints=100*(1:numberPercentages)/numberPercentages,number.time.steps=1:number.time.steps)
   stp = list(stp.matrix=stp.matrix,time.step=time.step,time.axis = 1:number.time.steps)
   class(stp) = "spaceTimePlot"
+  stp = propagateTakensAttr(stp,takens)
   
   #plot if necessary
   if (do.plot){

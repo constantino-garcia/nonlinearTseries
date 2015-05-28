@@ -46,7 +46,7 @@
 #'                radius=1.2,lmin=2,do.plot=FALSE,distanceToBorder=2)
 #' plot(rqa.analysis)
 #' }
-#' @author Constantino A. Garcia
+#' @author Constantino A. Garcia and Gunther Sawitzki
 #' @rdname rqa
 #' @export rqa
 rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
@@ -94,7 +94,10 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
   rqa.analysis = c(list(recurrence.matrix=neighs.matrix),
                    rqa.parameters)
   
+  rqa.analysis = propagateTakensAttr(rqa.analysis, takens)
+  attr(rqa.analysis, "radius") = radius
   class(rqa.analysis) = "rqa"
+ 
   rqa.analysis
 }
 

@@ -6,3 +6,10 @@ vectorizePar = function(par, N, default=1:N){
   par
 }
                         
+
+propagateTakensAttr = function(x, takens){
+  attr(x, "id") = attr(takens,"id")
+  attr(x, "time.lag") = attr(takens, "time.lag")
+  attr(x, "embedding.dim") = attr(takens, "embedding.dim")
+  x
+}

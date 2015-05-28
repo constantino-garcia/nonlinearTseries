@@ -130,6 +130,12 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5,
   # create the corrDim object
   corr.dim = list(corr.matrix = corr.matrix,embedding.dims = min.embedding.dim:max.embedding.dim,radius=radius,corr.order=corr.order)
   class(corr.dim) = "corrDim"
+  # add attributes
+  id=deparse(substitute(time.series))
+  attr(corr.dim,"time.lag") = time.lag
+  attr(corr.dim,"id") = id
+  attr(corr.dim,"theiler.window") = theiler.window
+  
   # plot if necessary
   if (do.plot){
     plot(corr.dim,...)

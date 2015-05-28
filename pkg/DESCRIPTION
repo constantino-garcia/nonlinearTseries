@@ -2,9 +2,13 @@ Package: nonlinearTseries
 Type: Package
 Title: R Package for Nonlinear Time Series Analysis
 Version: 0.2.2
-Date: 2015-04-22
-Author: Constantino A. Garcia
+Date: 2015-05-27
 Maintainer: Constantino A. Garcia <constantinoantonio.garcia@usc.es>
+Authors@R: c(person("Constantino A.", "Garcia",
+                    email = "constantinoantonio.garcia@usc.es",
+                    role = c("aut", "cre")),
+            person("Gunther", "Sawitzki",
+                    role = "ctb"))
 Description: The nonlinearTseries package provides functions for nonlinear time
              series analysis. This package permits the estimation of the 
              most-used nonlinear statistics/algorithms including generalized correlation dimension,
@@ -18,5 +22,5 @@ Copyright: ANN library is copyright University of Maryland and Sunil Arya and
            and Gregory Jefferis 2009-2013. See file COPYRIGHT for details
 Depends: Matrix, rgl, tseries, TSA, Rcpp (>= 0.10.5)
 LinkingTo: Rcpp
-Suggests: RUnit, plot3D, knitr,
+Suggests: plot3D, knitr,
 VignetteBuilder: knitr

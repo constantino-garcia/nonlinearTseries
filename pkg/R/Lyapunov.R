@@ -17,10 +17,6 @@
 #'  routine allows the user to get always an estimate of the maximal Lyapunov exponent, but the user must check that there is a linear region in the  
 #' \eqn{S(t) Vs t}. If such a region does not exist, the estimation should be discarded. The computations should be performed
 #' for several embedding dimensions in order to check that the Lyapunov exponent does not depend on the embedding dimension.
-#' @param takens A matrix containing the Takens' vectors (one per row) that will be used to estimate the maximal Lyapunov
-#' exponent (see \link{buildTakens}). If the Takens' vectors are not specified, the user must specify the time series
-#' (time.series), the embedding dimension (embedding.dim) and the time lag (time.lag) that
-#' shall be used to construct the Takens' vectors.
 #' @param time.series The original time series from which the maximal Lyapunov exponent will be estimated
 #' @param min.embedding.dim Integer denoting the minimum dimension in which we shall embed the time.series (see \link{buildTakens}). 
 #' @param max.embedding.dim Integer denoting the maximum dimension in which we shall embed the time.series (see \link{buildTakens}).Thus,
@@ -94,7 +90,7 @@
 #' @export maxLyapunov
 #' @exportClass maxLyapunov
 #' @useDynLib nonlinearTseries
-maxLyapunov=function(time.series,takens=NULL,
+maxLyapunov=function(time.series,
                      min.embedding.dim=2,
                      max.embedding.dim=min.embedding.dim,
                      time.lag=1,radius,theiler.window=1,min.neighs=5,
@@ -106,10 +102,9 @@ maxLyapunov=function(time.series,takens=NULL,
   s.function = matrix(0, ncol = (max.time.steps+1), nrow = n.embeddings)
   dimnames(s.function) = list(embeddings,0:max.time.steps)
   for (m in embeddings){
-    s.function[as.character(m),] = maxLyapunovSingleDimension(
-      time.series,takens,
-      m,
-      time.lag, radius,theiler.window,
+    s.function[as.character(m),] =
+      maxLyapunovSingleDimension(time.series,takens = NULL,
+      m, time.lag, radius,theiler.window,
       min.neighs,min.ref.points,
       max.time.steps,number.boxes,
       sampling.period)
@@ -120,6 +115,13 @@ maxLyapunov=function(time.series,takens=NULL,
                                 embedding.dims = min.embedding.dim:max.embedding.dim)
   
   class(max.lyapunov.structure) = "maxLyapunov"
+  id=deparse(substitute(time.series))
+  attr(max.lyapunov.structure,"id") = id
+  attr(max.lyapunov.structure,"time.lag") = time.lag
+  attr(max.lyapunov.structure,"theiler.window") = theiler.window  
+  attr(max.lyapunov.structure,"min.neighs") = min.neighs
+  attr(max.lyapunov.structure,"min.ref.points") = min.ref.points
+  
   #plot
   if (do.plot){
     plot(max.lyapunov.structure,...)
@@ -137,7 +139,9 @@ maxLyapunovSingleDimension=function(time.series,takens,embedding.dim,time.lag,
                                     sampling.period,do.plot){
   #C parameters
   if (is.null(takens)) takens=buildTakens(time.series,embedding.dim=embedding.dim,time.lag=time.lag)
-  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(time.series, radius)
+  if (is.null(number.boxes)) {
+      number.boxes = estimateNumberBoxes(time.series, radius)
+  }
   numberTakens=nrow(takens)
   Sdn=rep(0,max.time.steps+1)
   
