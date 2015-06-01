@@ -21,7 +21,7 @@ knitr::opts_chunk$set(fig.width=7,fig.height=4.7,fig.show='hold')
 
 The **nonlinearTseries** package provides functionality for nonlinear
 time series analysis. This package permits the estimation of the most-used
-nonlinear sstatistics/algorithms including generalized correlation dimension,
+nonlinear statistics/algorithms including generalized correlation dimension,
 information dimension, largest Lyapunov exponent, sample entropy and
 Recurrence Quantification Analysis (RQA), among others. Basic routines
 for surrogate data testing are also included. This vignette provides a brief
@@ -54,7 +54,7 @@ can be found in the `lorenz` help page (`?lorenz` command).
 ## Taken's embedding theorem
 
 Usually, what we observe in a physical experiment is a single time series and
-not the completely phase space. For example, let's assume that we have only measured
+not the complete phase space. For example, let's assume that we have only measured
 the $x$ component of the Lorenz system. Fortunately, we can still infer the 
 properties of the phase space by constructing a set of vectors whose components are
 time delayed versions of the $x$ signal $[x(t), x(t+\tau), ..., x(t + m\tau)]$ 
@@ -62,7 +62,7 @@ time delayed versions of the $x$ signal $[x(t), x(t+\tau), ..., x(t + m\tau)]$
 [Takens' embedding theorem](http://www.scholarpedia.org/article/Attractor_reconstruction)). 
 
 The **nonlinearTseries** package provides functions for estimating proper values
-for the embedding dimension $m$ and the delay-parameter $\tau$. First, the 
+of the embedding dimension $m$ and the delay-parameter $\tau$. First, the 
 delay-parameter can be estimated by using the autocorrelation function or the
 average mutual information of the signal.
 
@@ -78,7 +78,7 @@ tau.ami = timeLag(lor.x, technique = "ami", do.plot = T)
 par(old.par)
 ```
 
-Both techniques select a time-lag based on the behaviour of the autocorrelation
+Both techniques select a time-lag based on the behavior of the autocorrelation
 or the average mutual information function. Since the autocorrelation function
 is a linear statistic we usually obtain more appropriate values with the 
 mutual information technique. Thus, for the remainder of this section, we will 
@@ -93,8 +93,9 @@ emb.dim = estimateEmbeddingDim(lor.x, time.lag = tau.ami,
 
 ```
 
-The final phase space reconstruction can be obtained using the `buildTakens`
-function:
+When applied to the Lorenz system, the Cao's algorithm suggests the use of 
+an embedding dimension of 4. The final phase space reconstruction can be obtained
+using the `buildTakens` function:
 
 ```{r buildTakens}
 tak = buildTakens(lor.x,embedding.dim = emb.dim, time.lag = tau.ami)
@@ -103,23 +104,24 @@ scatter3D(tak[,1], tak[,2], tak[,3],
           col = 1, type="o",cex = 0.3)
 ```
 
-Note that the reconstructed and the original phase space have similar features.
+Note that the reconstructed and the original phase space, although different,
+share similar topological features.
 
 ## Lyapunov exponent and dimensions
 In practical applications, some of the best well-known nonlinear statistics 
 (such as the Lyapunov exponent, the generalized correlation dimensions or the
 sample entropies)  share a similar estimation process. This process could be
-summarised as follows: 
+summarized as follows: 
 
 
  * Perform some heavy computations characterizing 
-either the scaling behaviour of the attractor in the phase space 
+either the scaling behavior of the attractor in the phase space 
 (e.g. correlation dimension) or the dynamical evolution of the system in time  
 (e.g. Lyapunov exponent). These computations are usually repeated for several
 embedding dimensions.
   * The estimation of the nonlinear statistic requires the existence of a 
 small region (in space or time) in which the function computed in the previous
-step manifests a linear behaviour. The slope of this linear region yields the
+step manifests a linear behavior. The slope of this linear region yields the
 value of the nonlinear statistic. Since the nonlinear statistics in which we 
 are interested in are invariants of the dynamical system, their values should not
 depend on the embedding dimension used to estimate them (provided that we are using an
@@ -134,7 +136,7 @@ is obtained by performing a linear regression using the `estimate`
 function. 
 
 
-In the following sections we illustrate this procedure computating the correlation
+In the following sections we illustrate this procedure computing the correlation
 dimension, the sample entropy and the Lyapunov exponents of the Lorenz system.
 For a theoretical discussion of these methods, the interested reader is referred
 to [@kantz2004nonlinear].
@@ -147,7 +149,7 @@ embedding dimension, we compute the correlation sums (`corrDim` function)
 for several embedding dimensions. Once we have checked for the existence of the
 linear regions in different embedding dimensions, we obtain an estimation of
 the correlation dimension with the `estimate` function. This function allows to
-specify the range in which the linear behaviour appears (`regression.range`
+specify the range in which the linear behavior appears (`regression.range`
 parameter) as well as the embedding dimensions
 to be used for the estimation  of the correlation dimension (`use.embeddings`
 parameter). The final  estimation of the correlation dimension is an average of
@@ -192,8 +194,8 @@ One of the more important characteristics of a chaotic system is its sensitivity
 to initial conditions. As a consequence of this sensitivity, close trajectories
 diverge exponentially fast. The maximum Lyapunov exponent measures the 
 average rate of divergence of close trajectories in the system. The `maxLyapunov`
-exponent computes the divergence rates of close trajectories in the phase space
-of a time series. To define what is a close trajectory we make use of the `radius` 
+function can be used for computing this divergence through time. To define what is
+a close trajectory we make use of the `radius` 
 parameter. After the computation of the divergence rates we can get an
 estimate of the maximum Lyapunov exponent by performing a linear regression
 (`estimate` function), just as we did with the correlation dimension.
@@ -226,14 +228,14 @@ nonlinearity.
 The preferred method for nonlinearity-test in literature is surrogate data 
 testing. In surrogate data testing,  a statistic $\mu$
 quantifying some nonlinear feature of the data is computed and compared with
-the resulting values for an ensamble of comparable linear processes 
+the resulting values for an ensemble of comparable linear processes 
 [@theiler1992testing].
 
 **nonlinearTseries** includes basic functionality for surrogate data testing. The
 next example performs surrogate data testing by measuring the time
 asymmetry of the data and the surrogates (since linear stochastic processes are
 symmetric under time reversal, a deviation from the distribution of the surrogates
-will be a strong sign of nonlinearity). From the resulting figure, it is clear
+would be a strong sign of nonlinearity). From the resulting figure, it is clear
 that our time series shows some degree of nonlinearity.
 
 ```{r surrogateTest}
