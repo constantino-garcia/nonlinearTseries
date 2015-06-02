@@ -1,6 +1,6 @@
 Package: nonlinearTseries
 Type: Package
-Title: R Package for Nonlinear Time Series Analysis
+Title: Nonlinear Time Series Analysis
 Version: 0.2.2
 Date: 2015-05-27
 Maintainer: Constantino A. Garcia <constantinoantonio.garcia@usc.es>
@@ -9,13 +9,14 @@ Authors@R: c(person("Constantino A.", "Garcia",
                     role = c("aut", "cre")),
             person("Gunther", "Sawitzki",
                     role = "ctb"))
-Description: The nonlinearTseries package provides functions for nonlinear time
-             series analysis. This package permits the estimation of the 
-             most-used nonlinear statistics/algorithms including generalized correlation dimension,
-             information dimension, largest Lyapunov exponent, sample entropy and
-             Recurrence Quantification Analysis (RQA), among others. Basic routines
-             for surrogate data testing are also included. Part of this work was based on the 
-             book "Nonlinear time series analysis" by Holger Kantz and Thomas Schreiber.
+Description: Functions for nonlinear time series analysis. This package permits 
+             the estimation of the  most-used nonlinear statistics/algorithms
+             including generalized correlation dimension, information dimension,
+             largest Lyapunov exponent, sample entropy and Recurrence 
+             Quantification Analysis (RQA), among others. Basic routines
+             for surrogate data testing are also included. Part of this work 
+             was based on the  book "Nonlinear time series analysis" by 
+             Holger Kantz and Thomas Schreiber.
 License: GPL (>= 3)
 Copyright: ANN library is copyright University of Maryland and Sunil Arya and
            David Mount. R wrapper is based on the ANN library, copyright Samuel Kemp 2005-9 
