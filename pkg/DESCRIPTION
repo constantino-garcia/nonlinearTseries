@@ -16,7 +16,7 @@ Description: Functions for nonlinear time series analysis. This package permits
              Quantification Analysis (RQA), among others. Basic routines
              for surrogate data testing are also included. Part of this work 
              was based on the  book "Nonlinear time series analysis" by 
-             Holger Kantz and Thomas Schreiber.
+             Holger Kantz and Thomas Schreiber (ISBN: 9780521529020).
 License: GPL (>= 3)
 Copyright: ANN library is copyright University of Maryland and Sunil Arya and
            David Mount. R wrapper is based on the ANN library, copyright Samuel Kemp 2005-9 
