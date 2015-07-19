@@ -1,4 +1,8 @@
-
+# importFrom("graphics", "abline", "layout", "legend", "lines", "par", "plot", "plot.new")
+# importFrom("stats", "IQR", "as.formula", "dist", "fft", "lm", "median", "rnorm", "runif", "sd", "ts")
+#' @importFrom graphics abline layout legend lines par plot plot.new
+#' @importFrom stats IQR as.formula dist fft lm median rnorm runif sd ts
+NULL
 
 vectorizePar = function(par, N, default=1:N){
   if (is.null(par)) par=default
