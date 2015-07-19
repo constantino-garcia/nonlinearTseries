@@ -17,7 +17,7 @@ knitr::opts_chunk$set(fig.width=7,fig.height=4.7,fig.show='hold')
 ```
 
 The **nonlinearTseries** package provides functionality for nonlinear
-time series analysis. This package permits the estimation of the most-used
+time series analysis. This package permits the computation of the most-used
 nonlinear statistics/algorithms including generalized correlation dimension,
 information dimension, largest Lyapunov exponent, sample entropy and
 Recurrence Quantification Analysis (RQA), among others. Basic routines
