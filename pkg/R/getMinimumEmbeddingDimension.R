@@ -59,8 +59,20 @@ estimateEmbeddingDim = function(time.series,  number.points = length(time.series
                                 main = "Computing the embedding dimension",
                                 xlab="dimension (d)", ylab="E1(d) & E2(d)",
                                 ylim = NULL, xlim = NULL){
+  kSDFraction = 1e-6
+  
   if (max.embedding.dim < 3) stop("max.embedding.dim should be greater that 2...\n")
+  # normalize time series
+  time.series = (time.series - mean(time.series,na.rm = T) ) / sd(time.series, na.rm = T)
   time.series.len = length(time.series)
+  # add small quantity of noise to avoid finding identical phase space
+  # points (something impossible in a pure chaotic signal). This "trick"
+  # avoids failures when supplying periodic signals (i.e. a sine).
+  # We use the IQR as an estimation of the time.series dispersion to
+  # avoid the effect of outliers
+  time.series = time.series +
+    rnorm(time.series.len, 
+          sd = IQR(time.series,na.rm = T) * kSDFraction) 
   data = time.series[(time.series.len/2-number.points/2+1):(time.series.len/2+number.points/2)]
   #if no d verifies E1(d) >= threshold,  then we shall return 0
   embedding.dim = 0 
@@ -83,8 +95,9 @@ estimateEmbeddingDim = function(time.series,  number.points = length(time.series
     relative.error = abs(E1.vector[[dimension-1]]-E1.vector[[dimension-2]])/(E1.vector[[dimension-2]])
     #compute if E1(d)>=threshold...If it is the first time it happens(embedding.dim==0), store
     # the dimension
-    if ((embedding.dim==0)&&(E1.vector[[dimension-2]]>=threshold)
-        &&(relative.error < max.relative.change )){
+    if ((embedding.dim==0) && (!is.na(E1.vector[[dimension - 2]])) &&
+          (E1.vector[[dimension-2]]>=threshold) &&
+          (relative.error < max.relative.change )){
       embedding.dim = dimension - 2
     }
   }
@@ -115,7 +128,7 @@ estimateEmbeddingDim = function(time.series,  number.points = length(time.series
 # L.Cao article: Practical method for determining the minimum embedding dimension of a scalar time series.
 getCaoParameters = function(data, m, time.lag){
   # theshold for considering that two vectors are at distance 0
-  kZero = 10^-10
+  kZero = 1e-15
   #construct takens vectors of dimensions m and m+1
   takens = buildTakens(data,  m,  time.lag)
   takens.next.dimension = buildTakens(data,  m+1,  time.lag)

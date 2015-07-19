@@ -26,14 +26,8 @@
 #include "kd_tree.h"					// kd-tree definitions
 #include "kd_util.h"					// kd-tree utilities
 #include "kd_split.h"					// splitting functions
+#include "ANN/ANN_CONSTANTS.h" // ANN constants
 
-//----------------------------------------------------------------------
-//	Constants
-//----------------------------------------------------------------------
-
-const double ERR = 0.001;				// a small value
-const double FS_ASPECT_RATIO = 3.0;		// maximum allowed aspect ratio
-										// in fair split. Must be >= 2.
 
 //----------------------------------------------------------------------
 //	kd_split - Bentley's standard splitting routine for kd-trees
@@ -95,7 +89,7 @@ void midpt_split(
 	ANNcoord max_spread = -1;			// find long side with most spread
 	for (d = 0; d < dim; d++) {
 										// is it among longest?
-		if (double(bnds.hi[d] - bnds.lo[d]) >= (1-ERR)*max_length) {
+		if (double(bnds.hi[d] - bnds.lo[d]) >= (1-ann_constants::ANN_ERR)*max_length) {
 										// compute its spread
 			ANNcoord spr = annSpread(pa, pidx, n, d);
 			if (spr > max_spread) {		// is it max so far?
@@ -165,7 +159,7 @@ void sl_midpt_split(
 	ANNcoord max_spread = -1;			// find long side with most spread
 	for (d = 0; d < dim; d++) {
 										// is it among longest?
-		if ((bnds.hi[d] - bnds.lo[d]) >= (1-ERR)*max_length) {
+		if ((bnds.hi[d] - bnds.lo[d]) >= (1-ann_constants::ANN_ERR)*max_length) {
 										// compute its spread
 			ANNcoord spr = annSpread(pa, pidx, n, d);
 			if (spr > max_spread) {		// is it max so far?
@@ -221,7 +215,7 @@ void sl_midpt_split(
 //		The goal of this procedure is to achieve both nicely balanced
 //		splits, and boxes of bounded aspect ratio.
 //
-//		A constant FS_ASPECT_RATIO is defined. Given a box, those sides
+//		A constant ann_constants::ANN_FS_ASPECT_RATIO is defined (ANN/ANN_CONSTANTS.h). Given a box, those sides
 //		which can be split so that the ratio of the longest to shortest
 //		side does not exceed ASPECT_RATIO are identified.  Among these
 //		sides, we select the one in which the points have the largest
@@ -267,7 +261,7 @@ void fair_split(
 		ANNcoord length = bnds.hi[d] - bnds.lo[d];
 										// is this side midpoint splitable
 										// without violating aspect ratio?
-		if (((double) max_length)*2.0/((double) length) <= FS_ASPECT_RATIO) {
+		if (((double) max_length)*2.0/((double) length) <= ann_constants::ANN_FS_ASPECT_RATIO) {
 										// compute spread along this dim
 			ANNcoord spr = annSpread(pa, pidx, n, d);
 			if (spr > max_spread) {		// best spread so far
@@ -284,7 +278,7 @@ void fair_split(
 			max_length = length;
 	}
 										// consider most extreme splits
-	ANNcoord small_piece = max_length / FS_ASPECT_RATIO;
+	ANNcoord small_piece = max_length / ann_constants::ANN_FS_ASPECT_RATIO;
 	ANNcoord lo_cut = bnds.lo[cut_dim] + small_piece;// lowest legal cut
 	ANNcoord hi_cut = bnds.hi[cut_dim] - small_piece;// highest legal cut
 
@@ -373,7 +367,7 @@ void sl_fair_split(
 		ANNcoord length = bnds.hi[d] - bnds.lo[d];
 										// is this side midpoint splitable
 										// without violating aspect ratio?
-		if (((double) max_length)*2.0/((double) length) <= FS_ASPECT_RATIO) {
+		if (((double) max_length)*2.0/((double) length) <= ann_constants::ANN_FS_ASPECT_RATIO) {
 										// compute spread along this dim
 			ANNcoord spr = annSpread(pa, pidx, n, d);
 			if (spr > max_spread) {		// best spread so far
@@ -390,7 +384,7 @@ void sl_fair_split(
 			max_length = length;
 	}
 										// consider most extreme splits
-	ANNcoord small_piece = max_length / FS_ASPECT_RATIO;
+	ANNcoord small_piece = max_length / ann_constants::ANN_FS_ASPECT_RATIO;
 	ANNcoord lo_cut = bnds.lo[cut_dim] + small_piece;// lowest legal cut
 	ANNcoord hi_cut = bnds.hi[cut_dim] - small_piece;// highest legal cut
 										// find min and max along cut_dim

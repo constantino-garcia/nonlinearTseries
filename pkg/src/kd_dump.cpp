@@ -33,6 +33,7 @@
 
 #include "kd_tree.h"					// kd-tree declarations
 #include "bd_tree.h"					// bd-tree declarations
+#include "ANN/ANN_CONSTANTS.h" // ANN constants
 
 using namespace std;					// make std:: available
 
@@ -40,8 +41,6 @@ using namespace std;					// make std:: available
 //		Constants
 //----------------------------------------------------------------------
 
-const int		STRING_LEN		= 500;	// maximum string length
-const double	EPSILON			= 1E-5; // small number for float comparison
 
 enum ANNtreeType {KD_TREE, BD_TREE};	// tree types (used in loading)
 
@@ -262,8 +261,8 @@ static ANNkd_ptr annReadDump(
 	ANNpoint			&the_bnd_box_hi)		// high bounding point (ret'd)
 {
 	int j;
-	char str[STRING_LEN];						// storage for string
-	char version[STRING_LEN];					// ANN version number
+	char str[ann_constants::ANN_STRING_LEN];						// storage for string
+	char version[ann_constants::ANN_STRING_LEN];					// ANN version number
 	ANNkd_ptr the_root = NULL;
 
 	//------------------------------------------------------------------
@@ -273,7 +272,7 @@ static ANNkd_ptr annReadDump(
 	if (strcmp(str, "#ANN") != 0) {				// incorrect header
 		annError("Incorrect header for dump file", ANNabort);
 	}
-	in.getline(version, STRING_LEN);			// get version (ignore)
+	in.getline(version, ann_constants::ANN_STRING_LEN);			// get version (ignore)
 
 	//------------------------------------------------------------------
 	//	Input the points
@@ -371,7 +370,7 @@ static ANNkd_ptr annReadTree(
 	ANNidxArray			the_pidx,				// point indices (modified)
 	int					&next_idx)				// next index (modified)
 {
-	char tag[STRING_LEN];						// tag (leaf, split, shrink)
+	char tag[ann_constants::ANN_STRING_LEN];						// tag (leaf, split, shrink)
 	int n_pts;									// number of points in leaf
 	int cd;										// cut dimension
 	ANNcoord cv;								// cut value

@@ -1,12 +1,9 @@
 ---
-title: "nonlinearTseries quickstart"
-#author: "Constantino Antonio García Martínez "
-#email: constantinoantonio.garcia [at] usc.es
+title: "nonlinearTseries Quickstart"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-bibliography: biblio.bib
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Quickstart}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -85,7 +82,8 @@ mutual information technique. Thus, for the remainder of this section, we will
 use the value obtained with this technique.
 
 Once the time-lag parameter has been estimated, a proper embedding dimension can
-be computed by using the well-known Cao's algorithm [@cao1997practical]:
+be computed by using the well-known Cao's algorithm (see the documentation
+of the `estimateEmbeddingDim` function for references):
 
 ```{r mEstimation}
 emb.dim = estimateEmbeddingDim(lor.x, time.lag = tau.ami,
@@ -138,8 +136,6 @@ function.
 
 In the following sections we illustrate this procedure computing the correlation
 dimension, the sample entropy and the Lyapunov exponents of the Lorenz system.
-For a theoretical discussion of these methods, the interested reader is referred
-to [@kantz2004nonlinear].
 
 ### Correlation dimension
 The correlation dimension is a technique that measures the fractal dimension of
@@ -228,8 +224,7 @@ nonlinearity.
 The preferred method for nonlinearity-test in literature is surrogate data 
 testing. In surrogate data testing,  a statistic $\mu$
 quantifying some nonlinear feature of the data is computed and compared with
-the resulting values for an ensemble of comparable linear processes 
-[@theiler1992testing].
+the resulting values for an ensemble of comparable linear processes.
 
 **nonlinearTseries** includes basic functionality for surrogate data testing. The
 next example performs surrogate data testing by measuring the time
@@ -259,4 +254,4 @@ is that these functions are quite simple to use.
   * `spaceTimePlot` : shows the space time separation plot: broadly-used method
   of detecting non-stationarity and temporal correlations in time series.
 
-## References
+
