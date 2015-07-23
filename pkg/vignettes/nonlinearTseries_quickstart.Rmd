@@ -69,9 +69,11 @@ lor.x = lor$x
 
 old.par = par(mfrow = c(1, 2))
 # tau-delay estimation based on the autocorrelation function
-tau.acf = timeLag(lor.x, technique = "acf", do.plot = T)
+tau.acf = timeLag(lor.x, technique = "acf",
+                  lag.max = 100, do.plot = T)
 # tau-delay estimation based on the mutual information function
-tau.ami = timeLag(lor.x, technique = "ami", do.plot = T)
+tau.ami = timeLag(lor.x, technique = "ami", 
+                  lag.max = 100, do.plot = T)
 par(old.par)
 ```
 
