@@ -4,7 +4,7 @@
 \alias{ikedaMap}
 \title{Ikeda map}
 \usage{
-ikedaMap(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start = runif(2),
+ikedaMap(a = 0.85, b = 0.9, cc = 7.7, k = 0.4, start = runif(2),
   n.sample = 5000, n.transient = 500, do.plot = TRUE)
 }
 \arguments{
@@ -12,7 +12,7 @@ ikedaMap(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start = runif(2),
 
 \item{b}{The \emph{b} parameter. Default: 0.9.}
 
-\item{c}{The \emph{c} parameter. Default: 7.7.}
+\item{cc}{The \emph{c} parameter. Default: 7.7.}
 
 \item{k}{The \emph{k} parameter. Default: 0.4.}
 

@@ -4,7 +4,7 @@
 \alias{cliffordMap}
 \title{Clifford map}
 \usage{
-cliffordMap(a = -1.4, b = 1.6, c = 1, d = 0.7, start = runif(2),
+cliffordMap(a = -1.4, b = 1.6, cc = 1, d = 0.7, start = runif(2),
   n.sample = 5000, n.transient = 500, do.plot = TRUE)
 }
 \arguments{
@@ -12,7 +12,7 @@ cliffordMap(a = -1.4, b = 1.6, c = 1, d = 0.7, start = runif(2),
 
 \item{b}{The \emph{b} parameter. Default: 1.6}
 
-\item{c}{The \emph{c} parameter. Default: 1.0}
+\item{cc}{The \emph{c} parameter. Default: 1.0}
 
 \item{d}{The \emph{d} parameter. Default: 0.7}
 

@@ -31,7 +31,7 @@ void maxLyapunov(double *timeSeries,double *takens, int* tau, int *numberTakens,
   //last takens' vector that you can use
   lastTakens=(*numberTakens)-1-(*nmax);
   // iterate over the takens' vectors
-  for (i=0,rpfound=0;(i<=lastTakens)&&(rpfound<(*nminRP));i++){
+  for (i=0,rpfound=0;(i<lastTakens)&&(rpfound<(*nminRP));i++){
     //inicializate Saux for averaging the divergence S[k] for the neighbours of i
     for (ii=0;ii<=(*nmax);ii++) Saux[ii]=0;
     //find neighbours
@@ -41,7 +41,7 @@ void maxLyapunov(double *timeSeries,double *takens, int* tau, int *numberTakens,
     for (nf=0,j=0;j<nfound;j++){
       posNeigh=neighList[j];
       //check if we can use this possible neighbour to average
-      if (posNeigh>lastTakens) continue;
+      if (posNeigh>=lastTakens) continue;
       //avoid temporal correlations
       if ( abs(posNeigh-i)>=(*tdist) ){
         nf++;

@@ -41,7 +41,7 @@ void corrDim(double *timeSeries,int *lenTimeSeries,double *takensDimMin, int* ta
       //we can not use it if this t(i) vector do not exist in the following embedded spaces
       //or if we have already count this neighbourhood
       //or they are close in time (do not respect the theiler window)
-      if ((posNeigh<i)||(abs(posNeigh-i)<(*tdist))||(posNeigh>lastTakens)) continue;
+      if ((posNeigh<i)||(abs(posNeigh-i)<(*tdist))||(posNeigh>=lastTakens)) continue;
       //ok: we may use this vector  
       MAT_ELEM(corrMatrix,0,0,numberEmbeddings)=MAT_ELEM(corrMatrix,0,0,numberEmbeddings)+1.0/denom; 
       // complete the row corresponging to the minimum embedding dimension
@@ -112,7 +112,7 @@ void generalizedCorrDim(double *timeSeries,int *lenTimeSeries,double *takensDimM
       //we can not use it if this t(i) vector do not exist in the following embedded spaces
       //or if we have already count this neighbourhood
       //or they are close in time (do not respect the theiler window)
-      if ((abs(posNeigh-i)<(*tdist))||(posNeigh>lastTakens)) continue;
+      if ((abs(posNeigh-i)<(*tdist))||(posNeigh>=lastTakens)) continue;
       //ok: we may use this vector  
       MAT_ELEM(corrMatrix,0,0,numberEmbeddings)=MAT_ELEM(corrMatrix,0,0,numberEmbeddings)+1.0; 
       // complete the row corresponging to the minimum embedding dimension

@@ -231,7 +231,7 @@ rossler=function(a = 0.2, b = 0.2, w = 5.7, start=c(-2, -10, 0.2)
 #' If the starting point is not specified, it is generated randomly.
 #' @param a The \emph{a} parameter. Default: 0.85.
 #' @param b The \emph{b} parameter. Default: 0.9.
-#' @param c The \emph{c} parameter. Default: 7.7.
+#' @param cc The \emph{c} parameter. Default: 7.7.
 #' @param k The \emph{k} parameter. Default: 0.4.
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. Default: 500 samples.
@@ -249,24 +249,24 @@ rossler=function(a = 0.2, b = 0.2, w = 5.7, start=c(-2, -10, 0.2)
 #' @export ikedaMap
 
 # \code{\link{http://www.pessoal.utfpr.edu.br/msergio/cap3/6Ikeda/index.html}}
-ikedaMap=function(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start=runif(2), n.sample = 5000, n.transient=500, do.plot=TRUE){
+ikedaMap=function(a = 0.85, b = 0.9, cc= 7.7, k = 0.4, start=runif(2), n.sample = 5000, n.transient=500, do.plot=TRUE){
   n.sample = n.sample + n.transient
   z = vector(mode = "complex", length = n.sample)
   z[[1]] =  complex(real=start[[1]],imaginary=start[[2]]) 
   sampleVector = seq(2, n.sample)
   a=as.complex(a)
   b=as.complex(b)
-  c=as.complex(c)
+  cc=as.complex(cc)
   k = as.complex(k)
   for (n in sampleVector) {
-    z[[n]] = a + b*z[[n-1]]*exp(1i*( k-c/( abs(z[[n-1]])^2 +1 ) ))
+    z[[n]] = a + b*z[[n-1]]*exp(1i*( k-cc/( abs(z[[n-1]])^2 +1 ) ))
   }
   
   z = z[-(1:n.transient)]
   x = Re(z); y = Im(z)
   # plotting
   if (do.plot){
-    title=paste("Ikeda map\n","a = ",Re(a)," b = ",Re(b), " c = ",Re(c), " k = ",Re(k),"\n")
+    title=paste("Ikeda map\n","a = ",Re(a)," b = ",Re(b), " = ",Re(cc), " k = ",Re(k),"\n")
     plot(x,y,xlab="Re(z[n])",ylab="Im(z[n])",cex=0.3,main=title,type="p")
   }
   
@@ -287,7 +287,7 @@ ikedaMap=function(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start=runif(2), n.sample 
 #' If the starting point is not specified, it is generated randomly.
 #' @param a The \emph{a} parameter. Default: -1.4
 #' @param b The \emph{b} parameter. Default: 1.6
-#' @param c The \emph{c} parameter. Default: 1.0
+#' @param cc The \emph{c} parameter. Default: 1.0
 #' @param d The \emph{d} parameter. Default: 0.7
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. Default: 500 samples.
@@ -303,7 +303,7 @@ ikedaMap=function(a = 0.85, b = 0.9, c = 7.7, k = 0.4, start=runif(2), n.sample 
 #' # accessing the x coordinate and plotting it
 #' plot(ts(clifford.map$x))}
 #' @export cliffordMap
-cliffordMap=function(a = -1.4, b = 1.6, c = 1.0, d = 0.7,start=runif(2),
+cliffordMap=function(a = -1.4, b = 1.6, cc = 1.0, d = 0.7,start=runif(2),
                       n.sample = 5000, n.transient=500, do.plot=TRUE){
   n.sample = n.sample + n.transient
   x = y = vector(mode = "numeric", length = n.sample)
@@ -311,7 +311,7 @@ cliffordMap=function(a = -1.4, b = 1.6, c = 1.0, d = 0.7,start=runif(2),
   y[[1]] = start[[2]]
   sampleVector = seq(2, n.sample)
   for (n in sampleVector) {
-    x[[n]] = sin(a * y[[n-1]]) + c * cos(a * x[[n-1]])
+    x[[n]] = sin(a * y[[n-1]]) + cc * cos(a * x[[n-1]])
     y[[n]] = sin(b * x[[n-1]]) + d * cos(b * y[[n-1]])
   }
   transient=1:n.transient
@@ -319,7 +319,7 @@ cliffordMap=function(a = -1.4, b = 1.6, c = 1.0, d = 0.7,start=runif(2),
   y=y[-(transient)]
   # plotting
   if (do.plot){
-    title=paste("clifford map\n","a = ",a," b = ",b, " c = ", c, " d = ",d,"\n")
+    title=paste("clifford map\n","a = ",a," b = ",b, " c = ", cc, " d = ",d,"\n")
     plot(x,y,xlab="x[n]",ylab="y[n]",cex=0.3,main=title,type="p")
   }
   

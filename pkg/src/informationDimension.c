@@ -14,14 +14,15 @@ double which(double *distVector,int k,int numberValidNeighs){
 /********************************** d1 ****************************************/
 /******************************************************************************/
 void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
-        double *eps, double *increasingEpsFactor, int *numberBoxes,int *boxes, 
+        double *lnFixedMass, double *eps, double *increasingEpsFactor, 
+        int *numberBoxes,int *boxes, 
         int *numberReferenceVectors, int* theilerWindow, int* kMax,
         double* averageLogRadius){
   // declare variables
   int i,theilerMargin, k, takensVectorsUsed, remainingReferenceVectors,takensIterator,
       nTakensWithInsufficientNeighs=0, currentReferenceVector, nfound, neigh, neighIt,
       numberValidNeighs;
-  double lnFixedMass, currentEps, radius;
+  double currentEps, radius;
   int possibleNeighbours[*numberTakens];
   int neighList[*numberTakens];
   int referenceVectors[*numberReferenceVectors];
@@ -45,8 +46,8 @@ void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
   /******************************** estimator for ln(fixedMass) ****************/
   // use grassberger estimator for ln (fixedMass). This estimator takes into account the
   // finite nature of the estimation. See Generalizations of the Hausdorff dimension
-  // of fractal measures (Grassberger 1985)
-  lnFixedMass = digamma( (double)(k) ) - log10((double)(takensVectorsUsed-theilerMargin)); 
+  // of fractal measures (Grassberger 1985). We return it as a parameter
+  (*lnFixedMass) = digamma( (double)(k) ) - log((double)(takensVectorsUsed-theilerMargin)); 
   /****************************** Prepare the iterations **********************/
   // this variable will store the average radious
   *averageLogRadius = 0;
@@ -108,20 +109,22 @@ void d1(double *takens, int *numberTakens, int *embeddingD, double* fixedMass,
 /******************************************************************************/
 // warning!!!! averageLogRadiusVector and fixedMassVector must have the same length
 void informationDimension(double *takens, int *numberTakens, int *embeddingD, double* fixedMassVector,
-                          int* fixedMassVectorLength,double *eps, double *increasingEpsFactor,
+                          double *lnFixedMassVector, int* fixedMassVectorLength,double *eps, double *increasingEpsFactor,
                           int *numberBoxes,int *boxes, int *numberReferenceVectors, 
                           int* theilerWindow, int* kMax,double* averageLogRadiusVector){
   // declare variables
   int i;
-  double fixedMass,averageLogRadius,eps_copy;
+  double fixedMass, lnFixedMass, averageLogRadius,eps_copy;
   // find the averageLogRadiusVector for each fixedMass value in fixedMassVector
   for (i=0;i<(*fixedMassVectorLength);i++){
     fixedMass = fixedMassVector[i];
     averageLogRadius=0.0;
     eps_copy = (*eps);
-    d1(takens, numberTakens, embeddingD, &fixedMass, &eps_copy, increasingEpsFactor,   
+    d1(takens, numberTakens, embeddingD, &fixedMass, &lnFixedMass, &eps_copy, increasingEpsFactor,   
        numberBoxes, boxes, numberReferenceVectors,theilerWindow, kMax, 
        &averageLogRadius);
+    // store the corrections for lnFixedMass
+    lnFixedMassVector[i] = lnFixedMass;
     //store the averageLogRadius in the averageLogRadiusVector 
     averageLogRadiusVector[i] = averageLogRadius;
   }            

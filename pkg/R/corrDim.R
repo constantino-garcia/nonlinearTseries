@@ -101,7 +101,7 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5,
   
   #call the C program
   if (corr.order==2){
-    sol=.C("corrDim", timeSeries=as.double(time.series),lenTimeSeries = as.integer(lenTimeSeries),
+    sol=.C("corrDim", timeSeries=as.double(time.series),lenTimeSeries = as.integer(length(time.series)),
            takensDimMin=as.double(takensDimMin),tau=as.integer(time.lag), numberTakens = as.integer(numberTakens),
            minEmbeddingD=as.integer(min.embedding.dim),maxEmbeddingD=as.integer(max.embedding.dim),
            eps=as.double(radius),numberEps=as.integer(n.points.radius),

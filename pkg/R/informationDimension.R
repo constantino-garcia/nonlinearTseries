@@ -94,14 +94,17 @@ infDim <-
     infDim.matrix = matrix(0, ncol = number.fixed.mass.points, nrow = n.embeddings)
     dimnames(infDim.matrix)  = list(embeddings,fixed.mass.vector)
     for (m in embeddings){
-      infDim.matrix[as.character(m),] = infDimSingleDimension(
-                 time.series, m, time.lag, min.fixed.mass,
-                 max.fixed.mass, number.fixed.mass.points, radius, 
-                 increasing.radius.factor, number.boxes,
-                 number.reference.vectors, theiler.window,
-                 kMax)
+      infDim.result = 
+        infDimSingleDimension(
+          time.series, m, time.lag, min.fixed.mass,
+          max.fixed.mass, number.fixed.mass.points, radius, 
+          increasing.radius.factor, number.boxes,
+          number.reference.vectors, theiler.window,
+          kMax)
+      infDim.matrix[as.character(m),] = infDim.result$lr
     }
-   
+    # Not using the correction of the log(p) suggested by Kantz,
+    # the correction is stored in infDim.result$lfp.
     information.dimension.structure = list( fixed.mass = fixed.mass.vector, 
                                             log.radius =  infDim.matrix,
                                             embedding.dims = embeddings)
@@ -138,11 +141,13 @@ infDimSingleDimension <-
   fixedMassVector = 10^(seq(log10(min.fixed.mass),log10(max.fixed.mass),length.out=number.fixed.mass.points))
   boxes=rep(0,number.boxes*number.boxes+1)
   averageLogRadiusVector = rep(0,number.fixed.mass.points)
+  lnFixedMassVector = rep(0,number.fixed.mass.points)
   
   c.result=.C("informationDimension", takens = as.double(takens), 
               numberTakens = as.integer(numberTakens),
               embeddingD = as.integer(embedding.dim),
               fixedMassVector = as.double(fixedMassVector), 
+              lnFixedMassVector = as.double(lnFixedMassVector), 
               fixedMassVectorLength = as.integer(number.fixed.mass.points),
               eps = as.double(radius),
               increasingEpsFactor = as.double(increasing.radius.factor),
@@ -153,7 +158,8 @@ infDimSingleDimension <-
               PACKAGE="nonlinearTseries")
  
   
-  return (c.result$averageLogRadiusVector)  
+  return( list(lr = c.result$averageLogRadiusVector,
+              lfp = c.result$lnFixedMassVector))
 }
 
 #' Obtain the fixed mass vector used in the information dimension algorithm.
