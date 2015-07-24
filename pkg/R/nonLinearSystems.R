@@ -302,7 +302,7 @@ ikedaMap=function(a = 0.85, b = 0.9, cc= 7.7, k = 0.4, start=runif(2), n.sample 
 #' clifford.map=cliffordMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 #' # accessing the x coordinate and plotting it
 #' plot(ts(clifford.map$x))}
-#' @export cliffordMap
+#' @export cliffordMap 
 cliffordMap=function(a = -1.4, b = 1.6, cc = 1.0, d = 0.7,start=runif(2),
                       n.sample = 5000, n.transient=500, do.plot=TRUE){
   n.sample = n.sample + n.transient
