@@ -67,6 +67,8 @@
 #' }
 #' @rdname dfa
 #' @export dfa
+#' @import Rcpp
+#' @import RcppArmadillo
 #' @exportClass dfa
 dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE,
              ...){
@@ -105,9 +107,8 @@ dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE,
   #Calculate the local trend for
   #each of the segments by a least-square fit
   #of the time.series and compute the error
-  for (i in 1:npoints){
-    fluctuation.function[[i]]=calculateFluctuationFunction(Y,f,window.sizes[[i]])
-  }
+  fluctuation.function = calculateFluctuationFunction(Y, window.sizes)
+
   
   #create dfa object
   dfa.structure = list(window.sizes=window.sizes,fluctuation.function=fluctuation.function)
@@ -213,32 +214,8 @@ estimate.dfa = function(x, regression.range = NULL,do.plot=FALSE,
            legend=paste("Scaling exponent estimate =", sprintf("%.2f",alpha)))
     }
   }
+  attr(alpha, "fitted") = list(x = x$window.sizes[index.alpha],
+                               y = 10 ^ interp1$fitted.values)
   return(alpha)
-}
-
-# private
-# Calculate the local trend for
-# each of the segments by a least-square fit
-# of the time.series and compute the error
-# Y: the profile
-# fint: interpolation formula
-# l: size of the window
-calculateFluctuationFunction=function(Y,fint,l){
-  #preliminary definitions
-  ldata=length(Y)
-  ngroups=floor(ldata/l)
-  x=1:l
-  
-  # Divide the profile in ngroups non-overlaping groups. Interpolate and calculate the residual error
-  F2=c()
-  for (i in 1:ngroups){
-    beg=(i-1)*l+1; en=i*l;
-    y=Y[beg:en]
-    #interpolate
-    fit=lm(as.formula(fint))
-    #get error
-    F2[i]=sum(fit$residuals^2)/l
-  }
-  return (sqrt(sum(F2)/ngroups))
 }
 

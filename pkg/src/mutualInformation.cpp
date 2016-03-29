@@ -4,7 +4,7 @@ using namespace Rcpp;
 
  
 // [[Rcpp::export]]
-NumericMatrix tsHistogram(NumericVector& x,int& tlag, const int& npartitions) {
+NumericMatrix tsHistogram(const NumericVector& x,const int& tlag, const int& npartitions) {
   int indy, binx, biny;
   NumericMatrix histogram(npartitions,npartitions);
   
@@ -20,19 +20,20 @@ NumericMatrix tsHistogram(NumericVector& x,int& tlag, const int& npartitions) {
 }
 
 
-NumericVector marginalHistogram(NumericMatrix& hist){
+NumericVector marginalHistogram(const NumericMatrix& hist){
   int histdim = hist.nrow();
   NumericVector marginalHist(histdim);
+  NumericMatrix histCopy(hist);
   
   for (int i=0;i < histdim; i++){
-    marginalHist[i] = sum(hist(i,_));
+    marginalHist[i] = sum(histCopy(i,_));
   }
   
   return marginalHist;
 }
 
 
-double mutInfFromHist(NumericMatrix& hist){
+double mutInfFromHist(const NumericMatrix& hist){
   NumericVector histx = marginalHistogram(hist);
   int histlen = histx.size();
   double mutinf = 0.0;
@@ -58,8 +59,8 @@ double mutInfFromHist(NumericMatrix& hist){
 
   
 // [[Rcpp::export]]
-NumericVector mutualInformation(const NumericVector& tseries,const int& maxlag,
-const int& npartitions){
+NumericVector mutualInformation(const NumericVector& tseries,
+                                const int& maxlag, const int& npartitions){
   NumericVector mutinf(maxlag + 1);
   NumericVector x(clone(tseries));
   // reescale time series between 0 and 1
