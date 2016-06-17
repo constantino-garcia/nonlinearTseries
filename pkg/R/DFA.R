@@ -65,10 +65,10 @@
 #' cat("Theorical: 1.25 ---Estimated: ",fbm.estimation ,"\n")
 #' 
 #' }
+#' @references Penzel, Thomas, et al. "Comparison of detrended fluctuation analysis and spectral analysis for heart rate variability in sleep and sleep apnea." Biomedical Engineering, IEEE Transactions on 50.10 (2003): 1143-1151.
 #' @rdname dfa
 #' @export dfa
 #' @import Rcpp
-#' @import RcppArmadillo
 #' @exportClass dfa
 dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE,
              ...){
@@ -141,7 +141,6 @@ windowSizes = function(x){
 #' @return The \emph{windowSizes} function returns the windows sizes used
 #' to detrend the time series. 
 #' @rdname dfa
-#' @method windowSizes dfa
 #' @export
 windowSizes.dfa = function(x){
   return (x$window.sizes)
@@ -163,14 +162,12 @@ fluctuationFunction = function(x){
 #' @return The \emph{fluctuationFunction} function returns the fluctuation function
 #' obtained in the DFA represented by the \emph{dfa} object.
 #' @rdname dfa
-#' @method fluctuationFunction dfa
 #' @export
 fluctuationFunction.dfa = function(x){
   return (x$fluctuation.function)
 }
 
 #' @rdname dfa
-#' @method plot dfa
 #' @param main A title for the plot.
 #' @param xlab A title for the x axis.
 #' @param ylab A title for the y axis.
@@ -186,7 +183,6 @@ plot.dfa = function(x, main="Detrended fluctuation analysis\n",
        main=main,xlab=xlab,ylab=ylab,log=log,...)
 }
 #' @rdname dfa
-#' @method estimate dfa
 #' @param x A \emph{dfa} object.
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @param fit.col A colors to plot the regression line.
