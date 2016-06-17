@@ -172,7 +172,6 @@ divTime = function(x){
 #' @return The \emph{divTime} function returns the 
 #' time in which the divergence of close trajectories was computed.
 #' @rdname maxLyapunov
-#' @method divTime maxLyapunov
 #' @export
 divTime.maxLyapunov = function(x){
   return (x$time)
@@ -181,7 +180,6 @@ divTime.maxLyapunov = function(x){
 #' @return The \emph{embeddingDims} function returns the 
 #' embeddings in which the divergence of close trajectories was computed
 #' @rdname maxLyapunov
-#' @method embeddingDims maxLyapunov
 #' @export
 embeddingDims.maxLyapunov = function(x){
   return (embeddingDims.default(x))
@@ -204,14 +202,12 @@ divergence = function(x){
 #' rate of divergence of close trajectories needed for the maximum Lyapunov
 #' exponent estimation.
 #' @rdname maxLyapunov
-#' @method divergence maxLyapunov
 #' @export
 divergence.maxLyapunov = function(x){
   return (x$s.function)
 }
 
 #' @rdname maxLyapunov
-#' @method plot maxLyapunov  
 #' @param main A title for the plot.
 #' @param xlab A title for the x axis.
 #' @param ylab A title for the y axis.
@@ -219,9 +215,7 @@ divergence.maxLyapunov = function(x){
 #' @param col Vector of colors for each of the dimensions of the plot.
 #' @param pch Vector of symbols for each of the dimensions of the plot.
 #' @param add.legend add a legend to the plot?
-#' @method plot maxLyapunov
 #' @export
-#' @method plot
 plot.maxLyapunov= function(x, main="Estimating maximal Lyapunov exponent",
                            xlab="time t",ylab="S(t)",type="p",col=NULL,
                            pch=NULL, add.legend=T,...){
@@ -266,8 +260,6 @@ plot.maxLyapunov= function(x, main="Estimating maximal Lyapunov exponent",
 #' @param fit.lwd The width of the line for the regression lines.
 #' @rdname maxLyapunov
 #' @export
-#' @method estimate maxLyapunov
-#' @method estimate
 estimate.maxLyapunov= function(x,regression.range = NULL,
                                do.plot=FALSE,use.embeddings = NULL,
                                main="Estimating maximal Lyapunov exponent",

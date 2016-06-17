@@ -94,7 +94,6 @@ sampleEntropyFunction = function(x){
 #' entropy function is represented by a matrix. Each row represents a given
 #' embedding dimension whereas that each column representes a different radius.
 #' @rdname sampleEntropy
-#' @method sampleEntropyFunction sampleEntropy
 #' @export
 sampleEntropyFunction.sampleEntropy = function(x){
   return (x$sample.entropy)
@@ -102,7 +101,6 @@ sampleEntropyFunction.sampleEntropy = function(x){
 
 #' @return The \emph{nlOrder} function returns the order of the sample entropy.
 #' @rdname sampleEntropy
-#' @method nlOrder sampleEntropy
 #' @export
 nlOrder.sampleEntropy = function(x){
   return(x$entr.order)
@@ -111,7 +109,6 @@ nlOrder.sampleEntropy = function(x){
 #' @return The \emph{radius} function returns the radius on which the sample entropy
 #'  function has been evaluated.
 #' @rdname sampleEntropy
-#' @method radius sampleEntropy
 #' @export
 radius.sampleEntropy = function(x){
   return (radius.default(x))
@@ -120,7 +117,6 @@ radius.sampleEntropy = function(x){
 #' @return The \emph{embeddingDims} function returns the embedding dimensions 
 #' on which the sample entropy function has been evaluated.
 #' @rdname sampleEntropy
-#' @method embeddingDims sampleEntropy
 #' @export
 embeddingDims.sampleEntropy = function(x){
   return (embeddingDims.default(x))
@@ -129,7 +125,6 @@ embeddingDims.sampleEntropy = function(x){
 
 #' @return The \emph{plot} function shows the graphics for the sample entropy.
 #' @rdname sampleEntropy
-#' @method plot sampleEntropy
 #' @param main A title for the plot.
 #' @param xlab A title for the x axis.
 #' @param ylab A title for the y axis.
@@ -192,7 +187,6 @@ plot.sampleEntropy = function(x,main=NULL,xlab=NULL,ylab=NULL,type="l",
 #' @param fit.col A vector of colors to plot the regression lines.
 #' @return The  \emph{estimate} function returns a vector storing the sample entropy estimate for each embedding dimension.
 #' @rdname sampleEntropy
-#' @method estimate sampleEntropy
 #' @export
 estimate.sampleEntropy = function(x,regression.range=NULL,do.plot=TRUE,
                                   use.embeddings=NULL,fit.col=NULL,

@@ -81,7 +81,6 @@ mutualInformation = function(time.series,lag.max = NULL,
 #' @param ylab Title for the y axis.
 #' @param type Type of plot to be drawn.
 #' @rdname mutualInformation
-#' @method plot mutualInf
 #' @export
 plot.mutualInf = function(x,main="Average Mutual Information (AMI)",
                           xlab="Time lag", ylab=NULL, type="h",
@@ -96,7 +95,6 @@ plot.mutualInf = function(x,main="Average Mutual Information (AMI)",
 
 
 #' @rdname mutualInformation
-#' @method as.numeric mutualInf
 #' @export
 as.numeric.mutualInf = function(x,...){
   x$mutual.information

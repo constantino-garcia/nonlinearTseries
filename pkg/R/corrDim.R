@@ -147,7 +147,6 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5,
 
 #' @return The \emph{nlOrder} function returns the order of the correlation sum.
 #' @rdname corrDim
-#' @method nlOrder corrDim
 #' @export
 nlOrder.corrDim = function(x){
   return (x$corr.order)
@@ -169,7 +168,6 @@ corrMatrix = function(x){
 #' storing the correlation sums that have been computed for all the embedding 
 #' dimensions.
 #' @rdname corrDim
-#' @method corrMatrix corrDim
 #' @export
 corrMatrix.corrDim = function(x){
   return (x$corr.matrix)
@@ -177,7 +175,6 @@ corrMatrix.corrDim = function(x){
 
 #' @return The \emph{radius} function returns the radius on which the correlation sum function has been evaluated.
 #' @rdname corrDim
-#' @method radius corrDim
 #' @export
 radius.corrDim = function(x){
   return (radius.default(x))
@@ -186,16 +183,14 @@ radius.corrDim = function(x){
 #' @return The \emph{embeddingDims} function returns the embedding dimensions on which 
 #' the correlation sum function has been evaluated.
 #' @rdname corrDim
-#' @method embeddingDims corrDim
 #' @export
 embeddingDims.corrDim = function(x){
   return (embeddingDims.default(x))
 }
 
 
-#' @rdname corrDim
-#' @method print corrDim
 #' @export
+#' @method print corrDim
 print.corrDim = function(x, ...){
   print(x$corr.matrix)
 }
@@ -218,9 +213,7 @@ print.corrDim = function(x, ...){
 #' plot the the correlation sum Vs the radius and also the local scaling exponents
 #'  of the correlation  sum Vs radius.
 #' @rdname corrDim
-#' @method plot corrDim
 #' @export
-#' @method plot
 plot.corrDim = function(x,main="Correlation Sum C(r)",xlab=NULL,
                         ylab="C(r)",type="b",
                         log="xy",ylim=NULL, col=NULL,pch=NULL,localScalingExp=T,
@@ -280,9 +273,7 @@ plot.corrDim = function(x,main="Correlation Sum C(r)",xlab=NULL,
 #' @return The \emph{plotLocalScalingExp} function plots the local scaling exponents
 #'  of  the  correlation sum.
 #' @rdname corrDim
-#' @method plotLocalScalingExp corrDim
 #' @export
-#' @method plotLocalScalingExp
 plotLocalScalingExp.corrDim = function(x,main="Correlation Dimension C(r)",
                                    xlab=NULL,ylab="Local scaling exponents",
                                    type="b",log="x",ylim=NULL,col=NULL,pch=NULL,
@@ -349,7 +340,6 @@ plotLocalScalingExp.corrDim = function(x,main="Correlation Dimension C(r)",
 #' @param regression.range Vector with 2 components denoting the range where the function will perform linear regression.
 #' @rdname corrDim
 #' @export
-#' @method estimate corrDim
 #' 
 estimate.corrDim=function(x, regression.range = NULL, do.plot=FALSE,
                           use.embeddings = NULL,col=NULL,pch=NULL,

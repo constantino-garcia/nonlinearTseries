@@ -106,7 +106,6 @@ contourLines = function(x){
 #' space time plot.
 #' @param x A \emph{spaceTimePlot} object.
 #' @rdname spaceTimePlot
-#' @method contourLines spaceTimePlot
 #' @export
 contourLines.spaceTimePlot = function(x){
   return (x$stp.matrix)
@@ -114,7 +113,6 @@ contourLines.spaceTimePlot = function(x){
   
 
 #' @rdname spaceTimePlot
-#' @method plot spaceTimePlot
 #' @param main A title for the plot.
 #' @param xlab A title for the x axis.
 #' @param ylab A title for the y axis.

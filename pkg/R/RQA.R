@@ -85,8 +85,9 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
   #join all computations
   rqa.parameters = c(REC=REC,RATIO=diagP$DET/REC,
                      diagP,vertP,
-                     list(diagonalHistogram=hist$diagonalHist,
-                          recurrenceRate=recurrence_rate_vector))
+                     list(diagonalHistogram = hist$diagonalHist,
+                          verticalHistogram = hist$verticalHist,
+                          recurrenceRate = recurrence_rate_vector))
   
   if (!save.RM){
     neighs.matrix = NULL

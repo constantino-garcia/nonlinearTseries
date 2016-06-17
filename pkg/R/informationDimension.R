@@ -53,7 +53,7 @@
 #' the average log10(radius) in which the \emph{fixed.mass} can be found.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 #' @author Constantino A. Garcia
-#'  @examples
+#' @examples
 #' \dontrun{
 #' x=henon(n.sample=  3000,n.transient= 100, a = 1.4, b = 0.3, 
 #'         start =  c(0.8253681, 0.6955566), do.plot = FALSE)$x
@@ -175,7 +175,6 @@ fixedMass = function(x){
 #' @return The \emph{fixedMass} function returns the fixed mass vector used
 #' in the information dimension algorithm.
 #' @rdname infDim
-#' @method fixedMass infDim
 #' @export
 fixedMass.infDim = function(x){
   return (x$fixed.mass)
@@ -197,7 +196,6 @@ logRadius = function(x){
 #' @return The \emph{logRadius} function returns the average log(radius) computed
 #' on the information dimension algorithm.
 #' @rdname infDim
-#' @method fixedMass infDim
 #' @export
 logRadius.infDim = function(x){
   return (x$log.radius)
@@ -207,7 +205,6 @@ logRadius.infDim = function(x){
 #' @return The \emph{embeddingDims} function returns the 
 #' embeddings in which the information dimension was computed
 #' @rdname infDim
-#' @method embeddingDims infDim
 #' @export
 embeddingDims.infDim = function(x){
   return (embeddingDims.default(x))
@@ -230,8 +227,6 @@ embeddingDims.infDim = function(x){
 #' @param lwd The line width of the <log10(radius)> functions.
 #' @rdname infDim
 #' @export
-#' @method estimate infDim
-#' @method estimate
 estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,
                            use.embeddings = NULL,
                            col=NULL,pch=NULL,
@@ -317,8 +312,6 @@ estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,
 #' @param add.legend add a legend to the plot?
 #' @rdname infDim
 #' @export
-#' @method plot infDim
-#' @method plot
 plot.infDim = function(x, main="Information Dimension",
                        xlab="fixed mass (p)", ylab="<log10(radius)>",
                        type="b", log="x",ylim=NULL, col=NULL,pch=NULL,
@@ -376,9 +369,7 @@ plot.infDim = function(x, main="Information Dimension",
 #' local scaling exponentes of the information dimension 
 #' (for reasons of numerical stability).
 #' @rdname infDim
-#' @method plotLocalScalingExp infDim
 #' @export
-#' @method plotLocalScalingExp
 plotLocalScalingExp.infDim =  function(x,main="Local scaling exponents d1(p)",
                                        xlab="fixed mass p",ylab="1/d1(p)",
                                        type="b",log="x",ylim=NULL,col=NULL,pch=NULL,
