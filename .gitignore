@@ -4,3 +4,6 @@
 .Ruserdata
 *.o
 *.so
+vignettes/nonlinearTseries_quickstart.R
+vignettes/*.html
+

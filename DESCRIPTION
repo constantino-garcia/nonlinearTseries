@@ -34,5 +34,6 @@ LinkingTo: Rcpp, RcppArmadillo
 Suggests:
     plot3D,
     knitr,
+    testthat
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
