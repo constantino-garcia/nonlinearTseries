@@ -254,3 +254,62 @@ find.at.least.N.neighbours.for.vector=function(takens,positionTakens,radius,radi
   }
   return (neighbours$neighList)
 }
+
+
+
+
+# Rcpp-based functions ----------------------------------------------------
+
+#' @export
+rcppNeighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
+  #estimates number.boxes if it has not been specified
+  if (is.null(number.boxes)){
+    number.boxes = estimateNumberBoxes(takens, radius)
+  }
+  
+  # call c code
+  cneighs = .Call('nonlinearTseries_getVectorNeighbours', 
+                  PACKAGE = 'nonlinearTseries', 
+                  takens, positionTakens, radius, number.boxes)
+  # TODO: remove list conversion
+  nfound = length(cneighs)
+  if (nfound == 0) {
+    finalNeighs = list(nfound = 0, neighList = list())
+  } else {
+    finalNeighs = list(nfound = nfound, neighList = cneighs)
+  }
+  # end TODO 
+  
+  finalNeighs = propagateTakensAttr(finalNeighs, takens)
+  attr(finalNeighs,"takens.index") = positionTakens
+  attr(finalNeighs,"radius") = radius
+  return(finalNeighs)
+}
+
+
+#' @export
+rcppFindAllNeighbours = function(takens, radius, number.boxes = NULL) {
+  #estimates number.boxes if it has not been specified
+  if (is.null(number.boxes)) {
+    number.boxes = estimateNumberBoxes(takens, radius)
+  }
+  allneighs = .Call('nonlinearTseries_getAllNeighbours',
+                    PACKAGE = 'nonlinearTseries',
+                    takens, radius, number.boxes)
+  # TODO: eliminate in future conversion to list
+  allneighs = lapply(allneighs, function(x){
+    if (length(x) == 0) {
+      return(list())
+    } else {
+      return(x)
+    }
+  })
+    
+    
+  allneighs = propagateTakensAttr(allneighs, takens)
+  attr(allneighs, "radius") = radius
+  allneighs
+}
+
+
+

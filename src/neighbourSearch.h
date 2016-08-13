@@ -12,8 +12,8 @@
 static inline int position(int a, int b,int numberBoxes){
   //a specifies the file, b the colum in the imaginary unwrapped 2D cover with boxes
   return ( 
-             numberBoxes * ( MOD(a+OFFSET,numberBoxes) )
-             +  MOD(b+OFFSET,numberBoxes)
+             numberBoxes * ( positiveModulo(a+OFFSET,numberBoxes) )
+             +  positiveModulo(b+OFFSET,numberBoxes)
     
          );
 }

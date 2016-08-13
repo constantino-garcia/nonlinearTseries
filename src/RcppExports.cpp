@@ -44,6 +44,33 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// getVectorNeighbours
+IntegerVector getVectorNeighbours(const NumericMatrix& phaseSpace, int vectorIndex, double radius, int numberBoxes);
+RcppExport SEXP nonlinearTseries_getVectorNeighbours(SEXP phaseSpaceSEXP, SEXP vectorIndexSEXP, SEXP radiusSEXP, SEXP numberBoxesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type phaseSpace(phaseSpaceSEXP);
+    Rcpp::traits::input_parameter< int >::type vectorIndex(vectorIndexSEXP);
+    Rcpp::traits::input_parameter< double >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
+    __result = Rcpp::wrap(getVectorNeighbours(phaseSpace, vectorIndex, radius, numberBoxes));
+    return __result;
+END_RCPP
+}
+// getAllNeighbours
+List getAllNeighbours(const NumericMatrix& phaseSpace, double radius, int numberBoxes);
+RcppExport SEXP nonlinearTseries_getAllNeighbours(SEXP phaseSpaceSEXP, SEXP radiusSEXP, SEXP numberBoxesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type phaseSpace(phaseSpaceSEXP);
+    Rcpp::traits::input_parameter< double >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
+    __result = Rcpp::wrap(getAllNeighbours(phaseSpace, radius, numberBoxes));
+    return __result;
+END_RCPP
+}
 // neighsList2Sparse
 void neighsList2Sparse(List& neighs, NumericMatrix& neighs_matrix);
 RcppExport SEXP nonlinearTseries_neighsList2Sparse(SEXP neighsSEXP, SEXP neighs_matrixSEXP) {

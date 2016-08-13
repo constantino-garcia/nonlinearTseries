@@ -11,8 +11,8 @@
 
 //this function modifies the C mod function in order to return only positives
 //values
-static inline int MOD(int x,int m){
- return ( ((x%m) + m) %m);
+inline int positiveModulo(int x, int m) {
+  return (((x % m) + m) % m);
 }
 
 //computes the max distance between the n1-th and n2-th takens vector.

@@ -66,13 +66,18 @@ void neighbourSearchFromBoxes(double *takens,int *positionTakens, int *numberTak
   lastPosition=(*embeddingD)-1;  
   xBoxPosition=(int)(MAT_ELEM(takens,*positionTakens,0,*numberTakens)/(*eps));    
   yBoxPosition=(int)(MAT_ELEM(takens,*positionTakens,lastPosition,*numberTakens)/(*eps));
-  //printf("caigo en %d\n",position(xBoxPosition,yBoxPosition,*numberBoxes));
+  /*Rprintf("%f %f\n",MAT_ELEM(takens,*positionTakens,0,*numberTakens),
+          MAT_ELEM(takens,*positionTakens,lastPosition,*numberTakens));
+  Rprintf("%d %d\n", xBoxPosition, yBoxPosition);
+  Rprintf("caigo en %d\n",position(xBoxPosition,yBoxPosition,*numberBoxes));
+  */
   //look for vector neighbours in the 9 neighbours of the (iBoxPos,jBoxPos) box
   for ((*nfound)=0,i=xBoxPosition-1;i<=xBoxPosition+1;i++){
     for (j=yBoxPosition-1;j<=yBoxPosition+1;j++){
        auxiliarBoxPos=position(i,j,*numberBoxes);
-       //printf("boxPos %d\n",auxiliarBoxPos);
-       //printf("voy de  %d a %d\n",boxes[auxiliarBoxPos+1]-1,boxes[auxiliarBoxPos]);
+       /*Rprintf("boxPos %d\n",auxiliarBoxPos);
+       /printf("voy de  %d a %d\n",boxes[auxiliarBoxPos+1]-1,boxes[auxiliarBoxPos]);
+        */
        //avoid empty boxes
        for (boxptr=boxes[auxiliarBoxPos+1]-1;boxptr>=boxes[auxiliarBoxPos];boxptr--){
         possibleNeigh=possibleNeighbours[boxptr];

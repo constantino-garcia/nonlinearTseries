@@ -13,6 +13,14 @@ mutualInformation <- function(tseries, maxlag, npartitions) {
     .Call('nonlinearTseries_mutualInformation', PACKAGE = 'nonlinearTseries', tseries, maxlag, npartitions)
 }
 
+getVectorNeighbours <- function(phaseSpace, vectorIndex, radius, numberBoxes) {
+    .Call('nonlinearTseries_getVectorNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, vectorIndex, radius, numberBoxes)
+}
+
+getAllNeighbours <- function(phaseSpace, radius, numberBoxes) {
+    .Call('nonlinearTseries_getAllNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, radius, numberBoxes)
+}
+
 neighsList2Sparse <- function(neighs, neighs_matrix) {
     invisible(.Call('nonlinearTseries_neighsList2Sparse', PACKAGE = 'nonlinearTseries', neighs, neighs_matrix))
 }
