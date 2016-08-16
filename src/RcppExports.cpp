@@ -36,14 +36,23 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// timesTwo
-NumericVector timesTwo(NumericVector x);
-RcppExport SEXP nonlinearTseries_timesTwo(SEXP xSEXP) {
+// lyapunov_exponent
+NumericMatrix lyapunov_exponent(const NumericVector& timeSeries, int minEmbeddingDim, int maxEmbeddingDim, int timeLag, double radius, int theilerDistance, int minNumNeighbours, int nRefPoints, int maxTimeSteps, int nBoxes);
+RcppExport SEXP nonlinearTseries_lyapunov_exponent(SEXP timeSeriesSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP timeLagSEXP, SEXP radiusSEXP, SEXP theilerDistanceSEXP, SEXP minNumNeighboursSEXP, SEXP nRefPointsSEXP, SEXP maxTimeStepsSEXP, SEXP nBoxesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    __result = Rcpp::wrap(timesTwo(x));
+    Rcpp::traits::input_parameter< const NumericVector& >::type timeSeries(timeSeriesSEXP);
+    Rcpp::traits::input_parameter< int >::type minEmbeddingDim(minEmbeddingDimSEXP);
+    Rcpp::traits::input_parameter< int >::type maxEmbeddingDim(maxEmbeddingDimSEXP);
+    Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
+    Rcpp::traits::input_parameter< double >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< int >::type theilerDistance(theilerDistanceSEXP);
+    Rcpp::traits::input_parameter< int >::type minNumNeighbours(minNumNeighboursSEXP);
+    Rcpp::traits::input_parameter< int >::type nRefPoints(nRefPointsSEXP);
+    Rcpp::traits::input_parameter< int >::type maxTimeSteps(maxTimeStepsSEXP);
+    Rcpp::traits::input_parameter< int >::type nBoxes(nBoxesSEXP);
+    __result = Rcpp::wrap(lyapunov_exponent(timeSeries, minEmbeddingDim, maxEmbeddingDim, timeLag, radius, theilerDistance, minNumNeighbours, nRefPoints, maxTimeSteps, nBoxes));
     return __result;
 END_RCPP
 }
@@ -101,13 +110,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // test
-NumericVector test(NumericVector x);
-RcppExport SEXP nonlinearTseries_test(SEXP xSEXP) {
+NumericMatrix test(NumericMatrix& x, NumericVector y);
+RcppExport SEXP nonlinearTseries_test(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    __result = Rcpp::wrap(test(x));
+    Rcpp::traits::input_parameter< NumericMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    __result = Rcpp::wrap(test(x, y));
     return __result;
 END_RCPP
 }

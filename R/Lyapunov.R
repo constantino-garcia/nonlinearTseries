@@ -323,3 +323,61 @@ estimate.maxLyapunov= function(x,regression.range = NULL,
   return (lyapunov.estimate)
 }
 
+
+# Rcpp-based function -----------------------------------------------------
+#' @export
+rcppMaxLyapunov = function(time.series,
+                           min.embedding.dim = 2,
+                           max.embedding.dim = min.embedding.dim,
+                           time.lag = 1,
+                           radius,
+                           theiler.window = 1,
+                           min.neighs = 5,
+                           min.ref.points = 500,
+                           max.time.steps = 10,
+                           number.boxes = NULL,
+                           sampling.period = 1,
+                           do.plot = TRUE,
+                           ...) {
+
+  if (is.null(number.boxes)) {
+    number.boxes = estimateNumberBoxes(time.series, radius)
+  }
+  
+  #  s.function = matrix(0, ncol = (max.time.steps+1), nrow = n.embeddings)
+  s.function = .Call('nonlinearTseries_lyapunov_exponent',
+                     PACKAGE = 'nonlinearTseries',
+                     time.series, min.embedding.dim, max.embedding.dim,
+                     time.lag, radius, theiler.window, min.neighs,
+                     min.ref.points, max.time.steps, number.boxes)
+  
+  dimnames(s.function) = list(min.embedding.dim:max.embedding.dim,
+                              0:max.time.steps)
+  time = (0:max.time.steps) * sampling.period
+  max.lyapunov.structure = list(
+    time = time,
+    s.function = s.function,
+    embedding.dims = min.embedding.dim:max.embedding.dim
+  )
+  
+  class(max.lyapunov.structure) = "maxLyapunov"
+  id = deparse(substitute(time.series))
+  attr(max.lyapunov.structure,"id") = id
+  attr(max.lyapunov.structure,"time.lag") = time.lag
+  attr(max.lyapunov.structure,"theiler.window") = theiler.window  
+  attr(max.lyapunov.structure,"min.neighs") = min.neighs
+  attr(max.lyapunov.structure,"min.ref.points") = min.ref.points
+  
+  #plot
+  if (do.plot) {
+    tryCatch(
+      plot(max.lyapunov.structure,...), 
+      error = function(e) {
+        warning("Error while trying to plot the Lyapunov object.")
+      })
+  }
+  #return results
+  max.lyapunov.structure
+  
+}
+

@@ -9,8 +9,8 @@ calculateFluctuationFunction <- function(yr, windowSizesVector) {
     .Call('nonlinearTseries_calculateFluctuationFunction', PACKAGE = 'nonlinearTseries', yr, windowSizesVector)
 }
 
-timesTwo <- function(x) {
-    .Call('nonlinearTseries_timesTwo', PACKAGE = 'nonlinearTseries', x)
+lyapunov_exponent <- function(timeSeries, minEmbeddingDim, maxEmbeddingDim, timeLag, radius, theilerDistance, minNumNeighbours, nRefPoints, maxTimeSteps, nBoxes) {
+    .Call('nonlinearTseries_lyapunov_exponent', PACKAGE = 'nonlinearTseries', timeSeries, minEmbeddingDim, maxEmbeddingDim, timeLag, radius, theilerDistance, minNumNeighbours, nRefPoints, maxTimeSteps, nBoxes)
 }
 
 tsHistogram <- function(x, tlag, npartitions) {
@@ -29,8 +29,8 @@ getAllNeighbours <- function(phaseSpace, radius, numberBoxes) {
     .Call('nonlinearTseries_getAllNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, radius, numberBoxes)
 }
 
-test <- function(x) {
-    .Call('nonlinearTseries_test', PACKAGE = 'nonlinearTseries', x)
+test <- function(x, y) {
+    .Call('nonlinearTseries_test', PACKAGE = 'nonlinearTseries', x, y)
 }
 
 neighsList2Sparse <- function(neighs, neighs_matrix) {
