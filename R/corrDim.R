@@ -116,6 +116,7 @@ corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5,
            PACKAGE="nonlinearTseries")
   }
 
+  
   #get the correlation sum matrix
   corr.matrix=matrix(sol$corrMatrix,nrow=number.embeddings,ncol=n.points.radius)
   dimnames(corr.matrix) = list(min.embedding.dim:max.embedding.dim,radius)
@@ -431,3 +432,52 @@ eliminateDuplicates = function(correlation.sum , radius){
   return (list(correlation = unique.correlation.sum,radius = unique.radius))
 }
 
+
+
+# Rcpp-based function -----------------------------------------------------
+#' @export
+rcppCorrDim = function (time.series, min.embedding.dim = 2, max.embedding.dim = 5,
+                    time.lag = 1, min.radius, max.radius,
+                    corr.order = 2, n.points.radius = 5, theiler.window = 100,
+                    do.plot = TRUE, number.boxes = NULL, ...) {
+  #estimate number of boxes for the box assisted algorithm
+  if (is.null(number.boxes)){
+    number.boxes = estimateNumberBoxes(time.series, min.radius)
+  }
+  # Radius vector equally spaced points in the log10(radius) space
+  log.radius = seq(log10(max.radius), log10(min.radius), len = n.points.radius)
+  radius = 10 ^ log.radius
+  
+  corr.matrix = .Call("nonlinearTseries_rcppGeneralizedCorrDim",  PACKAGE = "nonlinearTseries",
+                       time.series,  time.lag,  theiler.window, radius,
+                      min.embedding.dim, max.embedding.dim, corr.order,  number.boxes) 
+  dimnames(corr.matrix) = list(min.embedding.dim:max.embedding.dim, radius)
+  
+  #eliminate columns with at least one 0
+  wh = which(corr.matrix == 0, arr.ind = TRUE)
+  wh = unique(wh[, 'col'])
+  if (length(wh > 0)) {
+    corr.matrix = corr.matrix[, -wh, drop = FALSE]
+    #eliminate the corresponding radius values in the radius vector
+    radius = radius[-wh]
+  }
+  # create the corrDim object
+  corr.dim = list(corr.matrix = corr.matrix,
+                  embedding.dims = min.embedding.dim:max.embedding.dim,
+                  radius=radius,
+                  corr.order=corr.order)
+  class(corr.dim) = "corrDim"
+  # add attributes
+  id = deparse(substitute(time.series))
+  attr(corr.dim, "time.lag") = time.lag
+  attr(corr.dim, "id") = id
+  attr(corr.dim, "theiler.window") = theiler.window
+  
+  # plot if necessary
+  if (do.plot) {
+    tryCatch(plot(corr.dim,...), error = function(error){
+      warning("Error while trying to plot the correlation sum")
+    })
+  }
+  corr.dim
+}

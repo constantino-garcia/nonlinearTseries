@@ -44,6 +44,24 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// rcppGeneralizedCorrDim
+NumericMatrix rcppGeneralizedCorrDim(NumericVector timeSeries, int timeLag, int theilerDistance, NumericVector radiusVector, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
+RcppExport SEXP nonlinearTseries_rcppGeneralizedCorrDim(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerDistanceSEXP, SEXP radiusVectorSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type timeSeries(timeSeriesSEXP);
+    Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
+    Rcpp::traits::input_parameter< int >::type theilerDistance(theilerDistanceSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type radiusVector(radiusVectorSEXP);
+    Rcpp::traits::input_parameter< int >::type minEmbeddingDim(minEmbeddingDimSEXP);
+    Rcpp::traits::input_parameter< int >::type maxEmbeddingDim(maxEmbeddingDimSEXP);
+    Rcpp::traits::input_parameter< int >::type corrSumOrder(corrSumOrderSEXP);
+    Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
+    __result = Rcpp::wrap(rcppGeneralizedCorrDim(timeSeries, timeLag, theilerDistance, radiusVector, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
+    return __result;
+END_RCPP
+}
 // getVectorNeighbours
 IntegerVector getVectorNeighbours(const NumericMatrix& phaseSpace, int vectorIndex, double radius, int numberBoxes);
 RcppExport SEXP nonlinearTseries_getVectorNeighbours(SEXP phaseSpaceSEXP, SEXP vectorIndexSEXP, SEXP radiusSEXP, SEXP numberBoxesSEXP) {
@@ -69,6 +87,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
     __result = Rcpp::wrap(getAllNeighbours(phaseSpace, radius, numberBoxes));
     return __result;
+END_RCPP
+}
+// timesTwo
+void timesTwo(NumericMatrix x);
+RcppExport SEXP nonlinearTseries_timesTwo(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    timesTwo(x);
+    return R_NilValue;
 END_RCPP
 }
 // neighsList2Sparse

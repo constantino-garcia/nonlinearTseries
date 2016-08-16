@@ -15,6 +15,8 @@ inline int positiveModulo(int x, int m) {
   return (((x % m) + m) % m);
 }
 
+
+
 //computes the max distance between the n1-th and n2-th takens vector.
 //the neighbourhood is defined in a embeddingD-dimension space
 double distance(int n1,int n2,double *takens, int numberTakens,int embeddingD);

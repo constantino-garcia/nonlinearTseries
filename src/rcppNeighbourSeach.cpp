@@ -52,7 +52,7 @@ List getAllNeighbours(const NumericMatrix& phaseSpace,
 /*** R
 ntakens = 500
 nrepeat = 3
-radius = 1.4
+radius = 2
 embeddingD = sample(2:10, 1)
 itak = sample(1:ntakens, 1)
 takens = matrix(rnorm(ntakens * embeddingD), nrow = ntakens)

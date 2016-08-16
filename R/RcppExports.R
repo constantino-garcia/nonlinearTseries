@@ -13,12 +13,20 @@ mutualInformation <- function(tseries, maxlag, npartitions) {
     .Call('nonlinearTseries_mutualInformation', PACKAGE = 'nonlinearTseries', tseries, maxlag, npartitions)
 }
 
+rcppGeneralizedCorrDim <- function(timeSeries, timeLag, theilerDistance, radiusVector, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes) {
+    .Call('nonlinearTseries_rcppGeneralizedCorrDim', PACKAGE = 'nonlinearTseries', timeSeries, timeLag, theilerDistance, radiusVector, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes)
+}
+
 getVectorNeighbours <- function(phaseSpace, vectorIndex, radius, numberBoxes) {
     .Call('nonlinearTseries_getVectorNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, vectorIndex, radius, numberBoxes)
 }
 
 getAllNeighbours <- function(phaseSpace, radius, numberBoxes) {
     .Call('nonlinearTseries_getAllNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, radius, numberBoxes)
+}
+
+timesTwo <- function(x) {
+    invisible(.Call('nonlinearTseries_timesTwo', PACKAGE = 'nonlinearTseries', x))
 }
 
 neighsList2Sparse <- function(neighs, neighs_matrix) {

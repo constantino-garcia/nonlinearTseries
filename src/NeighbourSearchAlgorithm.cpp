@@ -2,10 +2,17 @@
 #include "genericFunctions.h"
 using namespace Rcpp;
 
+NeighbourSearchAlgorithm::NeighbourSearchAlgorithm():
+  mPhaseSpace(), mEmbeddingDim(0),
+  mNumberVectors(0), mRadius(0.0),
+  mBoxes(0), mPossibleNeighbours() {
+}
+
 NeighbourSearchAlgorithm::NeighbourSearchAlgorithm(const NumericMatrix& phaseSpace, 
                                                    double radius, int numberBoxes) :
-  mPhaseSpace(phaseSpace), mRadius(radius), mBoxes(numberBoxes * numberBoxes + 1),
-  mPossibleNeighbours(phaseSpace.nrow()) {
+  mPhaseSpace(phaseSpace), mEmbeddingDim(phaseSpace.ncol()),
+  mNumberVectors(phaseSpace.nrow()), mRadius(radius),
+  mBoxes(numberBoxes * numberBoxes + 1), mPossibleNeighbours(phaseSpace.nrow()) {
   // The grid that we shall construct  has numberBoxes*numberBoxes boxes.
   // We add other position (the last position) to store the total length
   
@@ -33,6 +40,15 @@ NeighbourSearchAlgorithm::NeighbourSearchAlgorithm(const NumericMatrix& phaseSpa
   }
 }
 
+NumericMatrix NeighbourSearchAlgorithm::getPhaseSpace() const{
+  return mPhaseSpace;  
+}
+int NeighbourSearchAlgorithm::getEmbeddingDim() const {
+  return mEmbeddingDim;
+}
+int NeighbourSearchAlgorithm::getNumberVectors() const{
+  return mNumberVectors;
+}
 
 //computes the position of a takens' vector that falls into the (row, col)
 //unwrapped box in the wrapped 2d box grid.
@@ -41,10 +57,10 @@ inline int NeighbourSearchAlgorithm::getWrappedBoxPosition(int row, int col) con
   return (numberBoxes * positiveModulo(row, numberBoxes) + positiveModulo(col, numberBoxes));
 }
 
-bool NeighbourSearchAlgorithm::areNeighbours(const int vectorIndex1, const int vectorIndex2) const{
+bool NeighbourSearchAlgorithm::areNeighbours(int vectorIndex1, int vectorIndex2, double neighbourhoodRadius) const{
   // use max metric
   for (int i = 0; i < mPhaseSpace.ncol(); i++) {
-    if (std::abs(mPhaseSpace(vectorIndex1, i) - mPhaseSpace(vectorIndex2, i)) >= mRadius){
+    if (std::abs(mPhaseSpace(vectorIndex1, i) - mPhaseSpace(vectorIndex2, i)) >= neighbourhoodRadius){
       return false;
     }
   }
@@ -98,7 +114,7 @@ IntegerVector NeighbourSearchAlgorithm::boxAssistedNeighbourSearch(int vectorInd
       for (int boxptr = mBoxes[auxiliarBoxPos + 1] - 1; boxptr >= mBoxes[auxiliarBoxPos]; boxptr--) {
         int possibleNeigh = mPossibleNeighbours[boxptr];
         if (possibleNeigh == vectorIndex) continue;
-        if (areNeighbours(vectorIndex, possibleNeigh)) {
+        if (areNeighbours(vectorIndex, possibleNeigh, mRadius)) {
           neighbourWorkspace[nfound++] = possibleNeigh;
         }
       }

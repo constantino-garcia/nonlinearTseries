@@ -1,11 +1,10 @@
-#ifndef NEIGHBOUR_SEARCH_H
-#define NEIGHBOUR_SEARCH_H
+#ifndef RCPP_NEIGHBOUR_SEARCH_H
+#define RCPP_NEIGHBOUR_SEARCH_H
 #include <Rcpp.h>
 
-using namespace Rcpp;
 class NeighbourSearchAlgorithm {
 private:
-  const Rcpp::NumericMatrix& mPhaseSpace;
+  Rcpp::NumericMatrix mPhaseSpace;
   int mEmbeddingDim;
   int mNumberVectors;
   double mRadius;
@@ -13,14 +12,18 @@ private:
   Rcpp::IntegerVector mPossibleNeighbours;
   
   int getWrappedBoxPosition(int row, int col) const;
-  bool areNeighbours(const int vectorIndex1, const int vectorIndex2) const;
-  IntegerVector boxAssistedNeighbourSearch(int vectorIndex,
-                                           IntegerVector& neighbourWorkspace) const;
+  Rcpp::IntegerVector boxAssistedNeighbourSearch(int vectorIndex,
+                                           Rcpp::IntegerVector& neighbourWorkspace) const;
 public:
+  NeighbourSearchAlgorithm();
   NeighbourSearchAlgorithm(const Rcpp::NumericMatrix& phaseSpace, double radius, int numberBoxes);
+  Rcpp::NumericMatrix getPhaseSpace() const;
+  int getEmbeddingDim() const;
+  int getNumberVectors() const;
   Rcpp::IntegerVector getBoxes() const;
   Rcpp::List getAllNeighbours() const;
   Rcpp::IntegerVector getVectorNeighbours(int vectorIndex) const;
+  bool areNeighbours(int vectorIndex1, int vectorIndex2, double neighbourhoodRadius) const;
 };
 
 
