@@ -6,6 +6,24 @@
 
 using namespace Rcpp;
 
+// generalized_correlation_sum
+NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries, int timeLag, int theilerDistance, NumericVector& radii, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
+RcppExport SEXP nonlinearTseries_generalized_correlation_sum(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerDistanceSEXP, SEXP radiiSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type timeSeries(timeSeriesSEXP);
+    Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
+    Rcpp::traits::input_parameter< int >::type theilerDistance(theilerDistanceSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type radii(radiiSEXP);
+    Rcpp::traits::input_parameter< int >::type minEmbeddingDim(minEmbeddingDimSEXP);
+    Rcpp::traits::input_parameter< int >::type maxEmbeddingDim(maxEmbeddingDimSEXP);
+    Rcpp::traits::input_parameter< int >::type corrSumOrder(corrSumOrderSEXP);
+    Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
+    __result = Rcpp::wrap(generalized_correlation_sum(timeSeries, timeLag, theilerDistance, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
+    return __result;
+END_RCPP
+}
 // calculateFluctuationFunction
 NumericVector calculateFluctuationFunction(NumericVector& yr, NumericVector& windowSizesVector);
 RcppExport SEXP nonlinearTseries_calculateFluctuationFunction(SEXP yrSEXP, SEXP windowSizesVectorSEXP) {
@@ -52,24 +70,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const int& >::type maxlag(maxlagSEXP);
     Rcpp::traits::input_parameter< const int& >::type npartitions(npartitionsSEXP);
     __result = Rcpp::wrap(mutualInformation(tseries, maxlag, npartitions));
-    return __result;
-END_RCPP
-}
-// rcppGeneralizedCorrDim
-NumericMatrix rcppGeneralizedCorrDim(const NumericVector& timeSeries, int timeLag, int theilerDistance, NumericVector& radii, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
-RcppExport SEXP nonlinearTseries_rcppGeneralizedCorrDim(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerDistanceSEXP, SEXP radiiSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< const NumericVector& >::type timeSeries(timeSeriesSEXP);
-    Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
-    Rcpp::traits::input_parameter< int >::type theilerDistance(theilerDistanceSEXP);
-    Rcpp::traits::input_parameter< NumericVector& >::type radii(radiiSEXP);
-    Rcpp::traits::input_parameter< int >::type minEmbeddingDim(minEmbeddingDimSEXP);
-    Rcpp::traits::input_parameter< int >::type maxEmbeddingDim(maxEmbeddingDimSEXP);
-    Rcpp::traits::input_parameter< int >::type corrSumOrder(corrSumOrderSEXP);
-    Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
-    __result = Rcpp::wrap(rcppGeneralizedCorrDim(timeSeries, timeLag, theilerDistance, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
     return __result;
 END_RCPP
 }
