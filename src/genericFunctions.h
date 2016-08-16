@@ -9,9 +9,8 @@
 #define MIN(a,b) (a)<(b) ? (a) : (b)
 
 
-//this function modifies the C mod function in order to return only positives
-//values
-inline int positiveModulo(int x, int m) {
+/* Modifies the C mod function in order to return only positives values */
+inline int positive_modulo(int x, int m) {
   return (((x % m) + m) % m);
 }
 

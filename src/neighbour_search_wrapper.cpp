@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "NeighbourSearchAlgorithm.h"
+#include "neighbour_search.h"
 using namespace Rcpp;
 
 void transformCppIndexes(IntegerVector& indexes) {
@@ -18,9 +18,9 @@ void transformCppIndexes(IntegerVector& indexes) {
 // [[Rcpp::export]]
 IntegerVector getVectorNeighbours(const NumericMatrix& phaseSpace,    
                                   int vectorIndex, double radius, int numberBoxes){
-  NeighbourSearchAlgorithm neighbourSearcher(phaseSpace, 
+  neighbour_search neighbourSearcher(phaseSpace, 
                                              radius, numberBoxes);
-  IntegerVector neighbours = neighbourSearcher.getVectorNeighbours(vectorIndex - 1);
+  IntegerVector neighbours = neighbourSearcher.find_neighbours(vectorIndex - 1);
   
   // transform C++ indexes to R indexes
   transformCppIndexes(neighbours);
@@ -37,9 +37,9 @@ IntegerVector getVectorNeighbours(const NumericMatrix& phaseSpace,
 // [[Rcpp::export]]
 List getAllNeighbours(const NumericMatrix& phaseSpace,    
                       double radius, int numberBoxes){
-  NeighbourSearchAlgorithm neighbourSearcher(phaseSpace, 
+  neighbour_search neighbourSearcher(phaseSpace, 
                                              radius, numberBoxes);
-  List allNeighbours = neighbourSearcher.getAllNeighbours();
+  List allNeighbours = neighbourSearcher.find_all_neighbours();
   // transform C++ indexes to R indexes
   for (int i = 0; i < allNeighbours.size(); i++){
     IntegerVector iNeighbours = as<IntegerVector>(allNeighbours[i]);

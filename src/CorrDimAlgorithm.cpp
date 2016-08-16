@@ -1,26 +1,11 @@
 #include "CorrDimAlgorithm.h"
 #include "genericFunctions.h"
+#include "generic_functions.h"
 #include <cmath>
 #include <stdexcept> 
 using namespace Rcpp;
 
-//TODO: move to genericFunctions
-NumericMatrix buildTakens(const NumericVector& timeSeries, int embeddingDim, int timeLag){
-  int maxJump = (embeddingDim - 1) * timeLag;
-  IntegerVector jumpsVector(embeddingDim);
-  for (int i=0; i < jumpsVector.size(); i ++){
-    jumpsVector[i] = i * timeLag;
-  }
-  NumericMatrix takensSpace(timeSeries.size() - maxJump, embeddingDim);
 
-  // matrix that will store the takens' vectos. One vector per row
-  for (int i=0; i < takensSpace.nrow(); i++) {
-    for (int j=0; j < takensSpace.ncol(); j++){
-      takensSpace(i, j) = timeSeries[i + jumpsVector[j]];
-    }
-  }
-  return takensSpace;
-}
 
 CorrDimAlgorithm::CorrDimAlgorithm(const NumericVector& timeSeries,
                                    int timeLag,
@@ -49,7 +34,7 @@ CorrDimAlgorithm::CorrDimAlgorithm(const NumericVector& timeSeries,
         (2 + (mMaxEmbeddingDim - 1) * mTimeLag - 2 * mTheilerDistance);
   if (mTimeSeries.size() >= minimumTimeSeriesSize) {
     mNeighbourSearcher =
-      NeighbourSearchAlgorithm(buildTakens(mTimeSeries, mMinEmbeddingDim, timeLag),
+      neighbour_search(build_takens(mTimeSeries, mMinEmbeddingDim, timeLag),
                                max(radiusVector), numberBoxes);
   } else {
     throw std::invalid_argument("There aren't enough phase space vectors");
@@ -70,7 +55,6 @@ CorrDimAlgorithm::CorrDimAlgorithm(const NumericVector& timeSeries,
 }
 
 void CorrDimAlgorithm::calculateCorrMatrix(){
-  double radiusMax = mRadiusVector[0]; 
   for (int refVectorNumber = 0, refVectorIndex = mFirstReferenceVector; refVectorNumber < mNumberOfNeighbors.size(); 
   refVectorNumber++, refVectorIndex++) {
     updateNeighboursMatrix(mNumberOfNeighbors[refVectorNumber], refVectorIndex);
@@ -79,7 +63,7 @@ void CorrDimAlgorithm::calculateCorrMatrix(){
 
 void CorrDimAlgorithm::updateNeighboursMatrix(NumericMatrix& currentNeighbourMatrix, int refVectorIndex){
     //find neighbours
-    IntegerVector neighboursIndexes = mNeighbourSearcher.getVectorNeighbours(refVectorIndex);
+    IntegerVector neighboursIndexes = mNeighbourSearcher.find_neighbours(refVectorIndex);
     // check each of the neighbours of refVectorIndex
     for (int j = 0; j < neighboursIndexes.size(); j++){
       int neighbourIndex = neighboursIndexes[j];
@@ -96,7 +80,7 @@ void CorrDimAlgorithm::updateNeighboursMatrix(NumericMatrix& currentNeighbourMat
       // complete the row corresponging to the minimum embedding dimension
       int ep;
       for (ep = 1; ep < currentNeighbourMatrix.ncol(); ep++){
-        if (mNeighbourSearcher.areNeighbours(refVectorIndex, neighbourIndex, mRadiusVector[ep])){
+        if (mNeighbourSearcher.are_neighbours(refVectorIndex, neighbourIndex, mRadiusVector[ep])){
           currentNeighbourMatrix(0,ep)++;
         } else {
           break;

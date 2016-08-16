@@ -3,12 +3,12 @@
 
 #include <Rcpp.h>
 #include <vector>
-#include "NeighbourSearchAlgorithm.h"
+#include "neighbour_search.h"
 
 
 class CorrDimAlgorithm {
 private:
-  NeighbourSearchAlgorithm mNeighbourSearcher;
+  neighbour_search mNeighbourSearcher;
   Rcpp::NumericVector mTimeSeries;
   int mTimeLag;
   int mTheilerDistance;

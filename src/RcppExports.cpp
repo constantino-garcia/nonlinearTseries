@@ -18,6 +18,17 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// timesTwo
+NumericVector timesTwo(NumericVector x);
+RcppExport SEXP nonlinearTseries_timesTwo(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(timesTwo(x));
+    return __result;
+END_RCPP
+}
 // tsHistogram
 NumericMatrix tsHistogram(const NumericVector& x, const int& tlag, const int& npartitions);
 RcppExport SEXP nonlinearTseries_tsHistogram(SEXP xSEXP, SEXP tlagSEXP, SEXP npartitionsSEXP) {
@@ -45,20 +56,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcppGeneralizedCorrDim
-NumericMatrix rcppGeneralizedCorrDim(NumericVector timeSeries, int timeLag, int theilerDistance, NumericVector radiusVector, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
-RcppExport SEXP nonlinearTseries_rcppGeneralizedCorrDim(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerDistanceSEXP, SEXP radiusVectorSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
+NumericMatrix rcppGeneralizedCorrDim(const NumericVector& timeSeries, int timeLag, int theilerDistance, NumericVector& radii, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
+RcppExport SEXP nonlinearTseries_rcppGeneralizedCorrDim(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerDistanceSEXP, SEXP radiiSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type timeSeries(timeSeriesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type timeSeries(timeSeriesSEXP);
     Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
     Rcpp::traits::input_parameter< int >::type theilerDistance(theilerDistanceSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type radiusVector(radiusVectorSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type radii(radiiSEXP);
     Rcpp::traits::input_parameter< int >::type minEmbeddingDim(minEmbeddingDimSEXP);
     Rcpp::traits::input_parameter< int >::type maxEmbeddingDim(maxEmbeddingDimSEXP);
     Rcpp::traits::input_parameter< int >::type corrSumOrder(corrSumOrderSEXP);
     Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
-    __result = Rcpp::wrap(rcppGeneralizedCorrDim(timeSeries, timeLag, theilerDistance, radiusVector, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
+    __result = Rcpp::wrap(rcppGeneralizedCorrDim(timeSeries, timeLag, theilerDistance, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
     return __result;
 END_RCPP
 }
@@ -89,14 +100,15 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// timesTwo
-void timesTwo(NumericMatrix x);
-RcppExport SEXP nonlinearTseries_timesTwo(SEXP xSEXP) {
+// test
+NumericVector test(NumericVector x);
+RcppExport SEXP nonlinearTseries_test(SEXP xSEXP) {
 BEGIN_RCPP
+    Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    timesTwo(x);
-    return R_NilValue;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(test(x));
+    return __result;
 END_RCPP
 }
 // neighsList2Sparse

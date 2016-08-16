@@ -5,6 +5,10 @@ calculateFluctuationFunction <- function(yr, windowSizesVector) {
     .Call('nonlinearTseries_calculateFluctuationFunction', PACKAGE = 'nonlinearTseries', yr, windowSizesVector)
 }
 
+timesTwo <- function(x) {
+    .Call('nonlinearTseries_timesTwo', PACKAGE = 'nonlinearTseries', x)
+}
+
 tsHistogram <- function(x, tlag, npartitions) {
     .Call('nonlinearTseries_tsHistogram', PACKAGE = 'nonlinearTseries', x, tlag, npartitions)
 }
@@ -13,8 +17,8 @@ mutualInformation <- function(tseries, maxlag, npartitions) {
     .Call('nonlinearTseries_mutualInformation', PACKAGE = 'nonlinearTseries', tseries, maxlag, npartitions)
 }
 
-rcppGeneralizedCorrDim <- function(timeSeries, timeLag, theilerDistance, radiusVector, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes) {
-    .Call('nonlinearTseries_rcppGeneralizedCorrDim', PACKAGE = 'nonlinearTseries', timeSeries, timeLag, theilerDistance, radiusVector, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes)
+rcppGeneralizedCorrDim <- function(timeSeries, timeLag, theilerDistance, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes) {
+    .Call('nonlinearTseries_rcppGeneralizedCorrDim', PACKAGE = 'nonlinearTseries', timeSeries, timeLag, theilerDistance, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes)
 }
 
 getVectorNeighbours <- function(phaseSpace, vectorIndex, radius, numberBoxes) {
@@ -25,8 +29,8 @@ getAllNeighbours <- function(phaseSpace, radius, numberBoxes) {
     .Call('nonlinearTseries_getAllNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, radius, numberBoxes)
 }
 
-timesTwo <- function(x) {
-    invisible(.Call('nonlinearTseries_timesTwo', PACKAGE = 'nonlinearTseries', x))
+test <- function(x) {
+    .Call('nonlinearTseries_test', PACKAGE = 'nonlinearTseries', x)
 }
 
 neighsList2Sparse <- function(neighs, neighs_matrix) {
