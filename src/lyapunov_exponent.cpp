@@ -63,10 +63,11 @@ NumericMatrix lyapunov_exponent(
                      int nBoxes){
 
   /* TODO: check all arguments... maybe move checking to R code */
-  NumericMatrix divergenceMatrix(maxEmbeddingDim - minEmbeddingDim + 1,
+  int nrows = maxEmbeddingDim - minEmbeddingDim + 1;
+  NumericMatrix divergenceMatrix(nrows,
                                  maxTimeSteps + 1); 
-  
-  for (int i = 0; i < divergenceMatrix.nrow(); i++) {
+   
+  for (int i = 0; i < nrows; i++) {
     divergenceMatrix(i, _) = compute_divergence(timeSeries, minEmbeddingDim + i,
                      timeLag, radius, theilerWindow,
                      minNumNeighbours, nRefPoints, 

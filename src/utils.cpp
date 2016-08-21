@@ -5,7 +5,8 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void neighsList2Sparse(List&  neighs,NumericMatrix& neighs_matrix) {
   NumericVector x;
-  for (int i = 0;i < neighs_matrix.nrow(); i++){
+  int neighs_matrix_nrow = neighs_matrix.nrow();
+  for (int i = 0; i < neighs_matrix_nrow; i++){
     x = Rcpp::as<NumericVector>(neighs[i]); 
     x.sort();
     // add diagonal elements

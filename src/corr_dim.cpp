@@ -33,10 +33,13 @@ void count_neighbours(NumericMatrix& currentNeighbourCount,
                       neighbour_search& neighbourSearcher,
                       int refVectorIndex,
                       correlation_sum_information& corrSumInfo){
+  int currentNeighbourCountNumberCol = currentNeighbourCount.ncol();
+  int currentNeighbourCountNumberRow = currentNeighbourCount.nrow();
   IntegerVector neighboursIndexes = 
     neighbourSearcher.find_neighbours(refVectorIndex);
+  int neighboursIndexesSize = neighboursIndexes.size();
   /* check each of the neighbours of refVectorIndex */
-  for (int j = 0; j < neighboursIndexes.size(); j++){
+  for (int j = 0; j < neighboursIndexesSize; j++){
     int neighbourIndex = neighboursIndexes[j];
     /* Check if we can use this possible neighbour
      * we can not use it if this t(i) vector do not exist in the following 
@@ -53,7 +56,7 @@ void count_neighbours(NumericMatrix& currentNeighbourCount,
     currentNeighbourCount(0,0)++;
     /* Complete the row corresponging to the minimum embedding dimension. */
     int ep;
-    for (ep = 1; ep < currentNeighbourCount.ncol(); ep++){
+    for (ep = 1; ep < currentNeighbourCountNumberCol; ep++){
       if (neighbourSearcher.are_neighbours(refVectorIndex, neighbourIndex, 
                                            corrSumInfo.mRadii[ep])){
         currentNeighbourCount(0,ep)++;
@@ -62,7 +65,7 @@ void count_neighbours(NumericMatrix& currentNeighbourCount,
       }
     }
     int lastRadiusTocheck = ep;
-    for (int m=1; m < currentNeighbourCount.nrow(); m++){
+    for (int m=1; m < currentNeighbourCountNumberRow; m++){
       int embeddingDim = corrSumInfo.mMinEmbeddingDim + m;
       for (ep = 0; ep < lastRadiusTocheck; ep++){
         /* We just have to chek the last position of the vector in the new
@@ -94,8 +97,11 @@ void count_neighbours(NumericMatrix& currentNeighbourCount,
 void update_correlation_sum(NumericMatrix& corrSum,
                             NumericMatrix& currentNeighbourCount,
                             double exponent){
-  for (int i=0; i < corrSum.nrow(); i++) {
-    for (int j=0; j < corrSum.ncol(); j++){
+  int nrow = corrSum.nrow();
+  int ncol = corrSum.ncol();
+  
+  for (int i=0; i < nrow; i++) {
+    for (int j=0; j < ncol; j++){
       corrSum(i,j) += std::pow(currentNeighbourCount(i,j), exponent);
     }
   }
@@ -185,8 +191,10 @@ NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries,
   /* Normalize results */
   double denominator = 
   static_cast<double>(nRefVectors * std::pow(nRefVectors - 1, corrSumOrder - 1));
-  for (int i = 0; i < corrSum.nrow(); i++){
-    for (int j = 0; j < corrSum.ncol(); j++){
+  int nrow = corrSum.nrow();
+  int ncol = corrSum.ncol();
+  for (int i = 0; i < nrow; i++){
+    for (int j = 0; j < ncol; j++){
       corrSum(i,j) = corrSum(i, j) / denominator ;
     }
   }
@@ -194,3 +202,46 @@ NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries,
   return corrSum;
 }
 
+/*** R
+tolerance = 1e-2
+  # Henon I
+  set.seed(1)
+  h=henon(n.sample = 3000,n.transient = 100, a = 1.4, b = 0.3, 
+          start = c(0.73954883, 0.04772637), do.plot = FALSE)
+  
+  ts = h$x
+  mmin = 2
+  mmax = 5
+  time.lag = 1
+  rmin = 10 ^ -2.35
+  rmax = 10 ^ -2
+  np = 100
+  theiler.window = 5
+  
+library(microbenchmark)
+  microbenchmark(
+    old = corrDim(
+      time.series = ts,
+      min.embedding.dim = mmin,
+      max.embedding.dim = mmax,
+      time.lag = time.lag,
+      min.radius = rmin,
+      max.radius = rmax,
+      n.points.radius = np,
+      do.plot = FALSE,
+      theiler.window = theiler.window,
+      number.boxes = 100
+    ),
+    rcpp = rcppCorrDim(
+      time.series = ts,
+      min.embedding.dim = mmin,
+      max.embedding.dim = mmax,
+      time.lag = time.lag,
+      min.radius = rmin,
+      max.radius = rmax,
+      n.points.radius = np,
+      do.plot = FALSE,
+      theiler.window = theiler.window,
+      number.boxes = 100
+    ), times = 50)
+*/
