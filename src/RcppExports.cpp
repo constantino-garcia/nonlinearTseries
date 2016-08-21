@@ -24,15 +24,15 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// calculateFluctuationFunction
-NumericVector calculateFluctuationFunction(NumericVector& yr, NumericVector& windowSizesVector);
-RcppExport SEXP nonlinearTseries_calculateFluctuationFunction(SEXP yrSEXP, SEXP windowSizesVectorSEXP) {
+// calculate_fluctuation_function
+NumericVector calculate_fluctuation_function(NumericVector& yr, NumericVector& windowSizesVector);
+RcppExport SEXP nonlinearTseries_calculate_fluctuation_function(SEXP yrSEXP, SEXP windowSizesVectorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericVector& >::type yr(yrSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type windowSizesVector(windowSizesVectorSEXP);
-    __result = Rcpp::wrap(calculateFluctuationFunction(yr, windowSizesVector));
+    __result = Rcpp::wrap(calculate_fluctuation_function(yr, windowSizesVector));
     return __result;
 END_RCPP
 }

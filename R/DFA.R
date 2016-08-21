@@ -70,14 +70,14 @@
 #' @export dfa
 #' @import Rcpp
 #' @exportClass dfa
-dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE,
-             ...){
-  f="y~x"
-  window.sizes=c()
-  fluctuation.function=c()
+dfa = function(time.series, window.size.range = c(10, 300),
+               npoints = 20, do.plot = TRUE, ...) {
+  f = "y~x"
+  window.sizes = c()
+  fluctuation.function = c()
   
-  if ( (window.size.range[[2]] < window.size.range[[1]]) || 
-         any(window.size.range < 1)){
+  if ((window.size.range[[2]] < window.size.range[[1]]) ||
+      any(window.size.range < 1)) {
     stop("Invalid window size range")
   }
   # compute windows' sizes... 
@@ -88,42 +88,48 @@ dfa=function(time.series, window.size.range=c(10,300), npoints=20,do.plot=TRUE,
     # Try equally spaced windows in log scale
     log.window.sizes = seq(log10(window.size.range[[1]]),
                            log10(window.size.range[[2]]),
-                           len=npoints)
-    window.sizes = unique(round(10^log.window.sizes))
+                           len = npoints)
+    window.sizes = unique(round(10 ^ log.window.sizes))
     # if there are repeated elements we select missing windows until
     # reaching npoints
-    if (length(window.sizes) < npoints){ 
+    if (length(window.sizes) < npoints) { 
       missing = setdiff(window.size.range[[1]]:window.size.range[[2]],
                         window.sizes)
       points.needed = npoints - length(window.sizes) 
-      add.points = missing[seq(1,points.needed,len=points.needed)]
-      window.sizes = sort(c(window.sizes,add.points))
+      add.points = missing[seq(1, points.needed, len = points.needed)]
+      window.sizes = sort(c(window.sizes, add.points))
     }
   }
   npoints = length(window.sizes)
   #integrate the time series time.series: this is called the "profile" in Penzel et al.
-  Y=cumsum( time.series - mean(time.series) )
+  Y = cumsum(time.series - mean(time.series))
   
   #Calculate the local trend for
   #each of the segments by a least-square fit
   #of the time.series and compute the error
-  fluctuation.function = calculateFluctuationFunction(Y, window.sizes)
+  fluctuation.function =  .Call('nonlinearTseries_calculate_fluctuation_function',
+                                PACKAGE = 'nonlinearTseries',
+                                Y, window.sizes)
+
 
   
   #create dfa object
-  dfa.structure = list(window.sizes=window.sizes,fluctuation.function=fluctuation.function)
+  dfa.structure = list(window.sizes = window.sizes, 
+                       fluctuation.function = fluctuation.function)
   class(dfa.structure) = "dfa"
   # add attributes
-  id=deparse(substitute(time.series))
+  id = deparse(substitute(time.series))
   attr(dfa.structure,"id") = id
   
     
   #plot
-  if (do.plot){
-    plot(dfa.structure,...)
+  if (do.plot) {
+    tryCatch(plot(dfa.structure, ...), error = function(error){
+      warning("Error while trying to plot the DFA")
+    })
   }
   
-  return(dfa.structure)
+  dfa.structure
 }
 
 

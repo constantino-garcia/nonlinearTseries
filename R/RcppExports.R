@@ -5,8 +5,8 @@ generalized_correlation_sum <- function(timeSeries, timeLag, theilerWindow, radi
     .Call('nonlinearTseries_generalized_correlation_sum', PACKAGE = 'nonlinearTseries', timeSeries, timeLag, theilerWindow, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes)
 }
 
-calculateFluctuationFunction <- function(yr, windowSizesVector) {
-    .Call('nonlinearTseries_calculateFluctuationFunction', PACKAGE = 'nonlinearTseries', yr, windowSizesVector)
+calculate_fluctuation_function <- function(yr, windowSizesVector) {
+    .Call('nonlinearTseries_calculate_fluctuation_function', PACKAGE = 'nonlinearTseries', yr, windowSizesVector)
 }
 
 rcpp_information_dimension <- function(timeSeries, embeddingDimensions, timeLag, fixedMasses, radius, increasingRadiusFactor, nBoxes, nReferenceVectors, theilerWindow, nNeighbours) {
