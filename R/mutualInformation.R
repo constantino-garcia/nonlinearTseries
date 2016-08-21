@@ -55,23 +55,24 @@ mutualInformation = function(time.series,lag.max = NULL,
                 Bits = 2,
                 Bans = 10)
   
-  if(is.null(lag.max)){
-    lag.max = max(20, sqrt(length(time.series)) )
+  if (is.null(lag.max)) {
+    lag.max = max(20, sqrt(length(time.series)))
   }  
-  if (is.null(n.partitions)){
-    n.partitions = max(floor(length(time.series)^(1/3)),2)
+  if (is.null(n.partitions)) {
+    n.partitions = max(floor(length(time.series) ^ (1 / 3)), 2)
   }
-  #call C
-  mutinf = .Call("nonlinearTseries_mutualInformation", as.numeric(time.series),
-                  as.integer(lag.max),
-                  as.integer(n.partitions),base=as.numeric(base),
-                  PACKAGE="nonlinearTseries" )
-  mutinf = mutualInf(0:lag.max,mutinf / log(base), units, n.partitions)
+  mutinf = .Call("nonlinearTseries_calculate_mutual_information",
+                 as.numeric(time.series),
+                 as.integer(lag.max),
+                 as.integer(n.partitions),
+                 PACKAGE = "nonlinearTseries" )
+  mutinf = mutualInf(0:lag.max, mutinf / log(base), units, n.partitions)
   
-  if(do.plot){
-    plot(mutinf)
+  if (do.plot) { 
+    tryCatch(plot(mutinf), error = function(error){
+      warning("Error while trying to plot the mutual informaiton")
+    })
   }
-  
   mutinf
 }
 

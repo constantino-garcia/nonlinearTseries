@@ -17,12 +17,12 @@ lyapunov_exponent <- function(timeSeries, minEmbeddingDim, maxEmbeddingDim, time
     .Call('nonlinearTseries_lyapunov_exponent', PACKAGE = 'nonlinearTseries', timeSeries, minEmbeddingDim, maxEmbeddingDim, timeLag, radius, theilerWindow, minNumNeighbours, nRefPoints, maxTimeSteps, nBoxes)
 }
 
-tsHistogram <- function(x, tlag, npartitions) {
-    .Call('nonlinearTseries_tsHistogram', PACKAGE = 'nonlinearTseries', x, tlag, npartitions)
+calculate_time_series_histogram <- function(x, timeLag, nPartitions) {
+    .Call('nonlinearTseries_calculate_time_series_histogram', PACKAGE = 'nonlinearTseries', x, timeLag, nPartitions)
 }
 
-mutualInformation <- function(tseries, maxlag, npartitions) {
-    .Call('nonlinearTseries_mutualInformation', PACKAGE = 'nonlinearTseries', tseries, maxlag, npartitions)
+calculate_mutual_information <- function(tseries, maxlag, nPartitions) {
+    .Call('nonlinearTseries_calculate_mutual_information', PACKAGE = 'nonlinearTseries', tseries, maxlag, nPartitions)
 }
 
 getVectorNeighbours <- function(phaseSpace, vectorIndex, radius, numberBoxes) {

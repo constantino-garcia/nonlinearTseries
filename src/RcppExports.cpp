@@ -76,29 +76,29 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// tsHistogram
-NumericMatrix tsHistogram(const NumericVector& x, const int& tlag, const int& npartitions);
-RcppExport SEXP nonlinearTseries_tsHistogram(SEXP xSEXP, SEXP tlagSEXP, SEXP npartitionsSEXP) {
+// calculate_time_series_histogram
+NumericMatrix calculate_time_series_histogram(const NumericVector& x, const int& timeLag, const int& nPartitions);
+RcppExport SEXP nonlinearTseries_calculate_time_series_histogram(SEXP xSEXP, SEXP timeLagSEXP, SEXP nPartitionsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const int& >::type tlag(tlagSEXP);
-    Rcpp::traits::input_parameter< const int& >::type npartitions(npartitionsSEXP);
-    __result = Rcpp::wrap(tsHistogram(x, tlag, npartitions));
+    Rcpp::traits::input_parameter< const int& >::type timeLag(timeLagSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nPartitions(nPartitionsSEXP);
+    __result = Rcpp::wrap(calculate_time_series_histogram(x, timeLag, nPartitions));
     return __result;
 END_RCPP
 }
-// mutualInformation
-NumericVector mutualInformation(const NumericVector& tseries, const int& maxlag, const int& npartitions);
-RcppExport SEXP nonlinearTseries_mutualInformation(SEXP tseriesSEXP, SEXP maxlagSEXP, SEXP npartitionsSEXP) {
+// calculate_mutual_information
+NumericVector calculate_mutual_information(const NumericVector& tseries, const int& maxlag, const int& nPartitions);
+RcppExport SEXP nonlinearTseries_calculate_mutual_information(SEXP tseriesSEXP, SEXP maxlagSEXP, SEXP nPartitionsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const NumericVector& >::type tseries(tseriesSEXP);
     Rcpp::traits::input_parameter< const int& >::type maxlag(maxlagSEXP);
-    Rcpp::traits::input_parameter< const int& >::type npartitions(npartitionsSEXP);
-    __result = Rcpp::wrap(mutualInformation(tseries, maxlag, npartitions));
+    Rcpp::traits::input_parameter< const int& >::type nPartitions(nPartitionsSEXP);
+    __result = Rcpp::wrap(calculate_mutual_information(tseries, maxlag, nPartitions));
     return __result;
 END_RCPP
 }
