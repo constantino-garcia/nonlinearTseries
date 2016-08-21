@@ -10,11 +10,12 @@ NumericMatrix build_takens(const NumericVector& timeSeries,
   for (int i=0; i < jumps.size(); i ++){
     jumps[i] = i * timeLag;
   }
-  NumericMatrix takensSpace(timeSeries.size() - maxJump, embeddingDimension);
+  int nTakensVectors = timeSeries.size() - maxJump;
+  NumericMatrix takensSpace(nTakensVectors, embeddingDimension);
   
   /* matrix that will store the Takens' vectors. One vector per row */
-  for (int i=0; i < takensSpace.nrow(); i++) {
-    for (int j=0; j < takensSpace.ncol(); j++){
+  for (int i=0; i < nTakensVectors; i++) {
+    for (int j=0; j < embeddingDimension; j++){
       takensSpace(i, j) = timeSeries[i + jumps[j]];
     }
   }

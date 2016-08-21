@@ -33,10 +33,6 @@ getAllNeighbours <- function(phaseSpace, radius, numberBoxes) {
     .Call('nonlinearTseries_getAllNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, radius, numberBoxes)
 }
 
-start_profiler <- function(str) {
-    invisible(.Call('nonlinearTseries_start_profiler', PACKAGE = 'nonlinearTseries', str))
-}
-
 test <- function(x, y) {
     .Call('nonlinearTseries_test', PACKAGE = 'nonlinearTseries', x, y)
 }

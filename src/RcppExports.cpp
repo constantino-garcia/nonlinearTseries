@@ -129,16 +129,6 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// start_profiler
-void start_profiler(std::string str);
-RcppExport SEXP nonlinearTseries_start_profiler(SEXP strSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::string >::type str(strSEXP);
-    start_profiler(str);
-    return R_NilValue;
-END_RCPP
-}
 // test
 NumericMatrix test(NumericMatrix& x, NumericVector y);
 RcppExport SEXP nonlinearTseries_test(SEXP xSEXP, SEXP ySEXP) {

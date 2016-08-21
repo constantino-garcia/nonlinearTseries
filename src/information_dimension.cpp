@@ -155,7 +155,7 @@ NumericMatrix rcpp_information_dimension(const NumericVector& timeSeries,
                                          double radius, double increasingRadiusFactor,
                                          int nBoxes, int nReferenceVectors,
                                          int theilerWindow, int nNeighbours){
-  ProfilerStart("/tmp/infDimProf.txt");
+  ProfilerStart("/tmp/speedup_infDimProf_2.txt");
   NumericMatrix averageLogRadii(embeddingDimensions.size(), fixedMasses.size());
   
   // find the averageLogRadius for each embeddingDimension and fixed mass 
