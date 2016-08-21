@@ -16,6 +16,12 @@ neighbour_search::neighbour_search(const NumericMatrix& phaseSpace,
    * /position (the last position) to store the total length.
    */ 
   mBoxes(nBoxes * nBoxes + 1), mPossibleNeighbours(phaseSpace.nrow()) {
+  prepare_box_assisted_search();
+}
+
+void neighbour_search::prepare_box_assisted_search(){
+  std::fill(mBoxes.begin(), mBoxes.end(), 0);
+  std::fill(mPossibleNeighbours.begin(), mPossibleNeighbours.end(), 0);
   int nTakens = mPhaseSpace.nrow();
   int lastPosition = mPhaseSpace.ncol() - 1; 
   int xBoxPosition, yBoxPosition, wrappedBoxPosition;
@@ -23,8 +29,8 @@ neighbour_search::neighbour_search(const NumericMatrix& phaseSpace,
    * since they will probably be the least correlated ones.
    */
   for (int i = 0; i < nTakens; i++) {
-    xBoxPosition = static_cast<int>(mPhaseSpace(i, 0) / radius);
-    yBoxPosition = static_cast<int>(mPhaseSpace(i, lastPosition) / radius);
+    xBoxPosition = static_cast<int>(mPhaseSpace(i, 0) / mRadius);
+    yBoxPosition = static_cast<int>(mPhaseSpace(i, lastPosition) / mRadius);
     wrappedBoxPosition = get_wrapped_position(xBoxPosition, yBoxPosition);
     mBoxes[wrappedBoxPosition]++;
   }
@@ -32,19 +38,47 @@ neighbour_search::neighbour_search(const NumericMatrix& phaseSpace,
   std::partial_sum(mBoxes.begin(), mBoxes.end(), mBoxes.begin());
   /* fill list of pointers to possible neighbours. */
   for (int i = 0; i < (nTakens); i++) {
-    xBoxPosition = static_cast<int>(mPhaseSpace(i, 0) / radius);
-    yBoxPosition = static_cast<int>(mPhaseSpace(i, lastPosition) / radius);
+    xBoxPosition = static_cast<int>(mPhaseSpace(i, 0) / mRadius);
+    yBoxPosition = static_cast<int>(mPhaseSpace(i, lastPosition) / mRadius);
     wrappedBoxPosition = get_wrapped_position(xBoxPosition, yBoxPosition);
     mPossibleNeighbours[--mBoxes[wrappedBoxPosition]] = i;
   }
 }
 
+
+
+inline bool neighbour_search::comply_theiler_window(int vectorIndex1, int vectorIndex2, 
+                                                    int theilerWindow) {
+ if (theilerWindow < 0) {
+   return true;
+ } else {
+   return (std::abs(vectorIndex1 - vectorIndex2) > theilerWindow);
+ }
+}
+
+
+
+
+
+void neighbour_search::set_radius(double radius){
+  mRadius = radius;
+  prepare_box_assisted_search();
+}
+
+
+
 NumericMatrix neighbour_search::get_phase_space() const{
   return mPhaseSpace;  
 }
+
+
+
 int neighbour_search::get_dimension() const {
   return mEmbeddingDim;
 }
+
+
+
 int neighbour_search::get_number_vectors() const{
   return mNumberVectors;
 }
@@ -58,6 +92,18 @@ inline int neighbour_search::get_wrapped_position(int row, int col) const{
   return (nBoxes * positive_modulo(row, nBoxes) + positive_modulo(col, nBoxes));
 }
 
+double neighbour_search::max_distance(int vectorIndex1, int vectorIndex2) const {
+  double distance = -1.0;
+  for (int i=0; i < mEmbeddingDim; i++){
+    distance = std::max(distance, 
+                        std::abs(mPhaseSpace(vectorIndex1, i)- mPhaseSpace(vectorIndex2, i))
+    );
+  }
+  return distance;
+}  
+
+
+  
 /* check if two Phase Space vectors are neighbours using the max metric */
 bool neighbour_search::are_neighbours(int vectorIndex1, int vectorIndex2,
                                       double neighbourhoodRadius) const{
@@ -70,25 +116,35 @@ bool neighbour_search::are_neighbours(int vectorIndex1, int vectorIndex2,
   return true;
 }
 
-
-IntegerVector neighbour_search::find_neighbours(int vectorIndex) const{
+IntegerVector neighbour_search::find_neighbours(int vectorIndex, int theilerWindow) const{
   IntegerVector neighbourWorkspace(mPhaseSpace.nrow());
-  return box_assisted_search(vectorIndex, neighbourWorkspace);
+  return box_assisted_search(vectorIndex, neighbourWorkspace, theilerWindow);
 }
 
-List neighbour_search::find_all_neighbours() const{
+IntegerVector neighbour_search::find_neighbours(int vectorIndex) const{
+  /* A negative value for the Theiler window indicates that it can be ignored */
+  return find_neighbours(vectorIndex, -1);
+}
+
+List neighbour_search::find_all_neighbours(int theilerWindow) const{
   int nVectors = mPhaseSpace.nrow();
   Rcpp::List neighbourList(nVectors);
   Rcpp::IntegerVector neighbourWorkspace(nVectors);
   for (int i = 0; i < nVectors; i++) {
-    neighbourList[i] = box_assisted_search(i, neighbourWorkspace);
+    neighbourList[i] = box_assisted_search(i, neighbourWorkspace, theilerWindow);
   }
   return neighbourList;
 }
 
+List neighbour_search::find_all_neighbours() const{
+  /* A negative value for the Theiler window indicates that it can be ignored */
+   return find_all_neighbours(-1);
+}
+
 IntegerVector 
   neighbour_search::box_assisted_search(int vectorIndex, 
-                                        IntegerVector& neighbourWorkspace) const {
+                                        IntegerVector& neighbourWorkspace,
+                                        int theilerWindow) const {
   int nfound = 0;
   int embeddingDim = mPhaseSpace.ncol();
   int lastPosition = embeddingDim - 1;
@@ -105,7 +161,8 @@ IntegerVector
         if (possibleNeigh == vectorIndex){
           continue;
         }
-        if (are_neighbours(vectorIndex, possibleNeigh, mRadius)) {
+        if (are_neighbours(vectorIndex, possibleNeigh, mRadius) && 
+            comply_theiler_window(vectorIndex, possibleNeigh, theilerWindow)) {
           neighbourWorkspace[nfound++] = possibleNeigh;
         }
       }

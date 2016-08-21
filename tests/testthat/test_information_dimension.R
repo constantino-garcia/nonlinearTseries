@@ -2,96 +2,29 @@ library(nonlinearTseries)
 context("Information dimension")
 
 test_that("estimates equal theoretical results", {
-  q = 2
+  set.seed(1)
   # Henon
-  h = henon(
-    n.sample =  3000,
-    n.transient = 100,
-    a = 1.4,
-    b = 0.3,
-    start =  c(0.8253681, 0.6955566),
-    do.plot = FALSE
-  )
+  ts = henon(n.sample =  5000, n.transient = 100,
+             a = 1.4, b = 0.3, start =  c(0.8253681, 0.6955566),
+             do.plot = FALSE)$x
+  leps = rcppInfDim(ts, min.embedding.dim = 2, time.lag = 1,
+                min.fixed.mass = 0.01, max.fixed.mass = 0.1,
+                number.fixed.mass.points = 100, radius = 0.0005, 
+                increasing.radius.factor = sqrt(2), number.boxes = 100,
+                number.reference.vectors = 1000, theiler.window = 50,
+                kMax = 300, do.plot = FALSE)
+  expect_equal(1.24, estimate(leps, do.plot = FALSE), tolerance = 5 * 10 ^ -2)
   
-  ts = h$x
-  
-  leps = infDim(
-    ts,
-    min.embedding.dim = 2,
-    time.lag = 1,
-    min.fixed.mass = 0.04,
-    max.fixed.mass = 0.2,
-    number.fixed.mass.points = 100,
-    radius = 0.001,
-    increasing.radius.factor = sqrt(2),
-    number.boxes = 100,
-    number.reference.vectors = 100,
-    theiler.window = 10,
-    kMax = 100,
-    do.plot = FALSE
-  )
-  ## message("Henon---> expected: 1.24    predicted: ",estimate(leps),"\n")
-  expect_equal(1.178795, estimate(leps, do.plot = FALSE), tolerance = 10 ^
-                 -2)
-  
-  
-  # Rossler
-  r = rossler(
-    a = 0.2,
-    b = 0.2,
-    w = 5.7,
-    start = c(-2, -10, 0.2)
-    ,
-    time = seq(0, 60, by = 0.01),
-    do.plot = FALSE
-  )
-  ts = r$x
-  leps = infDim(
-    ts,
-    min.embedding.dim = 5,
-    max.embedding.dim = 6,
-    time.lag = 100,
-    min.fixed.mass = 0.001,
-    max.fixed.mass = 0.1,
-    number.fixed.mass.points = 100,
-    radius = 0.1,
-    increasing.radius.factor = sqrt(2),
-    number.boxes = 100,
-    number.reference.vectors = 100,
-    theiler.window = 200,
-    kMax = 100,
-    do.plot = FALSE
-  )
-  ## message("Rossler--->expected: 2.92    predicted: ",estimate(leps),"\n")
-  expect_equal(3.00, estimate(leps, do.plot = FALSE), tolerance = 5 * 10 ^
-                 -2)
   
   # Sinai map
-  s = sinaiMap(
-    a = 0.3,
-    n.sample = 5000,
-    start = c(0.23489, 0.8923),
-    do.plot = FALSE
-  )
-  ts = s$x
-  
-  leps = infDim(
-    ts,
-    min.embedding.dim = 2,
-    time.lag = 1,
-    min.fixed.mass = 0.01,
-    max.fixed.mass = 0.03,
-    number.fixed.mass.points = 1000,
-    radius = 0.1,
-    increasing.radius.factor = sqrt(2),
-    number.boxes = 100,
-    number.reference.vectors = 100,
-    theiler.window = 200,
-    kMax = 100,
-    do.plot = FALSE
-  )
+  ts = sinaiMap(a = 0.3, n.sample = 5000, start = c(0.23489, 0.8923),
+                do.plot = FALSE)$x
+  leps = rcppInfDim(ts, min.embedding.dim = 2, time.lag = 1, min.fixed.mass = 0.001,
+                max.fixed.mass = 0.1, number.fixed.mass.points = 500,
+                radius = 0.05, increasing.radius.factor = sqrt(2),
+                number.boxes = 100, number.reference.vectors = 1000,
+                theiler.window = 200, kMax = 500, do.plot = FALSE)
   expect_equal(1.68, estimate(leps, do.plot = FALSE), 
                tolerance = 5 * 10 ^ -2)
-  ## message("Rossler--->expected: 1.72-1.77    predicted: ",estimate(leps),"\n")
   
 })

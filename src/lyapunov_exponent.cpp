@@ -5,7 +5,7 @@ using namespace Rcpp;
 
 NumericVector compute_divergence(const NumericVector& timeSeries, 
                                  int embeddingDimension, int timeLag, 
-                                 double radius,  int theilerDistance,
+                                 double radius,  int theilerWindow,
                                  int minNumNeighbours, int nRefPoints, 
                                  int maxTimeSteps, int nBoxes){
   NumericMatrix phaseSpace = build_takens(timeSeries,embeddingDimension, timeLag);
@@ -28,7 +28,7 @@ NumericVector compute_divergence(const NumericVector& timeSeries,
       if (neighbourIndex >= nTakens){
         continue;
       }
-      if (abs(neighbourIndex - refVectorIndex) > theilerDistance){
+      if (abs(neighbourIndex - refVectorIndex) > theilerWindow){
         nNeighboursFound++;
         int timeIndex1 = refVectorIndex + (embeddingDimension - 1) * timeLag;
         int timeIndex2 = neighbourIndex + (embeddingDimension - 1) * timeLag;
@@ -58,7 +58,7 @@ NumericVector compute_divergence(const NumericVector& timeSeries,
 NumericMatrix lyapunov_exponent(
                      const NumericVector& timeSeries, 
                      int minEmbeddingDim, int maxEmbeddingDim,
-                     int timeLag, double radius, int theilerDistance,
+                     int timeLag, double radius, int theilerWindow,
                      int minNumNeighbours, int nRefPoints, int maxTimeSteps,
                      int nBoxes){
 
@@ -68,7 +68,7 @@ NumericMatrix lyapunov_exponent(
   
   for (int i = 0; i < divergenceMatrix.nrow(); i++) {
     divergenceMatrix(i, _) = compute_divergence(timeSeries, minEmbeddingDim + i,
-                     timeLag, radius, theilerDistance,
+                     timeLag, radius, theilerWindow,
                      minNumNeighbours, nRefPoints, 
                      maxTimeSteps,nBoxes);
   }

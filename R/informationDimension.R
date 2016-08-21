@@ -105,9 +105,9 @@ infDim <-
     }
     # Not using the correction of the log(p) suggested by Kantz,
     # the correction is stored in infDim.result$lfp.
-    information.dimension.structure = list( fixed.mass = fixed.mass.vector, 
-                                            log.radius =  infDim.matrix,
-                                            embedding.dims = embeddings)
+    information.dimension.structure = list(fixed.mass = fixed.mass.vector, 
+                                           log.radius =  infDim.matrix,
+                                           embedding.dims = embeddings)
     class(information.dimension.structure) = "infDim"
     # add attributes
     id=deparse(substitute(time.series))
@@ -411,3 +411,55 @@ plotLocalScalingExp.infDim =  function(x,main="Local scaling exponents d1(p)",
   }
   
 }
+
+
+
+
+# Rcpp-based function -----------------------------------------------------
+
+#' @export
+rcppInfDim <- 
+  function(time.series, min.embedding.dim=2, 
+           max.embedding.dim = min.embedding.dim, time.lag = 1, 
+           min.fixed.mass, max.fixed.mass, number.fixed.mass.points = 10,
+           radius, increasing.radius.factor = sqrt(2), number.boxes=NULL,
+           number.reference.vectors=5000, theiler.window = 1,
+           kMax = 1000, do.plot = TRUE, ...) {
+    
+    if (is.null(number.boxes)) {
+      number.boxes = estimateNumberBoxes(buildTakens(time.series, max.embedding.dim, time.lag),
+                                         radius)
+    } 
+    embeddings = min.embedding.dim:max.embedding.dim
+    fixed.mass.vector = 10 ^ (seq(log10(min.fixed.mass),
+                                  log10(max.fixed.mass),
+                                  length.out = number.fixed.mass.points)
+    )
+    infDim.matrix  = 
+      .Call('nonlinearTseries_rcpp_information_dimension', PACKAGE = 'nonlinearTseries', 
+            time.series, embeddings, time.lag,  fixed.mass.vector,
+            radius,  increasing.radius.factor, number.boxes, 
+            number.reference.vectors, theiler.window,  kMax)
+   
+    dimnames(infDim.matrix) = list(embeddings,fixed.mass.vector)
+    # Not using the correction of the log(p) suggested by Kantz,
+    # the correction is stored in infDim.result$lfp.
+    information.dimension.structure = list(fixed.mass = fixed.mass.vector, 
+                                           log.radius =  infDim.matrix,
+                                           embedding.dims = embeddings)
+    class(information.dimension.structure) = "infDim"
+    # add attributes
+    id = deparse(substitute(time.series))
+    attr(information.dimension.structure,"time.lag") = time.lag
+    attr(information.dimension.structure,"id") = id
+    attr(information.dimension.structure,"theiler.window") = theiler.window
+    
+    if (do.plot) {
+      tryCatch(plot(information.dimension.structure, ...), error = function(error){
+        warning("Error while trying to plot the correlation sum")
+      })
+    }
+    
+    information.dimension.structure
+  }
+

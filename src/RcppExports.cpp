@@ -7,20 +7,20 @@
 using namespace Rcpp;
 
 // generalized_correlation_sum
-NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries, int timeLag, int theilerDistance, NumericVector& radii, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
-RcppExport SEXP nonlinearTseries_generalized_correlation_sum(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerDistanceSEXP, SEXP radiiSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
+NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries, int timeLag, int theilerWindow, NumericVector& radii, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
+RcppExport SEXP nonlinearTseries_generalized_correlation_sum(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerWindowSEXP, SEXP radiiSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const NumericVector& >::type timeSeries(timeSeriesSEXP);
     Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
-    Rcpp::traits::input_parameter< int >::type theilerDistance(theilerDistanceSEXP);
+    Rcpp::traits::input_parameter< int >::type theilerWindow(theilerWindowSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type radii(radiiSEXP);
     Rcpp::traits::input_parameter< int >::type minEmbeddingDim(minEmbeddingDimSEXP);
     Rcpp::traits::input_parameter< int >::type maxEmbeddingDim(maxEmbeddingDimSEXP);
     Rcpp::traits::input_parameter< int >::type corrSumOrder(corrSumOrderSEXP);
     Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
-    __result = Rcpp::wrap(generalized_correlation_sum(timeSeries, timeLag, theilerDistance, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
+    __result = Rcpp::wrap(generalized_correlation_sum(timeSeries, timeLag, theilerWindow, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
     return __result;
 END_RCPP
 }
@@ -36,9 +36,29 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// rcpp_information_dimension
+NumericMatrix rcpp_information_dimension(const NumericVector& timeSeries, const IntegerVector& embeddingDimensions, int timeLag, const NumericVector& fixedMasses, double radius, double increasingRadiusFactor, int nBoxes, int nReferenceVectors, int theilerWindow, int nNeighbours);
+RcppExport SEXP nonlinearTseries_rcpp_information_dimension(SEXP timeSeriesSEXP, SEXP embeddingDimensionsSEXP, SEXP timeLagSEXP, SEXP fixedMassesSEXP, SEXP radiusSEXP, SEXP increasingRadiusFactorSEXP, SEXP nBoxesSEXP, SEXP nReferenceVectorsSEXP, SEXP theilerWindowSEXP, SEXP nNeighboursSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type timeSeries(timeSeriesSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type embeddingDimensions(embeddingDimensionsSEXP);
+    Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type fixedMasses(fixedMassesSEXP);
+    Rcpp::traits::input_parameter< double >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< double >::type increasingRadiusFactor(increasingRadiusFactorSEXP);
+    Rcpp::traits::input_parameter< int >::type nBoxes(nBoxesSEXP);
+    Rcpp::traits::input_parameter< int >::type nReferenceVectors(nReferenceVectorsSEXP);
+    Rcpp::traits::input_parameter< int >::type theilerWindow(theilerWindowSEXP);
+    Rcpp::traits::input_parameter< int >::type nNeighbours(nNeighboursSEXP);
+    __result = Rcpp::wrap(rcpp_information_dimension(timeSeries, embeddingDimensions, timeLag, fixedMasses, radius, increasingRadiusFactor, nBoxes, nReferenceVectors, theilerWindow, nNeighbours));
+    return __result;
+END_RCPP
+}
 // lyapunov_exponent
-NumericMatrix lyapunov_exponent(const NumericVector& timeSeries, int minEmbeddingDim, int maxEmbeddingDim, int timeLag, double radius, int theilerDistance, int minNumNeighbours, int nRefPoints, int maxTimeSteps, int nBoxes);
-RcppExport SEXP nonlinearTseries_lyapunov_exponent(SEXP timeSeriesSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP timeLagSEXP, SEXP radiusSEXP, SEXP theilerDistanceSEXP, SEXP minNumNeighboursSEXP, SEXP nRefPointsSEXP, SEXP maxTimeStepsSEXP, SEXP nBoxesSEXP) {
+NumericMatrix lyapunov_exponent(const NumericVector& timeSeries, int minEmbeddingDim, int maxEmbeddingDim, int timeLag, double radius, int theilerWindow, int minNumNeighbours, int nRefPoints, int maxTimeSteps, int nBoxes);
+RcppExport SEXP nonlinearTseries_lyapunov_exponent(SEXP timeSeriesSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP timeLagSEXP, SEXP radiusSEXP, SEXP theilerWindowSEXP, SEXP minNumNeighboursSEXP, SEXP nRefPointsSEXP, SEXP maxTimeStepsSEXP, SEXP nBoxesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -47,12 +67,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type maxEmbeddingDim(maxEmbeddingDimSEXP);
     Rcpp::traits::input_parameter< int >::type timeLag(timeLagSEXP);
     Rcpp::traits::input_parameter< double >::type radius(radiusSEXP);
-    Rcpp::traits::input_parameter< int >::type theilerDistance(theilerDistanceSEXP);
+    Rcpp::traits::input_parameter< int >::type theilerWindow(theilerWindowSEXP);
     Rcpp::traits::input_parameter< int >::type minNumNeighbours(minNumNeighboursSEXP);
     Rcpp::traits::input_parameter< int >::type nRefPoints(nRefPointsSEXP);
     Rcpp::traits::input_parameter< int >::type maxTimeSteps(maxTimeStepsSEXP);
     Rcpp::traits::input_parameter< int >::type nBoxes(nBoxesSEXP);
-    __result = Rcpp::wrap(lyapunov_exponent(timeSeries, minEmbeddingDim, maxEmbeddingDim, timeLag, radius, theilerDistance, minNumNeighbours, nRefPoints, maxTimeSteps, nBoxes));
+    __result = Rcpp::wrap(lyapunov_exponent(timeSeries, minEmbeddingDim, maxEmbeddingDim, timeLag, radius, theilerWindow, minNumNeighbours, nRefPoints, maxTimeSteps, nBoxes));
     return __result;
 END_RCPP
 }
@@ -107,6 +127,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
     __result = Rcpp::wrap(getAllNeighbours(phaseSpace, radius, numberBoxes));
     return __result;
+END_RCPP
+}
+// start_profiler
+void start_profiler(std::string str);
+RcppExport SEXP nonlinearTseries_start_profiler(SEXP strSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::string >::type str(strSEXP);
+    start_profiler(str);
+    return R_NilValue;
 END_RCPP
 }
 // test

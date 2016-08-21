@@ -6,7 +6,7 @@ using namespace Rcpp;
 struct correlation_sum_information {
   const NumericVector& mTimeSeries; 
   int mTimeLag;
-  int mTheilerDistance;
+  int mTheilerWindow;
   NumericVector& mRadii;
   int mMinEmbeddingDim;
   int mMaxEmbeddingDim;
@@ -15,12 +15,12 @@ struct correlation_sum_information {
   int mNumRefVectors;
   
   correlation_sum_information(const NumericVector& timeSeries,  int timeLag,
-                              int theilerDistance, NumericVector& radii,
+                              int theilerWindow, NumericVector& radii,
                               int minEmbeddingDim, int maxEmbeddingDim,
                               int corrSumOrder, int nTakens, int nRefVectors):
     mTimeSeries(timeSeries),
     mTimeLag(timeLag),
-    mTheilerDistance(theilerDistance),
+    mTheilerWindow(theilerWindow),
     mRadii(radii),
     mMinEmbeddingDim(minEmbeddingDim),
     mMaxEmbeddingDim(maxEmbeddingDim),
@@ -43,10 +43,10 @@ void count_neighbours(NumericMatrix& currentNeighbourCount,
      * embedded spaces or if we have already count this neighbourhood
      * or they are close in time (do not respect the theiler window)
      */
-    bool isCloserTheilerDistance = 
-      std::abs(neighbourIndex - refVectorIndex) <= corrSumInfo.mTheilerDistance;
+    bool isCloserTheilerWindow = 
+      std::abs(neighbourIndex - refVectorIndex) <= corrSumInfo.mTheilerWindow;
     bool isInvalidTakensVector = neighbourIndex >= corrSumInfo.mNumTakens;
-    if (isCloserTheilerDistance || isInvalidTakensVector) {
+    if (isCloserTheilerWindow || isInvalidTakensVector) {
       continue;
     }
     /* OK: we may use this vector */
@@ -55,7 +55,7 @@ void count_neighbours(NumericMatrix& currentNeighbourCount,
     int ep;
     for (ep = 1; ep < currentNeighbourCount.ncol(); ep++){
       if (neighbourSearcher.are_neighbours(refVectorIndex, neighbourIndex, 
-                                          corrSumInfo.mRadii[ep])){
+                                           corrSumInfo.mRadii[ep])){
         currentNeighbourCount(0,ep)++;
       } else {
         break;
@@ -71,7 +71,7 @@ void count_neighbours(NumericMatrix& currentNeighbourCount,
          */
         double distance =  std::abs(
           corrSumInfo.mTimeSeries[refVectorIndex + (embeddingDim - 1) * corrSumInfo.mTimeLag] -
-          corrSumInfo.mTimeSeries[neighbourIndex + (embeddingDim - 1) * corrSumInfo.mTimeLag]
+            corrSumInfo.mTimeSeries[neighbourIndex + (embeddingDim - 1) * corrSumInfo.mTimeLag]
         );
         if (distance < corrSumInfo.mRadii[ep]) {
           currentNeighbourCount(m,ep)++;
@@ -116,7 +116,7 @@ void  calculate_weighted_neighbour_count(NumericMatrix& corrSum,
    *  correlation sum).
    */
   if (corrSumInfo.mCorrSumOrder == 2) {
-    for (int refVectorNumber = 0, refVectorIndex = corrSumInfo.mTheilerDistance;
+    for (int refVectorNumber = 0, refVectorIndex = corrSumInfo.mTheilerWindow;
          refVectorNumber < corrSumInfo.mNumRefVectors;
          refVectorNumber++, refVectorIndex++) {
       count_neighbours(corrSum, neighbourSearcher,
@@ -124,7 +124,7 @@ void  calculate_weighted_neighbour_count(NumericMatrix& corrSum,
       
     }
   } else {
-    for (int refVectorNumber = 0, refVectorIndex = corrSumInfo.mTheilerDistance;
+    for (int refVectorNumber = 0, refVectorIndex = corrSumInfo.mTheilerWindow;
          refVectorNumber < corrSumInfo.mNumRefVectors;
          refVectorNumber++, refVectorIndex++) {
       NumericMatrix currentNeighbourCount(nDimensions, nRadii);
@@ -139,7 +139,7 @@ void  calculate_weighted_neighbour_count(NumericMatrix& corrSum,
 
 //[[Rcpp::export]]
 NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries, 
-                                          int timeLag, int theilerDistance,
+                                          int timeLag, int theilerWindow,
                                           NumericVector& radii,
                                           int minEmbeddingDim,
                                           int maxEmbeddingDim,
@@ -152,7 +152,7 @@ NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries,
   * Check if in the maximum embedding dimension (worst case) there will be at
   * least 2 phase space vectors to use for computing the correlation sum.
   */ 
-  int minimutimeSeriesSize = (2 + (maxEmbeddingDim - 1) * timeLag - 2 * theilerDistance);
+  int minimutimeSeriesSize = (2 + (maxEmbeddingDim - 1) * timeLag - 2 * theilerWindow);
   if (timeSeries.size() < minimutimeSeriesSize) {
      throw std::invalid_argument("There aren't enough phase space vectors");
   }
@@ -162,17 +162,17 @@ NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries,
   neighbour_search neighbourSearcher(build_takens(timeSeries, minEmbeddingDim, timeLag),
                                              radii[0], numberBoxes);
   int nTakens = timeSeries.size() - (maxEmbeddingDim - 1) * timeLag;
-  /* First reference vector is theilerDistance. The last reference vector (not
-   * included) would be  endReferenceVector = endTakens - theilerDistance. These
+  /* First reference vector is theilerWindow. The last reference vector (not
+   * included) would be  endReferenceVector = endTakens - theilerWindow. These
    * vectors are selected since they have the same number of possible neighbours,
    * which eases the normalization of the correlation sum.
    */
-  int nRefVectors = nTakens - 2 * theilerDistance;
+  int nRefVectors = nTakens - 2 * theilerWindow;
   /* store all the information required to compute the correlation sum in a 
    * handy structure
    */
   correlation_sum_information corrSumInfo(timeSeries, timeLag,
-                                          theilerDistance, radii,
+                                          theilerWindow, radii,
                                           minEmbeddingDim, 
                                           maxEmbeddingDim, corrSumOrder,
                                           nTakens, nRefVectors);
