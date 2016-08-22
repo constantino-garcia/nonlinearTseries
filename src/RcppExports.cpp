@@ -129,6 +129,20 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// nonlinear_noise_reduction
+NumericVector nonlinear_noise_reduction(const NumericVector& timeSeries, int embeddingDimension, double radius, int nBoxes);
+RcppExport SEXP nonlinearTseries_nonlinear_noise_reduction(SEXP timeSeriesSEXP, SEXP embeddingDimensionSEXP, SEXP radiusSEXP, SEXP nBoxesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type timeSeries(timeSeriesSEXP);
+    Rcpp::traits::input_parameter< int >::type embeddingDimension(embeddingDimensionSEXP);
+    Rcpp::traits::input_parameter< double >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< int >::type nBoxes(nBoxesSEXP);
+    __result = Rcpp::wrap(nonlinear_noise_reduction(timeSeries, embeddingDimension, radius, nBoxes));
+    return __result;
+END_RCPP
+}
 // test
 NumericMatrix test(NumericMatrix& x, NumericVector y);
 RcppExport SEXP nonlinearTseries_test(SEXP xSEXP, SEXP ySEXP) {

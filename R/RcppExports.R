@@ -33,6 +33,10 @@ getAllNeighbours <- function(phaseSpace, radius, numberBoxes) {
     .Call('nonlinearTseries_getAllNeighbours', PACKAGE = 'nonlinearTseries', phaseSpace, radius, numberBoxes)
 }
 
+nonlinear_noise_reduction <- function(timeSeries, embeddingDimension, radius, nBoxes) {
+    .Call('nonlinearTseries_nonlinear_noise_reduction', PACKAGE = 'nonlinearTseries', timeSeries, embeddingDimension, radius, nBoxes)
+}
+
 test <- function(x, y) {
     .Call('nonlinearTseries_test', PACKAGE = 'nonlinearTseries', x, y)
 }

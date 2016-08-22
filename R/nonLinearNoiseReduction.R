@@ -32,3 +32,15 @@ nonLinearNoiseReduction=function(time.series, embedding.dim, radius){
   return(denoised.time.series$timeSeries)
   
 }
+
+
+#' @export
+rcppNonLinearNoiseReduction = function(time.series, 
+                                       embedding.dim, radius){
+  # TODO: provide a better calculation of n.boxes
+  n.boxes = 400
+  .Call('nonlinearTseries_nonlinear_noise_reduction',
+        PACKAGE = 'nonlinearTseries', 
+        as.numeric(time.series), embedding.dim,
+        radius, n.boxes)
+}
