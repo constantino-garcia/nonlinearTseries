@@ -14,7 +14,6 @@ void spaceTimePlot( double *takens, int *numberTakens, int *embeddingD
   double dis;
   lastPosition = (*leps)-1;
   double maxEps=eps[lastPosition];
-  
   for (time=0; time < (*numberTimeSteps);time++){
     // inicialice the histogram of distances
     for(i=0;i<(*leps);i++) histEps[i]=0;

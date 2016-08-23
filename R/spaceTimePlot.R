@@ -45,7 +45,7 @@ spaceTimePlot=function(takens = NULL,
                        number.time.steps = NULL, numberPercentages=10,
                        do.plot=TRUE,...){
   ### define
-  kLengthRadiusVector = 1000
+  kLengthRadiusVector = 10
   kTimeStepsDefault = 500
   ###
   if(is.null(takens)){
@@ -71,7 +71,7 @@ spaceTimePlot=function(takens = NULL,
   stp.matrix = matrix(sol$spaceTimePlot,ncol=number.time.steps,nrow=numberPercentages)
   # positions where the radius was not enough to compute the propper percentage 
   positions = which(stp.matrix==0,arr.ind=TRUE)
-  if (length(positions) == 0){
+  if (length(positions) != 0){
     warning("The maximum radius was not enough to find enough neighbours for all the percentages\n")
     stp.matrix[positions]=NA  
   }
@@ -165,4 +165,58 @@ plot.spaceTimePlot = function(x, main = "Space time separation plot",xlab=NULL,
 
   }
   
+}
+
+
+
+
+
+# Rcpp-based function -----------------------------------------------------
+#' @export 
+rcppSpaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 2,
+                             time.lag = 1, max.radius = NULL, time.step = 1, 
+                             number.time.steps = NULL, numberPercentages = 10,
+                             do.plot = TRUE, ...){
+  ### define
+  kLengthRadiusVector = 10
+  kTimeStepsDefault = 500
+  ###
+  if (is.null(takens)) {
+    takens = buildTakens(time.series, embedding.dim = embedding.dim,
+                         time.lag = time.lag)  
+  } 
+  if (is.null(number.time.steps)) {
+    number.time.steps = min(length(takens) / time.step, kTimeStepsDefault)
+  } 
+  
+  if (is.null(max.radius)) {
+    max.radius = (max(takens) - min(takens) + 1e-2)
+  }
+  radii =  (1:kLengthRadiusVector) * max.radius / kLengthRadiusVector
+  stp.matrix =  .Call('nonlinearTseries_space_time_plot', 
+                      PACKAGE = 'nonlinearTseries', takens, radii, number.time.steps, 
+                      time.step, numberPercentages)
+  
+  # positions where the radius was not enough to compute the propper percentage 
+  positions = which(abs(stp.matrix) < 1e-12, arr.ind = TRUE)
+  if (length(positions) != 0) {
+    warning("The maximum radius was not enough to find enough neighbours for all the percentages\n")
+    stp.matrix[positions] = NA
+  }
+  
+  dimnames(stp.matrix) = list(percentagePoints = 100 * (1:numberPercentages) / numberPercentages,
+                              number.time.steps = 1:number.time.steps)
+  stp = list(stp.matrix = stp.matrix, 
+             time.step = time.step,
+             time.axis = 1:number.time.steps)
+  class(stp) = "spaceTimePlot"
+  stp = propagateTakensAttr(stp,takens)
+  
+  # Plot if necessary
+  if (do.plot) {
+    tryCatch(plot(stp,...), error = function(error){
+      warning("Error while trying to plot the space-time plot")
+    })
+  }
+  stp
 }

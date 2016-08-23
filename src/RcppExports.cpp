@@ -143,6 +143,21 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// space_time_plot
+NumericMatrix space_time_plot(NumericMatrix phaseSpace, NumericVector radii, int nTimeSteps, int timeStep, int nPercentages);
+RcppExport SEXP nonlinearTseries_space_time_plot(SEXP phaseSpaceSEXP, SEXP radiiSEXP, SEXP nTimeStepsSEXP, SEXP timeStepSEXP, SEXP nPercentagesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type phaseSpace(phaseSpaceSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type radii(radiiSEXP);
+    Rcpp::traits::input_parameter< int >::type nTimeSteps(nTimeStepsSEXP);
+    Rcpp::traits::input_parameter< int >::type timeStep(timeStepSEXP);
+    Rcpp::traits::input_parameter< int >::type nPercentages(nPercentagesSEXP);
+    __result = Rcpp::wrap(space_time_plot(phaseSpace, radii, nTimeSteps, timeStep, nPercentages));
+    return __result;
+END_RCPP
+}
 // test
 NumericMatrix test(NumericMatrix& x, NumericVector y);
 RcppExport SEXP nonlinearTseries_test(SEXP xSEXP, SEXP ySEXP) {

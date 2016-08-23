@@ -37,6 +37,10 @@ nonlinear_noise_reduction <- function(timeSeries, embeddingDimension, radius, nB
     .Call('nonlinearTseries_nonlinear_noise_reduction', PACKAGE = 'nonlinearTseries', timeSeries, embeddingDimension, radius, nBoxes)
 }
 
+space_time_plot <- function(phaseSpace, radii, nTimeSteps, timeStep, nPercentages) {
+    .Call('nonlinearTseries_space_time_plot', PACKAGE = 'nonlinearTseries', phaseSpace, radii, nTimeSteps, timeStep, nPercentages)
+}
+
 test <- function(x, y) {
     .Call('nonlinearTseries_test', PACKAGE = 'nonlinearTseries', x, y)
 }

@@ -93,7 +93,7 @@ inline int neighbour_search::get_wrapped_position(int row, int col) const{
   return (nBoxes * positive_modulo(row, nBoxes) + positive_modulo(col, nBoxes));
 }
 
-double neighbour_search::max_distance(int vectorIndex1, int vectorIndex2) const {
+double neighbour_search::calculate_max_distance(int vectorIndex1, int vectorIndex2) const {
   double distance = -1.0;
   for (int i=0; i < mEmbeddingDim; i++){
     distance = std::max(distance, 

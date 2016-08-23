@@ -15,7 +15,7 @@ public:
   Rcpp::List find_all_neighbours(int theilerWindow);
   Rcpp::IntegerVector find_neighbours(int vectorIndex);
   Rcpp::IntegerVector find_neighbours(int vectorIndex, int theilerWindow);
-  double max_distance(int vectorIndex1, int vectorIndex2) const;
+  double calculate_max_distance(int vectorIndex1, int vectorIndex2) const;
   bool are_neighbours(int vectorIndex1, int vectorIndex2, 
                       double neighbourhoodRadius) const;
   static bool comply_theiler_window(int vectorIndex1, int vectorIndex2, int theilerWindow);

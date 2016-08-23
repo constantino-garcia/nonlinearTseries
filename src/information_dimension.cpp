@@ -113,12 +113,12 @@ double calculate_average_log_radius_with_fixed_mass(NumericMatrix& phaseSpace,
         // if (currentReferenceVector < 2){
         //   
         // Rprintf("%d %d %f\n", currentReferenceVector,currentNeighbour,
-        //         neighbourSearcher.max_distance(currentReferenceVector,
+        //         neighbourSearcher.calculate_max_distance(currentReferenceVector,
         //                                        currentNeighbour));
         // 
         // 
         // }
-        distVector.push_back(neighbourSearcher.max_distance(currentReferenceVector,
+        distVector.push_back(neighbourSearcher.calculate_max_distance(currentReferenceVector,
                                                             currentNeighbour)
         );
       }
