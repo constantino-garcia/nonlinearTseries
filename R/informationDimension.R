@@ -436,7 +436,7 @@ rcppInfDim <-
                                   length.out = number.fixed.mass.points)
     )
     infDim.matrix  = 
-      .Call('nonlinearTseries_rcpp_information_dimension', PACKAGE = 'nonlinearTseries', 
+      .Call('_nonlinearTseries_rcpp_information_dimension', PACKAGE = 'nonlinearTseries', 
             time.series, embeddings, time.lag,  fixed.mass.vector,
             radius,  increasing.radius.factor, number.boxes, 
             number.reference.vectors, theiler.window,  kMax)

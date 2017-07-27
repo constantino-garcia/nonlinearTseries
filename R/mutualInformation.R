@@ -61,7 +61,7 @@ mutualInformation = function(time.series,lag.max = NULL,
   if (is.null(n.partitions)) {
     n.partitions = max(floor(length(time.series) ^ (1 / 3)), 2)
   }
-  mutinf = .Call("nonlinearTseries_calculate_mutual_information",
+  mutinf = .Call("_nonlinearTseries_calculate_mutual_information",
                  as.numeric(time.series),
                  as.integer(lag.max),
                  as.integer(n.partitions),
@@ -127,8 +127,9 @@ mutualInf = function(tim, mutinf, units, n.partitions){
   mutinf
 }
 
-tsHist <- function(x,tlag=1,npartitions=16){
-  .Call("nonlinearTseries_tsHistogram",as.numeric(x),as.integer(tlag),
-        as.integer(npartitions),PACKAGE="nonlinearTseries")
-}
+#TODO: check if we can remove this safely
+#tsHist <- function(x,tlag=1,npartitions=16){
+  #.Call("_nonlinearTseries_tsHistogram",as.numeric(x),as.integer(tlag),
+  #as.integer(npartitions),PACKAGE="nonlinearTseries")
+#}
 

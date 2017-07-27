@@ -81,13 +81,12 @@ timeLag(sx, technique="ami",
         n.partitions = 20, units = "Bits")
 timeLag(sx, technique="acf") }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
 \seealso{
 \code{\link{mutualInformation}}
 }
-
+\author{
+Constantino A. Garcia
+}

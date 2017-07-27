@@ -19,10 +19,9 @@ a chaotic invariant.
 Get the radius of the neighborhoods  used for the  computations of 
 a chaotic invariant.
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

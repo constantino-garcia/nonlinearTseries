@@ -23,10 +23,9 @@ Several chaotic invariants are estimated by using linear regression. This functi
 provides a common interface for the estimate of all these parameters (see \code{\link{corrDim}}, 
 \code{\link{dfa}} and \code{\link{maxLyapunov}} for examples).
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

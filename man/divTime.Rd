@@ -21,4 +21,3 @@ in order to estimate the maximum Lyapunov exponent.
 \seealso{
 \code{\link{maxLyapunov}}
 }
-

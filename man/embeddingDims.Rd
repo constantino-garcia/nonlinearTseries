@@ -16,10 +16,9 @@ A numeric vector with the embedding dimensions used for compute a
 \description{
 Get the embedding dimensions used for compute a chaotic invariant.
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

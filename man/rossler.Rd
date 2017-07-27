@@ -44,13 +44,12 @@ Some initial values may lead to an unstable system that will tend to infinity.
 r.ts = rossler(time=seq(0,30,by = 0.01))
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Strogatz, S.: Nonlinear dynamics and chaos: with applications to physics, biology, chemistry and engineering (Studies in Nonlinearity)
 }
 \seealso{
 \code{\link{henon}, \link{logisticMap}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 }
-
+\author{
+Constantino A. Garcia
+}

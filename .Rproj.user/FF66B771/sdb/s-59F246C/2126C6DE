@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\nik = ikedaMap(\n  n.sample = 3000,\n  n.transient = 100,\n  start = c(0.5341, 0.278),\n  do.plot = FALSE\n)\n\nplot.ts(ik$x)\nikx = matrix(ik$x, ncol=1)\nx = oldNonlinearTseries::nn.search(ikx, ikx, 2, eps=0)\n\ny = nn.search(ikx, ikx, 2, eps=0)\n",
+    "created" : 1501178605598.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "2310602955",
+    "id" : "2126C6DE",
+    "lastKnownWriteTime" : 7300718,
+    "last_content_update" : 1501179372223,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

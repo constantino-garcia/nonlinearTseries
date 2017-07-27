@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\n# ===============================\n# private function\n# NEAR NEIGHBOUR FINDER based on ANN C++ library and RANN functions\n# This function is a modified version of the nn2.R function of the RANN package,\n# copyrigth under Samuel Kemp 2005-9 and Gregory Jefferis 2009-2013.\n# Date of last edit: 17-09-2013\n# ===============================\n\n#TODO: create test to compare with old version\nnn.search <- function(data, query, k=min(10,nrow(data)),treetype=c(\"kd\",\"bd\"),\n                      searchtype=c(\"standard\",\"priority\",\"radius\"),radius=0.0,eps=0.0)\n{\n  dimension  <- ncol(data)\n  ND  \t    <- nrow(data)\n  NQ\t\t    <- nrow(query)\n  \n  # Check that both datasets have same dimensionality\n  if(ncol(data) != ncol(query) )\n    stop(\"Query and data tables must have same dimensions\")\t\n  \n  if(k>ND)\n    stop(\"Cannot find more nearest neighbours than there are points\")\n  \n  searchtypeInt=pmatch(searchtype[1],c(\"standard\",\"priority\",\"radius\"))\n  if(is.na(searchtypeInt)) stop(paste(\"Unknown search type\",searchtype))\n  treetype=match.arg(treetype,c(\"kd\",\"bd\"))\n  \n  # Coerce to matrix form\n  if(is.data.frame(data))\n    data <- unlist(data,use.names=FALSE)\n  \n  # Coerce to matrix form\n  if(!is.matrix(query))\n    query <- unlist(query,use.names=FALSE)\n  \n  results <- .Call(\"_nonlinearTseries_get_NN_2Set_wrapper\",\n                   data, query, dimension, ND, NQ,\n                   as.integer(k), as.double(eps),\n                   as.integer(searchtypeInt),  as.integer(treetype == \"bd\"), \n                   as.double(radius*radius), nn.idx=integer(k*NQ), \n                   nn=double(k*NQ), PACKAGE=\"nonlinearTseries\") \n  \n  # now put the returned vectors into (nq x k) arrays\n  nn.indexes = matrix(results$nn_index, ncol = k, byrow = TRUE)\n  nn.dist = matrix(results$distances, ncol = k, byrow = TRUE)\n  \n  return(list(nn.idx = nn.indexes, nn.dists = nn.dist ^ 2))\n}\n",
+    "created" : 1501178041192.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1135813374",
+    "id" : "146498BE",
+    "lastKnownWriteTime" : 1501179322,
+    "last_content_update" : 1501179322124,
+    "path" : "~/Code/R/nonlineartseries/R/nnSearch.R",
+    "project_path" : "R/nnSearch.R",
+    "properties" : {
+        "marks" : "<:38,101\n>:38,102"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

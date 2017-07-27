@@ -36,10 +36,9 @@ time.series = arima.sim(list(order = c(1,0,1), ar = 0.6, ma = 0.5), n = 200)
 surrogate = FFTsurrogate(time.series, 20)
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

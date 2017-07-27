@@ -22,4 +22,3 @@ of the sample entropy.
 \seealso{
 \code{\link{sampleEntropy}}
 }
-

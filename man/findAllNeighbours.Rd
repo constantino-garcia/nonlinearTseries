@@ -34,9 +34,6 @@ takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
 neighbours=findAllNeighbours(takens,0.1)
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Schreiber, T. Efficient neighbor searching in nonlinear time series analysis. Int. J. Bifurcation and Chaos, 
 5, p. 349, (1995).
@@ -44,4 +41,6 @@ Schreiber, T. Efficient neighbor searching in nonlinear time series analysis. In
 \seealso{
 \code{\link{neighbourSearch}}.
 }
-
+\author{
+Constantino A. Garcia
+}

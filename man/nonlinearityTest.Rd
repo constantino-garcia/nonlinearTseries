@@ -28,4 +28,3 @@ This function runs a set of nonlinearity tests implemented in other R packages i
    \item Perform the Likelihood ratio test for threshold nonlinearity. (\code{\link[TSA]{tlrt}}).
 }
 }
-

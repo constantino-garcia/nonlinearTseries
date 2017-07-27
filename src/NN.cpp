@@ -1,6 +1,6 @@
 #include <math.h>    // math routines
 #include "ANN.h"     // ANN library header
-#include <R.h>       // R header
+#include <Rcpp.h>       // R header
 
 //------------------------------------------------------------------------------------------------
 //				 Near Neighbours Program
@@ -193,3 +193,28 @@ extern "C"
 	}
 }
 
+
+/* Rcpp wrapper for the get_NN_2Set_wrapper function */
+// [[Rcpp::export]]
+Rcpp::List get_NN_2Set_wrapper(const Rcpp::NumericMatrix& data, const Rcpp::NumericMatrix& query,
+                               int dimension, int ND, int NQ, int K, 
+                         double EPS, int SEARCHTYPE, int USEBDTREE, double SQRAD,
+                         Rcpp::IntegerVector& nn_index, Rcpp::NumericVector& distances) {
+
+  std::vector<double> data_vec(ND * dimension);
+  std::vector<double> query_vec(NQ * dimension);
+  int data_vec_it = 0;
+  int query_vec_it = 0;
+  for (int j=0; j < dimension; j++) {
+    for (int i=0; i < ND; i++, data_vec_it++) {
+      data_vec[data_vec_it] = data(i, j);
+    }
+    for (int i=0; i < NQ; i++, query_vec_it++) {
+      query_vec[query_vec_it] = query(i, j);
+    }
+  }
+  get_NN_2Set(&data_vec[0], &query_vec[0], &dimension, &ND, &NQ, &K, &EPS,
+              &SEARCHTYPE, &USEBDTREE, &SQRAD, &nn_index(0), &distances(0));
+  return Rcpp::List::create(Rcpp::Named("nn_index") = nn_index,
+                            Rcpp::Named("distances") = distances); 
+}

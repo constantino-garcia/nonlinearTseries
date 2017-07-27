@@ -19,4 +19,3 @@ Obtain the contour lines of the space time plot.
 \seealso{
 \code{\link{spaceTimePlot}}
 }
-

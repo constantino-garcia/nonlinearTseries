@@ -172,7 +172,7 @@ neighbourList2SparseMatrix = function(neighs){
   neighs = neighs2numericType(neighs)
   neigh.len = sum(sapply(neighs, FUN=length)) + ntakens
   neighs.matrix = matrix(0,nrow= neigh.len ,ncol=2)
-  .Call("nonlinearTseries_neighsList2SparseRCreator",neighs=as.list(neighs),ntakens=as.integer(ntakens),
+  .Call("_nonlinearTseries_neighsList2SparseRCreator",neighs=as.list(neighs),ntakens=as.integer(ntakens),
         neighs_matrix=as.matrix(neighs.matrix),PACKAGE="nonlinearTseries")
   neighs.matrix
   sparseMatrix(neighs.matrix[,1],neighs.matrix[,2],dims = c(ntakens,ntakens),
@@ -186,7 +186,7 @@ neighbourListToCsparseNeighbourMatrix = function(neighs){
   neighs.matrix= matrix(-1,nrow=length(neighs),
                         ncol = max.neighs)
   neighs = neighs2numericType(neighs)
-  .Call("nonlinearTseries_neighsList2Sparse",neighs=as.list(neighs),
+  .Call("_nonlinearTseries_neighsList2Sparse",neighs=as.list(neighs),
         neighs_matrix = as.matrix(neighs.matrix),
         PACKAGE = "nonlinearTseries")
     

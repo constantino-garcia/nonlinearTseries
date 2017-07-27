@@ -16,7 +16,7 @@ test_that("correlation dimension port is correct", {
   rmax = 10 ^ -2
   np = 100
   theiler.window = 5
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -49,7 +49,7 @@ test_that("correlation dimension port is correct", {
           start = c(1,1), do.plot = FALSE)
   
   ts = h$x
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -89,7 +89,7 @@ test_that("correlation dimension port is correct", {
   rmax = 1
   np = 100
   theiler.window = 100
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -133,7 +133,7 @@ test_that("correlation dimension port is correct", {
   rmax = 10 ^ -0.2
   np = 100
   theiler.window = 100
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -167,7 +167,7 @@ test_that("correlation dimension port is correct", {
     do.plot = FALSE
   )
   ts = logmap
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = 2,
     max.embedding.dim = 4,

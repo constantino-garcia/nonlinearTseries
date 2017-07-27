@@ -1,6 +1,7 @@
 This R package is copyright Constantino Antonio Garcia Martinez, with the 
 exception of the following files:
 
+TODO modify appropriately
 *NN.cc, Makevars and Makevars.win from v2.3.0 of the RANN package (saved 
  under the src/ folder), wich are copyright Samuel Kemp 2005-9 and Gregory 
  Jefferis 2009-2013.

@@ -70,9 +70,6 @@ dimension = estimateEmbeddingDim(h$x, time.lag=1, max.embedding.dim=6,
              threshold=0.9, do.plot=TRUE)
              }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Cao, L. Practical method for determining the minimum embedding dimension of a scalar time series. Physica D: Nonlinear Phenomena,
 110,1, pp. 43-50 (1997).
@@ -81,4 +78,6 @@ Arya S. and Mount D. M. (1993), Approximate nearest neighbor searching, Proc. 4t
 
 Arya S., Mount D. M., Netanyahu N. S., Silverman R. and Wu A. Y (1998), An optimal algorithm for approximate nearest neighbor searching, Journal of the ACM, 45, 891-923.
 }
-
+\author{
+Constantino A. Garcia
+}

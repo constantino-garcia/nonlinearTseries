@@ -21,7 +21,7 @@ test_that("estimates equal theoretical results", {
   np = 20
   theiler.window = 5
   # message("\nComputing Renyi entropy for the Henon attractor (1,4,0.3)\n")
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -51,7 +51,7 @@ test_that("estimates equal theoretical results", {
   )
   ts = h$x
   # message("\nComputing Renyi entropy for the Henon attractor (1,2,0.3)\n")
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -86,7 +86,7 @@ test_that("estimates equal theoretical results", {
   np = 5
   theiler.window = 100
   # message("\nComputing Renyi entropy for the Lorenz attractor (10,28,8/3)\n")
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -113,7 +113,7 @@ test_that("estimates equal theoretical results", {
   )
   ts = logmap
   # message("\nComputing Renyi entropy for the logistic map (3.5699456)\n")
-  x = corrDim(
+  x = oldNonlinearTseries::corrDim(
     time.series = ts,
     min.embedding.dim = 2,
     max.embedding.dim = 4,

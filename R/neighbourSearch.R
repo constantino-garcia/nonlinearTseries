@@ -268,7 +268,7 @@ rcppNeighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
   }
   
   # call c code
-  cneighs = .Call('nonlinearTseries_getVectorNeighbours', 
+  cneighs = .Call('_nonlinearTseries_getVectorNeighbours', 
                   PACKAGE = 'nonlinearTseries', 
                   takens, positionTakens, radius, number.boxes)
   # TODO: remove list conversion
@@ -293,7 +293,7 @@ rcppFindAllNeighbours = function(takens, radius, number.boxes = NULL) {
   if (is.null(number.boxes)) {
     number.boxes = estimateNumberBoxes(takens, radius)
   }
-  allneighs = .Call('nonlinearTseries_getAllNeighbours',
+  allneighs = .Call('_nonlinearTseries_getAllNeighbours',
                     PACKAGE = 'nonlinearTseries',
                     takens, radius, number.boxes)
   # TODO: eliminate in future conversion to list

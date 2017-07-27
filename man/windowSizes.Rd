@@ -19,4 +19,3 @@ Returns the window sizes used for DFA in a \emph{dfa} object.
 \seealso{
 \code{\link{dfa}}
 }
-

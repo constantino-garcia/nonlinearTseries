@@ -12,7 +12,7 @@ test_that("ported code yields same results", {
                      1000)
       cts1 = cts2 = ts
       expect_equal(
-        nonLinearNoiseReduction(cts1, embeddingD, radius),
+        oldNonlinearTseries::nonLinearNoiseReduction(cts1, embeddingD, radius),
         rcppNonLinearNoiseReduction(cts2, embeddingD,radius)
       )
       # rcppNonLinearNoiseReduction modifies directly the time

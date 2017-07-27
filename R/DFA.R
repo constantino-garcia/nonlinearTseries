@@ -107,7 +107,7 @@ dfa = function(time.series, window.size.range = c(10, 300),
   #Calculate the local trend for
   #each of the segments by a least-square fit
   #of the time.series and compute the error
-  fluctuation.function =  .Call('nonlinearTseries_calculate_fluctuation_function',
+  fluctuation.function =  .Call('_nonlinearTseries_calculate_fluctuation_function',
                                 PACKAGE = 'nonlinearTseries',
                                 Y, window.sizes)
 

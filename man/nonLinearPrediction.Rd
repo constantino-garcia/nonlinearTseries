@@ -45,10 +45,9 @@ predic=nonLinearPrediction(time.series=h$x[10:2000],embedding.dim=2,
 cat("real value: ",h$x[2003],"Vs Forecast:",predic)
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

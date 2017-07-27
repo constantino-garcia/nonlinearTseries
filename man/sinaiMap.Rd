@@ -42,9 +42,6 @@ sinai.map = sinaiMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 plot(ts(sinai.map$x))
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Mcsharry, P. E. and P. R. Ruffino (2003). Asymptotic angular stability 
 in nonlinear systems: rotation numbers and winding numbers. Dynamical Systems 18(3), 191-200.
@@ -52,4 +49,6 @@ in nonlinear systems: rotation numbers and winding numbers. Dynamical Systems 18
 \seealso{
 \code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{gaussMap}}
 }
-
+\author{
+Constantino A. Garcia
+}

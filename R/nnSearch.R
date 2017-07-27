@@ -6,6 +6,8 @@
 # copyrigth under Samuel Kemp 2005-9 and Gregory Jefferis 2009-2013.
 # Date of last edit: 17-09-2013
 # ===============================
+
+#TODO: create test to compare with old version
 nn.search <- function(data, query, k=min(10,nrow(data)),treetype=c("kd","bd"),
                       searchtype=c("standard","priority","radius"),radius=0.0,eps=0.0)
 {
@@ -32,26 +34,16 @@ nn.search <- function(data, query, k=min(10,nrow(data)),treetype=c("kd","bd"),
   if(!is.matrix(query))
     query <- unlist(query,use.names=FALSE)
   
-  # void get_NN_2Set(double *data, double *query, int *D, int *ND, int *NQ, int *K, double *EPS,
-  # int *nn_index, double *distances)
-  
-  results <- .C("get_NN_2Set",
-                as.double(data),
-                as.double(query),
-                as.integer(dimension),
-                as.integer(ND),
-                as.integer(NQ),
-                as.integer(k),
-                as.double(eps),
-                as.integer(searchtypeInt), 
-                as.integer(treetype=="bd"), 
-                as.double(radius*radius),
-                nn.idx   = integer(k*NQ),
-                nn       = double(k*NQ), PACKAGE="nonlinearTseries")
+  results <- .Call("_nonlinearTseries_get_NN_2Set_wrapper",
+                   data, query, dimension, ND, NQ,
+                   as.integer(k), as.double(eps),
+                   as.integer(searchtypeInt),  as.integer(treetype == "bd"), 
+                   as.double(radius*radius), nn.idx=integer(k*NQ), 
+                   nn=double(k*NQ), PACKAGE="nonlinearTseries") 
   
   # now put the returned vectors into (nq x k) arrays
-  nn.indexes=matrix(results$nn.idx,ncol=k,byrow=TRUE)
-  nn.dist=matrix(results$nn,ncol=k,byrow=TRUE)
+  nn.indexes = matrix(results$nn_index, ncol = k, byrow = TRUE)
+  nn.dist = matrix(results$distances, ncol = k, byrow = TRUE)
   
-  return(list(nn.idx=nn.indexes, nn.dists=nn.dist^2))
+  return(list(nn.idx = nn.indexes, nn.dists = nn.dist ^ 2))
 }

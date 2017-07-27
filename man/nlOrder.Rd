@@ -17,13 +17,12 @@ a chaotic invariant.
 \description{
 Get the order of the nonlinear chaotic invariant.
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
 \seealso{
 \code{\link{corrDim}}, \code{\link{sampleEntropy}}
 }
-
+\author{
+Constantino A. Garcia
+}

@@ -2,13 +2,13 @@
 % Please edit documentation in R/corrDim.R
 \name{corrDim}
 \alias{corrDim}
-\alias{corrMatrix.corrDim}
-\alias{embeddingDims.corrDim}
-\alias{estimate.corrDim}
 \alias{nlOrder.corrDim}
+\alias{corrMatrix.corrDim}
+\alias{radius.corrDim}
+\alias{embeddingDims.corrDim}
 \alias{plot.corrDim}
 \alias{plotLocalScalingExp.corrDim}
-\alias{radius.corrDim}
+\alias{estimate.corrDim}
 \title{Correlation sum, correlation dimension and generalized correlation dimension 
 (order q >1).}
 \usage{
@@ -194,10 +194,9 @@ cd.est = estimate(cd,regression.range=c(0.2,2))
 cat("expected: 2.05  --- estimate: ",cd.est,"\\n")
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

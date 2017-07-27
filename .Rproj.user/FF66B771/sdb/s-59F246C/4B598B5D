@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "This R package is copyright Constantino Antonio Garcia Martinez, with the \nexception of the following files:\n\nTODO modify appropriately\n*NN.cc, Makevars and Makevars.win from v2.3.0 of the RANN package (saved \n under the src/ folder), wich are copyright Samuel Kemp 2005-9 and Gregory \n Jefferis 2009-2013.\n\n*nn.search function under the nnSearch.R file is a modified version of the \n nn2.R function of v2.3.0 of the RANN package, which are copyrigth  Samuel \n Kemp 2005-9 and Gregory Jefferis 2009-2013. Date of last edit: 17-09-2013\n\n*v1.1.3 of the ANN library under the src/ folder. The files from the  ANN\n library are: brute.cpp, kd_search.h, ANN.cpp, kd_dump.cpp, kd_split.cpp, \n Makevars.win, bd_fix_rad_search.cpp, kd_fix_rad_search.cpp, kd_split.h,\n bd_pr_search.cpp,  kd_fix_rad_search.h, kd_tree.cpp, pr_queue.h, \n bd_search.cpp, kd_pr_search.cpp,  kd_tree.h, pr_queue_k.h, bd_tree.cpp, \n kd_pr_search.h, kd_util.cpp, bd_tree.h, kd_search.cpp, kd_util.h, ANN/ANN.h,\n ANN/ANNperf.h and ANN/ANNx.h. The files from the ANN library are copyright as \n described below.\n\n\n--\nANN: Approximate Nearest Neighbors\nVersion: 1.1.3\nRelease date: Feb 5, 2010\n----------------------------------------------------------------------------\nCopyright (c) 1997-2010 University of Maryland and Sunil Arya and David\nMount All Rights Reserved.\n\nThis program is free software; you can redistribute it and/or modify it\nunder the terms of the GNU Lesser Public License as published by the\nFree Software Foundation; either version 2.1 of the License, or (at your\noption) any later version.\n\nThis program is distributed in the hope that it will be useful, but\nWITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\nLesser Public License for more details.\n\nA copy of the terms and conditions of the license can be found in\nLicense.txt or online at\n\n    http://www.gnu.org/copyleft/lesser.html\n\nTo obtain a copy, write to the Free Software Foundation, Inc.,\n59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\n\nDisclaimer\n----------\nThe University of Maryland and the authors make no representations about\nthe suitability or fitness of this software for any purpose.  It is\nprovided \"as is\" without express or implied warranty.\n---------------------------------------------------------------------\n\nAuthors\n-------\nDavid Mount\nDept of Computer Science\nUniversity of Maryland,\nCollege Park, MD 20742 USA\nmount@cs.umd.edu\nhttp://www.cs.umd.edu/~mount/\n\nSunil Arya\nDept of Computer Science\nHong University of Science and Technology\nClearwater Bay, HONG KONG\narya@cs.ust.hk\nhttp://www.cs.ust.hk/faculty/arya/\n",
+    "created" : 1501178059890.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2031178683",
+    "id" : "4B598B5D",
+    "lastKnownWriteTime" : 1501178106,
+    "last_content_update" : 1501178106524,
+    "path" : "~/Code/R/nonlineartseries/inst/COPYRIGHT",
+    "project_path" : "inst/COPYRIGHT",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "text"
+}

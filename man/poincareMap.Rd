@@ -62,11 +62,10 @@ pm=poincareMap(takens = takens,normal.hiperplane.vector = c(0,1,0),
 plot3d(takens,size=0.7)
 points3d(pm$pm,col="red")}
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Parker, T. S., L. O. Chua, and T. S. Parker (1989). Practical
 numerical algorithms for chaotic systems. Springer New York
 }
-
+\author{
+Constantino A. Garcia
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(nonlinearTseries)\ncontext(\"Embedding dimension calculation\")\n\ntest_that(\"estimates equal theoretical results\", {\n  \n  \n  \n  h = henon(do.plot = FALSE,\n            start = c(0.4, 0.234),\n            n.sample = 3000)\n  \n  l = lorenz(\n    sigma = 10,\n    rho = 28,\n    beta = 8 / 3,\n    start = c(-10, -11, 47),\n    time =  seq(0, 30, by = 0.01),\n    do.plot = FALSE\n  )\n  \n  ik = ikedaMap(\n    n.sample = 3000,\n    n.transient = 100,\n    start = c(0.5341, 0.278),\n    do.plot = FALSE\n  )\n  \n  \n  \n  #results expected: 4,2,4,none\n  x = estimateEmbeddingDim(\n    ik$x,\n    time.lag = 1,\n    max.embedding.dim = 6,\n    threshold = 0.9,\n    do.plot = FALSE\n  )\n  expect_equal(4, x)\n  \n  x = estimateEmbeddingDim(\n    h$x,\n    time.lag = 1,\n    max.embedding.dim = 6,\n    threshold = 0.9,\n    do.plot = FALSE\n  )\n  expect_equal(2, x)\n  \n  x = estimateEmbeddingDim(\n    l$x,\n    time.lag = 15,\n    max.embedding.dim = 6,\n    threshold = 0.9,\n    do.plot = FALSE\n  )\n  expect_equal(4, x)\n  \n})\n",
+    "created" : 1501177985295.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1176304340",
+    "id" : "111F1B03",
+    "lastKnownWriteTime" : 1496226809,
+    "last_content_update" : 1496226809,
+    "path" : "~/Code/R/nonlineartseries/tests/testthat/test_minimum_embedding.R",
+    "project_path" : "tests/testthat/test_minimum_embedding.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

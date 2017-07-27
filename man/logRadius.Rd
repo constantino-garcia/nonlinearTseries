@@ -21,4 +21,3 @@ on the information dimension algorithm.
 \seealso{
 \code{\link{infDim}}
 }
-

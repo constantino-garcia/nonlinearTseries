@@ -35,11 +35,10 @@ The default selection for both \emph{a} and \emph{b} parameters is known to prod
 \note{
 Some initial values may lead to an unstable system that will tend to infinity.
 }
+\references{
+Chaos and nonlinear dynamics: an introduction for scientists and engineers, by Robert C. Hilborn, 2nd Ed., Oxford, Univ. Press, New York, 2004.
+}
 \author{
 Constantino A. Garcia
  @seealso \code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}}
 }
-\references{
-Chaos and nonlinear dynamics: an introduction for scientists and engineers, by Robert C. Hilborn, 2nd Ed., Oxford, Univ. Press, New York, 2004.
-}
-

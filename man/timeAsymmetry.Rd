@@ -26,4 +26,3 @@ from a stationary linear stochastic process or not.
 \author{
 Constantino A. Garcia
 }
-

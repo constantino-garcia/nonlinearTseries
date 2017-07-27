@@ -38,10 +38,9 @@ takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
 # the state space of the Henon map
 plot(takens)}
 }
-\author{
-Constantino A. Garcia and Gunther Sawitzki.
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia and Gunther Sawitzki.
+}

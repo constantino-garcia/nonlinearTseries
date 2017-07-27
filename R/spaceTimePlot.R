@@ -193,7 +193,7 @@ rcppSpaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 
     max.radius = (max(takens) - min(takens) + 1e-2)
   }
   radii =  (1:kLengthRadiusVector) * max.radius / kLengthRadiusVector
-  stp.matrix =  .Call('nonlinearTseries_space_time_plot', 
+  stp.matrix =  .Call('_nonlinearTseries_space_time_plot', 
                       PACKAGE = 'nonlinearTseries', takens, radii, number.time.steps, 
                       time.step, numberPercentages)
   

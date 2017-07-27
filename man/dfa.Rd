@@ -2,10 +2,10 @@
 % Please edit documentation in R/DFA.R
 \name{dfa}
 \alias{dfa}
-\alias{estimate.dfa}
+\alias{windowSizes.dfa}
 \alias{fluctuationFunction.dfa}
 \alias{plot.dfa}
-\alias{windowSizes.dfa}
+\alias{estimate.dfa}
 \title{Detrended Fluctuation Analysis}
 \usage{
 dfa(time.series, window.size.range = c(10, 300), npoints = 20,
@@ -126,10 +126,9 @@ cat("Theorical: 1.25 ---Estimated: ",fbm.estimation ,"\\n")
 
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Penzel, Thomas, et al. "Comparison of detrended fluctuation analysis and spectral analysis for heart rate variability in sleep and sleep apnea." Biomedical Engineering, IEEE Transactions on 50.10 (2003): 1143-1151.
 }
-
+\author{
+Constantino A. Garcia
+}

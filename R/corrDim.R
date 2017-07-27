@@ -448,7 +448,7 @@ rcppCorrDim = function (time.series, min.embedding.dim = 2, max.embedding.dim = 
   log.radius = seq(log10(max.radius), log10(min.radius), len = n.points.radius)
   radius = 10 ^ log.radius
   
-  corr.matrix = .Call("nonlinearTseries_generalized_correlation_sum",
+  corr.matrix = .Call("_nonlinearTseries_generalized_correlation_sum",
                       PACKAGE = "nonlinearTseries",
                       time.series,  time.lag,  theiler.window, radius,
                       min.embedding.dim, max.embedding.dim, corr.order,  

@@ -46,13 +46,12 @@ henon.map=henon(n.sample = 1000, n.transient=10,do.plot=TRUE,
 plot(ts(henon.map$x))
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Strogatz, S.: Nonlinear dynamics and chaos: with applications to physics, biology, chemistry and engineering (Studies in Nonlinearity)
 }
 \seealso{
 \code{\link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 }
-
+\author{
+Constantino A. Garcia
+}

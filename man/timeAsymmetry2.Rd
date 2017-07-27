@@ -26,10 +26,9 @@ Since linear stochastic series are symmetric under time reversal, this statistic
 may be used for testing the assertion that the data was generated
 from a stationary linear stochastic process or not.
 }
-\author{
-Constantino A. Garcia
-}
 \seealso{
 \code{\link{timeAsymmetry}}
 }
-
+\author{
+Constantino A. Garcia
+}

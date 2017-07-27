@@ -21,13 +21,13 @@ License: GPL (>= 3)
 Copyright: ANN library is copyright University of Maryland and Sunil Arya and
     David Mount. R wrapper is based on the ANN library, copyright Samuel Kemp 2005-9
     and Gregory Jefferis 2009-2013. See file COPYRIGHT for details
-Depends:
+Imports:
     Matrix,
     rgl,
     tseries,
     TSA,
     zoo,
-    Rcpp (>= 0.10.5),
+    Rcpp (>= 0.12.12),
     graphics,
     stats
 LinkingTo: Rcpp, RcppArmadillo
@@ -36,4 +36,4 @@ Suggests:
     knitr,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

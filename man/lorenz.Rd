@@ -46,13 +46,12 @@ lor=lorenz(time=seq(0,30,by = 0.01))
 plot(lor$time,lor$x,type="l")
 }
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Strogatz, S.: Nonlinear dynamics and chaos: with applications to physics, biology, chemistry and engineering (Studies in Nonlinearity)
 }
 \seealso{
 \code{\link{henon}, \link{logisticMap}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 }
-
+\author{
+Constantino A. Garcia
+}

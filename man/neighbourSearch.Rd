@@ -27,9 +27,6 @@ This function finds all the neighbours of a given Takens' vector. The neighbours
 are found using a box assisted algorithm that creates a wrapped grid with a given
 number of  boxes per dimension.
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Schreiber, T. Efficient neighbor searching in nonlinear time series analysis. Int. J. Bifurcation and Chaos, 
 5, p. 349, (1995).
@@ -37,4 +34,6 @@ Schreiber, T. Efficient neighbor searching in nonlinear time series analysis. In
 \seealso{
 \code{\link{findAllNeighbours}}.
 }
-
+\author{
+Constantino A. Garcia
+}

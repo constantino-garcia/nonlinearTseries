@@ -12,12 +12,12 @@ test_that("ported code yields same results", {
       number.boxes = sample(c(4, 10, 50, 100, 1000), 1)
       
       expect_equal(
-        findAllNeighbours(takens, radius, number.boxes),
+        oldNonlinearTseries::findAllNeighbours(takens, radius, number.boxes),
         rcppFindAllNeighbours(takens, radius, number.boxes)
        )
       expect_equal(
         rcppNeighbourSearch(takens, itak, radius, number.boxes),
-        neighbourSearch(takens, itak, radius, number.boxes)
+        oldNonlinearTseries::neighbourSearch(takens, itak, radius, number.boxes)
       )
     } 
   }

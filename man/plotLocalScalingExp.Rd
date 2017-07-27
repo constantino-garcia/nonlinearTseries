@@ -16,10 +16,9 @@ the chaotic invariant.}
 Plots the local scaling exponents of the correlation sum or
  the average Shannon  information (when computing information dimension).
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

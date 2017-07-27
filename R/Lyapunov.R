@@ -345,7 +345,7 @@ rcppMaxLyapunov = function(time.series,
   }
   
   #  s.function = matrix(0, ncol = (max.time.steps+1), nrow = n.embeddings)
-  s.function = .Call('nonlinearTseries_lyapunov_exponent',
+  s.function = .Call('_nonlinearTseries_lyapunov_exponent',
                      PACKAGE = 'nonlinearTseries',
                      time.series, min.embedding.dim, max.embedding.dim,
                      time.lag, radius, theiler.window, min.neighs,

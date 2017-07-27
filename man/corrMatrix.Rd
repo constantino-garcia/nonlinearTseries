@@ -20,4 +20,3 @@ Returns the correlation sums stored in the \emph{corrDim} object
 \seealso{
 \code{\link{corrDim}}
 }
-

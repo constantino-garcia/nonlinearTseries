@@ -52,4 +52,3 @@ plot(ts(clifford.map$x))}
 Constantino A. Garcia
  @seealso \code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{sinaiMap}, \link{gaussMap}}
 }
-

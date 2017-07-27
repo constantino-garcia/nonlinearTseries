@@ -25,10 +25,9 @@ is achieved by averaging each Takens' vector in an m-dimensional space
 with his neighbours (time lag=1). Each neighbourhood is specified with balls of a given radius
 (max norm is used).
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-
+\author{
+Constantino A. Garcia
+}

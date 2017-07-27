@@ -22,4 +22,3 @@ exponent estimation.
 \seealso{
 \code{\link{maxLyapunov}}
 }
-

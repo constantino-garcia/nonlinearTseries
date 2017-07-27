@@ -21,4 +21,3 @@ Returns the fluctuation function obtained in a DFA and represented by a
 \seealso{
 \code{\link{dfa}}
 }
-

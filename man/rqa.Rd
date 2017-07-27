@@ -68,10 +68,9 @@ rqa.analysis=rqa(time.series = rossler.ts, embedding.dim=2, time.lag=1,
 plot(rqa.analysis)
 }
 }
-\author{
-Constantino A. Garcia and Gunther Sawitzki
-}
 \references{
 Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
 }
-
+\author{
+Constantino A. Garcia and Gunther Sawitzki
+}

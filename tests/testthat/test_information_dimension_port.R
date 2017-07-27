@@ -19,7 +19,7 @@ test_that("ported code yields same results", {
       ts = rnorm(2000)
       
       expect_equal(
-        infDim(ts, 
+        oldNonlinearTseries::infDim(ts, 
                min.embedding.dim = min.embedding.dim,
                max.embedding.dim = max.embedding.dim,
                time.lag = time.lag,

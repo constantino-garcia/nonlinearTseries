@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(nonlinearTseries)\ncontext(\"Sample entropy\")\n\ntest_that(\"estimates equal theoretical results\", {\n  corr.order = 2\n  # Henon\n  h = henon(\n    n.sample = 15000,\n    n.transient = 100,\n    a = 1.4,\n    b = 0.3,\n    start = c(0.78, 0.8165),\n    do.plot = FALSE\n  )\n  ts = h$x\n  mmin = 2\n  mmax = 10\n  time.lag = 1\n  rmin = 10 ^ -2.6\n  rmax = 0.01\n  np = 20\n  theiler.window = 5\n  \n  \n  x = rcppCorrDim(\n    time.series = ts,\n    min.embedding.dim = mmin,\n    max.embedding.dim = mmax,\n    corr.order = corr.order,\n    time.lag = time.lag,\n    min.radius = rmin,\n    max.radius = rmax,\n    n.points.radius = np,\n    do.plot = FALSE,\n    theiler.window = theiler.window,\n    number.boxes = 100\n  )\n  se = sampleEntropy(x, do.plot = FALSE)\n  #see Grassberger-estimation of the kolmogorov entropy from a chaotic signal\n  # message(\"Expected K2 = \",0.325,\" Estimated = \",mean(se$sample.entropy[\"9\",]),\"\\n\")\n  # calculate relative error\n  expect_true((mean(se$sample.entropy[\"9\", ]) - 0.325) / 0.325 < 0.1)\n  \n  # Logistic maps\n  mmin = 2\n  mmax = 5\n  rmin = 10 ^ -5\n  rmax = 0.01\n  time.lag = 1\n  ts = logisticMap(\n    r = 3.5,\n    n.sample = 5500,\n    n.transient = 500,\n    do.plot = FALSE,\n    start = 0.5\n  )\n  rmin = 10 ^ -5\n  rmax = 0.01\n  x = rcppCorrDim(\n    time.series = ts,\n    min.embedding.dim = mmin,\n    max.embedding.dim = mmax,\n    corr.order = corr.order,\n    time.lag = time.lag,\n    min.radius = rmin,\n    max.radius = rmax,\n    n.points.radius = 10,\n    do.plot = FALSE,\n    theiler.window = 100,\n    number.boxes = 100\n  )\n  se = sampleEntropy(x, do.plot = FALSE)\n  #the expected value is 0, so we can not use a relative error\n  expect_true(mean(se$sample.entropy[\"4\", ]) < 0.01)\n  \n  \n  \n  ts = logisticMap(\n    r = 3.6,\n    n.sample = 5500,\n    n.transient = 500,\n    do.plot = FALSE,\n    start = 0.955\n  )\n  rmin = 10 ^ -5\n  rmax = 0.01\n  x = rcppCorrDim(\n    time.series = ts,\n    min.embedding.dim = mmin,\n    max.embedding.dim = mmax,\n    corr.order = corr.order,\n    time.lag = 1,\n    min.radius = rmin,\n    max.radius = rmax,\n    n.points.radius = 10,\n    do.plot = FALSE,\n    theiler.window = 100,\n    number.boxes = 100\n  )\n  se = sampleEntropy(x, do.plot = FALSE)\n  \n  ## message(\"Expected K2 = \",0.204,\" Estimated = \",mean(se$sample.entropy[4,]),\"\\n\")\n  # calculate relative error\n  expect_true((mean(se$sample.entropy[\"4\", ]) - 0.204) / 0.204 < 0.1)\n  \n  rmin = 10 ^ -5\n  rmax = 0.01\n  ts = logisticMap(\n    r = 3.8,\n    n.sample = 5500,\n    n.transient = 500,\n    do.plot = FALSE,\n    start = 0.5\n  )\n  x = rcppCorrDim(\n    time.series = ts,\n    min.embedding.dim = mmin,\n    max.embedding.dim = mmax,\n    corr.order = corr.order,\n    time.lag = 1,\n    min.radius = rmin,\n    max.radius = rmax,\n    n.points.radius = 10,\n    do.plot = FALSE,\n    theiler.window = 100,\n    number.boxes = 100\n  )\n  se = sampleEntropy(x, do.plot = FALSE)\n  ## message(\"Expected K2 = \",0.442,\" Estimated = \",mean(se$sample.entropy[4,]),\"\\n\")\n  # calculate relative error\n  expect_true((mean(se$sample.entropy[\"4\", ]) - 0.442) / 0.442 < 0.1)\n  \n})\n",
+    "created" : 1501179483552.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "247450014",
+    "id" : "5D6ED706",
+    "lastKnownWriteTime" : 1501179575,
+    "last_content_update" : 1501179575200,
+    "path" : "~/Code/R/nonlineartseries/tests/testthat/test_sample_entropy.R",
+    "project_path" : "tests/testthat/test_sample_entropy.R",
+    "properties" : {
+        "marks" : "<:0,0\n>:0,0"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

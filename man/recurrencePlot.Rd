@@ -28,10 +28,9 @@ Plot the recurrence matrix.
 \details{
 WARNING: This function is computationally very expensive. Use with caution.
 }
-\author{
-Constantino A. Garcia
-}
 \references{
 Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
 }
-
+\author{
+Constantino A. Garcia
+}
