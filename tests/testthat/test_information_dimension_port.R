@@ -2,9 +2,12 @@ library(nonlinearTseries)
 context("Information dimension port")
 
 test_that("ported code yields same results", {
+  set.seed(1)
+  results = readRDS('../testdata/infDimPort.RDS')
   ntakens = 500
   nrepeat = 2
   delta.embedding = 0:1
+  counter = 1
   for (radius in c(10 ^ seq(-2, 0, len = 3))) {
     for (i in seq_len(nrepeat)) {
       min.embedding.dim = sample(2:4, 1)
@@ -19,17 +22,7 @@ test_that("ported code yields same results", {
       ts = rnorm(2000)
       
       expect_equal(
-        oldNonlinearTseries::infDim(ts, 
-               min.embedding.dim = min.embedding.dim,
-               max.embedding.dim = max.embedding.dim,
-               time.lag = time.lag,
-               min.fixed.mass = min.fixed.mass, max.fixed.mass = max.fixed.mass,
-               number.fixed.mass.points = 100, radius = radius, 
-               increasing.radius.factor = increasing.radius.factor,
-               number.boxes = 100,
-               number.reference.vectors = number.reference.vectors,
-               theiler.window = 50,
-               kMax = kMax, do.plot = FALSE),
+        results[[counter]],
         rcppInfDim(ts, 
                    min.embedding.dim = min.embedding.dim,
                    max.embedding.dim = max.embedding.dim,
@@ -42,6 +35,7 @@ test_that("ported code yields same results", {
                    theiler.window = 50,
                    kMax = kMax, do.plot = FALSE)
         )
+      counter = counter + 1
     }
   }
 })

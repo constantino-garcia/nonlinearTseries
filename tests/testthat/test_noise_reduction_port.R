@@ -2,6 +2,9 @@ library(nonlinearTseries)
 context("nonlinear noise reduction port")
 
 test_that("ported code yields same results", {
+  set.seed(1)
+  results = readRDS('../testdata/noiseReductionPort.RDS')
+  counter = 1
   nrepeat = 3
   for (radius in c(10 ^ seq(-2, log10(2), len = 10), 20)) {
     for (i in seq_len(nrepeat)) {
@@ -12,9 +15,10 @@ test_that("ported code yields same results", {
                      1000)
       cts1 = cts2 = ts
       expect_equal(
-        oldNonlinearTseries::nonLinearNoiseReduction(cts1, embeddingD, radius),
+        results[[counter]],
         rcppNonLinearNoiseReduction(cts2, embeddingD,radius)
       )
+      counter = counter + 1
       # rcppNonLinearNoiseReduction modifies directly the time
       # series in the C++ code, check that it doesn't affect the
       # R object

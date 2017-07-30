@@ -6,3 +6,4 @@
 vignettes/nonlinearTseries_quickstart.R
 vignettes/*.html
 
+.Rproj.user

@@ -3,6 +3,7 @@ context("Correlation dimension port")
 
 test_that("correlation dimension port is correct", {
   tolerance = 1e-2
+  results = readRDS('../testdata/corrDimPort.RDS')
   # Henon I
   set.seed(1)
   h=henon(n.sample = 3000,n.transient = 100, a = 1.4, b = 0.3, 
@@ -16,18 +17,7 @@ test_that("correlation dimension port is correct", {
   rmax = 10 ^ -2
   np = 100
   theiler.window = 5
-  x = oldNonlinearTseries::corrDim(
-    time.series = ts,
-    min.embedding.dim = mmin,
-    max.embedding.dim = mmax,
-    time.lag = time.lag,
-    min.radius = rmin,
-    max.radius = rmax,
-    n.points.radius = np,
-    do.plot = FALSE,
-    theiler.window = theiler.window,
-    number.boxes = 100
-  )
+  
   xr = rcppCorrDim(
     time.series = ts,
     min.embedding.dim = mmin,
@@ -40,7 +30,7 @@ test_that("correlation dimension port is correct", {
     theiler.window = theiler.window,
     number.boxes = 100
   )
-  expect_equal(x, xr, tolerance=tolerance)
+  expect_equal(results[[1]], xr, tolerance=tolerance)
   
   # Henon II (different parameters)
   rmin=0.001
@@ -49,18 +39,6 @@ test_that("correlation dimension port is correct", {
           start = c(1,1), do.plot = FALSE)
   
   ts = h$x
-  x = oldNonlinearTseries::corrDim(
-    time.series = ts,
-    min.embedding.dim = mmin,
-    max.embedding.dim = mmax,
-    time.lag = time.lag,
-    min.radius = rmin,
-    max.radius = rmax,
-    n.points.radius = np,
-    do.plot = FALSE,
-    theiler.window = theiler.window,
-    number.boxes = 100
-  )
   xr = rcppCorrDim(
     time.series = ts,
     min.embedding.dim = mmin,
@@ -73,7 +51,7 @@ test_that("correlation dimension port is correct", {
     theiler.window = theiler.window,
     number.boxes = 100
   )
-  expect_equal(x, xr, tolerance=tolerance)
+  expect_equal(results[[2]], xr, tolerance=tolerance)
   
   # Lorenz I
   l = lorenz(sigma = 10, rho = 28, beta = 8 / 3,
@@ -89,18 +67,6 @@ test_that("correlation dimension port is correct", {
   rmax = 1
   np = 100
   theiler.window = 100
-  x = oldNonlinearTseries::corrDim(
-    time.series = ts,
-    min.embedding.dim = mmin,
-    max.embedding.dim = mmax,
-    time.lag = time.lag,
-    min.radius = rmin,
-    max.radius = rmax,
-    n.points.radius = np,
-    do.plot = FALSE,
-    theiler.window = theiler.window,
-    number.boxes = 100
-  )
   xr = rcppCorrDim(
     time.series = ts,
     min.embedding.dim = mmin,
@@ -113,7 +79,7 @@ test_that("correlation dimension port is correct", {
     theiler.window = theiler.window,
     number.boxes = 100
   )
-  expect_equal(x, xr, tolerance=tolerance)
+  expect_equal(results[[3]], xr, tolerance=tolerance)
   
   
   # Rossler I 
@@ -133,18 +99,6 @@ test_that("correlation dimension port is correct", {
   rmax = 10 ^ -0.2
   np = 100
   theiler.window = 100
-  x = oldNonlinearTseries::corrDim(
-    time.series = ts,
-    min.embedding.dim = mmin,
-    max.embedding.dim = mmax,
-    time.lag = time.lag,
-    min.radius = rmin,
-    max.radius = rmax,
-    n.points.radius = np,
-    do.plot = FALSE,
-    theiler.window = theiler.window,
-    number.boxes = 100
-  )
   xr = rcppCorrDim(
     time.series = ts,
     min.embedding.dim = mmin,
@@ -157,7 +111,7 @@ test_that("correlation dimension port is correct", {
     theiler.window = theiler.window,
     number.boxes = 100
   )
-  expect_equal(x,xr,tolerance=tolerance)
+  expect_equal(results[[4]],xr,tolerance=tolerance)
   
   # Logistic map
   logmap = logisticMap(
@@ -167,18 +121,6 @@ test_that("correlation dimension port is correct", {
     do.plot = FALSE
   )
   ts = logmap
-  x = oldNonlinearTseries::corrDim(
-    time.series = ts,
-    min.embedding.dim = 2,
-    max.embedding.dim = 4,
-    time.lag = 1,
-    min.radius = 10 ^ -5,
-    max.radius = 10 ^ -3.5,
-    n.points.radius = 10,
-    do.plot = FALSE,
-    theiler.window = 100,
-    number.boxes = 100
-  )
   xr = rcppCorrDim(
     time.series = ts,
     min.embedding.dim = 2,
@@ -191,6 +133,6 @@ test_that("correlation dimension port is correct", {
     theiler.window = 100,
     number.boxes = 100
   )
-  expect_equal(x, xr, tolerance = tolerance)
+  expect_equal(results[[5]], xr, tolerance = tolerance)
   
 })

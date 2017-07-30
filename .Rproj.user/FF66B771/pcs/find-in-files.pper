@@ -4,7 +4,7 @@
         "filePatterns" : [
         ],
         "path" : "~/Code/R/nonlineartseries",
-        "query" : "get_NN_2Set",
+        "query" : "rcppCorrDim",
         "regex" : false
     }
 }

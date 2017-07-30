@@ -30,4 +30,6 @@
 ~%2FCode%2FR%2Fnonlineartseries%2Ftests%2Ftestthat%2Ftest_neighbour_search_port.R="E5C6FD4E"
 ~%2FCode%2FR%2Fnonlineartseries%2Ftests%2Ftestthat%2Ftest_noise_reduction_port.R="C83B0EEE"
 ~%2FCode%2FR%2Fnonlineartseries%2Ftests%2Ftestthat%2Ftest_rqa.R="728A2FEB"
+~%2FCode%2FR%2Fnonlineartseries%2Ftests%2Ftestthat%2Ftest_rqa_port.R="3E1119EF"
 ~%2FCode%2FR%2Fnonlineartseries%2Ftests%2Ftestthat%2Ftest_sample_entropy.R="EDB84059"
+~%2FCode%2FR%2Fnonlineartseries%2Ftests%2Ftestthat%2Ftest_space_time_plot.R="C56FD8F3"
