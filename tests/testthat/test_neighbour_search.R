@@ -8,7 +8,7 @@ test_that("the box assisted algorithm yields the same results as the brute-force
     # solution computed with a brute force approach
     sol = readRDS(paste0("../testdata/neigh_search_sol_", k,".RDS"))
     
-    neighs = rcppFindAllNeighbours(data, eps)
+    neighs = findAllNeighbours(data, eps)
     neighs = lapply(neighs,
                 function(x) {
                   if (length(x) > 0) {

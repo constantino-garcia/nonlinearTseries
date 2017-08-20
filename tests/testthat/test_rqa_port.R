@@ -1,10 +1,8 @@
 library(nonlinearTseries)
-context("RQA")
+context("RQA Port")
 
 test_that("test rqa", {
   set.seed(0)
-  
-  skip("RQA not implemented yet")
   
   timeSeries = list()
   for (i in 1:3) {
@@ -24,7 +22,7 @@ test_that("test rqa", {
     ts = timeSeries[[i]]
     ed = sample(2:10, 1)
     tl = sample(1:10, 1)
-    radius = runif(1, 1e-5, 1e-3)
+    radius = runif(1, 0.75, 1.25)
     lmin = sample(2:5, 1)
     dtb = sample(2:5, 1)
     results[[i]] = rqa(
@@ -39,6 +37,7 @@ test_that("test rqa", {
   }
   oldResults = readRDS("../testdata/port_rqa_results.RDS")  
   for (j in names(oldResults)) {
+    print(j)
     expect_equal(oldResults[[j]], results[[j]])
   }
 })

@@ -49,29 +49,3 @@ List getAllNeighbours(const NumericMatrix& phaseSpace,
   return  allNeighbours;
 }
 
-/*** R
-ntakens = 500
-nrepeat = 3
-radius = 2
-embeddingD = sample(2:10, 1)
-itak = sample(1:ntakens, 1)
-takens = matrix(rnorm(ntakens * embeddingD), nrow = ntakens)
-number.boxes = 4
-
-R = neighbourSearch(takens, itak, radius, number.boxes)
-C = rcppNeighbourSearch(takens, itak, radius, number.boxes)
-testthat::expect_equal(R,C)
-
-library(microbenchmark)
-print(
-  microbenchmark(
-    R = neighbourSearch(takens, itak, radius, number.boxes),
-    C = rcppNeighbourSearch(takens, itak, radius, number.boxes),
-    times = 100)
-)
-
-radius = 5.4
-R = findAllNeighbours(takens, radius, number.boxes)
-C = rcppFindAllNeighbours(takens, radius, number.boxes)
-testthat::expect_equal(R,C)
-*/

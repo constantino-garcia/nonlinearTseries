@@ -48,47 +48,31 @@ boxAssistant=function(takens, radius,number.boxes=NULL){
 #' @author Constantino A. Garcia
 #' @export neighbourSearch
 #' @useDynLib nonlinearTseries
-neighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
+neighbourSearch = function(takens,positionTakens,radius,number.boxes=NULL) {
   #estimates number.boxes if it has not been specified
-  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens, radius)
-  #arguments for the C function
-  #position in the vector was specified in "R-form" (starts at 1)
-  #Translate to "C-form" (starts at 0)
-  positionTakens=positionTakens-1
-  numberTakens=nrow(takens)
-  embedding.dim=ncol(takens)
-  lengthBoxes=number.boxes*number.boxes+1
-  boxes=rep(0,lengthBoxes)
-  possibleNeighbours=rep(0,numberTakens)
-  neighList=rep(-1,numberTakens)
-  nfound=0
- 
-  #get histogram using boxes
-  sol=boxAssistant(takens, radius,number.boxes)
-  boxes=sol$boxes;
-  possibleNeighbours=sol$possibleNeighbours
- # call c code
-  cneighs=.C("neighbourSearchFromBoxes",takens=as.double(takens),positionTakens=as.integer(positionTakens),
-                          numberTakens=as.integer(numberTakens), embeddingD=as.integer(embedding.dim),
-                          eps=as.double(radius), numberBoxes=as.integer(number.boxes),
-                          boxes=as.integer(boxes),possibleNeighbours=as.integer(possibleNeighbours),
-                          neighList=as.integer(neighList),
-                          nfound=as.integer(nfound),
-                          PACKAGE="nonlinearTseries")
-  #arrange solutions
-  if (cneighs$nfound==0){
-    finalNeighs=list(nfound=0,neighList=list())
-  }else{
-    #eliminate -1 and repeated numbers. convert c-vector positions to R positions
-    neighList=cneighs$neighList[1:(cneighs$nfound)]+ 1
-    finalNeighs=list(nfound=cneighs$nfound,neighList=neighList)
+  if (is.null(number.boxes)) {
+    number.boxes = estimateNumberBoxes(takens, radius)
   }
+  
+  cneighs = .Call('_nonlinearTseries_getVectorNeighbours', 
+                  PACKAGE = 'nonlinearTseries', 
+                  takens, positionTakens, radius, number.boxes)
+  # TODO: remove list conversion
+  nfound = length(cneighs)
+  if (nfound == 0) {
+    finalNeighs = list(nfound = 0, neighList = list())
+  } else {
+    finalNeighs = list(nfound = nfound, neighList = cneighs)
+  }
+  # end TODO 
+  
   finalNeighs = propagateTakensAttr(finalNeighs, takens)
-  # remember to translate the C-index into R-index
-  attr(finalNeighs,"takens.index") = positionTakens + 1
+  attr(finalNeighs,"takens.index") = positionTakens
   attr(finalNeighs,"radius") = radius
   return(finalNeighs)
 }
+
+
 
 ################################################################################
 #' neighbour search
@@ -117,51 +101,27 @@ neighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
 #' }
 #' @seealso \code{\link{neighbourSearch}}.
 #' @export findAllNeighbours
-findAllNeighbours=function(takens,radius,number.boxes=NULL){
+findAllNeighbours = function(takens, radius, number.boxes = NULL) {
   #estimates number.boxes if it has not been specified
-  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens, radius)
-  #arguments for the C function
-  numberTakens=nrow(takens)
-  embedding.dim=ncol(takens)
-  lengthBoxes=number.boxes*number.boxes+1
-  boxes=rep(0,lengthBoxes)
-  possibleNeighbours=rep(0,numberTakens)
-  neighList=rep(-1,numberTakens)
-  nfound=0
-  
-  #get histogram using boxes
-  sol=boxAssistant(takens, radius,number.boxes)
-  boxes=sol$boxes;
-  possibleNeighbours=sol$possibleNeighbours
-  
-  allneighs=list()
-  for (i in 1:numberTakens){
-    #position in the vector was specified in "R-form" (starts at 1)
-    #Translate to "C-form" (starts at 0)
-    positionTakens=i-1
-    #call the c function
-    cneighs=.C("neighbourSearchFromBoxes",takens=as.double(takens),positionTakens=as.integer(positionTakens),
-               numberTakens=as.integer(numberTakens), embeddingD=as.integer(embedding.dim),
-               eps=as.double(radius), numberBoxes=as.integer(number.boxes),
-               boxes=as.integer(boxes),possibleNeighbours=as.integer(possibleNeighbours),
-               neighList=as.integer(neighList),
-               nfound=as.integer(nfound),
-               PACKAGE="nonlinearTseries")
-    #arrange solutions
-    if (cneighs$nfound==0){
-      allneighs[[i]]=list()
-    }else{
-      #eliminate -1 and repeated numbers. convert c-vector positions to R positions
-      auxiliarNeighList=(cneighs$neighList[1:(cneighs$nfound)]+ 1)
-      allneighs[[i]]=as.vector(auxiliarNeighList)
-    }
+  if (is.null(number.boxes)) {
+    number.boxes = estimateNumberBoxes(takens, radius)
   }
+  allneighs = .Call('_nonlinearTseries_getAllNeighbours',
+                    PACKAGE = 'nonlinearTseries',
+                    takens, radius, number.boxes)
+  # TODO: eliminate in future conversion to list
+  allneighs = lapply(allneighs, function(x){
+    if (length(x) == 0) {
+      return(list())
+    } else {
+      return(x)
+    }
+  })
   
   allneighs = propagateTakensAttr(allneighs, takens)
-  attr(allneighs,"radius") = radius
-  return (allneighs)
+  attr(allneighs, "radius") = radius
+  allneighs
 }
-
 
 
 
@@ -256,60 +216,6 @@ find.at.least.N.neighbours.for.vector=function(takens,positionTakens,radius,radi
 }
 
 
-
-
-# Rcpp-based functions ----------------------------------------------------
-
-#' @export
-rcppNeighbourSearch=function(takens,positionTakens,radius,number.boxes=NULL){
-  #estimates number.boxes if it has not been specified
-  if (is.null(number.boxes)){
-    number.boxes = estimateNumberBoxes(takens, radius)
-  }
-  
-  # call c code
-  cneighs = .Call('_nonlinearTseries_getVectorNeighbours', 
-                  PACKAGE = 'nonlinearTseries', 
-                  takens, positionTakens, radius, number.boxes)
-  # TODO: remove list conversion
-  nfound = length(cneighs)
-  if (nfound == 0) {
-    finalNeighs = list(nfound = 0, neighList = list())
-  } else {
-    finalNeighs = list(nfound = nfound, neighList = cneighs)
-  }
-  # end TODO 
-  
-  finalNeighs = propagateTakensAttr(finalNeighs, takens)
-  attr(finalNeighs,"takens.index") = positionTakens
-  attr(finalNeighs,"radius") = radius
-  return(finalNeighs)
-}
-
-
-#' @export
-rcppFindAllNeighbours = function(takens, radius, number.boxes = NULL) {
-  #estimates number.boxes if it has not been specified
-  if (is.null(number.boxes)) {
-    number.boxes = estimateNumberBoxes(takens, radius)
-  }
-  allneighs = .Call('_nonlinearTseries_getAllNeighbours',
-                    PACKAGE = 'nonlinearTseries',
-                    takens, radius, number.boxes)
-  # TODO: eliminate in future conversion to list
-  allneighs = lapply(allneighs, function(x){
-    if (length(x) == 0) {
-      return(list())
-    } else {
-      return(x)
-    }
-  })
-    
-    
-  allneighs = propagateTakensAttr(allneighs, takens)
-  attr(allneighs, "radius") = radius
-  allneighs
-}
 
 
 

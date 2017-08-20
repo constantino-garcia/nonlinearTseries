@@ -16,8 +16,10 @@ test_that("ported code yields same results", {
       ts = arima.sim(model = list(ar = runif(1, -1, 1),
                                   ma = runif(1, -1 , 1)), 
                      1000)
-      ported = suppressWarnings(
-        rcppSpaceTimePlot(time.series = ts, embedding.dim = embeddingD, time.lag = time.lag, do.plot=FALSE)
+      ported = (
+        rcppSpaceTimePlot(time.series = ts, embedding.dim = embeddingD, 
+                          time.lag = time.lag, max.radius = 10,
+                          do.plot=FALSE)
       )
       expect_equal(results[[counter]], ported)
       counter = counter + 1  

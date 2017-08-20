@@ -27,14 +27,14 @@ NumericMatrix space_time_plot(NumericMatrix phaseSpace, NumericVector radii,
   int firstPhaseSpaceVector =  nTimeSteps * timeStep;
   /* Hence the number of available phase space vectors is ... */
   int nAvailablePhaseSpaceVectors = (nPhaseSpaceVectors - firstPhaseSpaceVector);
-  
+
   for (int iTime=0; iTime < nTimeSteps; iTime++) {
     /* Initialice the histogram of distances */
     IntegerVector radiusHistogram(radiiSize, 0);
     for (int iTakensVector = firstPhaseSpaceVector; iTakensVector < nPhaseSpaceVectors; iTakensVector++){
       /* calculate distances for the current timeStep = iTime * timeStep */
-      double distance = max_distance_between_rows(phaseSpace(iTakensVector, _), phaseSpace(iTakensVector - iTime * timeStep, _));
-     
+      double distance = max_distance_between_rows(phaseSpace(iTakensVector, _), 
+                                                  phaseSpace(iTakensVector - iTime * timeStep, _));
       int iHistogram = static_cast<int>(distance / maxRadius *  radiiSize);
       radiusHistogram[std::min(iHistogram,lastPosition)]++;
     }

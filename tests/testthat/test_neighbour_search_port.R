@@ -18,12 +18,12 @@ test_that("ported code yields same results", {
       counter = counter + 1
       expect_equal(
         xxx,
-        rcppFindAllNeighbours(takens, radius, number.boxes)
+        findAllNeighbours(takens, radius, number.boxes)
       )
       xxx = results[[counter]] 
       counter = counter + 1
       expect_equal(
-        rcppNeighbourSearch(takens, itak, radius, number.boxes),
+        neighbourSearch(takens, itak, radius, number.boxes),
         xxx)
     } 
   }

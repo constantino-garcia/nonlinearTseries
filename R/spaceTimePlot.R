@@ -45,7 +45,7 @@ spaceTimePlot=function(takens = NULL,
                        number.time.steps = NULL, numberPercentages=10,
                        do.plot=TRUE,...){
   ### define
-  kLengthRadiusVector = 10
+  kLengthRadiusVector = 1000
   kTimeStepsDefault = 500
   ###
   if(is.null(takens)){
@@ -178,7 +178,8 @@ rcppSpaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 
                              number.time.steps = NULL, numberPercentages = 10,
                              do.plot = TRUE, ...){
   ### define
-  kLengthRadiusVector = 10
+  # TODO: MOVE THIS TO BECOME AN ARGUMENT
+  kLengthRadiusVector = 1000
   kTimeStepsDefault = 500
   ###
   if (is.null(takens)) {
@@ -194,8 +195,8 @@ rcppSpaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 
   }
   radii =  (1:kLengthRadiusVector) * max.radius / kLengthRadiusVector
   stp.matrix =  .Call('_nonlinearTseries_space_time_plot', 
-                      PACKAGE = 'nonlinearTseries', takens, radii, number.time.steps, 
-                      time.step, numberPercentages)
+                      PACKAGE = 'nonlinearTseries', takens, radii, 
+                      number.time.steps, time.step, numberPercentages)
   
   # positions where the radius was not enough to compute the propper percentage 
   positions = which(abs(stp.matrix) < 1e-12, arr.ind = TRUE)

@@ -1869,7 +1869,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbour_search_wrapper.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503222037
     },
     {
         "definitions" : [
@@ -1924,6 +1924,30 @@
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincareMap.c",
         "file_last_write" : 1496226809
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 8,
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincare_map.cpp",
+                "kind" : 6,
+                "line" : 9,
+                "name" : "calculate_crossings(const NumericMatrix &, double, double, int, int, int, NumericVector &)",
+                "parent_name" : "",
+                "usr" : "c:@F@calculate_crossings#&1$@N@Rcpp@C@Matrix>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#d#d#I#I#I#&$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+            },
+            {
+                "column" : 6,
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincare_map.cpp",
+                "kind" : 6,
+                "line" : 33,
+                "name" : "poincare_map(const NumericMatrix &, const NumericVector &, const NumericVector &)",
+                "parent_name" : "",
+                "usr" : "c:@F@poincare_map#&1$@N@Rcpp@C@Matrix>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#&1$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S2_#"
+            }
+        ],
+        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincare_map.cpp",
+        "file_last_write" : 1503265765
     },
     {
         "definitions" : [
@@ -2103,52 +2127,52 @@
         "definitions" : [
             {
                 "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.c",
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
                 "line" : 11,
-                "name" : "getVerticalHistogram(int *, int *, int *, int *, int *)",
+                "name" : "get_vertical_histogram(IntegerMatrix &, IntegerVector &, int, int, IntegerVector &)",
                 "parent_name" : "",
-                "usr" : "c:@F@getVerticalHistogram"
-            },
-            {
-                "column" : 5,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.c",
-                "kind" : 6,
-                "line" : 38,
-                "name" : "isContainedInNeighbourhood(int, int, int *, int, int)",
-                "parent_name" : "",
-                "usr" : "c:@F@isContainedInNeighbourhood"
+                "usr" : "c:@F@get_vertical_histogram#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#S2_#"
             },
             {
                 "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.c",
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 53,
-                "name" : "updateLengthHistogram(int, int, int *, int *, int, int *, int)",
+                "line" : 39,
+                "name" : "is_contained_in_neighbourhood(int, int, IntegerMatrix &, int, int)",
                 "parent_name" : "",
-                "usr" : "c:@F@updateLengthHistogram"
+                "usr" : "c:@F@is_contained_in_neighbourhood#I#I#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#"
             },
             {
                 "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.c",
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 76,
-                "name" : "getDiagonalHistogramRecurrenceHistogram(int *, int *, int *, int *, int *, int *)",
+                "line" : 52,
+                "name" : "update_length_histogram(int, int, IntegerMatrix &, IntegerVector &, int, IntegerVector &, int)",
                 "parent_name" : "",
-                "usr" : "c:@F@getDiagonalHistogramRecurrenceHistogram"
+                "usr" : "c:@F@update_length_histogram#I#I#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#S2_#I#"
             },
             {
                 "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.c",
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 132,
-                "name" : "getHistograms(int *, int *, int *, int *, int *, int *, int *, int *)",
+                "line" : 77,
+                "name" : "get_diagonal_recurrence_histogram(IntegerMatrix &, IntegerVector &, int, int, IntegerVector &, IntegerVector &)",
                 "parent_name" : "",
-                "usr" : "c:@F@getHistograms"
+                "usr" : "c:@F@get_diagonal_recurrence_histogram#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#S2_#S2_#"
+            },
+            {
+                "column" : 6,
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
+                "kind" : 6,
+                "line" : 138,
+                "name" : "get_rqa_histograms(IntegerMatrix &, IntegerVector &, int, int, int, IntegerVector &, IntegerVector &, IntegerVector &)",
+                "parent_name" : "",
+                "usr" : "c:@F@get_rqa_histograms#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#I#S2_#S2_#S2_#"
             }
         ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.c",
-        "file_last_write" : 1496226809
+        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
+        "file_last_write" : 1503260887
     },
     {
         "definitions" : [
@@ -2187,7 +2211,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/space_time_plot.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1501447851
     },
     {
         "definitions" : [

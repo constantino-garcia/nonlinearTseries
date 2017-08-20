@@ -68,43 +68,51 @@ rqa=function(takens = NULL, time.series=NULL, embedding.dim=2, time.lag = 1,
   if (do.plot) {
     rec.plot = recurrencePlotFromMatrix(neighs.matrix,...)
   }
-  hist=getHistograms(neighs,ntakens,lmin,vmin)
+  hist = getHistograms(neighs, ntakens, lmin, vmin)
   # calculate the number of recurrence points from the recurrence rate. The recurrence
   # rate counts the number of points at every distance in a concrete side of the main diagonal.
   # Thus, sum all points for all distances, multiply by 2 (count both sides) and add the main
   # diagonal
-  numberRecurrencePoints=sum(hist$recurrenceHist)+ntakens
+  numberRecurrencePoints = sum(hist$recurrenceHist) + ntakens
   # calculate the recurrence rate dividing the number of recurrent points at a given
   # distance by all points that could be at that distance
-  recurrence_rate_vector=hist$recurrenceHist[1:(ntakens-1)]/((ntakens-1):1)
+  recurrence_rate_vector = hist$recurrenceHist[1:(ntakens - 1)] / ((ntakens - 1):1)
   #percentage of recurrent points
-  REC=(numberRecurrencePoints)/ntakens^2
-  diagP=calculateDiagonalParameters(ntakens,numberRecurrencePoints,lmin,hist$diagonalHist,recurrence_rate_vector,maxDistanceMD)  
+  REC = (numberRecurrencePoints) / ntakens ^ 2
+  diagP = calculateDiagonalParameters(
+    ntakens, numberRecurrencePoints, lmin, hist$diagonalHist,
+    recurrence_rate_vector, maxDistanceMD
+  )
   #paramenters dealing with vertical lines
-  vertP=calculateVerticalParameters(ntakens,numberRecurrencePoints,vmin,hist$verticalHist)
+  vertP = calculateVerticalParameters(ntakens, numberRecurrencePoints, vmin,
+                                      hist$verticalHist)
   #join all computations
-  rqa.parameters = c(REC=REC,RATIO=diagP$DET/REC,
-                     diagP,vertP,
-                     list(diagonalHistogram = hist$diagonalHist,
-                          verticalHistogram = hist$verticalHist,
-                          recurrenceRate = recurrence_rate_vector))
+  rqa.parameters = c(
+    REC = REC, RATIO = diagP$DET / REC,
+    diagP, vertP,
+    list(
+      diagonalHistogram = hist$diagonalHist,
+      verticalHistogram = hist$verticalHist,
+      recurrenceRate = recurrence_rate_vector
+    )
+  )
   
-  if (!save.RM){
+  if (!save.RM) {
     neighs.matrix = NULL
   }
-  rqa.analysis = c(list(recurrence.matrix=neighs.matrix),
+  rqa.analysis = c(list(recurrence.matrix = neighs.matrix),
                    rqa.parameters)
   
   rqa.analysis = propagateTakensAttr(rqa.analysis, takens)
   attr(rqa.analysis, "radius") = radius
   class(rqa.analysis) = "rqa"
- 
+  
   rqa.analysis
 }
 
 #' @export
 plot.rqa = function(x,...){
-  if (!is.null(x$recurrence.matrix)){
+  if (!is.null(x$recurrence.matrix)) {
     recurrencePlotFromMatrix(x$recurrence.matrix,
                              ...)
   }else{
@@ -144,10 +152,10 @@ recurrencePlot=function(takens = NULL, time.series,
 }
 
 #private 
-recurrencePlotFromMatrix=function(neighs.matrix,
+recurrencePlotFromMatrix = function(neighs.matrix,
                                   main="Recurrence plot",
                                   xlab="Takens vector's index",
-                                  ylab="Takens vector's index",...){
+                                  ylab="Takens vector's index", ...){
   # need a print because it is a trellis object!!
   rec.plot = image(neighs.matrix,
                    main = main, xlab = xlab, ylab = ylab, 
@@ -158,10 +166,10 @@ recurrencePlotFromMatrix=function(neighs.matrix,
 
 neighs2numericType = function(neighs){
   lapply(neighs,
-         FUN = function(x){
-           if(length(x)==0){
-             numeric();
-           }else{
+         FUN = function(x) {
+           if (length(x) == 0) {
+             numeric()
+           } else{
              x
            }
          })
@@ -170,10 +178,11 @@ neighs2numericType = function(neighs){
 neighbourList2SparseMatrix = function(neighs){
   ntakens = length(neighs)
   neighs = neighs2numericType(neighs)
-  neigh.len = sum(sapply(neighs, FUN=length)) + ntakens
-  neighs.matrix = matrix(0,nrow= neigh.len ,ncol=2)
-  .Call("_nonlinearTseries_neighsList2SparseRCreator",neighs=as.list(neighs),ntakens=as.integer(ntakens),
-        neighs_matrix=as.matrix(neighs.matrix),PACKAGE="nonlinearTseries")
+  neigh.len = sum(sapply(neighs, FUN = length)) + ntakens
+  neighs.matrix = matrix(0,nrow = neigh.len , ncol = 2)
+  .Call("_nonlinearTseries_neighsList2SparseRCreator",
+        neighs = as.list(neighs), ntakens = as.integer(ntakens), 
+        neighs_matrix = as.matrix(neighs.matrix), PACKAGE = "nonlinearTseries")
   neighs.matrix
   sparseMatrix(neighs.matrix[,1],neighs.matrix[,2],dims = c(ntakens,ntakens),
                symmetric = T)
@@ -183,85 +192,95 @@ neighbourListToCsparseNeighbourMatrix = function(neighs){
   # sum 1 to columns to include the diagonal (i,i) elements
   neighs.len = sapply(neighs,length)
   max.neighs = 1 + max(neighs.len)
-  neighs.matrix= matrix(-1,nrow=length(neighs),
-                        ncol = max.neighs)
+  neighs.matrix = matrix(-1, nrow = length(neighs),
+                         ncol = max.neighs)
   neighs = neighs2numericType(neighs)
-  .Call("_nonlinearTseries_neighsList2Sparse",neighs=as.list(neighs),
+  .Call("_nonlinearTseries_neighsList2Sparse",
+        neighs = as.list(neighs),
         neighs_matrix = as.matrix(neighs.matrix),
-        PACKAGE = "nonlinearTseries")
-    
-  list(neighs = neighs.matrix, nneighs = (neighs.len + 1) )
+        PACKAGE = "nonlinearTseries"
+  )
   
+  list(neighs = neighs.matrix, nneighs = (neighs.len + 1) )
 }
 
 
-calculateVerticalParameters=function(ntakens,numberRecurrencePoints,vmin=2,verticalLinesHistogram){
+calculateVerticalParameters = function(ntakens, numberRecurrencePoints,
+                                       vmin = 2, verticalLinesHistogram) {
   #begin parameter computations
-  num=sum((vmin:ntakens)*verticalLinesHistogram[vmin:ntakens])
-  LAM=num/numberRecurrencePoints
-  Vmean=num/sum(verticalLinesHistogram[vmin:ntakens])
-  if (is.nan(Vmean)) Vmean=0
+  num = sum((vmin:ntakens) * verticalLinesHistogram[vmin:ntakens])
+  LAM = num / numberRecurrencePoints
+  Vmean = num / sum(verticalLinesHistogram[vmin:ntakens])
+  if (is.nan(Vmean)) {
+    Vmean = 0
+  }
   #pick the penultimate
-  histogramWithoutZeros=which(verticalLinesHistogram>0)
-  if (length(histogramWithoutZeros)>0) Vmax=tail(histogramWithoutZeros,1) else Vmax=0
-  
+  histogramWithoutZeros = which(verticalLinesHistogram > 0)
+  if (length(histogramWithoutZeros) > 0) {
+    Vmax = tail(histogramWithoutZeros, 1)
+  } else {
+    Vmax = 0
+  } 
   #results
-  params=list(LAM=LAM,Vmax=Vmax,Vmean=Vmean)
+  params = list(LAM = LAM, Vmax = Vmax, Vmean = Vmean)
   return(params)
 }
 
-calculateDiagonalParameters=function(ntakens,numberRecurrencePoints,lmin=2,lDiagonalHistogram,recurrence_rate_vector,maxDistanceMD){
+calculateDiagonalParameters = function(ntakens, numberRecurrencePoints,
+                                       lmin = 2, lDiagonalHistogram,
+                                       recurrence_rate_vector, maxDistanceMD) {
   #begin parameter computations
-  num=sum((lmin:ntakens)*lDiagonalHistogram[lmin:ntakens]);
-  DET=num/numberRecurrencePoints
-  Lmean=num/sum(lDiagonalHistogram[lmin:ntakens])
-  aux.index=lmin:(ntakens-1)
-  LmeanWithoutMain=(sum((aux.index)*lDiagonalHistogram[aux.index]))/(sum(lDiagonalHistogram[aux.index]))
+  num = sum((lmin:ntakens) * lDiagonalHistogram[lmin:ntakens])
+  DET = num / numberRecurrencePoints
+  Lmean = num / sum(lDiagonalHistogram[lmin:ntakens])
+  aux.index = lmin:(ntakens - 1)
+  LmeanWithoutMain = (
+    sum((aux.index) * lDiagonalHistogram[aux.index]) / 
+      sum(lDiagonalHistogram[aux.index])
+  )
   #pick the penultimate
-  Lmax=tail(which(lDiagonalHistogram>0),2)[1]
-  if (Lmax==ntakens) Lmax=0
-  DIV=1/Lmax
-  pl=lDiagonalHistogram/sum(lDiagonalHistogram)
-  diff_0=which(pl>0)
-  ENTR=-sum(pl[diff_0]*log(pl[diff_0]));
+  Lmax = tail(which(lDiagonalHistogram > 0), 2)[1]
+  if (is.na(Lmax) || Lmax == ntakens) {
+    Lmax = 0
+  }
+  DIV = 1 / Lmax
+  pl = lDiagonalHistogram / sum(lDiagonalHistogram)
+  diff_0 = which(pl > 0)
+  ENTR = -sum(pl[diff_0] * log(pl[diff_0]))
   
   # use only recurrent points with a distance to the main diagonal < maxDistance
-  recurrence_rate_vector=recurrence_rate_vector[1:maxDistanceMD]
-  mrrv=mean(recurrence_rate_vector)
+  recurrence_rate_vector = recurrence_rate_vector[1:maxDistanceMD]
+  mrrv = mean(recurrence_rate_vector)
   #auxiliar vector for the linear regresion: It is related to the general regression
   #formula xi-mean(x)
-  auxiliarVector=(1:maxDistanceMD-(maxDistanceMD+1)/2);auxiliarVector2=auxiliarVector*auxiliarVector
-  num=sum(auxiliarVector*((recurrence_rate_vector-mrrv)/2) ) # divide by two because we are having into account just one side of the main diag
-  den=sum(auxiliarVector2)
-  TREND=num/den
+  auxiliarVector = (1:maxDistanceMD - (maxDistanceMD + 1) / 2)
+  auxiliarVector2 = auxiliarVector * auxiliarVector
+  # divide by two because we are having into account just one side of the main diag
+  num = sum(auxiliarVector * ((recurrence_rate_vector - mrrv) / 2)) 
+  den = sum(auxiliarVector2)
+  TREND = num / den
   #results
-  params=list(DET=DET,DIV=DIV,Lmax=Lmax,Lmean=Lmean,LmeanWithoutMain=LmeanWithoutMain,ENTR=ENTR,TREND=TREND)
-  return(params)
+  return(list(
+    DET = DET, DIV = DIV, Lmax = Lmax, Lmean = Lmean,
+    LmeanWithoutMain = LmeanWithoutMain, ENTR = ENTR, TREND = TREND
+  ))
 }
 
-getHistograms=function(neighs,ntakens,lmin,vmin){
-  
+getHistograms = function(neighs, ntakens, lmin, vmin){
   # the neighbours are labeled from 0 to ntakens-1
   c.matrix = neighbourListToCsparseNeighbourMatrix(neighs)
   verticalHistogram = rep(0,ntakens)
   diagonalHistogram = rep(0,ntakens)
   recurrenceHistogram = rep(0,ntakens)
   # auxiliar variables
-  hist = .C("getHistograms", neighs = as.integer(c.matrix$neighs),
-            nneighs = as.integer(c.matrix$nneighs), ntakens = as.integer(ntakens), 
-            vmin = as.integer(vmin), lmin = as.integer(lmin),
-            verticalHistogram = as.integer(verticalHistogram),
-            diagonalHistogram = as.integer(diagonalHistogram),
-            recurrenceHistogram = as.integer(recurrenceHistogram),
-            PACKAGE="nonlinearTseries" )
-  
-  
-  return(list(diagonalHist=hist$diagonalHistogram,recurrenceHist=hist$recurrenceHistogram,
-       verticalHist=hist$verticalHistogram))
-  
+  return(
+    .Call("_nonlinearTseries_get_rqa_histograms", 
+          neighs = c.matrix$neighs, nneighs = c.matrix$nneighs,
+          ntakens = as.integer(ntakens), vmin = as.integer(vmin),
+          lmin = as.integer(lmin), 
+          verticalHistogram = verticalHistogram,
+          diagonalHistogram = diagonalHistogram,
+          recurrenceHistogram = recurrenceHistogram,
+          PACKAGE = "nonlinearTseries")
+  )
 }  
-
-
-
-
-
