@@ -2,7 +2,7 @@
 % Please edit documentation in R/generics.R
 \name{radius}
 \alias{radius}
-\title{Get the radius of the neighborhoods  used for the  computations of 
+\title{Get the radius of the neighborhoods used for the  computations of 
 a chaotic invariant.}
 \usage{
 radius(x)
@@ -12,15 +12,16 @@ radius(x)
 the chaotic invariant.}
 }
 \value{
-A numeric vector with the radius of the neighborhoods  used for the  computations of 
-a chaotic invariant.
+A numeric vector with the radius of the neighborhoods used for the 
+computations of a chaotic invariant.
 }
 \description{
-Get the radius of the neighborhoods  used for the  computations of 
+Get the radius of the neighborhoods used for the  computations of 
 a chaotic invariant.
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 }
 \author{
 Constantino A. Garcia

@@ -13,11 +13,12 @@ the chaotic invariant.}
 \item{...}{Additional graphical parameters.}
 }
 \description{
-Plots the local scaling exponents of the correlation sum or
- the average Shannon  information (when computing information dimension).
+Plots the local scaling exponents of the correlation sum or 
+the average Shannon  information (when computing information dimension).
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 }
 \author{
 Constantino A. Garcia

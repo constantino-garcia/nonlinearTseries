@@ -9,24 +9,29 @@ nonLinearNoiseReduction(time.series, embedding.dim, radius)
 \arguments{
 \item{time.series}{The original time series to denoise.}
 
-\item{embedding.dim}{Integer denoting the dimension in which we shall embed the \emph{time.series}.}
+\item{embedding.dim}{Integer denoting the dimension in which we shall embed 
+the \emph{time.series}.}
 
-\item{radius}{The radius used to looking for neighbours in the phase space (see details).}
+\item{radius}{The radius used to looking for neighbours in the phase space 
+(see details).}
 }
 \value{
 A vector containing the denoised time series.
 }
 \description{
-Function for denoising a given time series using nonlinear analysis techniques.
+Function for denoising a given time series using nonlinear analysis 
+techniques.
 }
 \details{
 This function takes a given time series and denoises it. The denoising
 is achieved by averaging each Takens' vector in an m-dimensional space
-with his neighbours (time lag=1). Each neighbourhood is specified with balls of a given radius
+with his neighbours (time lag=1). Each neighbourhood is specified with balls 
+of a given radius
 (max norm is used).
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 }
 \author{
 Constantino A. Garcia

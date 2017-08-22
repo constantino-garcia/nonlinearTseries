@@ -1,4 +1,3 @@
-
 # Spectral index
 # @param regression.range in normalized frequency units
 # @export
@@ -23,9 +22,6 @@ spectralIndex = function(x, regression.range = c(0, 0.1), do.plot = TRUE,
   spectral_index$lm_data = fit
   spectral_index
 }
-
-
-
 
 spectralIndexObject = function(fit, spec) {
   if (!inherits(fit, "lm")) {

@@ -8,32 +8,41 @@ nonLinearPrediction(time.series, embedding.dim, time.lag, prediction.step,
   radius, radius.increment)
 }
 \arguments{
-\item{time.series}{Previous values of the time series that the algorithm will use to make the prediction.}
+\item{time.series}{Previous values of the time series that the algorithm 
+will use to make the prediction.}
 
-\item{embedding.dim}{Integer denoting the dimension in which we shall embed the \emph{time.series}.}
+\item{embedding.dim}{Integer denoting the dimension in which we shall embed 
+the \emph{time.series}.}
 
-\item{time.lag}{Integer denoting the number of time steps that will be use to construct the 
-Takens' vectors.}
+\item{time.lag}{Integer denoting the number of time steps that will be use 
+to construct the  Takens' vectors.}
 
-\item{prediction.step}{Integer denoting the number of time steps ahead for the forecasting.}
+\item{prediction.step}{Integer denoting the number of time steps ahead for 
+the forecasting.}
 
-\item{radius}{The radius used to looking for neighbours in the phase space (see details).}
+\item{radius}{The radius used to looking for neighbours in the phase space 
+(see details).}
 
-\item{radius.increment}{The increment used when no neighbours are found (see details).}
+\item{radius.increment}{The increment used when no neighbours are found 
+(see details).}
 }
 \value{
 The predicted value \emph{prediction.step} time steps ahead.
 }
 \description{
-Function for predicting futures values of a given time series using previous values
-and  nonlinear analysis techniques.
+Function for predicting futures values of a given time series using previous 
+values and  nonlinear analysis techniques.
 }
 \details{
-Using \emph{time.series} measurements, an embedding in \emph{embedding.dim}-dimensional phase space with
-time lag \emph{time.lag} is used to predict the value following the given time series after \emph{prediction.steps}
-sample steps. This is done by finding all the neighbours of the last Takens' vector in a  radius of size \emph{radius} (the
-max norm is used). If no neighbours are found within a distance radius, the neighbourhood size
-is increased until succesful using \emph{radius.increment}(\emph{radius} = \emph{radius} + \emph{radius.increment}).
+Using \emph{time.series} measurements, an embedding in 
+\emph{embedding.dim}-dimensional phase space with time lag \emph{time.lag} 
+is used to predict the value following the given time series after 
+\emph{prediction.steps} sample steps. This is done by finding all the 
+neighbours of the last Takens' vector in a  radius of size \emph{radius}  
+(the max norm is used). If no neighbours are found within a distance radius, 
+the neighbourhood size is increased until succesful using 
+\emph{radius.increment}(\emph{radius} = \emph{radius} + 
+\emph{radius.increment}).
 }
 \examples{
 \dontrun{
@@ -46,7 +55,8 @@ cat("real value: ",h$x[2003],"Vs Forecast:",predic)
 }
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 }
 \author{
 Constantino A. Garcia

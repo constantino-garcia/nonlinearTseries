@@ -9,10 +9,11 @@ buildTakens(time.series, embedding.dim, time.lag)
 \arguments{
 \item{time.series}{The original time series.}
 
-\item{embedding.dim}{Integer denoting the dimension in which we shall embed the time.series.}
+\item{embedding.dim}{Integer denoting the dimension in which we shall embed
+the time.series.}
 
-\item{time.lag}{Integer denoting the number of time steps that will be use to construct the 
-Takens' vectors.}
+\item{time.lag}{Integer denoting the number of time steps that will be use
+to construct the  Takens' vectors.}
 }
 \value{
 A matrix containing the Takens' vectors (one per row). The resulting
@@ -21,12 +22,13 @@ dimension used (as attributes).
 }
 \description{
 This function builds the Takens' vectors from a given time series. The set
-of Takens' vectors is the result of embedding the time series in a m-dimensional
-space. That is, the \eqn{n^{th}} Takens' vector is defined as 
+of Takens' vectors is the result of embedding the time series in a 
+m-dimensional space. That is, the \eqn{n^{th}} Takens' vector is defined as 
 \deqn{T[n]=\{time.series[n], time.series[n+ timeLag],...time.series[n+m*timeLag]\}.}
 Taken's theorem states that we can then reconstruct an equivalent dynamical 
 system to the original one (the 
-dynamical system that generated the observed time series) by using the Takens' vectors.
+dynamical system that generated the observed time series) by using the 
+Takens' vectors.
 }
 \examples{
 \dontrun{
@@ -39,7 +41,8 @@ takens = buildTakens(h$x,embedding.dim=2,time.lag=1)
 plot(takens)}
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 }
 \author{
 Constantino A. Garcia and Gunther Sawitzki.

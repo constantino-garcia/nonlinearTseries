@@ -12,8 +12,8 @@ timeLag(time.series, technique = c("acf", "ami"),
 \arguments{
 \item{time.series}{The original time series.}
 
-\item{technique}{The technique that we shall use to estimate the time lag (see the 
-Details section). Allowed values are \emph{"acf"} and \emph{"ami"}.}
+\item{technique}{The technique that we shall use to estimate the time lag 
+(see the Details section). Allowed values are \emph{"acf"} and \emph{"ami"}.}
 
 \item{selection.method}{Method used for selecting a concrete time lag. 
 Available methods are \emph{"first.zero"}, \emph{"first.e.decay"} (default),
@@ -41,25 +41,27 @@ Given a time series (time.series), an embedding dimension (m) and a
 time lag (timeLag), the \eqn{n^{th}} 
 Takens' vector is defined as 
 \deqn{T[n]=\{time.series[n], time.series[n+ timeLag],...time.series[n+m*timeLag]\}.}
-This function estimates an appropiate time lag by using the autocorrelation function
-or the average mutual information .
+This function estimates an appropiate time lag by using the autocorrelation 
+function or the average mutual information .
 }
 \details{
-A basic criteria for estimating a proper time lag is based on the following reasoning:
-if the time lag used to build the Takens' vectors is too small, the coordinates will
-be too highly temporally correlated and the embedding will tend to cluster around 
-the diagonal in the phase space. If the time lag is chosen too large, the resulting 
-coordinates may be almost uncorrelated and the resulting embedding will be very complicated. 
-Thus, the autocorrelation function can be used for  estimating an appropiate time lag of
-a time series. However, it must be noted that the autocorrelation is a linear statistic,
-and thus it does not take into account nonlinear dynamical correlations. To take into
-account nonlinear correlations the average mutual information (AMI) can be used. 
-Independently of the technique used to compute the correlation, the time lag can
- be selected in a variety of ways:   
+A basic criteria for estimating a proper time lag is based on the following 
+reasoning: if the time lag used to build the Takens' vectors is too small,
+the coordinates will be too highly temporally correlated and the embedding
+will tend to cluster around the diagonal in the phase space. If the time lag
+is chosen too large, the resulting coordinates may be almost uncorrelated and
+the resulting embedding will be very complicated. Thus, the autocorrelation 
+function can be used for  estimating an appropiate time lag of a time series. 
+However, it must be noted that the autocorrelation is a linear statistic,
+and thus it does not take into account nonlinear dynamical correlations. To 
+take into account nonlinear correlations the average mutual information (AMI)
+can be used. Independently of the technique used to compute the correlation, 
+the time lag can be selected in a variety of ways:   
 \itemize{
    \item Select the time lag where the autocorrelation/AMI function decays to 0 
    (\emph{first.zero} selection method). This
-   method is not appropriate for the AMI function, since it only takes positive values.
+   method is not appropriate for the AMI function, since it only takes 
+   positive values.
    \item Select the time lag where the autocorrelation/AMI function decays to 
    1/e of its value at zero (\emph{first.e.decay} selection method).
    \item Select the time lag where the autocorrelation/AMI function reaches 
@@ -82,7 +84,8 @@ timeLag(sx, technique="ami",
 timeLag(sx, technique="acf") }
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis
+(Cambridge university press)
 }
 \seealso{
 \code{\link{mutualInformation}}
