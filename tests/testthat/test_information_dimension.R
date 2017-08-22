@@ -14,8 +14,7 @@ test_that("estimates equal theoretical results", {
                 number.reference.vectors = 1000, theiler.window = 50,
                 kMax = 300, do.plot = FALSE)
   expect_equal(1.24, estimate(leps, do.plot = FALSE), tolerance = 5 * 10 ^ -2)
-  
-  
+
   # Sinai map
   ts = sinaiMap(a = 0.3, n.sample = 5000, start = c(0.23489, 0.8923),
                 do.plot = FALSE)$x

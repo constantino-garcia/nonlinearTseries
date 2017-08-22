@@ -4,7 +4,7 @@
         "filePatterns" : [
         ],
         "path" : "~/Code/R/nonlineartseries",
-        "query" : "maxLyapunovSingle",
+        "query" : "rcpp[A-Z]",
         "regex" : true
     }
 }

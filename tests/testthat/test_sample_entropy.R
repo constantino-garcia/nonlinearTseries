@@ -73,8 +73,6 @@ test_that("estimates equal theoretical results", {
   #the expected value is 0, so we can not use a relative error
   expect_true(mean(se$sample.entropy["4", ]) < 0.01)
   
-  
-  
   ts = logisticMap(
     r = 3.6,
     n.sample = 5500,
