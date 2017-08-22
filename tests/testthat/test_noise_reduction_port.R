@@ -16,10 +16,10 @@ test_that("ported code yields same results", {
       cts1 = cts2 = ts
       expect_equal(
         results[[counter]],
-        rcppNonLinearNoiseReduction(cts2, embeddingD,radius)
+        nonLinearNoiseReduction(cts2, embeddingD, radius)
       )
       counter = counter + 1
-      # rcppNonLinearNoiseReduction modifies directly the time
+      # nonLinearNoiseReduction modifies directly the time
       # series in the C++ code, check that it doesn't affect the
       # R object
       expect_equal(cts2, ts)

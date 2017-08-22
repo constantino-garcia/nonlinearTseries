@@ -8,7 +8,7 @@ test_that("estimates equal theoretical results", {
             n.transient = 100,
             start = c(0.73954883, 0.04772637),
             do.plot = FALSE)$x
-  x = rcppCorrDim(time.series = ts,
+  x = corrDim(time.series = ts,
               min.embedding.dim = 2,
               max.embedding.dim = 5,
               time.lag = 1,
@@ -25,7 +25,7 @@ test_that("estimates equal theoretical results", {
              time =  seq(0, 150, by = 0.01),
              do.plot = FALSE)$x
   
-  x = rcppCorrDim(time.series = ts,
+  x = corrDim(time.series = ts,
               min.embedding.dim = 4,
               max.embedding.dim = 7,
               time.lag = 10,
@@ -40,7 +40,7 @@ test_that("estimates equal theoretical results", {
   # Logistic map: 0.500 ± 0.005 (Grassberger and Procraccia 1983) -----------
   ts = logisticMap(r = 3.5699456, n.sample = 5000, 
                    n.transient = 500, do.plot = FALSE )
-  x = rcppCorrDim(time.series = ts,
+  x = corrDim(time.series = ts,
               min.embedding.dim = 2,
               max.embedding.dim = 4,
               time.lag = 1,
@@ -51,7 +51,6 @@ test_that("estimates equal theoretical results", {
               theiler.window = 100,
               number.boxes = 100)
   expect_equal(0.500, estimate(x), tolerance = 5 * 10 ^ -3)
-  
 })
 
 

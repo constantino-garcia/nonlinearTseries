@@ -1,5 +1,5 @@
 #include "neighbour_search.h"
-#include "genericFunctions.h"
+#include "generic_functions.h"
 using namespace Rcpp;
 
 neighbour_search::neighbour_search():

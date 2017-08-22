@@ -17,26 +17,8 @@
 #' @rdname nonLinearNoiseReduction
 #' @export nonLinearNoiseReduction
 #' @useDynLib nonlinearTseries
-nonLinearNoiseReduction=function(time.series, embedding.dim, radius){
-  #build takens' vectors using time.lag = 1
-  takens=buildTakens(time.series=time.series,embedding.dim=embedding.dim,time.lag=1) 
-  
-  denoised.time.series = .C("nonlinearNoiseReduction",timeSeries = as.double(time.series), 
-                                  takens = as.double(takens),
-                                  numberTakens = as.integer(nrow(takens)),
-                                  embeddingD = as.integer(embedding.dim),
-                                  eps = as.double(radius),
-                                  numberBoxes = as.integer(400),
-                                  PACKAGE="nonlinearTseries")
-  
-  return(denoised.time.series$timeSeries)
-  
-}
-
-
-#' @export
-rcppNonLinearNoiseReduction = function(time.series, 
-                                       embedding.dim, radius){
+nonLinearNoiseReduction = function(time.series, 
+                                   embedding.dim, radius){
   # TODO: provide a better calculation of n.boxes
   n.boxes = 400
   .Call('_nonlinearTseries_nonlinear_noise_reduction',

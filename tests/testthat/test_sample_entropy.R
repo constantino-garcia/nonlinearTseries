@@ -22,7 +22,7 @@ test_that("estimates equal theoretical results", {
   theiler.window = 5
   
   
-  x = rcppCorrDim(
+  x = corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -56,7 +56,7 @@ test_that("estimates equal theoretical results", {
   )
   rmin = 10 ^ -5
   rmax = 0.01
-  x = rcppCorrDim(
+  x = corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -84,7 +84,7 @@ test_that("estimates equal theoretical results", {
   )
   rmin = 10 ^ -5
   rmax = 0.01
-  x = rcppCorrDim(
+  x = corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,
@@ -112,7 +112,7 @@ test_that("estimates equal theoretical results", {
     do.plot = FALSE,
     start = 0.5
   )
-  x = rcppCorrDim(
+  x = corrDim(
     time.series = ts,
     min.embedding.dim = mmin,
     max.embedding.dim = mmax,

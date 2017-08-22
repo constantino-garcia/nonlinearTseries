@@ -17,7 +17,7 @@ test_that("ported code yields same results", {
                                   ma = runif(1, -1 , 1)), 
                      1000)
       ported = (
-        rcppSpaceTimePlot(time.series = ts, embedding.dim = embeddingD, 
+        spaceTimePlot(time.series = ts, embedding.dim = embeddingD, 
                           time.lag = time.lag, max.radius = 10,
                           do.plot=FALSE)
       )

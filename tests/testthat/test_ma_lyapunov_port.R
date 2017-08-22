@@ -10,7 +10,7 @@ test_that("checks port correctness", {
              start = c(0.63954883, 0.04772637),
              do.plot = FALSE
   )$x
- xr = rcppMaxLyapunov(
+ xr = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 2,
     max.embedding.dim = 4,
@@ -39,7 +39,7 @@ test_that("checks port correctness", {
     do.plot = FALSE
   )$x
  x = results[[2]]
-  xr = rcppMaxLyapunov(
+  xr = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 5,
     max.embedding.dim = 6,
@@ -68,7 +68,7 @@ test_that("checks port correctness", {
     do.plot = FALSE
   )$x
  x = results[[3]]
-  xr = rcppMaxLyapunov(
+  xr = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 5,
     max.embedding.dim = 10,
@@ -97,7 +97,7 @@ test_that("checks port correctness", {
     do.plot = FALSE
   )$x
  x = results[[4]]
-  xr = rcppMaxLyapunov(
+  xr = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 5,
     time.lag = 12,
@@ -117,7 +117,7 @@ test_that("checks port correctness", {
   # logistic map
   logmap = nonlinearTseries::logisticMap(do.plot = FALSE, n.sample = 10000, start = 0.3)
  x = results[[5]]
-  xr = rcppMaxLyapunov(
+  xr = maxLyapunov(
     time.series = logmap,
     min.embedding.dim = 2,
     max.embedding.dim = 7,

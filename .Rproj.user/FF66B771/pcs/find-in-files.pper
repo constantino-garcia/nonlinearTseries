@@ -4,7 +4,7 @@
         "filePatterns" : [
         ],
         "path" : "~/Code/R/nonlineartseries",
-        "query" : "std::vector",
-        "regex" : false
+        "query" : "maxLyapunovSingle",
+        "regex" : true
     }
 }

@@ -179,8 +179,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // get_rqa_histograms
-List get_rqa_histograms(IntegerMatrix& neighs, IntegerVector& nneighs, int ntakens, int vmin, int lmin, IntegerVector& verticalHistogram, IntegerVector& diagonalHistogram, IntegerVector& recurrenceHistogram);
-RcppExport SEXP _nonlinearTseries_get_rqa_histograms(SEXP neighsSEXP, SEXP nneighsSEXP, SEXP ntakensSEXP, SEXP vminSEXP, SEXP lminSEXP, SEXP verticalHistogramSEXP, SEXP diagonalHistogramSEXP, SEXP recurrenceHistogramSEXP) {
+List get_rqa_histograms(IntegerMatrix& neighs, IntegerVector& nneighs, int ntakens, int vmin, int lmin);
+RcppExport SEXP _nonlinearTseries_get_rqa_histograms(SEXP neighsSEXP, SEXP nneighsSEXP, SEXP ntakensSEXP, SEXP vminSEXP, SEXP lminSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -189,10 +189,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type ntakens(ntakensSEXP);
     Rcpp::traits::input_parameter< int >::type vmin(vminSEXP);
     Rcpp::traits::input_parameter< int >::type lmin(lminSEXP);
-    Rcpp::traits::input_parameter< IntegerVector& >::type verticalHistogram(verticalHistogramSEXP);
-    Rcpp::traits::input_parameter< IntegerVector& >::type diagonalHistogram(diagonalHistogramSEXP);
-    Rcpp::traits::input_parameter< IntegerVector& >::type recurrenceHistogram(recurrenceHistogramSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_rqa_histograms(neighs, nneighs, ntakens, vmin, lmin, verticalHistogram, diagonalHistogram, recurrenceHistogram));
+    rcpp_result_gen = Rcpp::wrap(get_rqa_histograms(neighs, nneighs, ntakens, vmin, lmin));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -235,14 +232,6 @@ BEGIN_RCPP
 END_RCPP
 }
 
-RcppExport void boxAssistant(void *, void *, void *, void *, void *, void *, void *);
-RcppExport void corrDim(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void generalizedCorrDim(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void informationDimension(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void maxLyapunov(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void nonlinearNoiseReduction(void *, void *, void *, void *, void *, void *);
-RcppExport void spaceTimePlot(void *, void *, void *, void *, void *, void *, void *, void *, void *);
-
 static const R_CallMethodDef CallEntries[] = {
     {"_nonlinearTseries_generalized_correlation_sum", (DL_FUNC) &_nonlinearTseries_generalized_correlation_sum, 8},
     {"_nonlinearTseries_calculate_fluctuation_function", (DL_FUNC) &_nonlinearTseries_calculate_fluctuation_function, 2},
@@ -255,17 +244,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_nonlinearTseries_get_NN_2Set_wrapper", (DL_FUNC) &_nonlinearTseries_get_NN_2Set_wrapper, 12},
     {"_nonlinearTseries_nonlinear_noise_reduction", (DL_FUNC) &_nonlinearTseries_nonlinear_noise_reduction, 4},
     {"_nonlinearTseries_poincare_map", (DL_FUNC) &_nonlinearTseries_poincare_map, 3},
-    {"_nonlinearTseries_get_rqa_histograms", (DL_FUNC) &_nonlinearTseries_get_rqa_histograms, 8},
+    {"_nonlinearTseries_get_rqa_histograms", (DL_FUNC) &_nonlinearTseries_get_rqa_histograms, 5},
     {"_nonlinearTseries_space_time_plot", (DL_FUNC) &_nonlinearTseries_space_time_plot, 5},
     {"_nonlinearTseries_neighsList2Sparse", (DL_FUNC) &_nonlinearTseries_neighsList2Sparse, 2},
     {"_nonlinearTseries_neighsList2SparseRCreator", (DL_FUNC) &_nonlinearTseries_neighsList2SparseRCreator, 3},
-    {"boxAssistant",            (DL_FUNC) &boxAssistant,             7},
-    {"corrDim",                 (DL_FUNC) &corrDim,                 12},
-    {"generalizedCorrDim",      (DL_FUNC) &generalizedCorrDim,      13},
-    {"informationDimension",    (DL_FUNC) &informationDimension,    14},
-    {"maxLyapunov",             (DL_FUNC) &maxLyapunov,             12},
-    {"nonlinearNoiseReduction", (DL_FUNC) &nonlinearNoiseReduction,  6},
-    {"spaceTimePlot",           (DL_FUNC) &spaceTimePlot,            9},
     {NULL, NULL, 0}
 };
 

@@ -1,33 +1,3 @@
-# neighbour Search in phase space
-# Reference: Efficient neighbor searching in nonlinear time series analysis, schreiber
-
-#wrapper for the boxAssistant C function.
-#This function computes the accumulated histogram of the "takens" takens'
-#vectors using a wrapped grid of "number.boxes" per dimension. Each box
-#has a size of "radius".
-#Further details may be seen in the C function comments
-boxAssistant=function(takens, radius,number.boxes=NULL){
-  #estimates number.boxes if it has not been specified
-  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens,radius)
-  #parameters for the C function
-  numberTakens=nrow(takens)
-  embedding.dim=ncol(takens)
-  boxes=rep(0,number.boxes*number.boxes+1)
-  possibleNeighbours=rep(0,numberTakens)
-  #call C
-  ret=.C("boxAssistant",takens=as.double(takens),numberTakens=as.integer(numberTakens),
-                    embeddingD=as.integer(embedding.dim),eps= as.double(radius),
-                    numberBoxes=as.integer(number.boxes),boxes=as.integer(boxes),
-                    possibleNeighbours=as.integer(possibleNeighbours),
-                    PACKAGE="nonlinearTseries" )
-  #format solution and return it
-  sol=list(boxes=ret$boxes,possibleNeighbours=ret$possibleNeighbours)
-  sol = propagateTakensAttr(sol, takens)
-  
-  return(sol)
-}
-
-################################################################################
 #' neighbour search
 #' @description
 #' This function finds all the neighbours of a given Takens' vector. The neighbours 

@@ -78,91 +78,50 @@
 #' @exportClass infDim
 #' @useDynLib nonlinearTseries
 #' @seealso \code{\link{corrDim}}.
-infDim <- 
-  function(time.series, min.embedding.dim=2, 
-           max.embedding.dim = min.embedding.dim,time.lag=1,
-           min.fixed.mass, max.fixed.mass, number.fixed.mass.points = 10,
-           radius, increasing.radius.factor = sqrt(2), number.boxes=NULL,
-           number.reference.vectors=5000, theiler.window = 1,
-           kMax = 1000,do.plot=TRUE,...){
-   
-    
-    embeddings =  min.embedding.dim:max.embedding.dim
-    n.embeddings = length(embeddings)
-    fixed.mass.vector = 10^(seq(log10(min.fixed.mass),log10(max.fixed.mass),
-                                length.out=number.fixed.mass.points))
-    infDim.matrix = matrix(0, ncol = number.fixed.mass.points, nrow = n.embeddings)
-    dimnames(infDim.matrix)  = list(embeddings,fixed.mass.vector)
-    for (m in embeddings){
-      infDim.result = 
-        infDimSingleDimension(
-          time.series, m, time.lag, min.fixed.mass,
-          max.fixed.mass, number.fixed.mass.points, radius, 
-          increasing.radius.factor, number.boxes,
-          number.reference.vectors, theiler.window,
-          kMax)
-      infDim.matrix[as.character(m),] = infDim.result$lr
-    }
-    # Not using the correction of the log(p) suggested by Kantz,
-    # the correction is stored in infDim.result$lfp.
-    information.dimension.structure = list(fixed.mass = fixed.mass.vector, 
-                                           log.radius =  infDim.matrix,
-                                           embedding.dims = embeddings)
-    class(information.dimension.structure) = "infDim"
-    # add attributes
-    id=deparse(substitute(time.series))
-    attr(information.dimension.structure,"time.lag") = time.lag
-    attr(information.dimension.structure,"id") = id
-    attr(information.dimension.structure,"theiler.window") = theiler.window
-    
-    
-    if (do.plot){
-      plot(information.dimension.structure,...)
-    }
-
-    
-    return(information.dimension.structure)
+infDim <- function(time.series, min.embedding.dim=2, 
+                   max.embedding.dim = min.embedding.dim, time.lag = 1, 
+                   min.fixed.mass, max.fixed.mass, number.fixed.mass.points = 10,
+                   radius, increasing.radius.factor = sqrt(2), number.boxes=NULL,
+                   number.reference.vectors=5000, theiler.window = 1,
+                   kMax = 1000, do.plot = TRUE, ...) {
+  
+  if (is.null(number.boxes)) {
+    number.boxes = estimateNumberBoxes(buildTakens(time.series, max.embedding.dim, time.lag),
+                                       radius)
+  } 
+  embeddings = min.embedding.dim:max.embedding.dim
+  fixed.mass.vector = 10 ^ (seq(log10(min.fixed.mass),
+                                log10(max.fixed.mass),
+                                length.out = number.fixed.mass.points)
+  )
+  infDim.matrix  = 
+    .Call('_nonlinearTseries_rcpp_information_dimension', PACKAGE = 'nonlinearTseries', 
+          time.series, embeddings, time.lag,  fixed.mass.vector,
+          radius,  increasing.radius.factor, number.boxes, 
+          number.reference.vectors, theiler.window,  kMax)
+  
+  dimnames(infDim.matrix) = list(embeddings,fixed.mass.vector)
+  # Not using the correction of the log(p) suggested by Kantz,
+  # the correction is stored in infDim.result$lfp.
+  information.dimension.structure = list(fixed.mass = fixed.mass.vector, 
+                                         log.radius =  infDim.matrix,
+                                         embedding.dims = embeddings)
+  class(information.dimension.structure) = "infDim"
+  # add attributes
+  id = deparse(substitute(time.series))
+  attr(information.dimension.structure,"time.lag") = time.lag
+  attr(information.dimension.structure,"id") = id
+  attr(information.dimension.structure,"theiler.window") = theiler.window
+  
+  if (do.plot) {
+    tryCatch(plot(information.dimension.structure, ...), error = function(error){
+      warning("Error while trying to plot the correlation sum")
+    })
+  }
+  
+  information.dimension.structure
 }
 
-
-# Private function... computes the average log radius for a given fixed mass
-# vector and a single embedding dimension.
-infDimSingleDimension <- 
-  function(time.series, embedding.dim, time.lag, min.fixed.mass,
-                max.fixed.mass, number.fixed.mass.points, radius, 
-                increasing.radius.factor, number.boxes,
-                number.reference.vectors, theiler.window,
-                kMax){
-  #estimates number.boxes if it has not been specified
-  takens = buildTakens(time.series,embedding.dim,time.lag)
-  numberTakens = nrow(takens)
-  embedding.dim = ncol(takens)
-  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(takens, radius)
-  fixedMassVector = 10^(seq(log10(min.fixed.mass),log10(max.fixed.mass),length.out=number.fixed.mass.points))
-  boxes=rep(0,number.boxes*number.boxes+1)
-  averageLogRadiusVector = rep(0,number.fixed.mass.points)
-  lnFixedMassVector = rep(0,number.fixed.mass.points)
-  
-  c.result=.C("informationDimension", takens = as.double(takens), 
-              numberTakens = as.integer(numberTakens),
-              embeddingD = as.integer(embedding.dim),
-              fixedMassVector = as.double(fixedMassVector), 
-              lnFixedMassVector = as.double(lnFixedMassVector), 
-              fixedMassVectorLength = as.integer(number.fixed.mass.points),
-              eps = as.double(radius),
-              increasingEpsFactor = as.double(increasing.radius.factor),
-              numberBoxes = as.integer(number.boxes), boxes = as.integer(boxes), 
-              numberReferenceVectors = as.integer( number.reference.vectors), 
-              theilerWindow = as.integer(theiler.window), kMax = as.integer(kMax),
-              averageLogRadiusVector = as.double(averageLogRadiusVector),
-              PACKAGE="nonlinearTseries")
- 
-  
-  return( list(lr = c.result$averageLogRadiusVector,
-              lfp = c.result$lnFixedMassVector))
-}
-
-#' Obtain the fixed mass vector used in the information dimension algorithm.
 #' @param x A \emph{infDim} object.
 #' @return A numeric vector representing the fixed mass vector used
 #' in the information dimension algorithm represented by the \emph{infDim} object.
@@ -171,15 +130,13 @@ infDimSingleDimension <-
 fixedMass = function(x){
   UseMethod("fixedMass")
 }
-
 #' @return The \emph{fixedMass} function returns the fixed mass vector used
 #' in the information dimension algorithm.
 #' @rdname infDim
 #' @export
 fixedMass.infDim = function(x){
-  return (x$fixed.mass)
+  return(x$fixed.mass)
 }
-
 
 #' Obtain the the average log(radius) computed
 #' on the information dimension algorithm.
@@ -192,22 +149,20 @@ logRadius = function(x){
   UseMethod("logRadius")
 }
 
-
 #' @return The \emph{logRadius} function returns the average log(radius) computed
 #' on the information dimension algorithm.
 #' @rdname infDim
 #' @export
 logRadius.infDim = function(x){
-  return (x$log.radius)
+  return(x$log.radius)
 }
-
 
 #' @return The \emph{embeddingDims} function returns the 
 #' embeddings in which the information dimension was computed
 #' @rdname infDim
 #' @export
 embeddingDims.infDim = function(x){
-  return (embeddingDims.default(x))
+  return(embeddingDims.default(x))
 }
 
 #' @return The 'estimate' function estimates the information dimension of the 
@@ -414,52 +369,4 @@ plotLocalScalingExp.infDim =  function(x,main="Local scaling exponents d1(p)",
 
 
 
-
-# Rcpp-based function -----------------------------------------------------
-
-#' @export
-rcppInfDim <- 
-  function(time.series, min.embedding.dim=2, 
-           max.embedding.dim = min.embedding.dim, time.lag = 1, 
-           min.fixed.mass, max.fixed.mass, number.fixed.mass.points = 10,
-           radius, increasing.radius.factor = sqrt(2), number.boxes=NULL,
-           number.reference.vectors=5000, theiler.window = 1,
-           kMax = 1000, do.plot = TRUE, ...) {
-    
-    if (is.null(number.boxes)) {
-      number.boxes = estimateNumberBoxes(buildTakens(time.series, max.embedding.dim, time.lag),
-                                         radius)
-    } 
-    embeddings = min.embedding.dim:max.embedding.dim
-    fixed.mass.vector = 10 ^ (seq(log10(min.fixed.mass),
-                                  log10(max.fixed.mass),
-                                  length.out = number.fixed.mass.points)
-    )
-    infDim.matrix  = 
-      .Call('_nonlinearTseries_rcpp_information_dimension', PACKAGE = 'nonlinearTseries', 
-            time.series, embeddings, time.lag,  fixed.mass.vector,
-            radius,  increasing.radius.factor, number.boxes, 
-            number.reference.vectors, theiler.window,  kMax)
-   
-    dimnames(infDim.matrix) = list(embeddings,fixed.mass.vector)
-    # Not using the correction of the log(p) suggested by Kantz,
-    # the correction is stored in infDim.result$lfp.
-    information.dimension.structure = list(fixed.mass = fixed.mass.vector, 
-                                           log.radius =  infDim.matrix,
-                                           embedding.dims = embeddings)
-    class(information.dimension.structure) = "infDim"
-    # add attributes
-    id = deparse(substitute(time.series))
-    attr(information.dimension.structure,"time.lag") = time.lag
-    attr(information.dimension.structure,"id") = id
-    attr(information.dimension.structure,"theiler.window") = theiler.window
-    
-    if (do.plot) {
-      tryCatch(plot(information.dimension.structure, ...), error = function(error){
-        warning("Error while trying to plot the correlation sum")
-      })
-    }
-    
-    information.dimension.structure
-  }
 

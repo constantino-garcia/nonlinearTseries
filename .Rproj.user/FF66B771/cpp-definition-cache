@@ -650,21 +650,6 @@
     {
         "definitions" : [
             {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/Lyapunov.c",
-                "kind" : 6,
-                "line" : 16,
-                "name" : "maxLyapunov(double *, double *, int *, int *, int *, double *, double *, int *, int *, int *, int *, int *)",
-                "parent_name" : "",
-                "usr" : "c:@F@maxLyapunov"
-            }
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/Lyapunov.c",
-        "file_last_write" : 1496226809
-    },
-    {
-        "definitions" : [
-            {
                 "column" : 12,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/NN.cpp",
                 "kind" : 6,
@@ -851,30 +836,6 @@
     {
         "definitions" : [
             {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/corrDim.c",
-                "kind" : 6,
-                "line" : 8,
-                "name" : "corrDim(double *, int *, double *, int *, int *, int *, int *, double *, int *, int *, int *, double *)",
-                "parent_name" : "",
-                "usr" : "c:@F@corrDim"
-            },
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/corrDim.c",
-                "kind" : 6,
-                "line" : 79,
-                "name" : "generalizedCorrDim(double *, int *, double *, int *, int *, int *, int *, int *, double *, int *, int *, int *, double *)",
-                "parent_name" : "",
-                "usr" : "c:@F@generalizedCorrDim"
-            }
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/corrDim.c",
-        "file_last_write" : 1496226809
-    },
-    {
-        "definitions" : [
-            {
                 "column" : 8,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/corr_dim.cpp",
                 "kind" : 3,
@@ -921,7 +882,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/corr_dim.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503405027
     },
     {
         "definitions" : [
@@ -954,7 +915,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/genericFunctions.c",
-        "file_last_write" : 1496226809
+        "file_last_write" : 1503414746
     },
     {
         "definitions" : [
@@ -969,7 +930,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/genericFunctions.h",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503414750
     },
     {
         "definitions" : [
@@ -988,42 +949,18 @@
     },
     {
         "definitions" : [
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/generic_functions.h",
-        "file_last_write" : 1501165434
-    },
-    {
-        "definitions" : [
             {
-                "column" : 8,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/informationDimension.c",
+                "column" : 12,
+                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/generic_functions.h",
                 "kind" : 6,
-                "line" : 7,
-                "name" : "which(double *, int, int)",
+                "line" : 6,
+                "name" : "positive_modulo(int, int)",
                 "parent_name" : "",
-                "usr" : "c:@F@which"
-            },
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/informationDimension.c",
-                "kind" : 6,
-                "line" : 16,
-                "name" : "d1(double *, int *, int *, double *, double *, double *, double *, int *, int *, int *, int *, int *, double *)",
-                "parent_name" : "",
-                "usr" : "c:@F@d1"
-            },
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/informationDimension.c",
-                "kind" : 6,
-                "line" : 111,
-                "name" : "informationDimension(double *, int *, int *, double *, double *, int *, double *, double *, int *, int *, int *, int *, int *, double *)",
-                "parent_name" : "",
-                "usr" : "c:@F@informationDimension"
+                "usr" : "c:@F@positive_modulo#I#I#"
             }
         ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/informationDimension.c",
-        "file_last_write" : 1496226809
+        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/generic_functions.h",
+        "file_last_write" : 1503415147
     },
     {
         "definitions" : [
@@ -1056,7 +993,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/information_dimension.cpp",
-        "file_last_write" : 1501165497
+        "file_last_write" : 1503405339
     },
     {
         "definitions" : [
@@ -1608,7 +1545,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/lyapunov_exponent.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503412970
     },
     {
         "definitions" : [
@@ -1650,45 +1587,6 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/mutual_information.cpp",
-        "file_last_write" : 1501165434
-    },
-    {
-        "definitions" : [
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbourSearch.c",
-                "kind" : 6,
-                "line" : 17,
-                "name" : "boxAssistant(double *, int *, int *, double *, int *, int *, int *)",
-                "parent_name" : "",
-                "usr" : "c:@F@boxAssistant"
-            },
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbourSearch.c",
-                "kind" : 6,
-                "line" : 62,
-                "name" : "neighbourSearchFromBoxes(double *, int *, int *, int *, double *, int *, int *, int *, int *, int *)",
-                "parent_name" : "",
-                "usr" : "c:@F@neighbourSearchFromBoxes"
-            }
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbourSearch.c",
-        "file_last_write" : 1501165434
-    },
-    {
-        "definitions" : [
-            {
-                "column" : 19,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbourSearch.h",
-                "kind" : 6,
-                "line" : 12,
-                "name" : "position(int, int, int)",
-                "parent_name" : "",
-                "usr" : "c:neighbourSearch.h@F@position#I#I#I#"
-            }
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbourSearch.h",
         "file_last_write" : 1501165434
     },
     {
@@ -1821,7 +1719,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbour_search.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503415238
     },
     {
         "definitions" : [
@@ -1870,21 +1768,6 @@
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbour_search_wrapper.cpp",
         "file_last_write" : 1503222037
-    },
-    {
-        "definitions" : [
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/nonlinearNoiseReduction.c",
-                "kind" : 6,
-                "line" : 17,
-                "name" : "nonlinearNoiseReduction(double *, double *, int *, int *, double *, int *)",
-                "parent_name" : "",
-                "usr" : "c:@F@nonlinearNoiseReduction"
-            }
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/nonlinearNoiseReduction.c",
-        "file_last_write" : 1496226809
     },
     {
         "definitions" : [
@@ -2105,7 +1988,7 @@
                 "column" : 6,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 11,
+                "line" : 10,
                 "name" : "get_vertical_histogram(IntegerMatrix &, IntegerVector &, int, int, IntegerVector &)",
                 "parent_name" : "",
                 "usr" : "c:@F@get_vertical_histogram#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#S2_#"
@@ -2114,7 +1997,7 @@
                 "column" : 6,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 39,
+                "line" : 38,
                 "name" : "is_contained_in_neighbourhood(int, int, IntegerMatrix &, int, int)",
                 "parent_name" : "",
                 "usr" : "c:@F@is_contained_in_neighbourhood#I#I#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#"
@@ -2123,7 +2006,7 @@
                 "column" : 6,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 52,
+                "line" : 51,
                 "name" : "update_length_histogram(int, int, IntegerMatrix &, IntegerVector &, int, IntegerVector &, int)",
                 "parent_name" : "",
                 "usr" : "c:@F@update_length_histogram#I#I#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#S2_#I#"
@@ -2132,7 +2015,7 @@
                 "column" : 6,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 77,
+                "line" : 76,
                 "name" : "get_diagonal_recurrence_histogram(IntegerMatrix &, IntegerVector &, int, int, IntegerVector &, IntegerVector &)",
                 "parent_name" : "",
                 "usr" : "c:@F@get_diagonal_recurrence_histogram#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#S2_#S2_#"
@@ -2141,29 +2024,14 @@
                 "column" : 6,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
                 "kind" : 6,
-                "line" : 138,
-                "name" : "get_rqa_histograms(IntegerMatrix &, IntegerVector &, int, int, int, IntegerVector &, IntegerVector &, IntegerVector &)",
+                "line" : 137,
+                "name" : "get_rqa_histograms(IntegerMatrix &, IntegerVector &, int, int, int)",
                 "parent_name" : "",
-                "usr" : "c:@F@get_rqa_histograms#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#I#S2_#S2_#S2_#"
+                "usr" : "c:@F@get_rqa_histograms#&$@N@Rcpp@C@Matrix>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#I#I#I#"
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
-        "file_last_write" : 1503260887
-    },
-    {
-        "definitions" : [
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/spaceTimePlot.c",
-                "kind" : 6,
-                "line" : 9,
-                "name" : "spaceTimePlot(double *, int *, int *, double *, int *, int *, int *, int *, double *)",
-                "parent_name" : "",
-                "usr" : "c:@F@spaceTimePlot"
-            }
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/spaceTimePlot.c",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503415324
     },
     {
         "definitions" : [

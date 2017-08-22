@@ -269,18 +269,12 @@ calculateDiagonalParameters = function(ntakens, numberRecurrencePoints,
 getHistograms = function(neighs, ntakens, lmin, vmin){
   # the neighbours are labeled from 0 to ntakens-1
   c.matrix = neighbourListToCsparseNeighbourMatrix(neighs)
-  verticalHistogram = rep(0,ntakens)
-  diagonalHistogram = rep(0,ntakens)
-  recurrenceHistogram = rep(0,ntakens)
   # auxiliar variables
   return(
     .Call("_nonlinearTseries_get_rqa_histograms", 
           neighs = c.matrix$neighs, nneighs = c.matrix$nneighs,
           ntakens = as.integer(ntakens), vmin = as.integer(vmin),
-          lmin = as.integer(lmin), 
-          verticalHistogram = verticalHistogram,
-          diagonalHistogram = diagonalHistogram,
-          recurrenceHistogram = recurrenceHistogram,
+          lmin = as.integer(lmin),
           PACKAGE = "nonlinearTseries")
   )
 }  

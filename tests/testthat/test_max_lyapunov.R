@@ -9,7 +9,7 @@ test_that("estimates equal theoretical results", {
              start = c(0.63954883, 0.04772637),
              do.plot = FALSE
   )$x
-  x = rcppMaxLyapunov(
+  x = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 2,
     time.lag = 1,
@@ -32,7 +32,7 @@ test_that("estimates equal theoretical results", {
     time =  seq(0, 100, by = 0.01),
     do.plot = FALSE
   )$x
-  x = rcppMaxLyapunov(
+  x = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 5,
     time.lag = 8,
@@ -56,7 +56,7 @@ test_that("estimates equal theoretical results", {
     time =  seq(0, 70, by = 0.01),
     do.plot = FALSE
   )$x
-  x = rcppMaxLyapunov(
+  x = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 5,
     time.lag = 8,
@@ -81,7 +81,7 @@ test_that("estimates equal theoretical results", {
     time = seq(0, 3000, 0.1),
     do.plot = FALSE
   )$x
-  x = rcppMaxLyapunov(
+  x = maxLyapunov(
     time.series = ts,
     min.embedding.dim = 5,
     time.lag = 12,
@@ -98,7 +98,7 @@ test_that("estimates equal theoretical results", {
   
   # logistic map
   logmap = nonlinearTseries::logisticMap(do.plot = FALSE, n.sample = 10000, start = 0.3)
-  x = rcppMaxLyapunov(
+  x = maxLyapunov(
     time.series = logmap,
     min.embedding.dim = 2,
     time.lag = 1,

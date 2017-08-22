@@ -1,6 +1,5 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-#include "neighbourSearch.h"
 #include "genericFunctions.h"  
 
 
@@ -136,14 +135,15 @@ void get_diagonal_recurrence_histogram(
 
 // [[Rcpp::export]]
 List get_rqa_histograms(IntegerMatrix& neighs, IntegerVector& nneighs, 
-                         int ntakens, int vmin, int lmin,
-                         IntegerVector& verticalHistogram, 
-                         IntegerVector& diagonalHistogram,
-                         IntegerVector& recurrenceHistogram){
+                         int ntakens, int vmin, int lmin){
   // auxiliar variables
+  IntegerVector verticalHistogram(ntakens, 0.0);
+  IntegerVector diagonalHistogram(ntakens, 0.0);
+  IntegerVector recurrenceHistogram(ntakens, 0.0);
+  
   get_vertical_histogram(neighs, nneighs, ntakens, vmin, verticalHistogram);
   get_diagonal_recurrence_histogram(neighs, nneighs, ntakens, lmin,
-                                          diagonalHistogram, recurrenceHistogram);
+                                    diagonalHistogram, recurrenceHistogram);
  List ret;
  ret["diagonalHist"] = diagonalHistogram;
  ret["recurrenceHist"] = recurrenceHistogram;

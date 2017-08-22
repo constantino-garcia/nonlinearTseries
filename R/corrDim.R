@@ -80,71 +80,55 @@
 #' @export corrDim
 #' @exportClass corrDim
 #' @useDynLib nonlinearTseries
-corrDim = function ( time.series, min.embedding.dim=2, max.embedding.dim = 5,
-                     time.lag=1,  min.radius,max.radius,corr.order=2,
-                     n.points.radius=5,theiler.window=100,do.plot=TRUE,
-                     number.boxes=NULL,...){
- 
+corrDim = function(time.series, min.embedding.dim = 2, max.embedding.dim = 5,
+                   time.lag = 1, min.radius, max.radius,
+                   corr.order = 2, n.points.radius = 5, theiler.window = 100,
+                   do.plot = TRUE, number.boxes = NULL, ...) {
   #estimate number of boxes for the box assisted algorithm
-  if (is.null(number.boxes)) number.boxes = estimateNumberBoxes(time.series, min.radius)
-  # getTakens vectors for the  minimium embedding dimension. This is done for simplicity
-  # in the C code
-  takensDimMin=buildTakens(time.series=time.series,embedding.dim=min.embedding.dim,time.lag=time.lag)
-  numberTakens=nrow(takensDimMin)
-  #other C params
-  lenTimeSeries=length(time.series)
-  number.embeddings=max.embedding.dim-min.embedding.dim+1
-  corr.matrix=matrix(0,nrow=number.embeddings,ncol=n.points.radius)
-  #radius vector. It is prepared to have equally spaced points in the log10(radius) axis
-  log.radius=seq(log10(max.radius),log10(min.radius),len=n.points.radius)
-  radius=10^log.radius
-  
-  #call the C program
-  if (corr.order==2){
-    sol=.C("corrDim", timeSeries=as.double(time.series),lenTimeSeries = as.integer(length(time.series)),
-           takensDimMin=as.double(takensDimMin),tau=as.integer(time.lag), numberTakens = as.integer(numberTakens),
-           minEmbeddingD=as.integer(min.embedding.dim),maxEmbeddingD=as.integer(max.embedding.dim),
-           eps=as.double(radius),numberEps=as.integer(n.points.radius),
-           numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),corrMatrix=as.double(corr.matrix),
-           PACKAGE="nonlinearTseries")
-  }else{
-    sol=.C("generalizedCorrDim", time.series=as.double(time.series),lenTimeSeries = as.integer(lenTimeSeries),
-           takensDimMin=as.double(takensDimMin),tau=as.integer(time.lag), numberTakens = as.integer(numberTakens),
-           minEmbeddingD=as.integer(min.embedding.dim),maxEmbeddingD=as.integer(max.embedding.dim), q = as.integer(corr.order),
-           eps=as.double(radius),numberEps=as.integer(n.points.radius),
-           numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),corrMatrix=as.double(corr.matrix),
-           PACKAGE="nonlinearTseries")
+  if (is.null(number.boxes)) {
+    number.boxes = estimateNumberBoxes(time.series, min.radius)
   }
-
+  # Radius vector equally spaced points in the log10(radius) space
+  log.radius = seq(log10(max.radius), log10(min.radius), len = n.points.radius)
+  radius = 10 ^ log.radius
   
-  #get the correlation sum matrix
-  corr.matrix=matrix(sol$corrMatrix,nrow=number.embeddings,ncol=n.points.radius)
-  dimnames(corr.matrix) = list(min.embedding.dim:max.embedding.dim,radius)
+  corr.matrix = .Call("_nonlinearTseries_generalized_correlation_sum",
+                      PACKAGE = "nonlinearTseries",
+                      time.series,  time.lag,  theiler.window, radius,
+                      min.embedding.dim, max.embedding.dim, corr.order,  
+                      number.boxes) 
+  dimnames(corr.matrix) = list(min.embedding.dim:max.embedding.dim, radius)
+  
   #eliminate columns with at least one 0
-  wh=which(corr.matrix==0,arr.ind=TRUE)
-  wh=unique(wh[,'col'])
-  if (length(wh>0)){
-    corr.matrix=corr.matrix[,-wh,drop=FALSE]
+  wh = which(corr.matrix == 0, arr.ind = TRUE)
+  wh = unique(wh[, 'col'])
+  if (length(wh > 0)) {
+    corr.matrix = corr.matrix[, -wh, drop = FALSE]
     #eliminate the corresponding radius values in the radius vector
-    radius=radius[-wh]
+    radius = radius[-wh]
   }
   # create the corrDim object
-  corr.dim = list(corr.matrix = corr.matrix,embedding.dims = min.embedding.dim:max.embedding.dim,radius=radius,corr.order=corr.order)
+  corr.dim = list(corr.matrix = corr.matrix,
+                  embedding.dims = min.embedding.dim:max.embedding.dim,
+                  radius=radius,
+                  corr.order=corr.order)
   class(corr.dim) = "corrDim"
   # add attributes
-  id=deparse(substitute(time.series))
-  attr(corr.dim,"time.lag") = time.lag
-  attr(corr.dim,"id") = id
-  attr(corr.dim,"theiler.window") = theiler.window
+  id = deparse(substitute(time.series))
+  attr(corr.dim, "time.lag") = time.lag
+  attr(corr.dim, "id") = id
+  attr(corr.dim, "theiler.window") = theiler.window
   
   # plot if necessary
-  if (do.plot){
-    plot(corr.dim,...)
+  if (do.plot) {
+    tryCatch(plot(corr.dim,...), error = function(error){
+      warning("Error while trying to plot the correlation sum")
+    })
   }
-  
-  return(corr.dim)
-  
+  corr.dim
 }
+
+
 
 #' @return The \emph{nlOrder} function returns the order of the correlation sum.
 #' @rdname corrDim
@@ -219,7 +203,7 @@ plot.corrDim = function(x,main="Correlation Sum C(r)",xlab=NULL,
                         ylab="C(r)",type="b",
                         log="xy",ylim=NULL, col=NULL,pch=NULL,localScalingExp=T,
                         add.legend=T,cex.legend=1,...){
-   # set layout depending on options
+  # set layout depending on options
   if ( add.legend || localScalingExp ){
     current.par =  par(no.readonly = TRUE)
     on.exit(par(current.par))
@@ -257,7 +241,7 @@ plot.corrDim = function(x,main="Correlation Sum C(r)",xlab=NULL,
   #### add local slopes if needed
   if (localScalingExp){
     plotLocalScalingExp(x,xlab = xlab,type = type,col = col,pch=pch,
-                    add.legend = F,...)
+                        add.legend = F,...)
   }
   ### add legend
   if (add.legend){
@@ -276,9 +260,9 @@ plot.corrDim = function(x,main="Correlation Sum C(r)",xlab=NULL,
 #' @rdname corrDim
 #' @export
 plotLocalScalingExp.corrDim = function(x,main="Correlation Dimension C(r)",
-                                   xlab=NULL,ylab="Local scaling exponents",
-                                   type="b",log="x",ylim=NULL,col=NULL,pch=NULL,
-                                   add.legend=T, ...){
+                                       xlab=NULL,ylab="Local scaling exponents",
+                                       type="b",log="x",ylim=NULL,col=NULL,pch=NULL,
+                                       add.legend=T, ...){
   # Check if it is possible to compute local slopes
   if ( ncol(x$corr.matrix) <= 1) {
     stop("Cannot compute local scaling exponents (not enough points in the correlation matrix)")
@@ -434,52 +418,3 @@ eliminateDuplicates = function(correlation.sum , radius){
 
 
 
-# Rcpp-based function -----------------------------------------------------
-#' @export
-rcppCorrDim = function (time.series, min.embedding.dim = 2, max.embedding.dim = 5,
-                    time.lag = 1, min.radius, max.radius,
-                    corr.order = 2, n.points.radius = 5, theiler.window = 100,
-                    do.plot = TRUE, number.boxes = NULL, ...) {
-  #estimate number of boxes for the box assisted algorithm
-  if (is.null(number.boxes)){
-    number.boxes = estimateNumberBoxes(time.series, min.radius)
-  }
-  # Radius vector equally spaced points in the log10(radius) space
-  log.radius = seq(log10(max.radius), log10(min.radius), len = n.points.radius)
-  radius = 10 ^ log.radius
-  
-  corr.matrix = .Call("_nonlinearTseries_generalized_correlation_sum",
-                      PACKAGE = "nonlinearTseries",
-                      time.series,  time.lag,  theiler.window, radius,
-                      min.embedding.dim, max.embedding.dim, corr.order,  
-                      number.boxes) 
-  dimnames(corr.matrix) = list(min.embedding.dim:max.embedding.dim, radius)
-  
-  #eliminate columns with at least one 0
-  wh = which(corr.matrix == 0, arr.ind = TRUE)
-  wh = unique(wh[, 'col'])
-  if (length(wh > 0)) {
-    corr.matrix = corr.matrix[, -wh, drop = FALSE]
-    #eliminate the corresponding radius values in the radius vector
-    radius = radius[-wh]
-  }
-  # create the corrDim object
-  corr.dim = list(corr.matrix = corr.matrix,
-                  embedding.dims = min.embedding.dim:max.embedding.dim,
-                  radius=radius,
-                  corr.order=corr.order)
-  class(corr.dim) = "corrDim"
-  # add attributes
-  id = deparse(substitute(time.series))
-  attr(corr.dim, "time.lag") = time.lag
-  attr(corr.dim, "id") = id
-  attr(corr.dim, "theiler.window") = theiler.window
-  
-  # plot if necessary
-  if (do.plot) {
-    tryCatch(plot(corr.dim,...), error = function(error){
-      warning("Error while trying to plot the correlation sum")
-    })
-  }
-  corr.dim
-}

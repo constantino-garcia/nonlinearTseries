@@ -90,32 +90,36 @@
 #' @export maxLyapunov
 #' @exportClass maxLyapunov
 #' @useDynLib nonlinearTseries
-maxLyapunov=function(time.series,
-                     min.embedding.dim=2,
-                     max.embedding.dim=min.embedding.dim,
-                     time.lag=1,radius,theiler.window=1,min.neighs=5,
-                     min.ref.points=500,max.time.steps=10,number.boxes=NULL,
-                     sampling.period=1,do.plot=TRUE,...){
+maxLyapunov = function(time.series,
+                       min.embedding.dim = 2,
+                       max.embedding.dim = min.embedding.dim,
+                       time.lag = 1, radius, theiler.window = 1, min.neighs = 5,
+                       min.ref.points = 500, max.time.steps = 10, number.boxes = NULL,
+                       sampling.period = 1, do.plot = TRUE,
+                       ...) {
   
-  embeddings = min.embedding.dim:max.embedding.dim
-  n.embeddings = length(embeddings)
-  s.function = matrix(0, ncol = (max.time.steps+1), nrow = n.embeddings)
-  dimnames(s.function) = list(embeddings,0:max.time.steps)
-  for (m in embeddings){
-    s.function[as.character(m),] =
-      maxLyapunovSingleDimension(time.series,takens = NULL,
-      m, time.lag, radius,theiler.window,
-      min.neighs,min.ref.points,
-      max.time.steps,number.boxes,
-      sampling.period)
+  if (is.null(number.boxes)) {
+    number.boxes = estimateNumberBoxes(time.series, radius)
   }
   
-  time=(0:max.time.steps)*sampling.period
-  max.lyapunov.structure = list(time=time,s.function=s.function, 
-                                embedding.dims = min.embedding.dim:max.embedding.dim)
+  #  s.function = matrix(0, ncol = (max.time.steps+1), nrow = n.embeddings)
+  s.function = .Call('_nonlinearTseries_lyapunov_exponent',
+                     PACKAGE = 'nonlinearTseries',
+                     time.series, min.embedding.dim, max.embedding.dim,
+                     time.lag, radius, theiler.window, min.neighs,
+                     min.ref.points, max.time.steps, number.boxes)
+  
+  dimnames(s.function) = list(min.embedding.dim:max.embedding.dim,
+                              0:max.time.steps)
+  time = (0:max.time.steps) * sampling.period
+  max.lyapunov.structure = list(
+    time = time,
+    s.function = s.function,
+    embedding.dims = min.embedding.dim:max.embedding.dim
+  )
   
   class(max.lyapunov.structure) = "maxLyapunov"
-  id=deparse(substitute(time.series))
+  id = deparse(substitute(time.series))
   attr(max.lyapunov.structure,"id") = id
   attr(max.lyapunov.structure,"time.lag") = time.lag
   attr(max.lyapunov.structure,"theiler.window") = theiler.window  
@@ -123,38 +127,16 @@ maxLyapunov=function(time.series,
   attr(max.lyapunov.structure,"min.ref.points") = min.ref.points
   
   #plot
-  if (do.plot){
-    plot(max.lyapunov.structure,...)
+  if (do.plot) {
+    tryCatch(
+      plot(max.lyapunov.structure,...), 
+      error = function(e) {
+        warning("Error while trying to plot the Lyapunov object.")
+      })
   }
   #return results
-  return (max.lyapunov.structure)
+  max.lyapunov.structure
   
-}
-
-# Private function for the computation of the s.function of a given 
-# embedding dimension
-maxLyapunovSingleDimension=function(time.series,takens,embedding.dim,time.lag,
-                                    radius,theiler.window,min.neighs,
-                                    min.ref.points,max.time.steps,number.boxes,
-                                    sampling.period,do.plot){
-  #C parameters
-  if (is.null(takens)) takens=buildTakens(time.series,embedding.dim=embedding.dim,time.lag=time.lag)
-  if (is.null(number.boxes)) {
-      number.boxes = estimateNumberBoxes(time.series, radius)
-  }
-  numberTakens=nrow(takens)
-  Sdn=rep(0,max.time.steps+1)
-  
-  sol=.C("maxLyapunov",timeSeries=as.double(time.series),takens=as.double(takens),
-         tau=as.integer(time.lag),numberTakens=as.integer(numberTakens),
-         embeddingD=as.integer(embedding.dim),eps=as.double(radius),
-         Sdn=as.double(Sdn),nmax=as.integer(max.time.steps),
-         nminRP=as.integer(min.ref.points),neighMin=as.integer(min.neighs),
-         numberBoxes=as.integer(number.boxes),tdist=as.integer(theiler.window),
-         PACKAGE="nonlinearTseries")
-  
-  # create lyapunov structure
-  return(sol$Sdn)
 }
 
 #' Returns the time in which the divergence of close trajectories was computed 
@@ -167,7 +149,6 @@ maxLyapunovSingleDimension=function(time.series,takens,embedding.dim,time.lag,
 divTime = function(x){
   UseMethod("divTime")
 }
-
 
 #' @return The \emph{divTime} function returns the 
 #' time in which the divergence of close trajectories was computed.
@@ -320,64 +301,5 @@ estimate.maxLyapunov= function(x,regression.range = NULL,
   }
   
   
-  return (lyapunov.estimate)
+  return(lyapunov.estimate)
 }
-
-
-# Rcpp-based function -----------------------------------------------------
-#' @export
-rcppMaxLyapunov = function(time.series,
-                           min.embedding.dim = 2,
-                           max.embedding.dim = min.embedding.dim,
-                           time.lag = 1,
-                           radius,
-                           theiler.window = 1,
-                           min.neighs = 5,
-                           min.ref.points = 500,
-                           max.time.steps = 10,
-                           number.boxes = NULL,
-                           sampling.period = 1,
-                           do.plot = TRUE,
-                           ...) {
-
-  if (is.null(number.boxes)) {
-    number.boxes = estimateNumberBoxes(time.series, radius)
-  }
-  
-  #  s.function = matrix(0, ncol = (max.time.steps+1), nrow = n.embeddings)
-  s.function = .Call('_nonlinearTseries_lyapunov_exponent',
-                     PACKAGE = 'nonlinearTseries',
-                     time.series, min.embedding.dim, max.embedding.dim,
-                     time.lag, radius, theiler.window, min.neighs,
-                     min.ref.points, max.time.steps, number.boxes)
-  
-  dimnames(s.function) = list(min.embedding.dim:max.embedding.dim,
-                              0:max.time.steps)
-  time = (0:max.time.steps) * sampling.period
-  max.lyapunov.structure = list(
-    time = time,
-    s.function = s.function,
-    embedding.dims = min.embedding.dim:max.embedding.dim
-  )
-  
-  class(max.lyapunov.structure) = "maxLyapunov"
-  id = deparse(substitute(time.series))
-  attr(max.lyapunov.structure,"id") = id
-  attr(max.lyapunov.structure,"time.lag") = time.lag
-  attr(max.lyapunov.structure,"theiler.window") = theiler.window  
-  attr(max.lyapunov.structure,"min.neighs") = min.neighs
-  attr(max.lyapunov.structure,"min.ref.points") = min.ref.points
-  
-  #plot
-  if (do.plot) {
-    tryCatch(
-      plot(max.lyapunov.structure,...), 
-      error = function(e) {
-        warning("Error while trying to plot the Lyapunov object.")
-      })
-  }
-  #return results
-  max.lyapunov.structure
-  
-}
-

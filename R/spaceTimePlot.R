@@ -39,55 +39,53 @@
 #' @export spaceTimePlot
 #' @exportClass spaceTimePlot
 #' @useDynLib nonlinearTseries
-spaceTimePlot=function(takens = NULL, 
-                       time.series=NULL, embedding.dim=2, 
-                       time.lag=1,max.radius=NULL, time.step=1,
-                       number.time.steps = NULL, numberPercentages=10,
-                       do.plot=TRUE,...){
+spaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 2,
+                         time.lag = 1, max.radius = NULL, time.step = 1, 
+                         number.time.steps = NULL, numberPercentages = 10,
+                         do.plot = TRUE, ...){
   ### define
+  # TODO: MOVE THIS TO BECOME AN ARGUMENT
   kLengthRadiusVector = 1000
   kTimeStepsDefault = 500
   ###
-  if(is.null(takens)){
-    takens = buildTakens( time.series, embedding.dim = embedding.dim, time.lag = time.lag)  
+  if (is.null(takens)) {
+    takens = buildTakens(time.series, embedding.dim = embedding.dim,
+                         time.lag = time.lag)  
   } 
-  if(is.null(number.time.steps)){
-    number.time.steps = min(length(takens)/time.step,kTimeStepsDefault)
+  if (is.null(number.time.steps)) {
+    number.time.steps = min(length(takens) / time.step, kTimeStepsDefault)
   } 
-    
-  if (is.null(max.radius)){max.radius = (max(takens)-min(takens)+0.01)}
-  # parameters for the C function
-  numberTakens = nrow(takens)
-  embedding.dim = ncol(takens)
-  radius =  ( (1:kLengthRadiusVector)* max.radius )/kLengthRadiusVector
-  stp = matrix(0,ncol=number.time.steps,nrow=numberPercentages)
-  # call the C function
-  sol = .C("spaceTimePlot",takens = as.double(takens), numberTakens = as.integer(numberTakens), 
-                   embeddingD = as.integer(embedding.dim), eps = as.double(radius), leps = as.integer(kLengthRadiusVector),
-                   numberTimeSteps =  as.integer(number.time.steps), timeStep = as.integer(time.step),
-                   numberPercentages = as.integer( numberPercentages), spaceTimePlot = as.double(stp),
-                   PACKAGE="nonlinearTseries")
-  # format and return spaceTimePlot
-  stp.matrix = matrix(sol$spaceTimePlot,ncol=number.time.steps,nrow=numberPercentages)
+  
+  if (is.null(max.radius)) {
+    max.radius = (max(takens) - min(takens) + 1e-2)
+  }
+  radii =  (1:kLengthRadiusVector) * max.radius / kLengthRadiusVector
+  stp.matrix =  .Call('_nonlinearTseries_space_time_plot', 
+                      PACKAGE = 'nonlinearTseries', takens, radii, 
+                      number.time.steps, time.step, numberPercentages)
+  
   # positions where the radius was not enough to compute the propper percentage 
-  positions = which(stp.matrix==0,arr.ind=TRUE)
-  if (length(positions) != 0){
+  positions = which(abs(stp.matrix) < 1e-12, arr.ind = TRUE)
+  if (length(positions) != 0) {
     warning("The maximum radius was not enough to find enough neighbours for all the percentages\n")
-    stp.matrix[positions]=NA  
+    stp.matrix[positions] = NA
   }
   
-  dimnames(stp.matrix)  = list(percentagePoints=100*(1:numberPercentages)/numberPercentages,number.time.steps=1:number.time.steps)
-  stp = list(stp.matrix=stp.matrix,time.step=time.step,time.axis = 1:number.time.steps)
+  dimnames(stp.matrix) = list(percentagePoints = 100 * (1:numberPercentages) / numberPercentages,
+                              number.time.steps = 1:number.time.steps)
+  stp = list(stp.matrix = stp.matrix, 
+             time.step = time.step,
+             time.axis = 1:number.time.steps)
   class(stp) = "spaceTimePlot"
   stp = propagateTakensAttr(stp,takens)
   
-  #plot if necessary
-  if (do.plot){
-    plot(stp,...)
+  # Plot if necessary
+  if (do.plot) {
+    tryCatch(plot(stp,...), error = function(error){
+      warning("Error while trying to plot the space-time plot")
+    })
   }
-  
-  return (stp)
-  
+  stp
 }
 
 
@@ -110,7 +108,7 @@ contourLines = function(x){
 contourLines.spaceTimePlot = function(x){
   return (x$stp.matrix)
 }
-  
+
 
 #' @rdname spaceTimePlot
 #' @param main A title for the plot.
@@ -162,62 +160,7 @@ plot.spaceTimePlot = function(x, main = "Space time separation plot",xlab=NULL,
            col=col,lty=rep(1,numberPercentages),
            lwd=rep(2.5,numberPercentages),bty="n",
            legend=legend.text,title="Percentage of neighbour pairs")
-
+    
   }
   
-}
-
-
-
-
-
-# Rcpp-based function -----------------------------------------------------
-#' @export 
-rcppSpaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 2,
-                             time.lag = 1, max.radius = NULL, time.step = 1, 
-                             number.time.steps = NULL, numberPercentages = 10,
-                             do.plot = TRUE, ...){
-  ### define
-  # TODO: MOVE THIS TO BECOME AN ARGUMENT
-  kLengthRadiusVector = 1000
-  kTimeStepsDefault = 500
-  ###
-  if (is.null(takens)) {
-    takens = buildTakens(time.series, embedding.dim = embedding.dim,
-                         time.lag = time.lag)  
-  } 
-  if (is.null(number.time.steps)) {
-    number.time.steps = min(length(takens) / time.step, kTimeStepsDefault)
-  } 
-  
-  if (is.null(max.radius)) {
-    max.radius = (max(takens) - min(takens) + 1e-2)
-  }
-  radii =  (1:kLengthRadiusVector) * max.radius / kLengthRadiusVector
-  stp.matrix =  .Call('_nonlinearTseries_space_time_plot', 
-                      PACKAGE = 'nonlinearTseries', takens, radii, 
-                      number.time.steps, time.step, numberPercentages)
-  
-  # positions where the radius was not enough to compute the propper percentage 
-  positions = which(abs(stp.matrix) < 1e-12, arr.ind = TRUE)
-  if (length(positions) != 0) {
-    warning("The maximum radius was not enough to find enough neighbours for all the percentages\n")
-    stp.matrix[positions] = NA
-  }
-  
-  dimnames(stp.matrix) = list(percentagePoints = 100 * (1:numberPercentages) / numberPercentages,
-                              number.time.steps = 1:number.time.steps)
-  stp = list(stp.matrix = stp.matrix, 
-             time.step = time.step,
-             time.axis = 1:number.time.steps)
-  class(stp) = "spaceTimePlot"
-  stp = propagateTakensAttr(stp,takens)
-  
-  # Plot if necessary
-  if (do.plot) {
-    tryCatch(plot(stp,...), error = function(error){
-      warning("Error while trying to plot the space-time plot")
-    })
-  }
-  stp
 }
