@@ -64,44 +64,11 @@ poincareMap=function(time.series=NULL, embedding.dim=2, time.lag=1, takens = NUL
     stop("The hiperplane was defined in a wrong dimensional space\n")
   }
   # this variables will store information about the poincare map
-  poincare.map.series = matrix(0,nrow=n.points,ncol=dimension)
-  positive.poincare.map.series = matrix(0,nrow=n.points,ncol=dimension)
-  negative.poincare.map.series = matrix(0,nrow=n.points,ncol=dimension)
-  crossing.time = rep(0,n.points)
-  positive.crossing.time = rep(0,n.points)
-  negative.crossing.time = rep(0,n.points)
-  number.of.crossings = 0
-  number.of.positive.crossings = 0
-  number.of.negative.crossings = 0
+  p.map = .Call("_nonlinearTseries_poincare_map", timeSeries = takens, 
+                hiperplanePoint = hiperplane.point,
+                normalVector = normal.hiperplane.vector,
+                PACKAGE = "nonlinearTseries")
   
-  poincare = .C("poincareMap", timeSeries = as.double(takens), 
-                nPoints = as.integer(n.points), dimension = as.integer(dimension), 
-                poincareMapSeries = as.double(poincare.map.series),
-                positivePoincareMapSeries = as.double(positive.poincare.map.series),
-                negativePoincareMapSeries = as.double(negative.poincare.map.series),
-                crossingTime = as.double(crossing.time), 
-                positiveCrossingTime = as.double(positive.crossing.time), 
-                negativeCrossingTime = as.double(negative.crossing.time), 
-                numberCrossings = as.integer(number.of.crossings), 
-                numberPositiveCrossings = as.integer(number.of.positive.crossings), 
-                numberNegativeCrossings = as.integer(number.of.negative.crossings), 
-                hiperplanePoint = as.double(hiperplane.point),
-                normalVector = as.double(normal.hiperplane.vector),
-                PACKAGE="nonlinearTseries")
-  
-  # arranging data to return it
-  poincare.map.series = matrix(poincare$poincareMapSeries,nrow=n.points,ncol=dimension)
-  poincare.map.series = poincare.map.series[1:poincare$numberCrossings,]
-  positive.poincare.map.series = matrix(poincare$positivePoincareMapSeries,nrow=n.points,ncol=dimension)
-  positive.poincare.map.series = positive.poincare.map.series[1:poincare$numberPositiveCrossings,]
-  negative.poincare.map.series = matrix(poincare$negativePoincareMapSeries,nrow=n.points,ncol=dimension)
-  negative.poincare.map.series = negative.poincare.map.series[1:poincare$numberNegativeCrossings,]
-  
-  
-  
-  p.map = list(pm = poincare.map.series, pm.time = poincare$crossingTime[1:poincare$numberCrossings],
-               pm.pos = positive.poincare.map.series, pm.pos.time = poincare$positiveCrossingTime[1:poincare$numberPositiveCrossings],
-               pm.neg = negative.poincare.map.series, pm.neg.time = poincare$negativeCrossingTime[1:poincare$numberNegativeCrossings])
   # add attributes
   p.map = propagateTakensAttr(p.map, takens)
   attr(p.map, "normal.hiperplane.vector") = normal.hiperplane.vector

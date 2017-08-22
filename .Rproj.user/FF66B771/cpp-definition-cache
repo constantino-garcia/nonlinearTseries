@@ -1905,30 +1905,6 @@
         "definitions" : [
             {
                 "column" : 8,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincareMap.c",
-                "kind" : 6,
-                "line" : 8,
-                "name" : "calculateCrossings(double *, int, double, double, int, int, int, double *)",
-                "parent_name" : "",
-                "usr" : "c:@F@calculateCrossings"
-            },
-            {
-                "column" : 6,
-                "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincareMap.c",
-                "kind" : 6,
-                "line" : 33,
-                "name" : "poincareMap(double *, int *, int *, double *, double *, double *, double *, double *, double *, int *, int *, int *, double *, double *)",
-                "parent_name" : "",
-                "usr" : "c:@F@poincareMap"
-            }
-        ],
-        "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincareMap.c",
-        "file_last_write" : 1496226809
-    },
-    {
-        "definitions" : [
-            {
-                "column" : 8,
                 "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincare_map.cpp",
                 "kind" : 6,
                 "line" : 9,
@@ -1947,7 +1923,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincare_map.cpp",
-        "file_last_write" : 1503265765
+        "file_last_write" : 1503401579
     },
     {
         "definitions" : [
