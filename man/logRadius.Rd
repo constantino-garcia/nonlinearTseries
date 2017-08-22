@@ -12,7 +12,8 @@ logRadius(x)
 }
 \value{
 A numeric vector representing the average log(radius) computed
-on the information dimension algorithm represented by the \emph{infDim} object.
+on the information dimension algorithm represented by the \emph{infDim} 
+object.
 }
 \description{
 Obtain the the average log(radius) computed

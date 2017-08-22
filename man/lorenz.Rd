@@ -17,12 +17,15 @@ lorenz(sigma = 10, beta = 8/3, rho = 28, start = c(-13, -14, 47),
 \item{start}{A 3-dimensional numeric vector indicating the starting point for the time series.
 Default: c(-13, -14, 47).}
 
-\item{time}{The temporal interval at which the system will be generated. Default: time=seq(0,50,by = 0.01).}
+\item{time}{The temporal interval at which the system will be generated. 
+Default: time=seq(0,50,by = 0.01).}
 
-\item{do.plot}{Logical value. If TRUE (default value), a plot of the generated Lorenz system is shown.}
+\item{do.plot}{Logical value. If TRUE (default value), a plot of the 
+generated Lorenz system is shown.}
 }
 \value{
-A list with four vectors named \emph{time}, \emph{x}, \emph{y} and \emph{z} containing the time, the x-components, the 
+A list with four vectors named \emph{time}, \emph{x}, \emph{y} 
+and \emph{z} containing the time, the x-components, the 
 y-components and the z-components of the Lorenz system, respectively.
 }
 \description{
@@ -37,7 +40,8 @@ The default selection for the system parameters (\eqn{\sigma=10, \rho=28, \beta=
 produce a deterministic chaotic time series.
 }
 \note{
-Some initial values may lead to an unstable system that will tend to infinity.
+Some initial values may lead to an unstable system that will tend to 
+infinity.
 }
 \examples{
 \dontrun{
@@ -47,10 +51,12 @@ plot(lor$time,lor$x,type="l")
 }
 }
 \references{
-Strogatz, S.: Nonlinear dynamics and chaos: with applications to physics, biology, chemistry and engineering (Studies in Nonlinearity)
+Strogatz, S.: Nonlinear dynamics and chaos: with applications 
+to physics, biology, chemistry and engineering (Studies in Nonlinearity)
 }
 \seealso{
-\code{\link{henon}, \link{logisticMap}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
+\code{\link{henon}, \link{logisticMap}, \link{rossler}, 
+\link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 }
 \author{
 Constantino A. Garcia

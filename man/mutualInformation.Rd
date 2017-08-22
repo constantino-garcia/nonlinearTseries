@@ -25,8 +25,8 @@ mutualInformation(time.series, lag.max = NULL, n.partitions = NULL,
 
 \item{lag.max}{Largest lag at which to calculate the AMI.}
 
-\item{n.partitions}{Number of bins used to compute the probability distribution
-of the time series.}
+\item{n.partitions}{Number of bins used to compute the probability 
+distribution of the time series.}
 
 \item{units}{The units for the mutual information. Allowed units are
 "Nats", "Bits" or "Bans" (somethings called Hartleys). Default is "Nats".}
@@ -50,15 +50,16 @@ of the time series.}
 \value{
 A \emph{mutualInf} object that consist of a list containing all 
 the relevant information of the AMI computation: 
-\emph{time.lag}, \emph{mutual.information}, \emph{units} and \emph{n.partitions}.
+\emph{time.lag}, \emph{mutual.information}, \emph{units} and 
+\emph{n.partitions}.
 }
 \description{
 Functions for estimating the Average Mutual Information (AMI) of a time
 series.
 }
 \details{
-The Average Mutual Information (AMI) measures how much one random variable tells us about 
-another. In the context of time series analysis, AMI
+The Average Mutual Information (AMI) measures how much one random variable
+ tells us about another. In the context of time series analysis, AMI
 helps to quantify the amount of knowledge gained about the value
 of \eqn{x(t+\tau)}{x(t+tau)} when observing \eqn{x(t)}.
 
@@ -81,7 +82,8 @@ sx = sinaiMap(a=0.3,n.sample=5000,start=c(0.23489,0.8923),do.plot=FALSE)$x
 mutinf = mutualInformation(sx, n.partitions = 20, units = "Bits") }
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 H. Abarbanel: Analysis of observed chaotic data (Springer, 1996).
 }
 \seealso{

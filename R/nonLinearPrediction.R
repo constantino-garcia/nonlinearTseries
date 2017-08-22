@@ -69,5 +69,5 @@ nonLinearPrediction = function(time.series, embedding.dim, time.lag,
     #increment the size of the neighbourhood
     radius = radius + radius.increment   
   }
-  return(av / nfound)
+  av / nfound
 }

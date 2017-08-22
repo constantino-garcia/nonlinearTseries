@@ -10,17 +10,20 @@ logisticMap(r = 4, start = runif(n = 1, min = 0, max = 1),
 \arguments{
 \item{r}{The \emph{r} parameter. Default: 4}
 
-\item{start}{A numeric value indicating the starting value for the time series.
-If the starting point is not specified, it is generated randomly.}
+\item{start}{A numeric value indicating the starting value for the time 
+series. If the starting point is not specified, it is generated randomly.}
 
 \item{n.sample}{Length of the generated time series. Default: 5000 samples.}
 
-\item{n.transient}{Number of transient samples that will be discarded. Default: 500 samples.}
+\item{n.transient}{Number of transient samples that will be discarded. 
+Default: 500 samples.}
 
-\item{do.plot}{Logical value. If TRUE (default value), a plot of the generated logistic system is shown.}
+\item{do.plot}{Logical value. If TRUE (default value), a plot of the 
+generated logistic system is shown.}
 }
 \value{
-A vector containing the values of the time series that has been generated.
+A vector containing the values of the time series that has been 
+generated.
 }
 \description{
 Generates a time series using the logistic map.
@@ -32,7 +35,8 @@ The default selection for the \emph{r} parameter is known to
 produce a deterministic chaotic time series.
 }
 \note{
-Some initial values may lead to an unstable system that will tend to infinity.
+Some initial values may lead to an unstable system that will tend to 
+infinity.
 }
 \examples{
 \dontrun{
@@ -40,10 +44,12 @@ log.map=logisticMap(n.sample = 1000, n.transient=10,do.plot=TRUE)
 }
 }
 \references{
-Strogatz, S.: Nonlinear dynamics and chaos: with applications to physics, biology, chemistry and engineering (Studies in Nonlinearity)
+Strogatz, S.: Nonlinear dynamics and chaos: with applications 
+to physics, biology, chemistry and engineering (Studies in Nonlinearity)
 }
 \seealso{
-\code{\link{henon}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
+\code{\link{henon}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, 
+\link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 }
 \author{
 Constantino A. Garcia

@@ -11,8 +11,8 @@ fluctuationFunction(x)
 \item{x}{A \emph{dfa} object.}
 }
 \value{
-The \emph{fluctuationFunction} function returns the fluctuation function used
-obtained in the DFA.
+The \emph{fluctuationFunction} function returns the fluctuation 
+function used obtained in the DFA.
 }
 \description{
 Returns the fluctuation function obtained in a DFA and represented by a

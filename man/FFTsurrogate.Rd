@@ -7,26 +7,29 @@
 FFTsurrogate(time.series, n.samples = 1)
 }
 \arguments{
-\item{time.series}{The original time.series from which the surrogate data is generated.}
+\item{time.series}{The original time.series from which the surrogate data 
+is generated.}
 
 \item{n.samples}{The number of surrogate data sets to generate,}
 }
 \value{
-A matrix containing the generated surrogate data (one time series per row).
+A matrix containing the generated surrogate data (one time series 
+per row).
 }
 \description{
 Generates surrogate samples from the original time series.
 }
 \details{
 This function uses the phase randomization procedure for 
-generating the surrogated data. This algorithm generates surrogate data with the same
-mean and autocorrelation function (and thus, the same power spectrum because of the 
-Wiener-Khinchin theorem) as the original time series.
+generating the surrogated data. This algorithm generates surrogate data with
+ the same mean and autocorrelation function (and thus, the same power 
+ spectrum because of the Wiener-Khinchin theorem) as the original time 
+ series.
 
-The phase randomization algorithm is often used when the null hypothesis being tested
-consist on the assumption that the time.series data comes from a stationary linear
-stochastic process with Gaussian inputs. The phase randomization preserves the Gaussian
-distribution.
+The phase randomization algorithm is often used when the null hypothesis 
+being tested consist on the assumption that the time.series data comes from 
+a stationary linear stochastic process with Gaussian inputs. The phase 
+randomization preserves the Gaussian distribution.
 }
 \examples{
 \dontrun{
@@ -37,7 +40,8 @@ surrogate = FFTsurrogate(time.series, 20)
 }
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 }
 \author{
 Constantino A. Garcia

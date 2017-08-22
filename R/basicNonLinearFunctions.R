@@ -19,7 +19,7 @@ estimateNumberBoxes = function(time.series, radius){
   number.boxes = as.integer((max(time.series) - min(time.series)) / radius)
   if (number.boxes > kMaximumNumberBoxes) number.boxes = kMaximumNumberBoxes
   if (number.boxes < kMinimumNumberBoxes) number.boxes = kMinimumNumberBoxes
-  return(number.boxes)
+  number.boxes
 }
 
 # private function
@@ -33,7 +33,7 @@ isNeighbour = function(v1,v2,embedding.dim,radius){
       return(FALSE)
     }
   }
-  return(TRUE);
+  TRUE
 }
 
 #' Build the Takens' vectors 
@@ -85,7 +85,7 @@ buildTakens = function(time.series, embedding.dim, time.lag) {
   attr(takens,"embedding.dim") = embedding.dim
   attr(takens,"time.lag") = time.lag
   attr(takens,"id") = id
-  return(takens)
+  takens
 }
 
 #' Estimate an appropiate time lag for the Takens' vectors
@@ -199,7 +199,7 @@ timeLag = function(time.series, technique=c("acf","ami"),
 # internal function. It will calculate the first time lag where
 # the vector x decays to a given value
 get.position.decays = function(x, value, method ) {
-  cross.position <- which(x <= value)
+  cross.position = which(x <= value)
   # if x does not cross the value specified
   # by the user, a warning is given
   if (length(cross.position) == 0) {
@@ -212,7 +212,7 @@ get.position.decays = function(x, value, method ) {
   if ((cross.position) > 1) {
     cross.position = cross.position - 1
   }
-  return(cross.position)
+  cross.position
 }
 
 # internal function. It will calculate the first time lag where
@@ -232,5 +232,5 @@ get.first.minimum = function(x,method){
     first.minimum = minimums[[1]] + 1
   } 
   # convert from positions to time lags by substracting 1
-  return(first.minimum - 1)
+  (first.minimum - 1)
 }

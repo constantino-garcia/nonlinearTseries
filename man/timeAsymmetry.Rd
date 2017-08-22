@@ -19,8 +19,8 @@ Time Reversibility statistic
 The time simmetry statistic  measures the asymmetry of a time series 
 under time reversal by calculating:
 \deqn{E[s_n\cdot s_{n+1}^2] - E[s_n^2\cdot s_{n+1}] }{E[s_n * s_{n+1}^2] - E[s_n^2 * s_{n+1}] }.
-Since linear stochastic series are symmetric under time reversal, this statistic
-may be used for testing the assertion that the data was generated
+Since linear stochastic series are symmetric under time reversal, this 
+statistic may be used for testing the assertion that the data was generated
 from a stationary linear stochastic process or not.
 }
 \author{

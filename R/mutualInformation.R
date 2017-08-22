@@ -3,8 +3,8 @@
 #' Functions for estimating the Average Mutual Information (AMI) of a time
 #' series.
 #' @details 
-#' The Average Mutual Information (AMI) measures how much one random variable tells us about 
-#' another. In the context of time series analysis, AMI
+#' The Average Mutual Information (AMI) measures how much one random variable
+#'  tells us about another. In the context of time series analysis, AMI
 #' helps to quantify the amount of knowledge gained about the value
 #' of \eqn{x(t+\tau)}{x(t+tau)} when observing \eqn{x(t)}.
 #' 
@@ -22,16 +22,18 @@
 #'  bans (base 10, also called hartleys).
 #' @param time.series The observed time series.
 #' @param lag.max Largest lag at which to calculate the AMI.
-#' @param n.partitions Number of bins used to compute the probability distribution
-#' of the time series.
+#' @param n.partitions Number of bins used to compute the probability 
+#' distribution of the time series.
 #' @param units The units for the mutual information. Allowed units are
 #' "Nats", "Bits" or "Bans" (somethings called Hartleys). Default is "Nats".
 #' @param do.plot Logical value. If TRUE, the AMI is plotted
 #' @param ... Further arguments for the plotting function.
 #' @return  A \emph{mutualInf} object that consist of a list containing all 
 #' the relevant information of the AMI computation: 
-#' \emph{time.lag}, \emph{mutual.information}, \emph{units} and \emph{n.partitions}. 
-#' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+#' \emph{time.lag}, \emph{mutual.information}, \emph{units} and 
+#' \emph{n.partitions}. 
+#' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+#' (Cambridge university press)
 #' H. Abarbanel: Analysis of observed chaotic data (Springer, 1996).
 #' @author Constantino A. Garcia
 #' @examples 
@@ -86,22 +88,19 @@ mutualInformation = function(time.series,lag.max = NULL,
 plot.mutualInf = function(x,main="Average Mutual Information (AMI)",
                           xlab="Time lag", ylab=NULL, type="h",
                           ...){
-  if (is.null(ylab)){
+  if (is.null(ylab)) {
     ylab = paste("AMI in", x$units)
   }
   x.len = length(x$mutual.information)
-  plot(x$time.lag, x$mutual.information,type=type, main=main,
-       xlab=xlab,ylab=ylab,...)
+  plot(x$time.lag, x$mutual.information, type = type, main = main, 
+       xlab = xlab, ylab = ylab, ...)
 }
-
 
 #' @rdname mutualInformation
 #' @export
 as.numeric.mutualInf = function(x,...){
   x$mutual.information
 }
-
-
 
 # Extract parts of the AMI object
 #' @param i Indices specifying elements to extract.
@@ -111,7 +110,6 @@ as.numeric.mutualInf = function(x,...){
     mutualInf(x$time.lag[i],x$mutual.information[i], x$units, x$n.partitions)
 }
 
-
 #  Extract parts of the AMI object
 #' @rdname mutualInformation
 #' @export
@@ -119,17 +117,9 @@ as.numeric.mutualInf = function(x,...){
   mutualInf(x$time.lag[i], x$mutual.information[i], x$units, x$n.partitions)
 }
 
-
 mutualInf = function(tim, mutinf, units, n.partitions){
-  mutinf = list(time.lag = tim, mutual.information = mutinf, units=units, 
+  mutinf = list(time.lag = tim, mutual.information = mutinf, units = units,
                 n.partitions = n.partitions)
   class(mutinf) = "mutualInf"
   mutinf
 }
-
-#TODO: check if we can remove this safely
-#tsHist <- function(x,tlag=1,npartitions=16){
-  #.Call("_nonlinearTseries_tsHistogram",as.numeric(x),as.integer(tlag),
-  #as.integer(npartitions),PACKAGE="nonlinearTseries")
-#}
-

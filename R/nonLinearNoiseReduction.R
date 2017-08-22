@@ -1,4 +1,3 @@
-
 # References: http://www.mpipks-dresden.mpg.de/~tisean/TISEAN_2.1/docs/chaospaper/node23.html#SECTION00061000000000000000
 #' Nonlinear noise reduction
 #' @description

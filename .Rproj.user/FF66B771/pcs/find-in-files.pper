@@ -2,9 +2,11 @@
     "dialog-state" : {
         "caseSensitive" : false,
         "filePatterns" : [
+            "*.r",
+            "*.R"
         ],
         "path" : "~/Code/R/nonlineartseries",
-        "query" : "rcpp[A-Z]",
-        "regex" : true
+        "query" : "<-",
+        "regex" : false
     }
 }

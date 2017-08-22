@@ -21,13 +21,15 @@ If the starting point is not specified, it is generated randomly.}
 
 \item{n.sample}{Length of the generated time series. Default: 5000 samples.}
 
-\item{n.transient}{Number of transient samples that will be discarded. Default: 500 samples.}
+\item{n.transient}{Number of transient samples that will be discarded. 
+Default: 500 samples.}
 
-\item{do.plot}{Logical value. If TRUE (default value), a plot of the generated ikeda system is shown.}
+\item{do.plot}{Logical value. If TRUE (default value), a plot of the 
+generated ikeda system is shown.}
 }
 \value{
-a list with 2 vectors named \emph{x} and \emph{y} the x-components and the 
-y-components of the Ikeda map, respectively.
+a list with 2 vectors named \emph{x} and \emph{y} the x-components 
+and the y-components of the Ikeda map, respectively.
 }
 \description{
 Generates a time series using the Ikeda map
@@ -39,7 +41,8 @@ The default selection for the \emph{a}, \emph{b}, \emph{c} and \emph{k} paramete
 produce a deterministic chaotic time series.
 }
 \note{
-Some initial values may lead to an unstable system that will tend to infinity.
+Some initial values may lead to an unstable system that will tend to 
+infinity.
 }
 \examples{
 \dontrun{
@@ -47,10 +50,12 @@ ikeda.map=ikedaMap(n.sample = 1000, n.transient=10, do.plot=TRUE)
 }
 }
 \references{
-Strogatz, S.: Nonlinear dynamics and chaos: with applications to physics, biology, chemistry and engineering (Studies in Nonlinearity)
+Strogatz, S.: Nonlinear dynamics and chaos: with applications 
+to physics, biology, chemistry and engineering (Studies in Nonlinearity)
 }
 \seealso{
-\code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
+\code{\link{henon}, \link{logisticMap}, \link{lorenz}, 
+\link{rossler}, \link{cliffordMap}, \link{sinaiMap}, \link{gaussMap}}
 }
 \author{
 Constantino A. Garcia

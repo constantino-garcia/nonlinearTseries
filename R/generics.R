@@ -33,7 +33,7 @@ embeddingDims = function(x){
 }
 
 embeddingDims.default = function(x){
-  return(x$embedding.dims)
+  x$embedding.dims
 }
 
 #' Get the radius of the neighborhoods used for the  computations of 
@@ -51,7 +51,7 @@ radius = function(x){
 }
 
 radius.default = function(x){
-  return(x$radius)
+  x$radius
 }
 
 #' Get the order of the nonlinear chaotic invariant. 

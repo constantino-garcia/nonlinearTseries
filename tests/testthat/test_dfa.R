@@ -11,7 +11,7 @@ test_that("estimates equal theoretical results", {
     for (i in 1:len) {
       br[[i]] = sum(x[1:i])
     }
-    return(br)
+    br
   }
   bnoise = brown_noise(6000)
   # load stored pink noise

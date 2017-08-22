@@ -10,18 +10,21 @@ sinaiMap(a = 0.1, start = runif(2), n.sample = 5000, n.transient = 500,
 \arguments{
 \item{a}{The \emph{a} parameter. Default: 0.1}
 
-\item{start}{A 2-dimensional vector indicating the starting values for the x and y Sinai coordinates. 
+\item{start}{A 2-dimensional vector indicating the starting values for the 
+x and y Sinai coordinates. 
 If the starting point is not specified, it is generated randomly.}
 
 \item{n.sample}{Length of the generated time series. Default: 5000 samples.}
 
-\item{n.transient}{Number of transient samples that will be discarded. Default: 500 samples.}
+\item{n.transient}{Number of transient samples that will be discarded. 
+Default: 500 samples.}
 
-\item{do.plot}{Logical value. If TRUE (default value), a plot of the generated Sinai system is shown.}
+\item{do.plot}{Logical value. If TRUE (default value), a plot of the 
+generated Sinai system is shown.}
 }
 \value{
-A list with two vectors named x and y containing the x-components and the 
-y-components of the Sinai map, respectively.
+A list with two vectors named x and y containing the x-components 
+and the  y-components of the Sinai map, respectively.
 }
 \description{
 Generates a 2-dimensional time series using the Sinai map.
@@ -33,7 +36,8 @@ The Sinai map is defined as follows:
 The default selection for the \emph{a} parameter is known to produce a deterministic chaotic time series.
 }
 \note{
-Some initial values may lead to an unstable system that will tend to infinity.
+Some initial values may lead to an unstable system that will tend to 
+infinity.
 }
 \examples{
 \dontrun{
@@ -44,10 +48,12 @@ plot(ts(sinai.map$x))
 }
 \references{
 Mcsharry, P. E. and P. R. Ruffino (2003). Asymptotic angular stability 
-in nonlinear systems: rotation numbers and winding numbers. Dynamical Systems 18(3), 191-200.
+in nonlinear systems: rotation numbers and winding numbers. Dynamical 
+Systems 18(3), 191-200.
 }
 \seealso{
-\code{\link{henon}, \link{logisticMap}, \link{lorenz}, \link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{gaussMap}}
+\code{\link{henon}, \link{logisticMap}, \link{lorenz}, 
+\link{rossler}, \link{ikedaMap}, \link{cliffordMap}, \link{gaussMap}}
 }
 \author{
 Constantino A. Garcia

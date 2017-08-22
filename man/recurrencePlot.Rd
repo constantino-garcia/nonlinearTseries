@@ -8,17 +8,21 @@ recurrencePlot(takens = NULL, time.series, embedding.dim, time.lag, radius,
   ...)
 }
 \arguments{
-\item{takens}{Instead of specifying the \emph{time.series}, the \emph{embedding.dim} and the \emph{time.lag}, the user
-may specify directly the Takens' vectors.}
+\item{takens}{Instead of specifying the \emph{time.series}, the 
+\emph{embedding.dim} and the \emph{time.lag}, the user may specify directly 
+the Takens' vectors.}
 
-\item{time.series}{The original time series from which the phase-space reconstruction is performed.}
+\item{time.series}{The original time series from which the phase-space 
+reconstruction is performed.}
 
-\item{embedding.dim}{Integer denoting the dimension in which we shall embed the \emph{time.series}.}
+\item{embedding.dim}{Integer denoting the dimension in which we shall embed 
+the \emph{time.series}.}
 
-\item{time.lag}{Integer denoting the number of time steps that will be use to construct the 
-Takens' vectors.}
+\item{time.lag}{Integer denoting the number of time steps that will be use 
+to construct the  Takens' vectors.}
 
-\item{radius}{Maximum distance between two phase-space points to be considered a recurrence.}
+\item{radius}{Maximum distance between two phase-space points to be 
+considered a recurrence.}
 
 \item{...}{Additional plotting parameters.}
 }
@@ -29,7 +33,8 @@ Plot the recurrence matrix.
 WARNING: This function is computationally very expensive. Use with caution.
 }
 \references{
-Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
+Zbilut, J. P. and C. L. Webber. Recurrence quantification 
+analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
 }
 \author{
 Constantino A. Garcia

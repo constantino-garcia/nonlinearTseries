@@ -15,30 +15,31 @@
 #' @export nonlinearityTest
 #' @import tseries
 #' @import TSA
-nonlinearityTest <- function(time.series, verbose = TRUE){
+nonlinearityTest = function(time.series, verbose = TRUE) {
   nltests = list()
   # apply all tests
   # testing linearity in mean
-  terasvirta = tseries::terasvirta.test(x=ts(time.series),type="Chisq")
+  terasvirta = tseries::terasvirta.test(x = ts(time.series), type = "Chisq")
   nltests$Terasvirta = terasvirta
-  if (verbose){
+  if (verbose) {
     cat("\t\t ** Teraesvirta's neural network test  **\n")  
     cat("\t\t Null hypothesis: Linearity in \"mean\" \n")
-    cat("\t\t X-squared = ",terasvirta$statistic," df = ",terasvirta$parameter," p-value = ",
-        terasvirta$p.value,"\n\n")  
+    cat("\t\t X-squared = ",terasvirta$statistic," df = ",terasvirta$parameter,
+        " p-value = ", terasvirta$p.value,"\n\n")  
   }  
   white = tseries::white.test(ts(time.series))
   nltests$White = white
-  if (verbose){
+  if (verbose) {
     cat("\t\t ** White neural network test  **\n")  
     cat("\t\t Null hypothesis: Linearity in \"mean\" \n")
-    cat("\t\t X-squared = ",white$statistic," df = ",white$parameter," p-value = ",
-        white$p.value,"\n\n")    
+    cat("\t\t X-squared = ",white$statistic," df = ",white$parameter,
+        " p-value = ", white$p.value,"\n\n")    
   }
-  # nonlinearity against the null hypothesis that the time series follows some AR process.
+  # nonlinearity against the null hypothesis that the time series follows 
+  # some AR process.
   keenan = TSA::Keenan.test(time.series)
   nltests$Keenan = keenan
-  if (verbose){
+  if (verbose) {
     cat("\t\t ** Keenan's one-degree test for nonlinearity  **\n")  
     cat("\t\t Null hypothesis: The time series follows some AR process\n")
     cat("\t\t F-stat = ",keenan$test.stat," p-value = ", keenan$p.value,"\n\n")    
@@ -46,7 +47,7 @@ nonlinearityTest <- function(time.series, verbose = TRUE){
   # test for conditional heteroscedascity
   mcleodLi = TSA::McLeod.Li.test(y=time.series,plot=FALSE) 
   nltests$McLeodLi = mcleodLi
-  if (verbose){
+  if (verbose) {
     cat("\t\t ** McLeod-Li test  **\n")  
     cat("\t\t Null hypothesis: The time series follows some ARIMA process\n")
     cat("\t\t Maximum p-value = ",  max( unlist(mcleodLi) ),"\n\n")    
@@ -54,7 +55,7 @@ nonlinearityTest <- function(time.series, verbose = TRUE){
   # Tsay test for nonlinearity
   tsay = TSA::Tsay.test(time.series)
   nltests$Tsay = tsay
-  if (verbose){
+  if (verbose) {
     cat("\t\t ** Tsay's Test for nonlinearity **\n")  
     cat("\t\t Null hypothesis: The time series follows some AR process\n")
     cat("\t\t F-stat = ",tsay$test.stat," p-value = ", tsay$p.value,"\n\n")    
@@ -62,15 +63,12 @@ nonlinearityTest <- function(time.series, verbose = TRUE){
   # Likelihood ratio test for threshold nonlinearity
   tarTest = TSA::tlrt(time.series)
   nltests$TarTest = tarTest
-  if (verbose){
+  if (verbose) {
     cat("\t\t ** Likelihood ratio test for threshold nonlinearity **\n")  
     cat("\t\t Null hypothesis: The time series follows some AR process\n")
     cat("\t\t Alternativce hypothesis: The time series follows some TAR process\n")
     cat("\t\t X-squared = ",tarTest$test.stat," p-value = ", tarTest$p.value,"\n\n")    
   }
-  
-  
-  return(nltests)
-  
+  nltests
 }
 

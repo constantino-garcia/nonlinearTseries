@@ -32,7 +32,8 @@ sampleEntropy(corrDim.object, do.plot = TRUE, ...)
 \item{corrDim.object}{A \emph{corrDim} object from which the Sample Entropy
 of the time series characterized by \emph{corrDim} shall be estimated.}
 
-\item{do.plot}{do.plot Logical value. If TRUE (default value), a plot of the sample entropy is shown.}
+\item{do.plot}{do.plot Logical value. If TRUE (default value), a plot of the 
+sample entropy is shown.}
 
 \item{...}{Additional plotting arguments.}
 
@@ -54,9 +55,11 @@ of the time series characterized by \emph{corrDim} shall be estimated.}
 
 \item{add.legend}{add a legend to the plot?}
 
-\item{regression.range}{Vector with 2 components denoting the range where the function will perform linear regression.}
+\item{regression.range}{Vector with 2 components denoting the range where the
+function will perform linear regression.}
 
-\item{use.embeddings}{A numeric vector specifying which embedding dimensions should the \emph{estimate} function use to compute
+\item{use.embeddings}{A numeric vector specifying which embedding dimensions 
+should the \emph{estimate} function use to compute
 the sample entropy.}
 
 \item{fit.col}{A vector of colors to plot the regression lines.}
@@ -66,10 +69,12 @@ the sample entropy.}
 \item{fit.lwd}{The width of the line for the regression lines.}
 }
 \value{
-A \emph{sampleEntropy} object that contains a list storing the sample entropy (\emph{sample.entropy}),
-the embedding dimensions ( \emph{embedding.dims}) and radius (\emph{radius}) for which the sample entropy has 
-been computed, and the order of the sample entropy (\emph{entr.order}). The sample entropy
-is stored as a matrix in which each row contains the computations for a given embedding dimension and 
+A \emph{sampleEntropy} object that contains a list storing the 
+sample entropy (\emph{sample.entropy}), the embedding dimensions 
+(\emph{embedding.dims}) and radius (\emph{radius}) for which the sample 
+entropy has been computed, and the order of the sample entropy 
+(\emph{entr.order}). The sample entropy is stored as a matrix in which 
+each row contains the computations for a given embedding dimension and 
 each column stores the computations for a given radius.
 
 The \emph{sampleEntropyFunction} returns the sample entropy function
@@ -79,32 +84,35 @@ embedding dimension whereas that each column representes a different radius.
 
 The \emph{nlOrder} function returns the order of the sample entropy.
 
-The \emph{radius} function returns the radius on which the sample entropy
- function has been evaluated.
+The \emph{radius} function returns the radius on which the sample 
+entropy function has been evaluated.
 
 The \emph{embeddingDims} function returns the embedding dimensions 
 on which the sample entropy function has been evaluated.
 
 The \emph{plot} function shows the graphics for the sample entropy.
 
-The  \emph{estimate} function returns a vector storing the sample entropy estimate for each embedding dimension.
+The  \emph{estimate} function returns a vector storing the sample 
+entropy estimate for each embedding dimension.
 }
 \description{
 The Sample Entropy measures the complexity of a time series. Large values of 
-the Sample Entropy indicate high complexity whereas that smaller values characterize
-more regular signals.
+the Sample Entropy indicate high complexity whereas that smaller values 
+characterize more regular signals.
 }
 \details{
 The sample entropy is computed using:
 \deqn{h_q(m,r) = log(C_q(m,r)/C_{q}(m+1,r))}{hq(m,r) = log(Cq(m,r)/Cq(m+1,r)),}
-where \emph{m} is the embedding dimension and \emph{r} is the radius of the neighbourhood. When 
-computing the correlation dimensions we use the linear regions from the correlation
-sums in order to do the estimates. Similarly, the sample entropy \eqn{h_q(m,r)}{hq(m,r)} 
-should not change for both various \emph{m} and \emph{r}.
+where \emph{m} is the embedding dimension and \emph{r} is the radius of the 
+neighbourhood. When computing the correlation dimensions we use the linear 
+regions from the correlation sums in order to do the estimates. Similarly, 
+the sample entropy \eqn{h_q(m,r)}{hq(m,r)} should not change for both 
+various \emph{m} and \emph{r}.
 
 For each embedding dimension the sample
 entropy is estimated by averaging  \deqn{h_q(m,r) = log(C_q(m,r)/C_{q}(m+1,r))}{hq(m,r) = log(Cq(m,r)/Cq(m+1,r))}
-over the range specified by \emph{regression range} in the \emph{estimate} function.
+over the range specified by \emph{regression range} in the \emph{estimate} 
+function.
 }
 \examples{
 \dontrun{
@@ -132,7 +140,8 @@ cat("Expected K2 = ",0.325," Estimated = ",mean(se.est),"\\n")
 }
 }
 \references{
-H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press)
 }
 \author{
 Constantino A. Garcia
