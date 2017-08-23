@@ -54,6 +54,7 @@
 /home/gaussllego/Code/R/nonlineartseries/tests/testthat/test_information_dimension.R="4D002A01"
 /home/gaussllego/Code/R/nonlineartseries/tests/testthat/test_information_dimension_port.R="5F7E3F2E"
 /home/gaussllego/Code/R/nonlineartseries/tests/testthat/test_max_lyapunov.R="F4C26581"
+/home/gaussllego/Code/R/nonlineartseries/tests/testthat/test_max_lyapunov_port.R="6577C5B8"
 /home/gaussllego/Code/R/nonlineartseries/tests/testthat/test_minimum_embedding.R="BDF8CA34"
 /home/gaussllego/Code/R/nonlineartseries/tests/testthat/test_neighbour_search.R="EB7DE676"
 /home/gaussllego/Code/R/nonlineartseries/tests/testthat/test_neighbour_search_port.R="843E0967"
