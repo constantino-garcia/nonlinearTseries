@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Code/R/nonlineartseries",
-        "query" : "<-",
+        "query" : ".C(",
         "regex" : false
     }
 }

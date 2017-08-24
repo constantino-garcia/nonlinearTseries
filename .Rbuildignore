@@ -1,4 +1,3 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-oldNonlinearTseries_0.2.4.tar.gz
-
+^LICENSE

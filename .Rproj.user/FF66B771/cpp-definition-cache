@@ -645,7 +645,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/DFA.cpp",
-        "file_last_write" : 1501170286
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -660,7 +660,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/NN.cpp",
-        "file_last_write" : 1501179269
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -882,7 +882,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/corr_dim.cpp",
-        "file_last_write" : 1503405027
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -930,7 +930,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/genericFunctions.h",
-        "file_last_write" : 1503414750
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -945,7 +945,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/generic_functions.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -960,7 +960,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/generic_functions.h",
-        "file_last_write" : 1503415147
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -993,7 +993,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/information_dimension.cpp",
-        "file_last_write" : 1503405339
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -1545,7 +1545,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/lyapunov_exponent.cpp",
-        "file_last_write" : 1503412970
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -1587,7 +1587,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/mutual_information.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -1719,7 +1719,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbour_search.cpp",
-        "file_last_write" : 1503415238
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -1734,7 +1734,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbour_search.h",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -1767,7 +1767,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/neighbour_search_wrapper.cpp",
-        "file_last_write" : 1503222037
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -1782,7 +1782,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/nonlinear_noise_reduction.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -1806,7 +1806,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/poincare_map.cpp",
-        "file_last_write" : 1503401579
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -2031,7 +2031,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/rqa.cpp",
-        "file_last_write" : 1503415324
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -2055,7 +2055,7 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/space_time_plot.cpp",
-        "file_last_write" : 1501447851
+        "file_last_write" : 1503524860
     },
     {
         "definitions" : [
@@ -2079,6 +2079,6 @@
             }
         ],
         "file" : "/home/gaussllego/Code/R/nonlineartseries/src/utils.cpp",
-        "file_last_write" : 1501165434
+        "file_last_write" : 1503524860
     }
 ]
