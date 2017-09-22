@@ -12,3 +12,6 @@ install.packages("nonlinearTseries")
 ## Getting started
 For a quick introduction to `nonlinearTseries`, see its
 [vignette](https://cran.r-project.org/web/packages/nonlinearTseries/vignettes/nonlinearTseries_quickstart.html).
+
+## Citation
+You can get information about citing `nonlinearTseries` using `citation('nonlinearTseries')` in an `R` session. 
