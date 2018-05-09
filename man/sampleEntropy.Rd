@@ -21,8 +21,8 @@ sampleEntropy(corrDim.object, do.plot = TRUE, ...)
 \method{embeddingDims}{sampleEntropy}(x)
 
 \method{plot}{sampleEntropy}(x, main = NULL, xlab = NULL, ylab = NULL,
-  type = "l", col = NULL, pch = NULL, ylim = NULL, add.legend = T,
-  ...)
+  type = "l", col = NULL, pch = NULL, ylim = NULL, log = "x",
+  add.legend = T, ...)
 
 \method{estimate}{sampleEntropy}(x, regression.range = NULL, do.plot = TRUE,
   use.embeddings = NULL, fit.col = NULL, fit.lty = 2, fit.lwd = 2,
@@ -52,6 +52,10 @@ sample entropy is shown.}
 \item{pch}{Vector of symbols for each of the dimensions of the plot}
 
 \item{ylim}{Numeric vector of length 2, giving the y coordinates range..}
+
+\item{log}{A character string which contains "x" if the x axis is to be 
+logarithmic, "y" if the y axis is to be logarithmic and "xy" or "yx" if 
+both axes are to be logarithmic.}
 
 \item{add.legend}{add a legend to the plot?}
 

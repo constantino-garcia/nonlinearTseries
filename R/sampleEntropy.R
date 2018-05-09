@@ -136,13 +136,16 @@ embeddingDims.sampleEntropy = function(x){
 #' @param col Vector of colors for each of the dimensions of the plot.
 #' @param pch Vector of symbols for each of the dimensions of the plot
 #' @param ylim Numeric vector of length 2, giving the y coordinates range..
+#' @param log A character string which contains "x" if the x axis is to be 
+#' logarithmic, "y" if the y axis is to be logarithmic and "xy" or "yx" if 
+#' both axes are to be logarithmic.
 #' @param add.legend add a legend to the plot?
 #' @export
 plot.sampleEntropy = function(x, main = NULL, xlab = NULL, ylab = NULL,
                               type = "l", col=NULL, pch=NULL, ylim=NULL,
-                              add.legend = T, ...) {
+                              log = "x", add.legend = T, ...) {
   if (is.null(xlab)) {
-    xlab = expression("ln("*epsilon*")")
+    xlab = expression(epsilon)
   }
   if (is.null(ylab)) {
     ylab = expression(h[q]*"("*epsilon*")")
@@ -171,7 +174,7 @@ plot.sampleEntropy = function(x, main = NULL, xlab = NULL, ylab = NULL,
        }
        plot(x$radius, x$sample.entropy[1, ], 
             xlab = xlab, ylab = ylab, main = main, type = type, pch = pch[[i]], 
-            col = col[[i]], ylim = ylim, ...)
+            col = col[[i]], ylim = ylim, log = log, ...)
      } else {
        lines(x$radius, x$sample.entropy[i, ], type = type, pch = pch[[i]], 
              col = col[[i]], ...)
