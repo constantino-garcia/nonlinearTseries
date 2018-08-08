@@ -3,6 +3,7 @@
 \name{spaceTimePlot}
 \alias{spaceTimePlot}
 \alias{contourLines.spaceTimePlot}
+\alias{getContourLines.spaceTimePlot}
 \alias{plot.spaceTimePlot}
 \title{Space Time plot}
 \usage{
@@ -11,7 +12,9 @@ spaceTimePlot(takens = NULL, time.series = NULL, embedding.dim = 2,
   number.time.steps = NULL, numberPercentages = 10, do.plot = TRUE,
   ...)
 
-contourLines.spaceTimePlot(x)
+\method{contourLines}{spaceTimePlot}(x)
+
+\method{getContourLines}{spaceTimePlot}(x)
 
 \method{plot}{spaceTimePlot}(x, main = "Space time separation plot",
   xlab = NULL, ylab = NULL, type = "l", ylim = NULL, col = NULL,

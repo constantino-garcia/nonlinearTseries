@@ -104,15 +104,16 @@ spaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 2,
 }
 
 
-# #' Obtain the contour lines of the space time plot.
-# #' @param x A \emph{spaceTimePlot} object.
-# #' @return Returns a matrix representing the contour lines of the 
-# #' space time plot.
-# #' @seealso \code{\link{spaceTimePlot}}
-# #' @export contourLines
-# contourLines = function(x){
-#   UseMethod("contourLines")
-# }
+#' Obtain the contour lines of the space time plot.
+#' @param x A \emph{spaceTimePlot} object.
+#' @return Returns a matrix representing the contour lines of the
+#' space time plot.
+#' @seealso \code{\link{spaceTimePlot}}
+#' @export contourLines
+contourLines = function(x){
+  .Deprecated("getContourLines")
+  UseMethod("contourLines")
+}
 
 
 #' @return The \emph{contourLines} function returns the contour lines of the 
@@ -120,10 +121,29 @@ spaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 2,
 #' @param x A \emph{spaceTimePlot} object.
 #' @rdname spaceTimePlot
 #' @export
-#' @importFrom grDevices contourLines
 contourLines.spaceTimePlot = function(x){
+  .Deprecated("getContourLines.spaceTimePlot")
   x$stp.matrix
 }
+
+
+#' Obtain the contour lines of the space time plot.
+#' @inherit contourLines
+#' @seealso \code{\link{spaceTimePlot}}
+#' @export getContourLines
+getContourLines = function(x){
+  UseMethod("getContourLines")
+}
+
+
+
+#' @inherit contourLines.spaceTimePlot
+#' @rdname spaceTimePlot
+#' @export
+getContourLines.spaceTimePlot = function(x){
+  x$stp.matrix
+}
+
 
 
 #' @rdname spaceTimePlot

@@ -5,7 +5,7 @@ Version: 0.2.4
 Date: 2018-08-08
 Maintainer: Constantino A. Garcia <constantinoantonio.garcia@usc.es>
 Authors@R: c(person("Constantino A.", "Garcia",
-                    email = "constantinoantonio.garcia@usc.es",
+                    email = "constantinogarciama@ceu.es",
                     role = c("aut", "cre")),
             person("Gunther", "Sawitzki",
                     role = "ctb"))
