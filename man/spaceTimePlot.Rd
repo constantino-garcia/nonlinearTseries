@@ -11,7 +11,7 @@ spaceTimePlot(takens = NULL, time.series = NULL, embedding.dim = 2,
   number.time.steps = NULL, numberPercentages = 10, do.plot = TRUE,
   ...)
 
-\method{contourLines}{spaceTimePlot}(x)
+contourLines.spaceTimePlot(x)
 
 \method{plot}{spaceTimePlot}(x, main = "Space time separation plot",
   xlab = NULL, ylab = NULL, type = "l", ylim = NULL, col = NULL,

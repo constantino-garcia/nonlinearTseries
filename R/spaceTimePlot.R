@@ -104,21 +104,23 @@ spaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 2,
 }
 
 
-#' Obtain the contour lines of the space time plot.
-#' @param x A \emph{spaceTimePlot} object.
-#' @return Returns a matrix representing the contour lines of the 
-#' space time plot.
-#' @seealso \code{\link{spaceTimePlot}}
-#' @export contourLines
-contourLines = function(x){
-  UseMethod("contourLines")
-}
+# #' Obtain the contour lines of the space time plot.
+# #' @param x A \emph{spaceTimePlot} object.
+# #' @return Returns a matrix representing the contour lines of the 
+# #' space time plot.
+# #' @seealso \code{\link{spaceTimePlot}}
+# #' @export contourLines
+# contourLines = function(x){
+#   UseMethod("contourLines")
+# }
+
 
 #' @return The \emph{contourLines} function returns the contour lines of the 
 #' space time plot.
 #' @param x A \emph{spaceTimePlot} object.
 #' @rdname spaceTimePlot
 #' @export
+#' @importFrom grDevices contourLines
 contourLines.spaceTimePlot = function(x){
   x$stp.matrix
 }
