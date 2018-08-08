@@ -4,8 +4,8 @@
 \alias{recurrencePlot}
 \title{Recurrence Plot}
 \usage{
-recurrencePlot(takens = NULL, time.series, embedding.dim, time.lag, radius,
-  ...)
+recurrencePlot(takens = NULL, time.series, embedding.dim, time.lag,
+  radius, ...)
 }
 \arguments{
 \item{takens}{Instead of specifying the \emph{time.series}, the 

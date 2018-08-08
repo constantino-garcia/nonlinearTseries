@@ -2,7 +2,8 @@ library(nonlinearTseries)
 context("RQA")
 
 test_that("test rqa", {
-  
+  skip_on_cran()
+  set.seed(1)
   # Test 1
   ts = readRDS("../testdata/rqa_ts_1.RDS")  
   handmade_result = readRDS("../testdata/rqa_results_1.RDS")

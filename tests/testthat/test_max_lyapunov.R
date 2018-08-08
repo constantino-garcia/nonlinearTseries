@@ -2,8 +2,9 @@ library(nonlinearTseries)
 context("Maximal Lyapunov exponent")
 
 test_that("estimates equal theoretical results", {
-  set.seed(1)
-  tolerance = 1e-2
+  skip_on_cran()
+  set.seed(10)
+  tolerance = 5e-2
   # Henon system
   ts = henon(n.sample =  5000, n.transient = 100, a = 1.4, b = 0.3,
              start = c(0.63954883, 0.04772637),
@@ -34,18 +35,21 @@ test_that("estimates equal theoretical results", {
   )$x
   x = maxLyapunov(
     time.series = ts,
-    min.embedding.dim = 5,
+    min.embedding.dim = 4,
+    max.embedding.dim = 6,
     time.lag = 8,
-    radius = 0.30,
-    theiler.window = 100,
+    radius = 0.40,
+    theiler.window = 200,
     min.neighs = 5,
     min.ref.points = length(ts),
-    max.time.steps = 300,
+    max.time.steps = 400,
     number.boxes = NULL,
     sampling.period = 0.01,
     do.plot = FALSE
   )
-  expect_equal(estimate(x, c(0.5, 2.7)), 1.37, tolerance = tolerance)
+  expected = 1.37
+  expect_equal(estimate(x, c(0, 2.7), FALSE), expected, tolerance = tolerance, 
+               scale = expected)
   
   # lorenz
   ts = lorenz(

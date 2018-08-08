@@ -20,13 +20,13 @@ sampleEntropy(corrDim.object, do.plot = TRUE, ...)
 
 \method{embeddingDims}{sampleEntropy}(x)
 
-\method{plot}{sampleEntropy}(x, main = NULL, xlab = NULL, ylab = NULL,
-  type = "l", col = NULL, pch = NULL, ylim = NULL, log = "x",
-  add.legend = T, ...)
+\method{plot}{sampleEntropy}(x, main = NULL, xlab = NULL,
+  ylab = NULL, type = "l", col = NULL, pch = NULL, ylim = NULL,
+  log = "x", add.legend = T, ...)
 
-\method{estimate}{sampleEntropy}(x, regression.range = NULL, do.plot = TRUE,
-  use.embeddings = NULL, fit.col = NULL, fit.lty = 2, fit.lwd = 2,
-  add.legend = T, ...)
+\method{estimate}{sampleEntropy}(x, regression.range = NULL,
+  do.plot = TRUE, use.embeddings = NULL, fit.col = NULL,
+  fit.lty = 2, fit.lwd = 2, add.legend = T, ...)
 }
 \arguments{
 \item{corrDim.object}{A \emph{corrDim} object from which the Sample Entropy

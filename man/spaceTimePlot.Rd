@@ -8,7 +8,8 @@
 \usage{
 spaceTimePlot(takens = NULL, time.series = NULL, embedding.dim = 2,
   time.lag = 1, max.radius = NULL, time.step = 1,
-  number.time.steps = NULL, numberPercentages = 10, do.plot = TRUE, ...)
+  number.time.steps = NULL, numberPercentages = 10, do.plot = TRUE,
+  ...)
 
 \method{contourLines}{spaceTimePlot}(x)
 

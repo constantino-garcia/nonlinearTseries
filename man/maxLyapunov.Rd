@@ -21,15 +21,16 @@ maxLyapunov(time.series, min.embedding.dim = 2,
 
 \method{divergence}{maxLyapunov}(x)
 
-\method{plot}{maxLyapunov}(x, main = "Estimating maximal Lyapunov exponent",
-  xlab = "time t", ylab = "S(t)", type = "p", col = NULL, pch = NULL,
+\method{plot}{maxLyapunov}(x,
+  main = "Estimating maximal Lyapunov exponent", xlab = "time t",
+  ylab = "S(t)", type = "p", col = NULL, pch = NULL,
   add.legend = T, ...)
 
-\method{estimate}{maxLyapunov}(x, regression.range = NULL, do.plot = FALSE,
-  use.embeddings = NULL, main = "Estimating maximal Lyapunov exponent",
-  xlab = "time t", ylab = "S(t)", type = "p", col = NULL, pch = NULL,
-  ylim = NULL, fit.col = NULL, fit.lty = 2, fit.lwd = 2,
-  add.legend = T, ...)
+\method{estimate}{maxLyapunov}(x, regression.range = NULL,
+  do.plot = FALSE, use.embeddings = NULL,
+  main = "Estimating maximal Lyapunov exponent", xlab = "time t",
+  ylab = "S(t)", type = "p", col = NULL, pch = NULL, ylim = NULL,
+  fit.col = NULL, fit.lty = 2, fit.lwd = 2, add.legend = T, ...)
 }
 \arguments{
 \item{time.series}{The original time series from which the maximal Lyapunov 

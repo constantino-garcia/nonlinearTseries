@@ -146,6 +146,7 @@ infDim = function(time.series, min.embedding.dim=2,
   information.dimension.structure
 }
 
+#' fixed mass
 #' @param x A \emph{infDim} object.
 #' @return A numeric vector representing the fixed mass vector used
 #' in the information dimension algorithm represented by the \emph{infDim} 

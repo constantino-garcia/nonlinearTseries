@@ -2,7 +2,8 @@ library(nonlinearTseries)
 context("Surrogate data generation")
 
 test_that("the surrogate data has the same linear parameters of the original linear process", {
-  
+  skip_on_cran() 
+  set.seed(1)
   tol = 10 ^ -7
   # message("generating surrogate data...\n")
   # message("checking power spectrum and mean...\n")

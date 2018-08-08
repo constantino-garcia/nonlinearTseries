@@ -2,6 +2,8 @@ library(nonlinearTseries)
 context("Poincare maps")
 
 test_that("test Poincare maps", {
+  skip_on_cran()
+  set.seed(1)
   Ts=0.001
   r = rossler(a = 0.2, b = 0.2, w = 5.7,
     start = c(-2, -10, 0.2), time = seq(0, 300, by = Ts),

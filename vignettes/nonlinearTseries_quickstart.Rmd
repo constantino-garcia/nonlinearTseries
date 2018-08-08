@@ -5,7 +5,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Quickstart}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\usepackage[utf8]{inputenc}
 ---
 
 ```{r options,echo=FALSE}
@@ -252,7 +252,7 @@ is that these functions are quite simple to use.
   * `dfa`: performs Detrended Fluctuation Analysis.
   * `nonLinearNoiseReduction`: denoises a given time series using phase space
   techniques.
-  * `poincareMap`: computes a Poincaré map of the trajectories in phase space.
+  * `poincareMap`: computes a Poincare map of the trajectories in phase space.
   * `spaceTimePlot` : shows the space time separation plot: broadly-used method
   of detecting non-stationarity and temporal correlations in time series.
 

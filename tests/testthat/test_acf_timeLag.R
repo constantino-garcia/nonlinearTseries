@@ -2,6 +2,7 @@ library(nonlinearTseries)
 context("ACF-based time-lag estimation")
 
 test_that("the time lag for the Takens' vectors are properly estimated", {
+  skip_on_cran()
   set.seed(1)
   Ts = 0.01
   time = seq(0, 100, Ts)

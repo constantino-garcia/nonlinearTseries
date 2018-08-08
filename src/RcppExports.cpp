@@ -6,6 +6,40 @@
 
 using namespace Rcpp;
 
+// calculate_fluctuation_function
+NumericVector calculate_fluctuation_function(NumericVector& yr, NumericVector& windowSizesVector);
+RcppExport SEXP _nonlinearTseries_calculate_fluctuation_function(SEXP yrSEXP, SEXP windowSizesVectorSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector& >::type yr(yrSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type windowSizesVector(windowSizesVectorSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_fluctuation_function(yr, windowSizesVector));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_NN_2Set_wrapper
+Rcpp::List get_NN_2Set_wrapper(const Rcpp::NumericMatrix& data, const Rcpp::NumericMatrix& query, int dimension, int ND, int NQ, int K, double EPS, int SEARCHTYPE, int USEBDTREE, double SQRAD, Rcpp::IntegerVector& nn_index, Rcpp::NumericVector& distances);
+RcppExport SEXP _nonlinearTseries_get_NN_2Set_wrapper(SEXP dataSEXP, SEXP querySEXP, SEXP dimensionSEXP, SEXP NDSEXP, SEXP NQSEXP, SEXP KSEXP, SEXP EPSSEXP, SEXP SEARCHTYPESEXP, SEXP USEBDTREESEXP, SEXP SQRADSEXP, SEXP nn_indexSEXP, SEXP distancesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type query(querySEXP);
+    Rcpp::traits::input_parameter< int >::type dimension(dimensionSEXP);
+    Rcpp::traits::input_parameter< int >::type ND(NDSEXP);
+    Rcpp::traits::input_parameter< int >::type NQ(NQSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< double >::type EPS(EPSSEXP);
+    Rcpp::traits::input_parameter< int >::type SEARCHTYPE(SEARCHTYPESEXP);
+    Rcpp::traits::input_parameter< int >::type USEBDTREE(USEBDTREESEXP);
+    Rcpp::traits::input_parameter< double >::type SQRAD(SQRADSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector& >::type nn_index(nn_indexSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type distances(distancesSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_NN_2Set_wrapper(data, query, dimension, ND, NQ, K, EPS, SEARCHTYPE, USEBDTREE, SQRAD, nn_index, distances));
+    return rcpp_result_gen;
+END_RCPP
+}
 // generalized_correlation_sum
 NumericMatrix generalized_correlation_sum(const NumericVector& timeSeries, int timeLag, int theilerWindow, NumericVector& radii, int minEmbeddingDim, int maxEmbeddingDim, int corrSumOrder, int numberBoxes);
 RcppExport SEXP _nonlinearTseries_generalized_correlation_sum(SEXP timeSeriesSEXP, SEXP timeLagSEXP, SEXP theilerWindowSEXP, SEXP radiiSEXP, SEXP minEmbeddingDimSEXP, SEXP maxEmbeddingDimSEXP, SEXP corrSumOrderSEXP, SEXP numberBoxesSEXP) {
@@ -21,18 +55,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type corrSumOrder(corrSumOrderSEXP);
     Rcpp::traits::input_parameter< int >::type numberBoxes(numberBoxesSEXP);
     rcpp_result_gen = Rcpp::wrap(generalized_correlation_sum(timeSeries, timeLag, theilerWindow, radii, minEmbeddingDim, maxEmbeddingDim, corrSumOrder, numberBoxes));
-    return rcpp_result_gen;
-END_RCPP
-}
-// calculate_fluctuation_function
-NumericVector calculate_fluctuation_function(NumericVector& yr, NumericVector& windowSizesVector);
-RcppExport SEXP _nonlinearTseries_calculate_fluctuation_function(SEXP yrSEXP, SEXP windowSizesVectorSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector& >::type yr(yrSEXP);
-    Rcpp::traits::input_parameter< NumericVector& >::type windowSizesVector(windowSizesVectorSEXP);
-    rcpp_result_gen = Rcpp::wrap(calculate_fluctuation_function(yr, windowSizesVector));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -129,28 +151,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// get_NN_2Set_wrapper
-Rcpp::List get_NN_2Set_wrapper(const Rcpp::NumericMatrix& data, const Rcpp::NumericMatrix& query, int dimension, int ND, int NQ, int K, double EPS, int SEARCHTYPE, int USEBDTREE, double SQRAD, Rcpp::IntegerVector& nn_index, Rcpp::NumericVector& distances);
-RcppExport SEXP _nonlinearTseries_get_NN_2Set_wrapper(SEXP dataSEXP, SEXP querySEXP, SEXP dimensionSEXP, SEXP NDSEXP, SEXP NQSEXP, SEXP KSEXP, SEXP EPSSEXP, SEXP SEARCHTYPESEXP, SEXP USEBDTREESEXP, SEXP SQRADSEXP, SEXP nn_indexSEXP, SEXP distancesSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type query(querySEXP);
-    Rcpp::traits::input_parameter< int >::type dimension(dimensionSEXP);
-    Rcpp::traits::input_parameter< int >::type ND(NDSEXP);
-    Rcpp::traits::input_parameter< int >::type NQ(NQSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< double >::type EPS(EPSSEXP);
-    Rcpp::traits::input_parameter< int >::type SEARCHTYPE(SEARCHTYPESEXP);
-    Rcpp::traits::input_parameter< int >::type USEBDTREE(USEBDTREESEXP);
-    Rcpp::traits::input_parameter< double >::type SQRAD(SQRADSEXP);
-    Rcpp::traits::input_parameter< Rcpp::IntegerVector& >::type nn_index(nn_indexSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type distances(distancesSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_NN_2Set_wrapper(data, query, dimension, ND, NQ, K, EPS, SEARCHTYPE, USEBDTREE, SQRAD, nn_index, distances));
-    return rcpp_result_gen;
-END_RCPP
-}
 // nonlinear_noise_reduction
 NumericVector nonlinear_noise_reduction(const NumericVector& timeSeries, int embeddingDimension, double radius, int nBoxes);
 RcppExport SEXP _nonlinearTseries_nonlinear_noise_reduction(SEXP timeSeriesSEXP, SEXP embeddingDimensionSEXP, SEXP radiusSEXP, SEXP nBoxesSEXP) {
@@ -233,15 +233,15 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_nonlinearTseries_generalized_correlation_sum", (DL_FUNC) &_nonlinearTseries_generalized_correlation_sum, 8},
     {"_nonlinearTseries_calculate_fluctuation_function", (DL_FUNC) &_nonlinearTseries_calculate_fluctuation_function, 2},
+    {"_nonlinearTseries_get_NN_2Set_wrapper", (DL_FUNC) &_nonlinearTseries_get_NN_2Set_wrapper, 12},
+    {"_nonlinearTseries_generalized_correlation_sum", (DL_FUNC) &_nonlinearTseries_generalized_correlation_sum, 8},
     {"_nonlinearTseries_rcpp_information_dimension", (DL_FUNC) &_nonlinearTseries_rcpp_information_dimension, 10},
     {"_nonlinearTseries_lyapunov_exponent", (DL_FUNC) &_nonlinearTseries_lyapunov_exponent, 10},
     {"_nonlinearTseries_calculate_time_series_histogram", (DL_FUNC) &_nonlinearTseries_calculate_time_series_histogram, 3},
     {"_nonlinearTseries_calculate_mutual_information", (DL_FUNC) &_nonlinearTseries_calculate_mutual_information, 3},
     {"_nonlinearTseries_getVectorNeighbours", (DL_FUNC) &_nonlinearTseries_getVectorNeighbours, 4},
     {"_nonlinearTseries_getAllNeighbours", (DL_FUNC) &_nonlinearTseries_getAllNeighbours, 3},
-    {"_nonlinearTseries_get_NN_2Set_wrapper", (DL_FUNC) &_nonlinearTseries_get_NN_2Set_wrapper, 12},
     {"_nonlinearTseries_nonlinear_noise_reduction", (DL_FUNC) &_nonlinearTseries_nonlinear_noise_reduction, 4},
     {"_nonlinearTseries_poincare_map", (DL_FUNC) &_nonlinearTseries_poincare_map, 3},
     {"_nonlinearTseries_get_rqa_histograms", (DL_FUNC) &_nonlinearTseries_get_rqa_histograms, 5},

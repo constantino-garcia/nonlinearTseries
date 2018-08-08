@@ -2,6 +2,8 @@ library(nonlinearTseries)
 context("Generalized correlation entropy")
 
 test_that("estimates equal theoretical results", {
+  skip_on_cran()
+  set.seed(1)
   q = 2
   # Henon
   h = henon(

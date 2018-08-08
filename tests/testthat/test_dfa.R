@@ -2,6 +2,7 @@ library(nonlinearTseries)
 context("DFA")
 
 test_that("estimates equal theoretical results", {
+  skip_on_cran()
   set.seed(1)
   # generate/load data
   noise = rnorm(6000)

@@ -2,7 +2,8 @@ library(nonlinearTseries)
 context("Embedding dimension calculation")
 
 test_that("estimates equal theoretical results", {
-  
+  skip_on_cran()
+  set.seed(1)
   h = henon(do.plot = FALSE,
             start = c(0.4, 0.234),
             n.sample = 3000)

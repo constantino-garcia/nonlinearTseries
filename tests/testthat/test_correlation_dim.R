@@ -2,6 +2,8 @@ library(nonlinearTseries)
 context("Correlation dimension")
 
 test_that("estimates equal theoretical results", {
+  skip_on_cran()
+  set.seed(1)
   # Henon: 1.25 +- 0.02 (Grassberger and Procaccia 1983) -----------
   set.seed(1)
   ts = henon(

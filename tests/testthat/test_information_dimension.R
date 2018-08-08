@@ -2,6 +2,7 @@ library(nonlinearTseries)
 context("Information dimension")
 
 test_that("estimates equal theoretical results", {
+  skip_on_cran()
   set.seed(1)
   # Henon
   ts = henon(n.sample =  5000, n.transient = 100,

@@ -2,7 +2,7 @@ Package: nonlinearTseries
 Type: Package
 Title: Nonlinear Time Series Analysis
 Version: 0.2.4
-Date: 2016-06-16
+Date: 2018-08-08
 Maintainer: Constantino A. Garcia <constantinoantonio.garcia@usc.es>
 Authors@R: c(person("Constantino A.", "Garcia",
                     email = "constantinoantonio.garcia@usc.es",
@@ -36,4 +36,4 @@ Suggests:
     knitr,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

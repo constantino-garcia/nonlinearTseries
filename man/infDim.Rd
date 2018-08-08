@@ -25,17 +25,18 @@ infDim(time.series, min.embedding.dim = 2,
 
 \method{estimate}{infDim}(x, regression.range = NULL, do.plot = TRUE,
   use.embeddings = NULL, col = NULL, pch = NULL, fit.col = NULL,
-  fit.lty = 2, fit.lwd = 2, add.legend = T, lty = 1, lwd = 1, ...)
+  fit.lty = 2, fit.lwd = 2, add.legend = T, lty = 1, lwd = 1,
+  ...)
 
 \method{plot}{infDim}(x, main = "Information Dimension",
   xlab = "fixed mass (p)", ylab = "<log10(radius)>", type = "b",
-  log = "x", ylim = NULL, col = NULL, pch = NULL, localScalingExp = T,
-  add.legend = T, ...)
+  log = "x", ylim = NULL, col = NULL, pch = NULL,
+  localScalingExp = T, add.legend = T, ...)
 
 \method{plotLocalScalingExp}{infDim}(x,
   main = "Local scaling exponents d1(p)", xlab = "fixed mass p",
-  ylab = "1/d1(p)", type = "b", log = "x", ylim = NULL, col = NULL,
-  pch = NULL, add.legend = T, ...)
+  ylab = "1/d1(p)", type = "b", log = "x", ylim = NULL,
+  col = NULL, pch = NULL, add.legend = T, ...)
 }
 \arguments{
 \item{time.series}{The original time series from which the information 
