@@ -19,7 +19,7 @@ double calculate_average_log_radius_with_fixed_mass(NumericMatrix& phaseSpace,
                                                     int theilerWindow, int nNeighbours) {
   // Rcout << "1" << std::endl;
   int nPhaseSpaceVectors = phaseSpace.nrow();
-  int embeddingDimension = phaseSpace.ncol();
+  // int embeddingDimension = phaseSpace.ncol();  // Unused
   // Rcout << "le fuck" << std::endl;
   
   neighbour_search neighbourSearcher(phaseSpace, radius, nBoxes);
@@ -34,7 +34,6 @@ double calculate_average_log_radius_with_fixed_mass(NumericMatrix& phaseSpace,
    * the effective number of phaseSpace vectors is
    * nPhaseSpaceVectors - 2 * theilerWindow - 1
    */
-  int theilerMargin = 2 * theilerWindow + 1;
   int nUsablePhaseSpaceVectors = nPhaseSpaceVectors - 2 * theilerWindow - 1;
   int k = static_cast<int>(fixedMass * nUsablePhaseSpaceVectors) + 1;
   // avoid looking for too many neighbours by imposing a max number nNeighbours. If
@@ -53,9 +52,9 @@ double calculate_average_log_radius_with_fixed_mass(NumericMatrix& phaseSpace,
   /******************************** estimator for ln(fixedMass) ****************/
   // use grassberger estimator for ln (fixedMass). This estimator takes into account the
   // finite nature of the estimation. See Generalizations of the Hausdorff dimension
-  // of fractal measures (Grassberger 1985). We return it as a parameter
-  double lnFixedMass = R::digamma(k) - std::log(takensVectorsUsed - theilerMargin);
-  double log10FixedMass = lnFixedMass / std::log(10.0);
+  // of fractal measures (Grassberger 1985). It is currently unused...
+  // double lnFixedMass = R::digamma(k) - std::log(takensVectorsUsed - theilerMargin); // Unused
+  // double log10FixedMass = lnFixedMass / std::log(10.0); // Unused
   // /****************************** Prepare the iterations **********************/
   // this variable will store the average radious
   double averageLogRadius = 0.0;
@@ -68,8 +67,6 @@ double calculate_average_log_radius_with_fixed_mass(NumericMatrix& phaseSpace,
   for (int i = 0; i < referenceVectors.size(); i++){
     referenceVectors[i] = i;
   }
-  //TODO: quitar
-  int plotDone =0;
   
   int remainingReferenceVectors = nReferenceVectors;
   /*************************** iterate ***************************************/

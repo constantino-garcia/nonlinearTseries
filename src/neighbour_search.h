@@ -6,7 +6,8 @@
 class neighbour_search {
 public:
   neighbour_search();
-  neighbour_search(const Rcpp::NumericMatrix& phaseSpace, double radius, int numberBoxes);
+  neighbour_search(const Rcpp::NumericMatrix& phaseSpace, double radius,
+                   int numberBoxes);
   void set_radius(double radius);
   Rcpp::NumericMatrix get_phase_space() const;
   int get_dimension() const;
@@ -21,16 +22,14 @@ public:
   static bool comply_theiler_window(int vectorIndex1, int vectorIndex2, int theilerWindow);
   
   
-  
-  
 private:
   Rcpp::NumericMatrix mPhaseSpace;
   int mEmbeddingDim;
   int mNumberVectors;
   double mRadius;
+  Rcpp::IntegerVector mSearchingWorkspace;
   Rcpp::IntegerVector mBoxes;
   Rcpp::IntegerVector mPossibleNeighbours;
-  Rcpp::IntegerVector mSearchingWorkspace;
   
   int get_wrapped_position(int row, int col) const;
   void prepare_box_assisted_search();
