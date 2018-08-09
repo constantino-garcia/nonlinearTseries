@@ -3,7 +3,6 @@
 using namespace Rcpp;
 
 
-
 NumericMatrix build_takens(const NumericVector& timeSeries,
                            int embeddingDimension, 
                            int timeLag){

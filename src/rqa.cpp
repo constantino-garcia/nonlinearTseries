@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-#include "genericFunctions.h"  
+#include "generic_functions.h"  
 
 
 // neighs is a matrix with ntakens rows. The n-th row has the neighbours of the 
