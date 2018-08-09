@@ -3,13 +3,21 @@
 language: R
 sudo: false
 cache: packages
+warnings_are_errors: false
 
 env:
-    GL_USE_NULL=TRUE
+    - RGL_USE_NULL=TRUE
+
+r_check_args: --as-cran
 
 r:
-    - 3.1
     - 3.2
     - oldrel
     - release
     - devel
+
+after_failure:
+      - cat "${RCHECK_DIR}/00install.out"
+
+after_success:
+      - cat "${RCHECK_DIR}/00install.out"

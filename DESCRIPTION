@@ -3,7 +3,7 @@ Type: Package
 Title: Nonlinear Time Series Analysis
 Version: 0.2.4
 Date: 2018-08-08
-Maintainer: Constantino A. Garcia <constantinogarciama@ceu.es>
+Maintainer: Constantino A. Garcia<constantinogarciama@ceu.es>
 Authors@R: c(person("Constantino A.", "Garcia",
                     email = "constantinogarciama@ceu.es",
                     role = c("aut", "cre")),
@@ -17,10 +17,13 @@ Description: Functions for nonlinear time series analysis. This package permits
     for surrogate data testing are also included. Part of this work
     was based on the  book "Nonlinear time series analysis" by
     Holger Kantz and Thomas Schreiber (ISBN: 9780521529020).
-License: GPL (>= 3)
+License: GPL-3
+URL: https://github.com/constantino-garcia/nonlinearTseries
+BugReports: https://github.com/constantino-garcia/nonlinearTseries/issues
 Copyright: ANN library is copyright University of Maryland and Sunil Arya and
     David Mount. R wrapper is based on the ANN library, copyright Samuel Kemp 2005-9
     and Gregory Jefferis 2009-2013. See file COPYRIGHT for details
+Depends: R (>= 3.2.0)
 Imports:
     Matrix,
     rgl,
@@ -28,6 +31,7 @@ Imports:
     TSA,
     zoo,
     Rcpp (>= 0.12.12),
+    RcppArmadillo,
     graphics,
     stats
 LinkingTo: Rcpp, RcppArmadillo
@@ -37,3 +41,4 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+Encoding: UTF-8
