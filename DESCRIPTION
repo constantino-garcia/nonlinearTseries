@@ -23,7 +23,7 @@ BugReports: https://github.com/constantino-garcia/nonlinearTseries/issues
 Copyright: ANN library is copyright University of Maryland and Sunil Arya and
     David Mount. R wrapper is based on the ANN library, copyright Samuel Kemp 2005-9
     and Gregory Jefferis 2009-2013. See file COPYRIGHT for details
-Depends: R (>= 3.2.0)
+Depends: R (>= 3.3.0)
 Imports:
     Matrix,
     rgl,
