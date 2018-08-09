@@ -5,5 +5,8 @@
 *.so
 vignettes/nonlinearTseries_quickstart.R
 vignettes/*.html
-
+cran-comments.md
 .Rproj.user
+/revdep/
+/revdep/.cache.rds
+
