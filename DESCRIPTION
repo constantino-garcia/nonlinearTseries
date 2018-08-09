@@ -3,7 +3,7 @@ Type: Package
 Title: Nonlinear Time Series Analysis
 Version: 0.2.4
 Date: 2018-08-08
-Maintainer: Constantino A. Garcia<constantino.garciama@ceu.es>
+Maintainer: Constantino A. Garcia <constantino.garciama@ceu.es>
 Authors@R: c(person("Constantino A.", "Garcia",
                     email = "constantino.garciama@ceu.es",
                     role = c("aut", "cre")),
@@ -31,7 +31,6 @@ Imports:
     TSA,
     zoo,
     Rcpp (>= 0.12.12),
-    RcppArmadillo,
     graphics,
     stats
 LinkingTo: Rcpp, RcppArmadillo
