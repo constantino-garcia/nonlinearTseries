@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^LICENSE
 README.md
+^\.travis\.yml$
