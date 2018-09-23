@@ -5,7 +5,7 @@
 using namespace Rcpp;
 
 double calculate_fluctuation(NumericVector& yr, int windowSize) {
-  int nWindows = floor(yr.size() / windowSize);
+  int nWindows = floor((double)yr.size() / windowSize);
   /* reuses memory and avoids extra copy */
   arma::colvec y(yr.begin(), yr.size(), false);
   
