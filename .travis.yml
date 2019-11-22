@@ -11,8 +11,8 @@ env:
 r_check_args: --as-cran
 
 r:
-    - 3.3
-    - oldrel
+    - 3.4
+    - 3.5 
     - release
     - devel
 
