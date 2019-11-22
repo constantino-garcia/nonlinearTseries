@@ -16,6 +16,10 @@ r:
     - release
     - devel
 
+apt_packages:
+      - libglu1-mesa-dev
+      - r-cran-rgl 
+
 after_failure:
       - cat "${RCHECK_DIR}/00install.out"
 
