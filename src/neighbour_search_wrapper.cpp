@@ -4,8 +4,10 @@ using namespace Rcpp;
 
 void transformCppIndexes(IntegerVector& indexes) {
   if (!Rf_isNull(indexes) && indexes.size() > 0) {
-    std::transform(indexes.begin(), indexes.end(), indexes.begin(),
-                   std::bind2nd(std::plus<int>(), 1));  
+    std::transform(
+      indexes.begin(), indexes.end(), indexes.begin(),
+      std::bind(std::plus<int>(), std::placeholders::_1, 1)
+    );  
   }
 }
 
