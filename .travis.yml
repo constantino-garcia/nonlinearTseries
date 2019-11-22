@@ -12,7 +12,7 @@ r_check_args: --as-cran
 
 r:
     - 3.4
-    - oldrel:
+    - oldrel
         r_binary_packages:
             - Rcpp
             - RcppArmadillo
