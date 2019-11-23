@@ -21,6 +21,8 @@ apt_packages:
 
 after_failure:
       - cat "${RCHECK_DIR}/00install.out"
+      - cat "${RCHECK_DIR}/00check.log"
 
 after_success:
       - cat "${RCHECK_DIR}/00install.out"
+      - cat "${RCHECK_DIR}/00check.log"
