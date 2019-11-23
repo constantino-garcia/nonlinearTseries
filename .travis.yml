@@ -18,9 +18,6 @@ r:
 
 apt_packages:
       - libglu1-mesa-dev
-      - r-cran-rgl 
-      - r-cran-rcpp
-      - r-cran-rcpparmadillo
 
 after_failure:
       - cat "${RCHECK_DIR}/00install.out"
