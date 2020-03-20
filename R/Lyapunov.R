@@ -284,7 +284,6 @@ estimate.maxLyapunov = function(x, regression.range = NULL,
   
   indx = which(x$time >= min.time & x$time <= max.time )
   x.values = x$time[indx]
-  lyapunov.estimate = c()
   n.embeddings = length(use.embeddings)
   # color and symbols for the plots if needed
   if (do.plot) {
@@ -293,11 +292,12 @@ estimate.maxLyapunov = function(x, regression.range = NULL,
     pch = vectorizePar(pch,n.embeddings)
     fit.col = vectorizePar(fit.col,n.embeddings,col)  
   }
+  lyapunov.estimate = numeric(n.embeddings)
   for (i in 1:n.embeddings) {
     current.embedding = use.embeddings[[i]]
     y.values = s.function[as.character(current.embedding),indx]
     fit = lm(y.values ~ x.values)
-    lyapunov.estimate = c(lyapunov.estimate,fit$coefficients[[2]])
+    lyapunov.estimate = fit$coefficients[[2]]
     if (do.plot) {
       if (i != 1) {
         lines(x$time, s.function[as.character(current.embedding), ], 

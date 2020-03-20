@@ -235,7 +235,6 @@ estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,
   indx = which(x$fixed.mass >= min.fixed.mass &
                  x$fixed.mass <= max.fixed.mass)
   x.values = log10(x$fixed.mass[indx])
-  information.dimension = c()
   if (do.plot) {
     if (add.legend) {
       current.par =  par(no.readonly = TRUE)
@@ -255,10 +254,11 @@ estimate.infDim = function(x, regression.range=NULL, do.plot=TRUE,
     plot(reduced.x, col = col, pch = pch, lty = lty, lwd = lwd,
          add.legend = F, localScalingExp = F, ...)
   }
+  information.dimension = numeric(n.embeddings)
   for (i in 1:n.embeddings) {
     y.values = log.radius[as.character(use.embeddings[[i]]), indx]
     reg = lm(y.values ~ x.values)
-    information.dimension = c(information.dimension, 1 / reg$coefficients[[2]])
+    information.dimension[i] = 1 / reg$coefficients[[2]]
     # plotting
     if (do.plot) {
       lines(x$fixed.mass[indx], reg$fitted.values, col = fit.col[[i]],

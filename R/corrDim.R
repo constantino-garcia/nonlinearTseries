@@ -433,13 +433,13 @@ estimate.corrDim = function(x, regression.range = NULL, do.plot = FALSE,
 eliminateDuplicates = function(correlation.sum, radius) {
   len.correlation.sum  = length(correlation.sum)
   unique.correlation.sum = unique(correlation.sum)
-  unique.radius = c()
   len.unique.correlation.sum = length(unique.correlation.sum)
   if (len.unique.correlation.sum < len.correlation.sum) {
     radius.position = 1
+    unique.radius = numeric(len.unique.correlation.sum)
     for (corr in unique.correlation.sum) {
       index = which(correlation.sum == corr)
-      unique.radius[[radius.position]] = median(radius[index])
+      unique.radius[radius.position] = median(radius[index])
       radius.position = radius.position + 1
     }
   } else {  

@@ -7,12 +7,7 @@ test_that("estimates equal theoretical results", {
   # generate/load data
   noise = rnorm(6000)
   brown_noise = function(len = 100) {
-    br = c()
-    x = rnorm(len)
-    for (i in 1:len) {
-      br[[i]] = sum(x[1:i])
-    }
-    br
+    cumsum(rnorm(len))
   }
   bnoise = brown_noise(6000)
   # load stored pink noise

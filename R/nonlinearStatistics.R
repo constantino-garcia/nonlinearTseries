@@ -15,9 +15,9 @@
 #' @export timeAsymmetry2
 timeAsymmetry2 = function(time.series, tau) {
   len.ts = length(time.series)
-  statistic = c()
+  statistic = numeric(length(tau))
   for (i in seq_along(tau)) {
-    statistic[[i]] = mean(
+    statistic[i] = mean(
       (time.series[(tau[[i]] + 1):len.ts] - time.series[1:(len.ts - tau[[i]])]) ^ 3
     )  
   }
