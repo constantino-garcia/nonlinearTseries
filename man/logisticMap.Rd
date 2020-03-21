@@ -4,8 +4,13 @@
 \alias{logisticMap}
 \title{Logistic map}
 \usage{
-logisticMap(r = 4, start = runif(n = 1, min = 0, max = 1),
-  n.sample = 5000, n.transient = 500, do.plot = TRUE)
+logisticMap(
+  r = 4,
+  start = runif(n = 1, min = 0, max = 1),
+  n.sample = 5000,
+  n.transient = 500,
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{r}{The \emph{r} parameter. Default: 4}

@@ -4,8 +4,13 @@
 \alias{sinaiMap}
 \title{Sinai map}
 \usage{
-sinaiMap(a = 0.1, start = runif(2), n.sample = 5000,
-  n.transient = 500, do.plot = TRUE)
+sinaiMap(
+  a = 0.1,
+  start = runif(2),
+  n.sample = 5000,
+  n.transient = 500,
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{a}{The \emph{a} parameter. Default: 0.1}

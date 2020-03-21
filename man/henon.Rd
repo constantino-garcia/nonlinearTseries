@@ -4,8 +4,14 @@
 \alias{henon}
 \title{Henon map}
 \usage{
-henon(start = runif(min = -0.5, max = 0.5, n = 2), a = 1.4, b = 0.3,
-  n.sample = 5000, n.transient = 500, do.plot = TRUE)
+henon(
+  start = runif(min = -0.5, max = 0.5, n = 2),
+  a = 1.4,
+  b = 0.3,
+  n.sample = 5000,
+  n.transient = 500,
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{start}{A 2-dimensional vector indicating the starting values for the 

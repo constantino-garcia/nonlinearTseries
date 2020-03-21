@@ -4,8 +4,14 @@
 \alias{lorenz}
 \title{Lorenz system}
 \usage{
-lorenz(sigma = 10, beta = 8/3, rho = 28, start = c(-13, -14, 47),
-  time = seq(0, 50, by = 0.01), do.plot = TRUE)
+lorenz(
+  sigma = 10,
+  beta = 8/3,
+  rho = 28,
+  start = c(-13, -14, 47),
+  time = seq(0, 50, by = 0.01),
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{sigma}{The \eqn{\sigma}{sigma} parameter. Default: 10.}

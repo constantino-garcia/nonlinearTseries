@@ -4,8 +4,14 @@
 \alias{rossler}
 \title{Rossler system}
 \usage{
-rossler(a = 0.2, b = 0.2, w = 5.7, start = c(-2, -10, 0.2),
-  time = seq(0, 50, by = 0.01), do.plot = TRUE)
+rossler(
+  a = 0.2,
+  b = 0.2,
+  w = 5.7,
+  start = c(-2, -10, 0.2),
+  time = seq(0, 50, by = 0.01),
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{a}{The \emph{a} parameter. Default:0.2.}

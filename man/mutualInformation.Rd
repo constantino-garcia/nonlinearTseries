@@ -8,11 +8,23 @@
 \alias{[[.mutualInf}
 \title{Average Mutual Information (AMI)}
 \usage{
-mutualInformation(time.series, lag.max = NULL, n.partitions = NULL,
-  units = c("Nats", "Bits", "Bans"), do.plot = TRUE, ...)
+mutualInformation(
+  time.series,
+  lag.max = NULL,
+  n.partitions = NULL,
+  units = c("Nats", "Bits", "Bans"),
+  do.plot = TRUE,
+  ...
+)
 
-\method{plot}{mutualInf}(x, main = "Average Mutual Information (AMI)",
-  xlab = "Time lag", ylab = NULL, type = "h", ...)
+\method{plot}{mutualInf}(
+  x,
+  main = "Average Mutual Information (AMI)",
+  xlab = "Time lag",
+  ylab = NULL,
+  type = "h",
+  ...
+)
 
 \method{as.numeric}{mutualInf}(x, ...)
 

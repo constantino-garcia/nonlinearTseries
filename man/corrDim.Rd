@@ -12,10 +12,20 @@
 \title{Correlation sum, correlation dimension and generalized correlation dimension 
 (order q >1).}
 \usage{
-corrDim(time.series, min.embedding.dim = 2, max.embedding.dim = 5,
-  time.lag = 1, min.radius, max.radius, corr.order = 2,
-  n.points.radius = 5, theiler.window = 100, do.plot = TRUE,
-  number.boxes = NULL, ...)
+corrDim(
+  time.series,
+  min.embedding.dim = 2,
+  max.embedding.dim = 5,
+  time.lag = 1,
+  min.radius,
+  max.radius,
+  corr.order = 2,
+  n.points.radius = 5,
+  theiler.window = 100,
+  do.plot = TRUE,
+  number.boxes = NULL,
+  ...
+)
 
 \method{nlOrder}{corrDim}(x)
 
@@ -25,20 +35,51 @@ corrDim(time.series, min.embedding.dim = 2, max.embedding.dim = 5,
 
 \method{embeddingDims}{corrDim}(x)
 
-\method{plot}{corrDim}(x, main = "Correlation Sum C(r)", xlab = NULL,
-  ylab = "C(r)", type = "b", log = "xy", ylim = NULL, col = NULL,
-  pch = NULL, localScalingExp = T, add.legend = T, cex.legend = 1,
-  ...)
+\method{plot}{corrDim}(
+  x,
+  main = "Correlation Sum C(r)",
+  xlab = NULL,
+  ylab = "C(r)",
+  type = "b",
+  log = "xy",
+  ylim = NULL,
+  col = NULL,
+  pch = NULL,
+  localScalingExp = T,
+  add.legend = T,
+  cex.legend = 1,
+  ...
+)
 
-\method{plotLocalScalingExp}{corrDim}(x,
-  main = "Correlation Dimension C(r)", xlab = NULL,
-  ylab = "Local scaling exponents", type = "b", log = "x",
-  ylim = NULL, col = NULL, pch = NULL, add.legend = T, ...)
+\method{plotLocalScalingExp}{corrDim}(
+  x,
+  main = "Correlation Dimension C(r)",
+  xlab = NULL,
+  ylab = "Local scaling exponents",
+  type = "b",
+  log = "x",
+  ylim = NULL,
+  col = NULL,
+  pch = NULL,
+  add.legend = T,
+  ...
+)
 
-\method{estimate}{corrDim}(x, regression.range = NULL, do.plot = FALSE,
-  use.embeddings = NULL, col = NULL, pch = NULL, fit.col = NULL,
-  fit.lty = 2, fit.lwd = 2, add.legend = T, lty = 1, lwd = 1,
-  ...)
+\method{estimate}{corrDim}(
+  x,
+  regression.range = NULL,
+  do.plot = FALSE,
+  use.embeddings = NULL,
+  col = NULL,
+  pch = NULL,
+  fit.col = NULL,
+  fit.lty = 2,
+  fit.lwd = 2,
+  add.legend = T,
+  lty = 1,
+  lwd = 1,
+  ...
+)
 }
 \arguments{
 \item{time.series}{The original time series from which the correlation sum 
@@ -222,7 +263,7 @@ cd=corrDim(time.series=x,min.embedding.dim=3,max.embedding.dim=6,
 plot(cd,type="l")
 plotLocalScalingExp(cd,cex=0.5,xlim=c(1e-1,5))
 cd.est = estimate(cd,regression.range=c(0.2,2))
-cat("expected: 2.05  --- estimate: ",cd.est,"\\n")
+cat("expected: 2.05  --- estimate: ",cd.est,"\n")
 }
 }
 \references{

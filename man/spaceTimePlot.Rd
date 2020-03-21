@@ -7,18 +7,35 @@
 \alias{plot.spaceTimePlot}
 \title{Space Time plot}
 \usage{
-spaceTimePlot(takens = NULL, time.series = NULL, embedding.dim = 2,
-  time.lag = 1, max.radius = NULL, time.step = 1,
-  number.time.steps = NULL, numberPercentages = 10, do.plot = TRUE,
-  ...)
+spaceTimePlot(
+  takens = NULL,
+  time.series = NULL,
+  embedding.dim = 2,
+  time.lag = 1,
+  max.radius = NULL,
+  time.step = 1,
+  number.time.steps = NULL,
+  numberPercentages = 10,
+  do.plot = TRUE,
+  ...
+)
 
 \method{contourLines}{spaceTimePlot}(x)
 
 \method{getContourLines}{spaceTimePlot}(x)
 
-\method{plot}{spaceTimePlot}(x, main = "Space time separation plot",
-  xlab = NULL, ylab = NULL, type = "l", ylim = NULL, col = NULL,
-  pch = NULL, add.legend = TRUE, ...)
+\method{plot}{spaceTimePlot}(
+  x,
+  main = "Space time separation plot",
+  xlab = NULL,
+  ylab = NULL,
+  type = "l",
+  ylim = NULL,
+  col = NULL,
+  pch = NULL,
+  add.legend = TRUE,
+  ...
+)
 }
 \arguments{
 \item{takens}{Instead of specifying the \emph{time.series}, the 

@@ -4,8 +4,14 @@
 \alias{nonLinearPrediction}
 \title{Nonlinear time series prediction}
 \usage{
-nonLinearPrediction(time.series, embedding.dim, time.lag, prediction.step,
-  radius, radius.increment)
+nonLinearPrediction(
+  time.series,
+  embedding.dim,
+  time.lag,
+  prediction.step,
+  radius,
+  radius.increment
+)
 }
 \arguments{
 \item{time.series}{Previous values of the time series that the algorithm 

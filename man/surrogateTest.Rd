@@ -4,10 +4,20 @@
 \alias{surrogateTest}
 \title{Surrogate data testing}
 \usage{
-surrogateTest(time.series, significance = 0.05, one.sided = FALSE,
-  alternative = c("smaller", "larger"), K = 1, FUN, verbose = TRUE,
-  do.plot = TRUE, xlab = "Values of the statistic", ylab = "",
-  main = "Surrogate data testing", ...)
+surrogateTest(
+  time.series,
+  significance = 0.05,
+  one.sided = FALSE,
+  alternative = c("smaller", "larger"),
+  K = 1,
+  FUN,
+  verbose = TRUE,
+  do.plot = TRUE,
+  xlab = "Values of the statistic",
+  ylab = "",
+  main = "Surrogate data testing",
+  ...
+)
 }
 \arguments{
 \item{time.series}{The original time.series from which the surrogate data is

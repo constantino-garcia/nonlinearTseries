@@ -4,8 +4,16 @@
 \alias{ikedaMap}
 \title{Ikeda map}
 \usage{
-ikedaMap(a = 0.85, b = 0.9, cc = 7.7, k = 0.4, start = runif(2),
-  n.sample = 5000, n.transient = 500, do.plot = TRUE)
+ikedaMap(
+  a = 0.85,
+  b = 0.9,
+  cc = 7.7,
+  k = 0.4,
+  start = runif(2),
+  n.sample = 5000,
+  n.transient = 500,
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{a}{The \emph{a} parameter. Default: 0.85.}

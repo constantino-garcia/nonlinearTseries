@@ -4,9 +4,19 @@
 \alias{rqa}
 \title{Recurrence Quantification Analysis (RQA)}
 \usage{
-rqa(takens = NULL, time.series = NULL, embedding.dim = 2,
-  time.lag = 1, radius, lmin = 2, vmin = 2, distanceToBorder = 2,
-  save.RM = TRUE, do.plot = FALSE, ...)
+rqa(
+  takens = NULL,
+  time.series = NULL,
+  embedding.dim = 2,
+  time.lag = 1,
+  radius,
+  lmin = 2,
+  vmin = 2,
+  distanceToBorder = 2,
+  save.RM = TRUE,
+  do.plot = FALSE,
+  ...
+)
 }
 \arguments{
 \item{takens}{Instead of specifying the \emph{time.series}, 

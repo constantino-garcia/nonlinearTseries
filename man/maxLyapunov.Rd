@@ -9,11 +9,21 @@
 \alias{estimate.maxLyapunov}
 \title{Maximum lyapunov exponent}
 \usage{
-maxLyapunov(time.series, min.embedding.dim = 2,
-  max.embedding.dim = min.embedding.dim, time.lag = 1, radius,
-  theiler.window = 1, min.neighs = 5, min.ref.points = 500,
-  max.time.steps = 10, number.boxes = NULL, sampling.period = 1,
-  do.plot = TRUE, ...)
+maxLyapunov(
+  time.series,
+  min.embedding.dim = 2,
+  max.embedding.dim = min.embedding.dim,
+  time.lag = 1,
+  radius,
+  theiler.window = 1,
+  min.neighs = 5,
+  min.ref.points = 500,
+  max.time.steps = 10,
+  number.boxes = NULL,
+  sampling.period = 1,
+  do.plot = TRUE,
+  ...
+)
 
 \method{divTime}{maxLyapunov}(x)
 
@@ -21,16 +31,36 @@ maxLyapunov(time.series, min.embedding.dim = 2,
 
 \method{divergence}{maxLyapunov}(x)
 
-\method{plot}{maxLyapunov}(x,
-  main = "Estimating maximal Lyapunov exponent", xlab = "time t",
-  ylab = "S(t)", type = "p", col = NULL, pch = NULL,
-  add.legend = T, ...)
+\method{plot}{maxLyapunov}(
+  x,
+  main = "Estimating maximal Lyapunov exponent",
+  xlab = "time t",
+  ylab = "S(t)",
+  type = "p",
+  col = NULL,
+  pch = NULL,
+  add.legend = T,
+  ...
+)
 
-\method{estimate}{maxLyapunov}(x, regression.range = NULL,
-  do.plot = FALSE, use.embeddings = NULL,
-  main = "Estimating maximal Lyapunov exponent", xlab = "time t",
-  ylab = "S(t)", type = "p", col = NULL, pch = NULL, ylim = NULL,
-  fit.col = NULL, fit.lty = 2, fit.lwd = 2, add.legend = T, ...)
+\method{estimate}{maxLyapunov}(
+  x,
+  regression.range = NULL,
+  do.plot = FALSE,
+  use.embeddings = NULL,
+  main = "Estimating maximal Lyapunov exponent",
+  xlab = "time t",
+  ylab = "S(t)",
+  type = "p",
+  col = NULL,
+  pch = NULL,
+  ylim = NULL,
+  fit.col = NULL,
+  fit.lty = 2,
+  fit.lwd = 2,
+  add.legend = T,
+  ...
+)
 }
 \arguments{
 \item{time.series}{The original time series from which the maximal Lyapunov 
@@ -178,7 +208,7 @@ ml.estimation = estimate(ml,regression.range = c(0,15),
                          use.embeddings=4:5,
                          do.plot = TRUE)
 # The max Lyapunov exponent of the Henon system is 0.41
-cat("expected: ",0.41," calculated: ",ml.estimation,"\\n")
+cat("expected: ",0.41," calculated: ",ml.estimation,"\n")
 
 ## Rossler system
 r=rossler(a=0.15,b=0.2,w=10,start=c(0,0,0), time=seq(0,1000,0.1), 
@@ -195,7 +225,7 @@ ml=maxLyapunov(time.series=my.ts,min.embedding.dim=5,max.embedding.dim = 7,
 ml.est=estimate(ml,col=use.cols,do.plot=T,
                 fit.lty=1,
                 fit.lwd=5)
-cat("expected: ",0.090," calculated: ",ml.est,"\\n")
+cat("expected: ",0.090," calculated: ",ml.est,"\n")
 }
 }
 \references{

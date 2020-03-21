@@ -8,19 +8,37 @@
 \alias{estimate.dfa}
 \title{Detrended Fluctuation Analysis}
 \usage{
-dfa(time.series, window.size.range = c(10, 300), npoints = 20,
-  do.plot = TRUE, ...)
+dfa(
+  time.series,
+  window.size.range = c(10, 300),
+  npoints = 20,
+  do.plot = TRUE,
+  ...
+)
 
 \method{windowSizes}{dfa}(x)
 
 \method{fluctuationFunction}{dfa}(x)
 
-\method{plot}{dfa}(x, main = "Detrended Fluctuation Analysis",
-  xlab = "Window size: t", ylab = "Fluctuation function: F(t)",
-  log = "xy", ...)
+\method{plot}{dfa}(
+  x,
+  main = "Detrended Fluctuation Analysis",
+  xlab = "Window size: t",
+  ylab = "Fluctuation function: F(t)",
+  log = "xy",
+  ...
+)
 
-\method{estimate}{dfa}(x, regression.range = NULL, do.plot = FALSE,
-  fit.col = 2, fit.lty = 1, fit.lwd = 1, add.legend = TRUE, ...)
+\method{estimate}{dfa}(
+  x,
+  regression.range = NULL,
+  do.plot = FALSE,
+  fit.col = 2,
+  fit.lty = 1,
+  fit.lwd = 1,
+  add.legend = TRUE,
+  ...
+)
 }
 \arguments{
 \item{time.series}{The original time series to be analyzed.}
@@ -111,7 +129,7 @@ series).
 dfa.analysis = dfa(time.series = white.noise, npoints = 10, 
                  window.size.range=c(10,1000), do.plot=FALSE)
 white.estimation = estimate(dfa.analysis,do.plot=TRUE)
-cat("Theorical: 0.5---Estimated: ",white.estimation ,"\\n")
+cat("Theorical: 0.5---Estimated: ",white.estimation ,"\n")
 
 
 library(fArma)
@@ -122,7 +140,7 @@ dfa.analysis = dfa(time.series = fgn, npoints = 30,
 fgn.estimation = estimate(dfa.analysis, do.plot = TRUE,
                           fit.col="blue",fit.lwd=2,fit.lty=2,
                           main="Fitting DFA to fGn")
-cat("Theorical: 0.75---Estimated: ",fgn.estimation ,"\\n")
+cat("Theorical: 0.75---Estimated: ",fgn.estimation ,"\n")
 
 
 fbm = as.numeric(fArma::fbmSim(n = 2000, H = 0.25))
@@ -131,7 +149,7 @@ dfa.analysis = dfa(time.series = fbm, npoints = 50,
                    do.plot=FALSE)
 fbm.estimation = estimate(dfa.analysis,do.plot = TRUE,
                           add.legend=F, main="DFA of fBm")
-cat("Theorical: 1.25 ---Estimated: ",fbm.estimation ,"\\n")
+cat("Theorical: 1.25 ---Estimated: ",fbm.estimation ,"\n")
 
 }
 }

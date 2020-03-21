@@ -4,8 +4,16 @@
 \alias{cliffordMap}
 \title{Clifford map}
 \usage{
-cliffordMap(a = -1.4, b = 1.6, cc = 1, d = 0.7, start = runif(2),
-  n.sample = 5000, n.transient = 500, do.plot = TRUE)
+cliffordMap(
+  a = -1.4,
+  b = 1.6,
+  cc = 1,
+  d = 0.7,
+  start = runif(2),
+  n.sample = 5000,
+  n.transient = 500,
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{a}{The \emph{a} parameter. Default: -1.4}

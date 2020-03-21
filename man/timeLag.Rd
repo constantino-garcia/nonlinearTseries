@@ -4,10 +4,16 @@
 \alias{timeLag}
 \title{Estimate an appropiate time lag for the Takens' vectors}
 \usage{
-timeLag(time.series, technique = c("acf", "ami"),
-  selection.method = c("first.e.decay", "first.zero", "first.minimum",
-  "first.value"), value = 1/exp(1), lag.max = NULL, do.plot = TRUE,
-  main = NULL, ...)
+timeLag(
+  time.series,
+  technique = c("acf", "ami"),
+  selection.method = c("first.e.decay", "first.zero", "first.minimum", "first.value"),
+  value = 1/exp(1),
+  lag.max = NULL,
+  do.plot = TRUE,
+  main = NULL,
+  ...
+)
 }
 \arguments{
 \item{time.series}{The original time series.}

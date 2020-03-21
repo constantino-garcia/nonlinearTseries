@@ -4,8 +4,14 @@
 \alias{gaussMap}
 \title{Gauss map}
 \usage{
-gaussMap(a = 4.9, b = -0.58, start = runif(1, min = -0.5, max = 0.5),
-  n.sample = 5000, n.transient = 500, do.plot = TRUE)
+gaussMap(
+  a = 4.9,
+  b = -0.58,
+  start = runif(1, min = -0.5, max = 0.5),
+  n.sample = 5000,
+  n.transient = 500,
+  do.plot = TRUE
+)
 }
 \arguments{
 \item{a}{The \emph{a} parameter. Default: 4.9}

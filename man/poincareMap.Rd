@@ -4,8 +4,14 @@
 \alias{poincareMap}
 \title{Poincare map}
 \usage{
-poincareMap(time.series = NULL, embedding.dim = 2, time.lag = 1,
-  takens = NULL, normal.hiperplane.vector = NULL, hiperplane.point)
+poincareMap(
+  time.series = NULL,
+  embedding.dim = 2,
+  time.lag = 1,
+  takens = NULL,
+  normal.hiperplane.vector = NULL,
+  hiperplane.point
+)
 }
 \arguments{
 \item{time.series}{The original time series from which the phase-space 

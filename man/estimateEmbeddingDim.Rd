@@ -4,11 +4,20 @@
 \alias{estimateEmbeddingDim}
 \title{Estimate the embedding dimension}
 \usage{
-estimateEmbeddingDim(time.series, number.points = length(time.series),
-  time.lag = 1, max.embedding.dim = 15, threshold = 0.95,
-  max.relative.change = 0.1, do.plot = TRUE,
-  main = "Computing the embedding dimension", xlab = "dimension (d)",
-  ylab = "E1(d) & E2(d)", ylim = NULL, xlim = NULL)
+estimateEmbeddingDim(
+  time.series,
+  number.points = length(time.series),
+  time.lag = 1,
+  max.embedding.dim = 15,
+  threshold = 0.95,
+  max.relative.change = 0.1,
+  do.plot = TRUE,
+  main = "Computing the embedding dimension",
+  xlab = "dimension (d)",
+  ylab = "E1(d) & E2(d)",
+  ylim = NULL,
+  xlim = NULL
+)
 }
 \arguments{
 \item{time.series}{The original time series.}
