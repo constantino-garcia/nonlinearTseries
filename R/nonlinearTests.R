@@ -15,6 +15,7 @@
 #' @export nonlinearityTest
 #' @import tseries
 #' @import TSA
+#' @seealso \code{\link{keenanTest}}
 nonlinearityTest = function(time.series, verbose = TRUE) {
   nltests = list()
   # apply all tests
@@ -70,5 +71,65 @@ nonlinearityTest = function(time.series, verbose = TRUE) {
     cat("\t\t X-squared = ",tarTest$test.stat," p-value = ", tarTest$p.value,"\n\n")    
   }
   nltests
+}
+
+
+#' Keenan's test
+#' @details
+#' Keenan's test: test for nonlinearity against the null hypothesis that the time
+#' series follows some AR process.
+#' @param time.series The original time.series.
+#' @param ... Additional arguments for the (\code{\link[stats]{ar}}) function.
+#' @return A list containing the results of the test, including:
+#' \itemize{
+#'    \item test.stat: the F-squared test statistic
+#'    \item df1 and df2: the degrees of freedom of the test statistic.
+#'    \item p.value.
+#'    \item order: order of the AR process used for testing.
+#' }
+#' @references Keenan, D. M. (1985), A Tukey nonadditivity-type test for 
+#' time series Nonlinearity, Biometrika, 72, 39-44.
+#' @export keenanTest
+#' @seealso \code{\link{nonlinearityTest}}
+keenanTest = function(time.series, ...) {
+  # In the following commentaries, y = time.series to follow the paper's original
+  # notation
+  
+  # Step 1
+  # Regress y[t] on {1, y[t-1], ..., y[t-order]}.
+  # We implement it using the ar function, since this also permits to estimate
+  # a proper order for the AR process.
+  y_model = ar(time.series, ...)
+  y_predictions = time.series - y_model$resid
+  # The first predictions and residuals are NA, since there is no enough 
+  # data to compute them
+  y_predictions = y_predictions[!is.na(y_predictions)]
+  y_residuals = y_model$resid[!is.na(y_model$resid)]
+  
+  # Step 2
+  # We have to regress (\hat{y}[t])^2 on {1, y[t-1], ..., y[t-order]}. We do
+  # it computing the regression matrix X:
+  X = buildTakens(head(time.series, -1), y_model$order, 1)
+  X = cbind(X)
+  y2_model = lm.fit(x = X, y = y_predictions ^ 2)
+  y2_residuals = y2_model$residuals
+  
+  # Step 3
+  residuals_model = lm(y_residuals ~ y2_residuals + 0)
+  
+  df1 = 1
+  n = length(time.series)
+  df2 = n - 2 * y_model$order - 2
+  f_stat = summary(residuals_model)$fstatistic[1] * df2 / (n - y_model$order - 1)
+  names(f_stat) = NULL
+  p_value = pf(f_stat, df1 = df1, df2 = df2, lower.tail = FALSE)
+  
+  list(
+    'test.stat' = f_stat, 
+    'df1' = df1,
+    'df2' = df2, 
+    'p.value' = p_value,
+    'order' = y_model$order
+  )
 }
 
