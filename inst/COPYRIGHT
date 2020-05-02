@@ -1,13 +1,16 @@
 This R package is copyright Constantino Antonio Garcia Martinez, with the 
 exception of the following files:
 
-TODO modify appropriately
+* thresholdTest and tlrtPValue functions in the nonlinearTests.R file are 
+modified versions of the tlrt and p.value.tlrt of v1.2 of the TSA package,
+which are copyright Kung-Sik Chan.
+
 *NN.cc, Makevars and Makevars.win from v2.3.0 of the RANN package (saved 
  under the src/ folder), wich are copyright Samuel Kemp 2005-9 and Gregory 
  Jefferis 2009-2013.
 
 *nn.search function under the nnSearch.R file is a modified version of the 
- nn2.R function of v2.3.0 of the RANN package, which are copyrigth  Samuel 
+ nn2.R function of v2.3.0 of the RANN package, which are copyright  Samuel 
  Kemp 2005-9 and Gregory Jefferis 2009-2013. Date of last edit: 17-09-2013
 
 *v1.1.3 of the ANN library under the src/ folder. The files from the  ANN

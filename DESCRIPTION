@@ -28,7 +28,6 @@ Imports:
     Matrix,
     rgl,
     tseries,
-    TSA,
     zoo,
     Rcpp (>= 0.12.12),
     graphics,
