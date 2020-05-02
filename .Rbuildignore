@@ -6,3 +6,5 @@ README.md
 ^\.travis\.yml$
 ^revdep$
 ^cran-comments.md
+^doc$
+^Meta$

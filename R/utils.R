@@ -1,5 +1,7 @@
 #' @importFrom graphics abline layout legend lines par plot plot.new filled.contour
-#' @importFrom stats IQR as.formula dist fft lm median rnorm runif sd ts time as.ts frequency na.fail
+#' @importFrom stats IQR as.formula dist fft lm median rnorm runif sd ts time 
+#' @importFrom stats as.ts frequency na.fail Box.test anova ar dchisq dnorm lm.fit 
+#' @importFrom stats pf pnorm qnorm
 #' @importFrom grDevices terrain.colors
 NULL
 

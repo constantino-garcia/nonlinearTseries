@@ -2,8 +2,6 @@
 #include <vector>
 #include "generic_functions.h"
 #include "neighbour_search.h"
-// TODO: ELIMINATE
-//#include <gperftools/profiler.h>
 using namespace Rcpp;
 
 

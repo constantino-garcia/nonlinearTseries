@@ -16,7 +16,8 @@ estimateEmbeddingDim(
   xlab = "dimension (d)",
   ylab = "E1(d) & E2(d)",
   ylim = NULL,
-  xlim = NULL
+  xlim = NULL,
+  std.noise
 )
 }
 \arguments{
@@ -54,6 +55,12 @@ E2(d) is shown.}
 \item{ylim}{numeric vectors of length 2, giving the y coordinates range.}
 
 \item{xlim}{numeric vectors of length 2, giving the x coordinates range.}
+
+\item{std.noise}{numeric value that permits to add a small amount of noise
+to the original series to avoid the appearance of false neighbours due to 
+discretizacion errors. This also prevents the method to fail with periodic
+signals (in which neighbours at a distance of 0 appear). By default, a small
+ amount of noise is always added. Use 0 not to add noise.}
 }
 \description{
 This function determines the minimum embedding dimension from a scalar time 

@@ -43,6 +43,11 @@
 #' @param ylab Title for the y axis.
 #' @param xlim numeric vectors of length 2, giving the x coordinates range.
 #' @param ylim numeric vectors of length 2, giving the y coordinates range.
+#' @param std.noise numeric value that permits to add a small amount of noise
+#' to the original series to avoid the appearance of false neighbours due to 
+#' discretizacion errors. This also prevents the method to fail with periodic
+#' signals (in which neighbours at a distance of 0 appear). By default, a small
+#'  amount of noise is always added. Use 0 not to add noise.
 #' @references 
 #' Cao, L. Practical method for determining the minimum embedding dimension of
 #'  a scalar time series. Physica D: Nonlinear Phenomena, 110,1, 
@@ -69,9 +74,8 @@ estimateEmbeddingDim = function(
   do.plot = TRUE,
   main = "Computing the embedding dimension",
   xlab="dimension (d)", ylab="E1(d) & E2(d)",
-  ylim = NULL, xlim = NULL) {
+  ylim = NULL, xlim = NULL, std.noise) {
   
-  kSDFraction = 1e-6
   if (max.embedding.dim < 3) {
     stop("max.embedding.dim should be greater that 2...\n")
   }
@@ -83,13 +87,22 @@ estimateEmbeddingDim = function(
   # add small quantity of noise to avoid finding identical phase space
   # points (something impossible in a pure chaotic signal). This "trick"
   # avoids failures when supplying periodic signals (i.e. a sine).
-  # We use the IQR as an estimation of the time.series dispersion to
-  # avoid the effect of outliers
-  time.series = (
-    time.series +
-    rnorm(time.series.len, 
-          sd = IQR(time.series,na.rm = T) * kSDFraction) 
-  )
+  if (missing(std.noise)) {
+    kSDFraction = 1e-6
+    min.abs.separation = min(
+      abs(
+        diff(
+          sort(as.numeric(time.series))
+        )
+      ),
+      na.rm = TRUE
+    )
+    std.noise = min.abs.separation * kSDFraction 
+  }
+  if (std.noise < 0) {
+    std.noise = 0
+  }
+  time.series = time.series + rnorm(time.series.len, sd = std.noise) 
   tsBeg = time.series.len / 2 - number.points / 2 + 1
   tsEnd = time.series.len / 2 + number.points / 2
   data = time.series[tsBeg:tsEnd]

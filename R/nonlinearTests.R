@@ -112,8 +112,12 @@ keenanTest = function(time.series, ...) {
   # Step 2
   # We have to regress (\hat{y}[t])^2 on {1, y[t-1], ..., y[t-order]}. We do
   # it computing the regression matrix X:
-  X = buildTakens(head(y, -1), y_model$order, 1)
-  X = cbind(X)
+  if (y_model$order > 0) {
+    X = buildTakens(head(y, -1), y_model$order, 1)
+    X = cbind(1, X) 
+  } else {
+    X = matrix(rep(1, length(y_predictions)), ncol = 1)
+  }
   y2_model = lm.fit(x = X, y = y_predictions ^ 2)
   y2_residuals = y2_model$residuals
   
@@ -161,7 +165,7 @@ tsayTest = function(time.series, order) {
   # Regress y[t] on {1, y[t-1], ..., y[t-order]}.
   # If the order is missing, we estimate a proper one using the ar function
   if (missing(order)) {
-    order = ar(y)$order
+    order = max(1, ar(y)$order)
   }
   X = buildTakens(head(y, -1), order, 1)
   linear_model = lm(tail(y, -order) ~ X)
