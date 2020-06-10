@@ -108,7 +108,6 @@
 #' @author Constantino A. Garcia
 #' @rdname maxLyapunov
 #' @export maxLyapunov
-#' @exportClass maxLyapunov
 #' @useDynLib nonlinearTseries
 maxLyapunov = function(time.series,
                        min.embedding.dim = 2,

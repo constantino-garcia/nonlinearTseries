@@ -9,10 +9,6 @@ getContourLines(x)
 \arguments{
 \item{x}{A \emph{spaceTimePlot} object.}
 }
-\value{
-Returns a matrix representing the contour lines of the
-space time plot.
-}
 \description{
 Obtain the contour lines of the space time plot.
 }

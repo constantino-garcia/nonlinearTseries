@@ -43,7 +43,6 @@
 #' @seealso \code{\link{timeLag}}
 #' @rdname mutualInformation 
 #' @export mutualInformation
-#' @exportClass mutualInf
 #' @useDynLib nonlinearTseries
 #' @import Rcpp
 mutualInformation = function(time.series,lag.max = NULL, 

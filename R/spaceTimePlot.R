@@ -51,7 +51,6 @@
 #' @author Constantino A. Garcia
 #' @rdname spaceTimePlot
 #' @export spaceTimePlot
-#' @exportClass spaceTimePlot
 #' @useDynLib nonlinearTseries
 spaceTimePlot = function(takens = NULL, time.series = NULL, embedding.dim = 2,
                          time.lag = 1, max.radius = NULL, time.step = 1, 
@@ -128,8 +127,8 @@ contourLines.spaceTimePlot = function(x){
 
 
 #' Obtain the contour lines of the space time plot.
-#' @inherit contourLines
 #' @seealso \code{\link{spaceTimePlot}}
+#' @inheritParams contourLines.spaceTimePlot
 #' @export getContourLines
 getContourLines = function(x){
   UseMethod("getContourLines")
@@ -137,7 +136,6 @@ getContourLines = function(x){
 
 
 
-#' @inherit contourLines.spaceTimePlot
 #' @rdname spaceTimePlot
 #' @export
 getContourLines.spaceTimePlot = function(x){

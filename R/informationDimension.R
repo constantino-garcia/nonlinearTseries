@@ -95,7 +95,6 @@
 #' }
 #' @rdname infDim
 #' @export infDim
-#' @exportClass infDim
 #' @useDynLib nonlinearTseries
 #' @seealso \code{\link{corrDim}}.
 infDim = function(time.series, min.embedding.dim=2, 

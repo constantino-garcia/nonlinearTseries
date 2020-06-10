@@ -103,7 +103,6 @@
 #' @author Constantino A. Garcia
 #' @rdname corrDim
 #' @export corrDim
-#' @exportClass corrDim
 #' @useDynLib nonlinearTseries
 corrDim = function(time.series, min.embedding.dim = 2, max.embedding.dim = 5,
                    time.lag = 1, min.radius, max.radius,

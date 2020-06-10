@@ -79,7 +79,6 @@
 #' @rdname dfa
 #' @export dfa
 #' @import Rcpp
-#' @exportClass dfa
 dfa = function(time.series, window.size.range = c(10, 300),
                npoints = 20, do.plot = TRUE, ...) {
   if ((window.size.range[[2]] < window.size.range[[1]]) ||

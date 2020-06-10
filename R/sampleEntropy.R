@@ -51,7 +51,6 @@
 #' @author Constantino A. Garcia
 #' @rdname sampleEntropy
 #' @export sampleEntropy
-#' @exportClass sampleEntropy
 sampleEntropy = function (corrDim.object, do.plot = TRUE, ...) {
   if (!inherits(corrDim.object, "corrDim")) {
     stop("corrDim.object should be of class corrDim")
