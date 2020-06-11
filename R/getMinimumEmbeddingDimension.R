@@ -106,8 +106,10 @@ estimateEmbeddingDim = function(
   tsBeg = time.series.len / 2 - number.points / 2 + 1
   tsEnd = time.series.len / 2 + number.points / 2
   data = time.series[tsBeg:tsEnd]
-  #if no d verifies E1(d) >= threshold,  then we shall return 0
-  embedding.dim = 0 
+
+  # initialize embedding dimension
+  embedding.dim = 0
+
   # First iteration: get E1(1) and E2(1)
   E.parameters = getCaoParameters(data,  1,  time.lag)
   E.parameters.next.dim = getCaoParameters(data,  2,  time.lag)
@@ -160,7 +162,12 @@ estimateEmbeddingDim = function(
            legend = c("E1(d)", "E2(d)", "limits for E1(d)")
     )
   }
-  embedding.dim 
+
+  # if no embedding dimension has been identified, return NA instead
+  if (embedding.dim==0){ embedding.dim = NA}
+
+  # return embedding dimension
+  return(embedding.dim)
 }
 
 
