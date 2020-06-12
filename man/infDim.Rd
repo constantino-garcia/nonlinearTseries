@@ -163,7 +163,7 @@ should be used to compute the information dimension.}
 
 \item{ylab}{A title for the y axis.}
 
-\item{type}{Type of plot (see \code{\link[graphics]{plot}}).}
+\item{type}{Type of plot (see \code{?plot}).}
 
 \item{log}{A character string which contains "x" if the x axis is to be 
 logarithmic, "y" if the y axis is to be logarithmic and "xy" or "yx" if both

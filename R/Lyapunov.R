@@ -208,7 +208,7 @@ divergence.maxLyapunov = function(x) {
 #' @param main A title for the plot.
 #' @param xlab A title for the x axis.
 #' @param ylab A title for the y axis.
-#' @param type Type of plot (see \code{\link[graphics]{plot}}).
+#' @param type Type of plot (see \code{?plot}).
 #' @param col Vector of colors for each of the dimensions of the plot.
 #' @param pch Vector of symbols for each of the dimensions of the plot.
 #' @param add.legend add a legend to the plot?

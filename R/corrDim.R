@@ -204,7 +204,7 @@ print.corrDim = function(x, ...){
 #' @param main A title for the plot.
 #' @param xlab A title for the x axis.
 #' @param ylab A title for the y axis.
-#' @param type Type of plot (see \code{\link[graphics]{plot}}).
+#' @param type Type of plot (see \code{?plot}).
 #' @param log A character string which contains "x" if the x axis is to be 
 #' logarithmic, "y" if the y axis is to be logarithmic and "xy" or "yx" if both 
 #' axes are to be logarithmic.

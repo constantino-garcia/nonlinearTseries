@@ -63,7 +63,7 @@ sample entropy is shown.}
 
 \item{ylab}{A title for the y axis.}
 
-\item{type}{Type of plot (see \code{\link[graphics]{plot}}).}
+\item{type}{Type of plot (see \code{?plot}).}
 
 \item{col}{Vector of colors for each of the dimensions of the plot.}
 

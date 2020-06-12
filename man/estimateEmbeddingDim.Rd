@@ -81,6 +81,9 @@ This function uses the Arya and Mount's C++ ANN library for nearest neighbour
  search (For more information on the ANN library please visit 
  \url{http://www.cs.umd.edu/~mount/ANN/}). The R wrapper is a modified 
  version of the RANN package code by Samuel E. Kemp and Gregory Jefferis.
+
+If no suitable embedding dimension can be found within the provided range,
+the function will return NA.
 }
 \note{
 In the current version of the package, the automatic detection of stochastic 

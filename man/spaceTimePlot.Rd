@@ -77,7 +77,7 @@ contour line represent a concrete percentage of points (see Details).}
 
 \item{ylab}{A title for the y axis.}
 
-\item{type}{Type of plot (see \code{\link[graphics]{plot}}).}
+\item{type}{Type of plot (see \code{?plot}).}
 
 \item{ylim}{Numeric vector of length 2, giving the y coordinates range.}
 
