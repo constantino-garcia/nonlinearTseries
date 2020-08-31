@@ -23,6 +23,10 @@ Since linear stochastic series are symmetric under time reversal, this
 statistic may be used for testing the assertion that the data was generated
 from a stationary linear stochastic process or not.
 }
+\references{
+H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+(Cambridge university press, second edition, section 7.1.3)
+}
 \author{
 Constantino A. Garcia
 }

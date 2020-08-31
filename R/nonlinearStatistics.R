@@ -36,6 +36,8 @@ timeAsymmetry2 = function(time.series, tau) {
 #' @author Constantino A. Garcia
 #' @rdname timeAsymmetry
 #' @export timeAsymmetry
+#' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis 
+#' (Cambridge university press, second edition, section 7.1.3)
 timeAsymmetry = function(time.series){
   len = length(time.series)
   mean(time.series[1:(len - 1)] *
