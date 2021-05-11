@@ -31,7 +31,7 @@ Imports:
     Rcpp (>= 0.12.12),
     graphics,
     stats, 
-    lifecycle
+    lifecycle   
 LinkingTo: Rcpp, RcppArmadillo
 Suggests:
     rgl,
