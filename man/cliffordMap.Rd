@@ -12,7 +12,7 @@ cliffordMap(
   start = runif(2),
   n.sample = 5000,
   n.transient = 500,
-  do.plot = TRUE
+  do.plot = deprecated()
 )
 }
 \arguments{
@@ -33,8 +33,9 @@ If the starting point is not specified, it is generated randomly.}
 \item{n.transient}{Number of transient samples that will be discarded. 
 Default: 500 samples.}
 
-\item{do.plot}{Logical value. If TRUE (default value), a plot of the 
-generated Clifford system is shown.}
+\item{do.plot}{Logical value. If TRUE, a plot of the 
+generated Clifford system is shown. Before version 0.2.11, default value was
+TRUE; versions 0.2.11 and later use FALSE as default.}
 }
 \value{
 A list with two vectors named x and y containing the x-components 

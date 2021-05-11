@@ -10,7 +10,7 @@ lorenz(
   rho = 28,
   start = c(-13, -14, 47),
   time = seq(0, 50, by = 0.01),
-  do.plot = TRUE
+  do.plot = deprecated()
 )
 }
 \arguments{
@@ -26,8 +26,9 @@ Default: c(-13, -14, 47).}
 \item{time}{The temporal interval at which the system will be generated. 
 Default: time=seq(0,50,by = 0.01).}
 
-\item{do.plot}{Logical value. If TRUE (default value), a plot of the 
-generated Lorenz system is shown.}
+\item{do.plot}{Logical value. If TRUE, a plot of the 
+generated Lorenz system is shown. Before version 0.2.11, default value was
+TRUE; versions 0.2.11 and later use FALSE as default.}
 }
 \value{
 A list with four vectors named \emph{time}, \emph{x}, \emph{y} 

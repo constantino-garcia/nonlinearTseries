@@ -1,3 +1,17 @@
+#' @importFrom lifecycle deprecated deprecate_warn is_present
+.deprecateDoPlot = function(do.plot, function.name) {
+  if (!is_present(do.plot)) {
+    deprecate_warn(
+      "0.2.11", 
+      paste0(function.name, "(do.plot = 'has changed its default value to FALSE')"),
+      details = "Please set do.plot = TRUE for restoring <0.2.11 behavior"
+    )
+    do.plot = FALSE
+  }
+  do.plot
+}
+
+
 #' Henon map
 #' @description
 #' Generates a 2-dimensional time series using the Henon map.
@@ -16,8 +30,9 @@
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. 
 #' Default: 500 samples.
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated Henon system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated Henon system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return A list with two vectors named \emph{x} and \emph{y} containing the 
 #' x-components and the y-components of the Henon map, respectively.
 #' @note Some initial values may lead to an unstable system that will tend to 
@@ -36,7 +51,7 @@
 #' }
 #' @export henon
 henon = function(start = runif(min = -0.5, max = 0.5, n = 2), a = 1.4, b = 0.3,
-                 n.sample = 5000, n.transient=500, do.plot=TRUE) {
+                 n.sample = 5000, n.transient=500, do.plot=deprecated()) {
   n.sample = n.sample + n.transient
   y = x = vector(mode = "numeric", length = n.sample)
   x[[1]] = start[[1]]
@@ -50,6 +65,7 @@ henon = function(start = runif(min = -0.5, max = 0.5, n = 2), a = 1.4, b = 0.3,
   x = x[-transientVector]
   y = y[-transientVector]
   
+  do.plot = .deprecateDoPlot(do.plot, 'henon')
   # plotting
   if (do.plot) {
     title = paste("Henon map\n", "a = ", a, " b = ", b)
@@ -72,8 +88,9 @@ henon = function(start = runif(min = -0.5, max = 0.5, n = 2), a = 1.4, b = 0.3,
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. 
 #' Default: 500 samples.
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated logistic system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated logistic system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return A vector containing the values of the time series that has been 
 #' generated.
 #' @note Some initial values may lead to an unstable system that will tend to 
@@ -89,7 +106,7 @@ henon = function(start = runif(min = -0.5, max = 0.5, n = 2), a = 1.4, b = 0.3,
 #' }
 #' @export logisticMap
 logisticMap = function(r=4, start=runif(n = 1, min = 0, max = 1), n.sample=5000,
-                       n.transient=500, do.plot=TRUE) {
+                       n.transient=500, do.plot=deprecated()) {
   n.sample = n.sample + n.transient
   x = vector(mode = "numeric", length = n.sample)
   x[[1]] = start
@@ -98,6 +115,7 @@ logisticMap = function(r=4, start=runif(n = 1, min = 0, max = 1), n.sample=5000,
     x[[i]] = r * x[[i - 1]]  * (1 - x[[i - 1]])
   }
   # plotting
+  do.plot = .deprecateDoPlot(do.plot, 'logisticMap')
   if (do.plot) {
     title = paste("logistic map\n", "r = ",r)
     plot(c(1, sampleVector), x, xlab = "n", ylab = "x[n]", main = title,
@@ -145,8 +163,9 @@ bifurcationDiagram = function(mappingFunctionName, parameterVector,
 #' @param beta The \eqn{\beta}{beta} parameter. Default: 8/3.
 #' @param time The temporal interval at which the system will be generated. 
 #' Default: time=seq(0,50,by = 0.01).
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated Lorenz system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated Lorenz system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return A list with four vectors named \emph{time}, \emph{x}, \emph{y} 
 #' and \emph{z} containing the time, the x-components, the 
 #' y-components and the z-components of the Lorenz system, respectively.
@@ -164,9 +183,8 @@ bifurcationDiagram = function(mappingFunctionName, parameterVector,
 #' plot(lor$time,lor$x,type="l")
 #' }
 #' @export lorenz
-#' @import rgl
 lorenz = function(sigma = 10, beta = 8/3, rho = 28, start = c(-13, -14, 47),
-                  time = seq(0, 50, by = 0.01), do.plot = TRUE) {
+                  time = seq(0, 50, by = 0.01), do.plot = deprecated()) {
   params = c(sigma, beta, rho)
   lorenzEquations = function(coord, t, params) {
     x = coord[[1]]
@@ -179,9 +197,14 @@ lorenz = function(sigma = 10, beta = 8/3, rho = 28, start = c(-13, -14, 47),
   }
   l = rungeKutta(lorenzEquations, start, time, params)
   
+  do.plot = .deprecateDoPlot(do.plot, 'lorenz') 
   if (do.plot) {
-    plot3d(l[,1],l[,2],l[,3], pch = 1, cex = 1, xlab = "x(t)", ylab = "y(t)",
-           zlab = "z(t)")
+    if (requireNamespace("rgl", quietly = TRUE)) {
+      rgl::plot3d(l[,1],l[,2],l[,3], pch = 1, cex = 1, xlab = "x(t)", ylab = "y(t)",
+             zlab = "z(t)")
+    } else {
+      warning("rgl package is not installed, but is required if do.plot = TRUE (run install.packages('rgl')). Skipping plot") 
+    }
   }
   list(time = time, x = l[, 1], y = l[, 2], z = l[, 3])
 }
@@ -203,8 +226,9 @@ lorenz = function(sigma = 10, beta = 8/3, rho = 28, start = c(-13, -14, 47),
 #' @param w The \emph{w} parameter. Default: 5.7.
 #' @param time The temporal interval at which the system will be generated. 
 #' Default: time=seq(0,50,by = 0.01).
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated Lorenz system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated Lorenz system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return A list with four vectors named \emph{time}, \emph{x}, \emph{y} 
 #' and \emph{z} containing the time, the x-components, the 
 #' y-components and the z-components of the Rossler system, respectively.
@@ -220,9 +244,8 @@ lorenz = function(sigma = 10, beta = 8/3, rho = 28, start = c(-13, -14, 47),
 #' r.ts = rossler(time=seq(0,30,by = 0.01))
 #' }
 #' @export rossler
-#' @import rgl
 rossler = function(a = 0.2, b = 0.2, w = 5.7, start=c(-2, -10, 0.2),
-                   time = seq(0, 50, by = 0.01), do.plot = TRUE) {
+                   time = seq(0, 50, by = 0.01), do.plot = deprecated()) {
   params = c(a, b, w)
   rosslerEquations = function(coord, t, params) {
     x = coord[[1]]
@@ -235,9 +258,15 @@ rossler = function(a = 0.2, b = 0.2, w = 5.7, start=c(-2, -10, 0.2),
   }
   r = rungeKutta(rosslerEquations, start, time, params)
   
+  
+  do.plot = .deprecateDoPlot(do.plot, 'rossler')
   if (do.plot) {
-    plot3d(r[,1],r[,2],r[,3], col = 'black', pch = 1, cex = 1, xlab = "x(t)",
+    if (requireNamespace("rgl", quietly = TRUE)) {
+      rgl::plot3d(r[,1],r[,2],r[,3], col = 'black', pch = 1, cex = 1, xlab = "x(t)",
            ylab =  "y(t)", zlab = "z(t)")
+    } else {
+      warning("rgl package is not installed, but is required if do.plot = TRUE (run install.packages('rgl')). Skipping plot") 
+    }
   }
   list(time = time, x = r[, 1], y = r[, 2], z = r[, 3])
 }
@@ -259,8 +288,9 @@ rossler = function(a = 0.2, b = 0.2, w = 5.7, start=c(-2, -10, 0.2),
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. 
 #' Default: 500 samples.
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated ikeda system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated ikeda system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return a list with 2 vectors named \emph{x} and \emph{y} the x-components 
 #' and the y-components of the Ikeda map, respectively.
 #' @note Some initial values may lead to an unstable system that will tend to 
@@ -277,7 +307,7 @@ rossler = function(a = 0.2, b = 0.2, w = 5.7, start=c(-2, -10, 0.2),
 #' @export ikedaMap
 # \code{\link{http://www.pessoal.utfpr.edu.br/msergio/cap3/6Ikeda/index.html}}
 ikedaMap = function(a = 0.85, b = 0.9, cc= 7.7, k = 0.4, start = runif(2),
-                    n.sample = 5000, n.transient = 500, do.plot = TRUE) {
+                    n.sample = 5000, n.transient = 500, do.plot = deprecated()) {
   n.sample = n.sample + n.transient
   z = vector(mode = "complex", length = n.sample)
   z[[1]] = complex(real = start[[1]], imaginary = start[[2]]) 
@@ -292,6 +322,7 @@ ikedaMap = function(a = 0.85, b = 0.9, cc= 7.7, k = 0.4, start = runif(2),
   z = z[-(1:n.transient)]
   x = Re(z); y = Im(z)
   # plotting
+  do.plot = .deprecateDoPlot(do.plot, 'ikedaMap')
   if (do.plot) {
     title = paste("Ikeda map\n",
                   "a = ", Re(a),
@@ -323,8 +354,9 @@ ikedaMap = function(a = 0.85, b = 0.9, cc= 7.7, k = 0.4, start = runif(2),
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. 
 #' Default: 500 samples.
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated Clifford system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated Clifford system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return A list with two vectors named x and y containing the x-components 
 #' and the y-components of the Clifford map, respectively.
 #' @note Some initial values may lead to an unstable system that will tend to 
@@ -339,7 +371,7 @@ ikedaMap = function(a = 0.85, b = 0.9, cc= 7.7, k = 0.4, start = runif(2),
 #' plot(ts(clifford.map$x))}
 #' @export cliffordMap 
 cliffordMap = function(a = -1.4, b = 1.6, cc = 1.0, d = 0.7, start = runif(2),
-                       n.sample = 5000, n.transient = 500, do.plot = TRUE) {
+                       n.sample = 5000, n.transient = 500, do.plot = deprecated()) {
   n.sample = n.sample + n.transient
   x = y = vector(mode = "numeric", length = n.sample)
   x[[1]] = start[[1]]
@@ -353,6 +385,7 @@ cliffordMap = function(a = -1.4, b = 1.6, cc = 1.0, d = 0.7, start = runif(2),
   x = x[-(transient)]
   y = y[-(transient)]
   # plotting
+  do.plot = .deprecateDoPlot(do.plot, 'clifforMap')
   if (do.plot) {
     title = paste("clifford map\n", "a = ",a, " b = ",b, 
                   " c = ", cc, " d = ",d, "\n")
@@ -377,8 +410,9 @@ cliffordMap = function(a = -1.4, b = 1.6, cc = 1.0, d = 0.7, start = runif(2),
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. 
 #' Default: 500 samples.
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated Sinai system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated Sinai system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return A list with two vectors named x and y containing the x-components 
 #' and the  y-components of the Sinai map, respectively.
 #' @note Some initial values may lead to an unstable system that will tend to 
@@ -398,7 +432,7 @@ cliffordMap = function(a = -1.4, b = 1.6, cc = 1.0, d = 0.7, start = runif(2),
 #' }
 #' @export sinaiMap
 sinaiMap = function(a = 0.1, start = runif(2), 
-                    n.sample = 5000, n.transient = 500, do.plot = TRUE) {
+                    n.sample = 5000, n.transient = 500, do.plot = deprecated()) {
   n.sample = n.sample + n.transient
   x = y = vector(mode = "numeric", length = n.sample)
   x[[1]] = start[[1]]
@@ -413,6 +447,7 @@ sinaiMap = function(a = 0.1, start = runif(2),
   x = x[-(transient)]
   y = y[-(transient)]
   # plotting
+  do.plot = .deprecateDoPlot(do.plot, 'sinaiMap')
   if (do.plot) {
     title = paste("Sinai map\n", "a = ",a, "\n")
     plot(x,y, xlab =  "x[n]", ylab =  "y[n]", cex = 0.3, main = title,
@@ -436,8 +471,9 @@ sinaiMap = function(a = 0.1, start = runif(2),
 #' @param n.sample Length of the generated time series. Default: 5000 samples.
 #' @param n.transient Number of transient samples that will be discarded. 
 #' Default: 500 samples.
-#' @param do.plot Logical value. If TRUE (default value), a plot of the 
-#' generated Gauss system is shown.
+#' @param do.plot Logical value. If TRUE, a plot of the 
+#' generated Gauss system is shown. Before version 0.2.11, default value was
+#' TRUE; versions 0.2.11 and later use FALSE as default.
 #' @return A vector containing the values of the time series that has been 
 #' generated.
 #' @note Some initial values may lead to an unstable system that will tend to 
@@ -451,7 +487,7 @@ sinaiMap = function(a = 0.1, start = runif(2),
 #' @export gaussMap
 #http://en.wikipedia.org/wiki/Gauss_iterated_map
 gaussMap = function(a = 4.9, b = -0.58, start = runif(1, min = -0.5, max = 0.5),
-                    n.sample = 5000, n.transient = 500, do.plot = TRUE) {
+                    n.sample = 5000, n.transient = 500, do.plot = deprecated()) {
   n.sample = n.sample + n.transient
   x = vector(mode = "numeric", length = n.sample)
   x[[1]] = start[[1]]
@@ -462,6 +498,7 @@ gaussMap = function(a = 4.9, b = -0.58, start = runif(1, min = -0.5, max = 0.5),
   transient = 1:n.transient
   x = x[-(transient)]
   # plotting
+  do.plot = .deprecateDoPlot(do.plot, 'gaussMap') 
   if (do.plot) {
     title = paste("Gauss map\n", "a = ", a, " b = ", b, "\n")
     plot(1:length(x), x, xlab = "n", ylab =  "x[n]", cex = 0.3, main = title, 
@@ -469,3 +506,5 @@ gaussMap = function(a = 4.9, b = -0.58, start = runif(1, min = -0.5, max = 0.5),
   }
   x
 }
+
+

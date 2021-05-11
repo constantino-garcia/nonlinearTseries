@@ -76,8 +76,11 @@ takens=cbind(r$x,r$y,r$z)
 # calculate poincare sections
 pm=poincareMap(takens = takens,normal.hiperplane.vector = c(0,1,0), 
  hiperplane.point=c(0,0,0) )
-plot3d(takens,size=0.7)
-points3d(pm$pm,col="red")}
+if (requireNamespace("rgl", quietly = TRUE)) {
+   plot3d(takens,size=0.7)
+   points3d(pm$pm,col="red")
+}
+}
 }
 \references{
 Parker, T. S., L. O. Chua, and T. S. Parker (1989). Practical

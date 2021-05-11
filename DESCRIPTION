@@ -1,8 +1,8 @@
 Package: nonlinearTseries
 Type: Package
 Title: Nonlinear Time Series Analysis
-Version: 0.2.10
-Date: 2020-6-10
+Version: 0.2.11
+Date: 2021-5-11
 Maintainer: Constantino A. Garcia <constantino.garciama@ceu.es>
 Authors@R: c(person("Constantino A.", "Garcia",
                     email = "constantino.garciama@ceu.es",
@@ -26,15 +26,17 @@ Copyright: ANN library is copyright University of Maryland and Sunil Arya and
 Depends: R (>= 3.3.0)
 Imports:
     Matrix,
-    rgl,
     tseries,
     zoo,
     Rcpp (>= 0.12.12),
     graphics,
-    stats
+    stats, 
+    lifecycle
 LinkingTo: Rcpp, RcppArmadillo
 Suggests:
+    rgl,
     plot3D,
+    knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
