@@ -26,7 +26,7 @@ overview of the most important routines contained in **nonlinearTseries**.
 
 ## Data: Lorenz system
 To explore the routines included in **nonlinearTseries**, we will study the
-famous [Lorenz system](http://en.wikipedia.org/wiki/Lorenz_system). 
+famous [Lorenz system](https://en.wikipedia.org/wiki/Lorenz_system). 
 **nonlinearTseries** offers different routines for simulating the best well-known
 nonlinear systems: 
 
