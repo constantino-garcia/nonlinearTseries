@@ -1,15 +1,11 @@
-## Resubmission
-This is a resubmission. In this version I have:
-* Updated http URL to avoid https redirect.
-
-Previous version of the submission added rmarkdown as dependency.
-It also addressed concerns by Prof Brian Ripley regarding rgl. rgl package was moved
-to Suggest and the package now uses it conditionally.
+* This submission fixes the following warning on gcc-12:
+"void operator delete(void*)’ called on pointer returned from a mismatched allocation function [-Wmismatched-new-delete]" 
 
 ## Test environments
-* local Manjaro, R 4.0.5
-* Ubuntu 16.04 (on travis-ci), R 3.4, R-oldrel, R-release and R-devel.
+* local Manjaro, R 4.1.2
+* Ubuntu 16.04 (on travis-ci), R-oldrel, R-release and R-devel.
 * Win-builder checks: devel, release and oldrelease.
+* Docker image rocker/r-edge:gcc-12
 
 ## R CMD check results
 There was 1 NOTE (only in Ubuntu systems):
@@ -18,10 +14,4 @@ installed size is  6.6Mb
 sub-directories of 1Mb or more:
   libs   6.0Mb
 
-## revdepcheck results
-We checked 4 reverse dependencies (3 from CRAN + 1 from Bioconductor), comparing
-R CMD check results across CRAN and dev versions of this package.
-
-* We saw 0 new problems
-* We failed to check 0 packages
 
