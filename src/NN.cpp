@@ -90,8 +90,8 @@ extern "C"
 	// Do a little bit of memory management......
 	delete data_pts;
 	delete output_pts;
-	delete nn_idx;
-	delete dists;
+	delete [] nn_idx;
+	delete [] dists;
 	delete the_tree;
 	delete [] d_ptr;
 	}
