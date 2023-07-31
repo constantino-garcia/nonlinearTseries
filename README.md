@@ -1,6 +1,5 @@
 # nonlinearTseries
-[![Travis Build
-Status](https://travis-ci.org/constantino-garcia/nonlinearTseries.svg?branch=master)](https://travis-ci.org/constantino-garcia/nonlinearTseries.svg?branch=master)
+[![Github actions CI](https://github.com/constantino-garcia/nonlinearTseries/actions/workflows/github-actions/badge.svg)](https://github.com/constantino-garcia/nonlinearTseries/actions/workflows/github-actions/badge.svg)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/nonlinearTseries)](https://www.r-pkg.org/badges/version/nonlinearTseries)
 
 ## Overview
