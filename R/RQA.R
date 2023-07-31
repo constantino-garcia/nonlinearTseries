@@ -204,7 +204,8 @@ neighs2numericType = function(neighs){
 neighbourList2SparseMatrix = function(neighs) {
   ntakens = length(neighs)
   neighs = neighs2numericType(neighs)
-  neigh.len = sum(sapply(neighs, FUN = length)) + ntakens
+  # / 2 to account only for the upper diagonal matrix
+  neigh.len = sum(sapply(neighs, FUN = length)) / 2 + ntakens
   neighs.matrix = matrix(0,nrow = neigh.len , ncol = 2)
   .Call("_nonlinearTseries_neighsList2SparseRCreator",
         neighs = as.list(neighs), ntakens = as.integer(ntakens), 

@@ -43,15 +43,15 @@ NumericMatrix& neighs_matrix) {
   int irow = 0;
   for (int i = 0;i < ntakens; i++){
     x = Rcpp::as<NumericVector>(neighs[i]); 
-    // i starts in 1 and ends in takens as required by the R sparseMatrix
+    // i should start in 1 and ends in Takens as required by the R sparseMatrix
     // object constructor
     neighs_matrix(irow,0) = i + 1;
     neighs_matrix(irow++,1) = i + 1;
     for (int j = 0; j < x.size(); j++){
-      neighs_matrix(irow,0) = i + 1;
-      // substract one to x(j) so that all indices start in 1 and end
-      //in ntakens  as required by the R sparseMatrix constructor
-      neighs_matrix(irow++,1) = x(j);
+      if ((i + 1) < x(j)) {
+        neighs_matrix(irow,0) = i + 1;
+        neighs_matrix(irow++,1) = x(j);
+      }
     }
   }
 }
