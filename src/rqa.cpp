@@ -9,13 +9,10 @@ using namespace Rcpp;
 // verticalHistogram: vector with ntakens elements
 void get_vertical_histogram(List& neighs,  int ntakens, int vmin, 
                           IntegerVector& verticalHistogram){
-  for (int i = 0; i < ntakens; i++){
-    verticalHistogram[i] = 0;
-  }
   // find vertical lines in every column/row
   for (int i = 0; i < ntakens; i++){
     // count number of neighbours + itself
-    IntegerVector ith_takens_neighs = neighs[i];
+    IntegerVector ith_takens_neighs = as<IntegerVector>(neighs[i]);
     int lne = ith_takens_neighs.length();
     int j = 1;
     while (j < lne){
@@ -37,7 +34,7 @@ void get_vertical_histogram(List& neighs,  int ntakens, int vmin,
 
 bool is_contained_in_neighbourhood(int possibleNeigh, int i, List& neighs){
   bool found = false;
-  IntegerVector ith_takens_neighs = neighs[i];
+  IntegerVector ith_takens_neighs = as<IntegerVector>(neighs[i]);
   int nneighs = ith_takens_neighs.length();
   for (int iter = 0; iter < nneighs; iter++ ){
     if (possibleNeigh == ith_takens_neighs[iter]){
@@ -66,7 +63,8 @@ void update_length_histogram(int i, int j, List& neighs, int ntakens,
   // update the Histogram
   if (actualLength >= lmin){
     // diagonal lengths of 1 in position 0, 2 in position 1, etc.
-    diagonalHistogram[actualLength - 1]++;
+    // +=2 to take into account that the matrix is symmetric
+    diagonalHistogram[actualLength - 1] += 2;
   }
 }
 
@@ -75,20 +73,17 @@ void update_length_histogram(int i, int j, List& neighs, int ntakens,
 void get_diagonal_recurrence_histogram(
     List& neighs, int ntakens, int lmin,
     IntegerVector& diagonalHistogram, IntegerVector& recurrenceHistogram){
-  for (int i = 0; i < ntakens ;i++){
-    diagonalHistogram[i]=0;
-    recurrenceHistogram[i]=0;
-  }
   // Treat the first row separately: It will be easier if we find diagonals that
   // "originate" at the first row separately
-  IntegerVector first_takens_neighs = neighs[0];
+  IntegerVector first_takens_neighs = as<IntegerVector>(neighs[0]);
   int nneighs = first_takens_neighs.length();
   for (int j = 0; j < nneighs; j++){
     int currentNeigh = first_takens_neighs[j];
     // update recurrenceHistogram: the recurrence histogram takes into account
     // the distance between neigbours. In this case: currentNeigh - 0, and we store
-    // it in tre previous position (position 0 stores distance 1)
-    recurrenceHistogram[currentNeigh - 1]++;
+    // it in the previous position (position 0 stores distance 1).
+    // +=2 to take into account that the RQA matrix is symmetric
+    recurrenceHistogram[currentNeigh - 1] += 2;
     // update diagonal histogram
     update_length_histogram(0, currentNeigh, neighs,
                             ntakens, diagonalHistogram, lmin);
@@ -96,14 +91,14 @@ void get_diagonal_recurrence_histogram(
   // find diagonals that "originate" at other rows
   int lastPosition = ntakens - lmin;
   for (int i = 1; i < lastPosition; i++){
-    IntegerVector ith_takens_neighs = neighs[i];
+    IntegerVector ith_takens_neighs = as<IntegerVector>(neighs[i]);
     nneighs = ith_takens_neighs.length();
     for (int j = 0; j < nneighs; j++){
       int currentNeigh = ith_takens_neighs[j];
       //check if we have already took into account the pair i,j
       if (currentNeigh <= i) continue;
-      // update recurrenceHistogram
-      recurrenceHistogram[currentNeigh - i - 1]++;
+      // +=2 to take into account that the RQA matrix is symmetric
+      recurrenceHistogram[currentNeigh - i - 1] += 2;
       //check if this diagonal has its origin in any row before
       if (is_contained_in_neighbourhood(currentNeigh - 1, i - 1, neighs)) {
         continue;
@@ -117,31 +112,26 @@ void get_diagonal_recurrence_histogram(
   //complete the recurrence vector if needed
   if (lastPosition < ntakens){
     for (int i = lastPosition; i < ntakens; i++){
-      IntegerVector ith_takens_neighs = neighs[i];
+      IntegerVector ith_takens_neighs = as<IntegerVector>(neighs[i]);
       nneighs = ith_takens_neighs.length();
       for (int j = 0; j < nneighs; j++){
         int currentNeigh = ith_takens_neighs[j];
         if (currentNeigh <= i) continue;
-        // update recurrenceHistogram
-        recurrenceHistogram[currentNeigh - i - 1]++;
+        // +=2 to take into account that the matrix is symmetric
+        recurrenceHistogram[currentNeigh - i - 1] += 2;
       }
     }
   }
-  // take into account that the matrix is symmetric
-  for (int i = 0; i <  ntakens; i++){
-    diagonalHistogram[i] = 2 * diagonalHistogram[i];
-    recurrenceHistogram[i] = 2 * recurrenceHistogram[i];
-  }
-  // Add the main diagonal, of length ntakens
+  // Add the main diagonal, of length ntakens (there is only one!)
   diagonalHistogram[ntakens - 1] = 1;
 }
 
 // [[Rcpp::export]]
 List get_rqa_histograms(List& neighs, int ntakens, int vmin, int lmin){
   // auxiliar variables
-  IntegerVector verticalHistogram(ntakens, 0.0);
-  IntegerVector diagonalHistogram(ntakens, 0.0);
-  IntegerVector recurrenceHistogram(ntakens, 0.0);
+  IntegerVector verticalHistogram(ntakens, 0);
+  IntegerVector diagonalHistogram(ntakens, 0);
+  IntegerVector recurrenceHistogram(ntakens, 0);
   
   get_vertical_histogram(neighs, ntakens, vmin, verticalHistogram);
   get_diagonal_recurrence_histogram(neighs, ntakens, lmin,
