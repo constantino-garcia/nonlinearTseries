@@ -184,17 +184,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // get_rqa_histograms
-List get_rqa_histograms(IntegerMatrix& neighs, IntegerVector& nneighs, int ntakens, int vmin, int lmin);
-RcppExport SEXP _nonlinearTseries_get_rqa_histograms(SEXP neighsSEXP, SEXP nneighsSEXP, SEXP ntakensSEXP, SEXP vminSEXP, SEXP lminSEXP) {
+List get_rqa_histograms(List& neighs, int ntakens, int vmin, int lmin);
+RcppExport SEXP _nonlinearTseries_get_rqa_histograms(SEXP neighsSEXP, SEXP ntakensSEXP, SEXP vminSEXP, SEXP lminSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix& >::type neighs(neighsSEXP);
-    Rcpp::traits::input_parameter< IntegerVector& >::type nneighs(nneighsSEXP);
+    Rcpp::traits::input_parameter< List& >::type neighs(neighsSEXP);
     Rcpp::traits::input_parameter< int >::type ntakens(ntakensSEXP);
     Rcpp::traits::input_parameter< int >::type vmin(vminSEXP);
     Rcpp::traits::input_parameter< int >::type lmin(lminSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_rqa_histograms(neighs, nneighs, ntakens, vmin, lmin));
+    rcpp_result_gen = Rcpp::wrap(get_rqa_histograms(neighs, ntakens, vmin, lmin));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -249,7 +248,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_nonlinearTseries_getAllNeighbours", (DL_FUNC) &_nonlinearTseries_getAllNeighbours, 3},
     {"_nonlinearTseries_nonlinear_noise_reduction", (DL_FUNC) &_nonlinearTseries_nonlinear_noise_reduction, 4},
     {"_nonlinearTseries_poincare_map", (DL_FUNC) &_nonlinearTseries_poincare_map, 3},
-    {"_nonlinearTseries_get_rqa_histograms", (DL_FUNC) &_nonlinearTseries_get_rqa_histograms, 5},
+    {"_nonlinearTseries_get_rqa_histograms", (DL_FUNC) &_nonlinearTseries_get_rqa_histograms, 4},
     {"_nonlinearTseries_space_time_plot", (DL_FUNC) &_nonlinearTseries_space_time_plot, 5},
     {"_nonlinearTseries_neighsList2Sparse", (DL_FUNC) &_nonlinearTseries_neighsList2Sparse, 2},
     {"_nonlinearTseries_neighsList2SparseRCreator", (DL_FUNC) &_nonlinearTseries_neighsList2SparseRCreator, 3},

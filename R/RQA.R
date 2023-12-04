@@ -231,6 +231,7 @@ neighbourListToCsparseNeighbourMatrix = function(neighs) {
 }
 
 
+
 calculateVerticalParameters = function(ntakens, numberRecurrencePoints,
                                        vmin = 2, verticalLinesHistogram) {
   #begin parameter computations
@@ -292,12 +293,21 @@ calculateDiagonalParameters = function(ntakens, numberRecurrencePoints,
 }
 
 getHistograms = function(neighs, ntakens, lmin, vmin){
+  # update neighs: 
+  # 1) add each vector to its own neigbourhood (i is a neighbour of i)
+  # 2) sort 
+  # 3) substract 1 to get C-like indexes for neighbors
+  cneighs = mapply(
+    function(ith_neighs, i) as.integer(sort(c(i, ith_neighs) - 1)),
+    neighs, 
+    seq_along(neighs)
+  )
   # the neighbours are labeled from 0 to ntakens-1
-  c.matrix = neighbourListToCsparseNeighbourMatrix(neighs)
   # auxiliar variables
   .Call("_nonlinearTseries_get_rqa_histograms", 
-        neighs = c.matrix$neighs, nneighs = c.matrix$nneighs,
-        ntakens = as.integer(ntakens), vmin = as.integer(vmin),
+        neighs = cneighs, 
+        ntakens = as.integer(ntakens), 
+        vmin = as.integer(vmin),
         lmin = as.integer(lmin),
         PACKAGE = "nonlinearTseries")
 }  

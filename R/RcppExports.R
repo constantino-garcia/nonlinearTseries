@@ -45,8 +45,8 @@ poincare_map <- function(timeSeries, hiperplanePoint, normalVector) {
     .Call('_nonlinearTseries_poincare_map', PACKAGE = 'nonlinearTseries', timeSeries, hiperplanePoint, normalVector)
 }
 
-get_rqa_histograms <- function(neighs, nneighs, ntakens, vmin, lmin) {
-    .Call('_nonlinearTseries_get_rqa_histograms', PACKAGE = 'nonlinearTseries', neighs, nneighs, ntakens, vmin, lmin)
+get_rqa_histograms <- function(neighs, ntakens, vmin, lmin) {
+    .Call('_nonlinearTseries_get_rqa_histograms', PACKAGE = 'nonlinearTseries', neighs, ntakens, vmin, lmin)
 }
 
 space_time_plot <- function(phaseSpace, radii, nTimeSteps, timeStep, nPercentages) {
