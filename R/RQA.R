@@ -298,7 +298,7 @@ getHistograms = function(neighs, ntakens, lmin, vmin){
   # 2) sort 
   # 3) substract 1 to get C-like indexes for neighbors
   cneighs = mapply(
-    function(ith_neighs, i) as.integer(sort(c(i, ith_neighs) - 1)),
+    function(ith_neighs, i) list(sort(as.integer(c(i, ith_neighs)) - 1)),
     neighs, 
     seq_along(neighs)
   )
