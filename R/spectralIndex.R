@@ -45,7 +45,7 @@ spectralIndexObject = function(fit, spec) {
   spectral_index_fit
 }
 
-# @export
+#' @export
 plot.spectralIndex = function(x, type = "l", log = "xy", 
                               ylab = "spectrum", xlab = "normalized frequency",
                               ...) {
@@ -59,13 +59,12 @@ plot.spectralIndex = function(x, type = "l", log = "xy",
 }
 
 
-# @export
 getHurst = function(x) {
   UseMethod("getHurst")
 }
 
 
-# @export
+#' @export
 getHurst.spectralIndex = function(x) {
   beta = x$spectral_index_fit[[1]]
   Hs = c(H_fgn = NA, H_fbm = NA)
@@ -78,12 +77,11 @@ getHurst.spectralIndex = function(x) {
   Hs
 }
 
-# @export
 getAlpha = function(x) {
   UseMethod("getAlpha")  
 }
 
-# @export 
+#' @export 
 getAlpha.spectralIndex = function(x) {
   (x$spectral_index_fit[[1]] + 1) / 2
 }

@@ -32,6 +32,7 @@ embeddingDims = function(x){
   UseMethod("embeddingDims")
 }
 
+#' @export
 embeddingDims.default = function(x){
   x$embedding.dims
 }
@@ -50,6 +51,7 @@ radius = function(x){
   UseMethod("radius")
 }
 
+#' @export
 radius.default = function(x){
   x$radius
 }
