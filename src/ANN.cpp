@@ -173,7 +173,7 @@ void annError(const char* msg, ANNerr level)
 {
 	if (level == ANNabort) {
 #ifdef RANN
-		error("RANN: %s",msg);
+		Rf_error("RANN: %s",msg);
 #else
 		cerr << "ANN: ERROR------->" << msg << "<-------------ERROR\n";
 		exit(1);
@@ -181,7 +181,7 @@ void annError(const char* msg, ANNerr level)
 	}
 	else {
 #ifdef RANN
-		warning("RANN: %s",msg);
+		Rf_warning("RANN: %s",msg);
 #else
 		cerr << "ANN: WARNING----->" << msg << "<-------------WARNING\n";
 #endif
