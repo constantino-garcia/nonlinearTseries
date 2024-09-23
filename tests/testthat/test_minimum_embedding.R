@@ -30,6 +30,7 @@ test_that("estimates equal theoretical results", {
     threshold = 0.9,
     do.plot = FALSE
   )
+  cat("Ikeda: ", x, "\n")
   expect_equal(4, x)
   
   x = estimateEmbeddingDim(
@@ -39,6 +40,7 @@ test_that("estimates equal theoretical results", {
     threshold = 0.9,
     do.plot = FALSE
   )
+  cat("Henon: ", x, "\n")
   expect_equal(2, x)
   
   x = estimateEmbeddingDim(
@@ -48,6 +50,7 @@ test_that("estimates equal theoretical results", {
     threshold = 0.9,
     do.plot = FALSE
   )
+  cat("Lorenz: ", x, "\n")
   expect_equal(4, x)
   
 })
