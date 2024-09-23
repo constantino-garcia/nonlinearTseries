@@ -27,7 +27,7 @@ test_that("estimates equal theoretical results", {
     ik$x,
     time.lag = 1,
     max.embedding.dim = 6,
-    threshold = 0.9,
+    threshold = 0.85,
     do.plot = FALSE
   )
   cat("Ikeda: ", x, "\n")
