@@ -1,8 +1,8 @@
 Package: nonlinearTseries
 Type: Package
 Title: Nonlinear Time Series Analysis
-Version: 0.3.0.99999
-Date: 2024-9-19
+Version: 0.3.1
+Date: 2024-9-23
 Maintainer: Constantino A. Garcia <constantino.garciama@ceu.es>
 Authors@R: c(person("Constantino A.", "Garcia",
                     email = "constantino.garciama@ceu.es",
@@ -40,5 +40,5 @@ Suggests:
     rmarkdown,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.2
 Encoding: UTF-8
