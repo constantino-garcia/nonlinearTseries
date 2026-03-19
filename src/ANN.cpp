@@ -30,7 +30,7 @@
 #include <ANN/ANNx.h>					// all ANN includes
 #include <ANN/ANNperf.h>				// ANN performance 
 #ifdef RANN
-#include <R.h>				// R headers for error handling
+#include <Rcpp.h>			// Rcpp headers for error handling
 #endif
 
 using namespace std;					// make std:: accessible
@@ -173,7 +173,7 @@ void annError(const char* msg, ANNerr level)
 {
 	if (level == ANNabort) {
 #ifdef RANN
-		Rf_error("RANN: %s",msg);
+		Rcpp::stop("RANN: %s",msg);
 #else
 		cerr << "ANN: ERROR------->" << msg << "<-------------ERROR\n";
 		exit(1);
